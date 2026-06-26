@@ -1,0 +1,116 @@
+<?php
+
+namespace Core;
+
+class Application {
+    public static Application $app;
+    public Router $router;
+    public Request $request;
+    public Response $response;
+    public Database $db;
+    public ?array $sessionUser = null;
+    public array $config = [];
+
+    public function __construct() {
+        self::$app = $this;
+        $this->request = new Request();
+        $this->response = new Response();
+        $this->router = new Router($this->request, $this->response);
+        
+        // Start session if not started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Initialize Database
+        $this->db = new Database();
+        
+        // Load Company Configuration
+        $this->loadConfig();
+    }
+
+    public function run(): void {
+        try {
+            echo $this->router->resolve();
+        } catch (\Throwable $e) {
+            $this->handleException($e);
+        }
+    }
+
+    public function getSessionUser(): ?array {
+        if ($this->sessionUser) {
+            return $this->sessionUser;
+        }
+        
+        if (isset($_SESSION['user_id'])) {
+            // Fetch user from DB
+            $stmt = $this->db->prepare("SELECT u.*, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = ? AND u.status = 'ACTIVE'");
+            $stmt->execute([$_SESSION['user_id']]);
+            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if ($user) {
+                unset($user['password_hash']);
+                $this->sessionUser = $user;
+                return $user;
+            } else {
+                // Invalid session
+                unset($_SESSION['user_id']);
+            }
+        }
+        return null;
+    }
+
+    public function loadConfig(): void {
+        try {
+            $stmt = $this->db->query("SELECT setting_key, setting_value FROM system_settings");
+            $settings = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR) ?: [];
+            $this->config = $settings;
+        } catch (\PDOException $e) {
+            // DB not yet installed/migrated, load defaults
+            $this->config = [
+                'company_name' => 'Viraasat Wholesale',
+                'brand_name' => 'Viraasat',
+                'support_email' => 'support@viraasat.com',
+                'support_mobile' => '+91 9999999999',
+            ];
+        }
+    }
+
+    public function handleException(\Throwable $e): void {
+        // Log error to database/file
+        $userId = $_SESSION['user_id'] ?? null;
+        $url = $_SERVER['REQUEST_URI'] ?? '';
+        $message = $e->getMessage();
+        $file = $e->getFile();
+        $line = $e->getLine();
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $browser = $_SERVER['HTTP_USER_AGENT'] ?? '';
+
+        try {
+            $stmt = $this->db->prepare("
+                INSERT INTO error_logs (message, url, file_name, line_number, user_id, ip_address, browser) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ");
+            $stmt->execute([$message, $url, $file, $line, $userId, $ip, $browser]);
+        } catch (\Throwable $dbEx) {
+            // Fallback to error_log
+            error_log("Error log insertion failed: " . $dbEx->getMessage());
+        }
+
+        error_log($e);
+
+        // Redirect to /install.php if it is a database connection error and install.php exists
+        if (($e instanceof \PDOException || str_contains($message, 'Database connection')) && file_exists(dirname(__DIR__) . '/public/install.php')) {
+            $this->response->redirect('/install.php');
+            return;
+        }
+
+        // Redirect to /php-error.php in production
+        $this->response->setStatusCode(500);
+        if (file_exists(dirname(__DIR__) . '/public/php-error.php')) {
+            $this->response->redirect('/php-error.php');
+        } else {
+            echo "<h1>500 Internal Server Error</h1><p>An unexpected error occurred. The administrator has been notified.</p>";
+        }
+    }
+}
+

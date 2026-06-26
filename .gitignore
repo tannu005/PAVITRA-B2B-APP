@@ -1,0 +1,15 @@
+# Local binaries
+db-bin/
+php-bin/
+
+# IDE files
+.vscode/
+.idea/
+
+# Composer dependencies
+vendor/
+
+# Temporary / logs
+error_log
+*.log
+*.tmp
