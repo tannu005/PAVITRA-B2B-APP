@@ -15,9 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
         $logs[] = "Connected to MySQL host {$config['host']}.";
 
-        // 2. Create database
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$config['dbname']}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-        $logs[] = "Database `{$config['dbname']}` verified/created.";
+        // 2. Drop and recreate database for a clean installation slate
+        $pdo->exec("DROP DATABASE IF EXISTS `{$config['dbname']}`");
+        $pdo->exec("CREATE DATABASE `{$config['dbname']}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+        $logs[] = "Database `{$config['dbname']}` dropped and fresh database created.";
 
         // 3. Reconnect to the database
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
