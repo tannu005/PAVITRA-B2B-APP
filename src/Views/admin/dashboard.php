@@ -5,6 +5,7 @@
             <h2 class="fw-bold mb-1"><i class="fa-solid fa-chart-line text-pink me-2"></i>Super Admin Console</h2>
             <p class="text-muted mb-0">Platform stats, KYC verification queue, weavers settlement runs, and error diagnostic logs.</p>
         </div>
+        <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
     </div>
 
     <!-- Stat Grid -->

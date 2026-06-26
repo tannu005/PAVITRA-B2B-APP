@@ -1,6 +1,7 @@
 <div class="container-xl py-5" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
     <div class="card p-4 p-md-5" style="width: 100%; max-width: 520px; border-radius: 8px; border: 1px solid var(--meesho-border); background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4 position-relative">
+            <a href="/" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Home</a>
             <h2 class="fw-bold mb-1" style="color: var(--meesho-pink); letter-spacing: -0.5px;">Join Viraasat</h2>
             <p class="text-muted" style="font-size: 0.9rem;">Register your B2B wholesale profile</p>
         </div>

@@ -5,6 +5,7 @@
             <h2 class="fw-bold mb-1"><i class="fa fa-warehouse text-pink me-2"></i>Inventory Manager</h2>
             <p class="text-muted mb-0">Track warehouse reserves, check stock depletion alerts, and log refills.</p>
         </div>
+        <a href="/seller" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
 
     <div class="row g-4">

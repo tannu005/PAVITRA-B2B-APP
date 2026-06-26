@@ -1,5 +1,12 @@
 <!-- Retailer Wallet & Ledger -->
 <div class="container-xl py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="fa-solid fa-wallet text-pink me-2"></i>Wallet & Financial Ledger</h2>
+            <p class="text-muted mb-0">Monitor wholesale credit limits, transaction debits/credits, and refill balances.</p>
+        </div>
+        <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
+    </div>
     <div class="row g-4">
         <!-- Balance widgets -->
         <div class="col-lg-4">

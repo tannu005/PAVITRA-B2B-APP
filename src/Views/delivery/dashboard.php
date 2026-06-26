@@ -5,6 +5,7 @@
             <h2 class="fw-bold mb-1"><i class="fa-solid fa-truck text-pink me-2"></i>Logistics Handover</h2>
             <p class="text-muted mb-0">Claim shipments, track pickup warehouses, and confirm handovers with OTP verification.</p>
         </div>
+        <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
     </div>
 
     <div class="row g-4">

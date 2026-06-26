@@ -1,5 +1,12 @@
 <!-- Seller Payouts & Settlements -->
 <div class="container-xl py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="fa-solid fa-credit-card text-pink me-2"></i>My Payouts & Settlements</h2>
+            <p class="text-muted mb-0">Track completed wholesale payouts, service commissions, and tax deductions.</p>
+        </div>
+        <a href="/seller" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
     <div class="row g-4">
         <!-- Payout Policies -->
         <div class="col-lg-4">

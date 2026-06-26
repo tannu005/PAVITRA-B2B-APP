@@ -5,6 +5,7 @@
             <h2 class="fw-bold mb-1"><i class="fa fa-box-open text-pink me-2"></i>Dispatch Shipments</h2>
             <p class="text-muted mb-0">Track boutique order lifecycles and advance dispatch statuses.</p>
         </div>
+        <a href="/seller" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
 
     <?php if (empty($orders)): ?>

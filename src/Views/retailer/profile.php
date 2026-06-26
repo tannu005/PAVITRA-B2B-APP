@@ -3,8 +3,13 @@
     <div class="row g-4 justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4">
-                <h3 class="fw-bold mb-1 text-dark"><i class="fa-regular fa-id-card text-pink me-2"></i>Account & Shop Settings</h3>
-                <p class="text-muted mb-4">Update contact credentials and shop location addresses.</p>
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h3 class="fw-bold mb-1 text-dark"><i class="fa-regular fa-id-card text-pink me-2"></i>Account & Shop Settings</h3>
+                        <p class="text-muted mb-0">Update contact credentials and shop location addresses.</p>
+                    </div>
+                    <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
+                </div>
 
                 <?php if (!empty($errors)): ?>
                     <div class="alert alert-danger py-2 px-3 mb-3" style="font-size: 0.85rem;">

@@ -5,7 +5,10 @@
             <h2 class="fw-bold mb-1"><i class="fa fa-shirt text-pink me-2"></i>My Saree Catalog</h2>
             <p class="text-muted mb-0">Inspect approval status, retail values, and live inventory balances.</p>
         </div>
-        <a href="/seller/products/create" class="btn btn-meesho-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload Saree</a>
+        <div>
+            <a href="/seller" class="btn btn-outline-secondary btn-sm me-2"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
+            <a href="/seller/products/create" class="btn btn-meesho-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload Saree</a>
+        </div>
     </div>
 
     <?php if (empty($products)): ?>
