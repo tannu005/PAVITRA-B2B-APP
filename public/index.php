@@ -100,11 +100,21 @@ $app->router->post('/delivery/verify-otp', [App\Controllers\DeliveryController::
 
 // --- DEFINING REST API ENDPOINTS ---
 $app->router->post('/api/auth/login', [App\Controllers\ApiController::class, 'login']);
+$app->router->post('/api/auth/register', [App\Controllers\ApiController::class, 'register']);
+$app->router->get('/api/categories', [App\Controllers\ApiController::class, 'getCategories']);
 $app->router->get('/api/products', [App\Controllers\ApiController::class, 'getProducts']);
+$app->router->get('/api/inventory', [App\Controllers\ApiController::class, 'getInventory']);
+$app->router->post('/api/inventory/update', [App\Controllers\ApiController::class, 'updateInventory']);
 $app->router->get('/api/orders', [App\Controllers\ApiController::class, 'getOrders']);
 $app->router->post('/api/orders/create', [App\Controllers\ApiController::class, 'createOrder']);
 $app->router->get('/api/wallet/balance', [App\Controllers\ApiController::class, 'getWalletBalance']);
+$app->router->post('/api/payments/charge', [App\Controllers\ApiController::class, 'chargePayment']);
+$app->router->post('/api/kyc/upload', [App\Controllers\ApiController::class, 'uploadKyc']);
+$app->router->get('/api/notifications', [App\Controllers\ApiController::class, 'getNotifications']);
+$app->router->get('/api/reports/sales', [App\Controllers\ApiController::class, 'getSalesReport']);
 $app->router->post('/api/delivery/update', [App\Controllers\ApiController::class, 'updateDelivery']);
+
+// Mock triggers
 $app->router->post('/api/wallet/deposit', [App\Controllers\ApiController::class, 'depositSimulate']);
 $app->router->post('/api/kyc/simulate', [App\Controllers\ApiController::class, 'kycSimulate']);
 
