@@ -151,3 +151,18 @@ INSERT INTO `cms_pages` (`title`, `slug`, `content`, `meta_title`, `meta_descrip
 ('Terms & Conditions', 'terms-conditions', '<h1>Terms & Conditions</h1><p>By registering on Viraasat B2B, sellers (weavers), retailers (boutique buyers), and delivery riders agree to abide by our fair transaction guidelines. Wholesale prices apply only above MOQ thresholds. Settlements are disbursed on delivery completion, subject to commission rates and GST rules.</p>', 'Terms & Conditions - Viraasat B2B Merchant Agreement', 'Terms and conditions for buying and selling on Viraasat B2B marketplace.', 1),
 ('Refund Policy', 'refund-policy', '<h1>Refund & Return Policy</h1><p>We want you to be completely satisfied with your handloom sarees. Retailers can request returns within 7 days of delivery. Upon seller approval and driver pickup verification, refunds are automatically credited back to the retailer\'s wallet ledger.</p>', 'Refund & Return Policy - Viraasat B2B', 'Refund and return guidelines for boutique buyers and weavers on Viraasat B2B.', 1),
 ('Shipping Policy', 'shipping-policy', '<h1>Shipping & Logistics Policy</h1><p>Orders are dispatched by registered weavers within 24-48 hours of acceptance. Our logistics network assigns courier drivers with integrated routing and handover verification via secure 4-digit customer OTP codes.</p>', 'Shipping Policy - Viraasat B2B Courier Logistics', 'Shipping and logistics handbook for delivery partners and merchants.', 1);
+
+-- 12. Seed Coupons
+INSERT INTO `coupons` (`code`, `type`, `value`, `min_cart_value`, `start_date`, `end_date`, `max_uses`, `active`) VALUES
+('WELCOMB2B', 'FLAT', 500.00, 5000.00, '2026-01-01', '2030-12-31', 100, 1),
+('FESTIVE10', 'PERCENTAGE', 10.00, 10000.00, '2026-01-01', '2030-12-31', 100, 1);
+
+-- 13. Seed Offers
+INSERT INTO `offers` (`name`, `type`, `discount_value`, `start_date`, `end_date`, `active`) VALUES
+('Varanasi Summer Flash Sale', 'FLASH_SALE', 5.00, '2026-01-01 00:00:00', '2030-12-31 23:59:59', 1);
+
+INSERT INTO `offer_products` (`offer_id`, `product_id`) VALUES
+(1, 1),
+(1, 2);
+
+

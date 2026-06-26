@@ -80,6 +80,13 @@
                                     <div class="text-muted"><strong>Deliver To Address:</strong> Varanasi Handloom Cluster Hub, UP</div>
                                 </div>
 
+                                <?php if ($order['status'] === 'DELIVERED'): ?>
+                                    <div class="mt-3 mb-2 d-flex gap-2">
+                                        <a href="/orders/return/<?= $order['id'] ?>" class="btn btn-outline-pink btn-sm flex-grow-1 py-1 fw-bold" style="border-color: #F43397; color: #F43397;"><i class="fa fa-rotate-left me-1"></i> Return Items</a>
+                                        <a href="/order/invoice/<?= $order['id'] ?>" target="_blank" class="btn btn-outline-secondary btn-sm flex-grow-1 py-1 fw-bold"><i class="fa fa-file-invoice me-1"></i> Invoice</a>
+                                    </div>
+                                <?php endif; ?>
+
                                 <!-- Status Timeline Indicator -->
                                 <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem;">Delivery Roadmap</h6>
                                 <?php

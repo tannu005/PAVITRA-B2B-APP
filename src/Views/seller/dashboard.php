@@ -54,6 +54,7 @@
                     <a href="/seller/inventory" class="btn btn-light border text-start py-2 px-3 fw-semibold"><i class="fa fa-warehouse text-pink me-2"></i> Inventory Manager</a>
                     <a href="/seller/orders" class="btn btn-light border text-start py-2 px-3 fw-semibold"><i class="fa fa-box-open text-pink me-2"></i> Dispatch Shipments</a>
                     <a href="/seller/settlements" class="btn btn-light border text-start py-2 px-3 fw-semibold"><i class="fa-solid fa-file-invoice-dollar text-pink me-2"></i> Settlement & Payout Reports</a>
+                    <a href="/seller/returns" class="btn btn-light border text-start py-2 px-3 fw-semibold"><i class="fa-solid fa-rotate-left text-pink me-2"></i> Returns & Refund Requests</a>
                 </div>
             </div>
         </div>

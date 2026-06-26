@@ -173,9 +173,34 @@ class RetailerController extends Controller {
             ];
         }
 
+        $discount = 0.00;
+        $couponCode = '';
+        if (isset($_SESSION['applied_coupon'])) {
+            $sessCoupon = $_SESSION['applied_coupon'];
+            $stmtC = $db->prepare("SELECT * FROM coupons WHERE id = ? AND active = 1 AND start_date <= CURDATE() AND end_date >= CURDATE()");
+            $stmtC->execute([$sessCoupon['id']]);
+            $coupon = $stmtC->fetch();
+            if ($coupon && $subtotal >= floatval($coupon['min_cart_value'])) {
+                $couponCode = $coupon['code'];
+                if ($coupon['type'] === 'FLAT') {
+                    $discount = floatval($coupon['value']);
+                } else if ($coupon['type'] === 'PERCENTAGE') {
+                    $discount = ($subtotal * floatval($coupon['value'])) / 100.00;
+                }
+                if ($discount > $subtotal) $discount = $subtotal;
+                $_SESSION['applied_coupon']['discount'] = $discount;
+            } else {
+                // Remove coupon if cart subtotal dropped below threshold
+                unset($_SESSION['applied_coupon']);
+            }
+        }
+
         return $response->json([
             'items' => $processedItems,
-            'subtotal' => $subtotal
+            'subtotal' => $subtotal,
+            'discount' => $discount,
+            'coupon_code' => $couponCode,
+            'total' => $subtotal - $discount
         ]);
     }
 
@@ -327,6 +352,26 @@ class RetailerController extends Controller {
             ];
         }
 
+        // Coupon discount validation
+        $discountAmount = 0.00;
+        $couponId = null;
+        if (isset($_SESSION['applied_coupon'])) {
+            $sessCoupon = $_SESSION['applied_coupon'];
+            $stmtC = $db->prepare("SELECT * FROM coupons WHERE id = ? AND active = 1 AND start_date <= CURDATE() AND end_date >= CURDATE()");
+            $stmtC->execute([$sessCoupon['id']]);
+            $coupon = $stmtC->fetch();
+            if ($coupon && $subtotal >= floatval($coupon['min_cart_value'])) {
+                $couponId = $coupon['id'];
+                if ($coupon['type'] === 'FLAT') {
+                    $discountAmount = floatval($coupon['value']);
+                } else if ($coupon['type'] === 'PERCENTAGE') {
+                    $discountAmount = ($subtotal * floatval($coupon['value'])) / 100.00;
+                }
+                if ($discountAmount > $subtotal) $discountAmount = $subtotal;
+            }
+        }
+        $netSubtotal = $subtotal - $discountAmount;
+
         // Check Retailer Profile Balance & Credit Limit
         $stmtProfile = $db->prepare("SELECT * FROM retailer_profiles WHERE user_id = ?");
         $stmtProfile->execute([$user['id']]);
@@ -337,15 +382,15 @@ class RetailerController extends Controller {
         }
 
         $availableBalance = floatval($profile['balance']);
-        if ($availableBalance < $subtotal) {
-            return $response->json(['error' => "Insufficient wallet balance. You need ₹" . number_format($subtotal, 2) . " but only have ₹" . number_format($availableBalance, 2) . " in your wallet."], 400);
+        if ($availableBalance < $netSubtotal) {
+            return $response->json(['error' => "Insufficient wallet balance. You need ₹" . number_format($netSubtotal, 2) . " but only have ₹" . number_format($availableBalance, 2) . " in your wallet."], 400);
         }
 
         try {
             $db->beginTransaction();
 
             // 1. Deduct from retailer wallet
-            $newBalance = $availableBalance - $subtotal;
+            $newBalance = $availableBalance - $netSubtotal;
             $stmtUpdateProfile = $db->prepare("UPDATE retailer_profiles SET balance = ? WHERE user_id = ?");
             $stmtUpdateProfile->execute([$newBalance, $user['id']]);
 
@@ -363,7 +408,7 @@ class RetailerController extends Controller {
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'DEBIT', ?, ?, 'ORDER_PURCHASE', ?)
             ");
-            $stmtTx->execute([$walletId, $subtotal, "Bulk order payment for Viraasat catalog sarees", $newBalance]);
+            $stmtTx->execute([$walletId, $netSubtotal, "Bulk order payment for Viraasat catalog sarees", $newBalance]);
 
             // Create shipping address entry if new
             $stmtAddr = $db->prepare("INSERT INTO user_addresses (user_id, address_line1, city, state, pin_code) VALUES (?, ?, 'Varanasi', 'Uttar Pradesh', '221001')");
@@ -375,14 +420,21 @@ class RetailerController extends Controller {
                 $orderNumber = 'ORD-' . strtoupper(bin2hex(random_bytes(4))) . '-' . time();
                 
                 $orderTotal = array_sum(array_column($items, 'total'));
+                $orderDiscount = ($subtotal > 0) ? ($orderTotal / $subtotal) * $discountAmount : 0;
+                $orderNet = $orderTotal - $orderDiscount;
                 
                 // Create order
                 $stmtOrder = $db->prepare("
-                    INSERT INTO orders (order_number, user_id, seller_id, status, total_amount, net_amount, payment_status, payment_method, address_id)
-                    VALUES (?, ?, ?, 'PLACED', ?, ?, 'PAID', 'WALLET', ?)
+                    INSERT INTO orders (order_number, user_id, seller_id, status, total_amount, discount_amount, net_amount, payment_status, payment_method, address_id)
+                    VALUES (?, ?, ?, 'PLACED', ?, ?, ?, 'PAID', 'WALLET', ?)
                 ");
-                $stmtOrder->execute([$orderNumber, $user['id'], $sellerId, $orderTotal, $orderTotal, $addressId]);
+                $stmtOrder->execute([$orderNumber, $user['id'], $sellerId, $orderTotal, $orderDiscount, $orderNet, $addressId]);
                 $orderId = $db->lastInsertId();
+
+                if ($couponId) {
+                    $stmtCouponUsage = $db->prepare("INSERT INTO coupon_usage (coupon_id, user_id, order_id) VALUES (?, ?, ?)");
+                    $stmtCouponUsage->execute([$couponId, $user['id'], $orderId]);
+                }
 
                 // Create status log
                 $stmtHistory = $db->prepare("
@@ -412,9 +464,10 @@ class RetailerController extends Controller {
                 }
             }
 
-            // 3. Clear cart
+            // 3. Clear cart and session coupon
             $stmtClear = $db->prepare("DELETE FROM cart_items WHERE cart_id = ?");
             $stmtClear->execute([$cartId]);
+            unset($_SESSION['applied_coupon']);
 
             $db->commit();
             return $response->json(['success' => true]);
@@ -523,6 +576,64 @@ class RetailerController extends Controller {
             'title' => 'Account Settings - Viraasat B2B',
             'errors' => $errors,
             'user' => $user
+        ]);
+    }
+
+    // Apply coupon code via POST JSON
+    public function applyCoupon(Request $request, Response $response) {
+        $body = $request->getBody();
+        $code = strtoupper(trim($body['code'] ?? ''));
+        $cartSubtotal = floatval($body['subtotal'] ?? 0);
+
+        if (empty($code)) {
+            return $response->json(['error' => 'Coupon code is required.'], 400);
+        }
+
+        $db = Application::$app->db;
+        $stmt = $db->prepare("
+            SELECT * FROM coupons 
+            WHERE code = ? AND active = 1 AND start_date <= CURDATE() AND end_date >= CURDATE()
+        ");
+        $stmt->execute([$code]);
+        $coupon = $stmt->fetch();
+
+        if (!$coupon) {
+            return $response->json(['error' => 'Invalid or expired coupon code.'], 400);
+        }
+
+        if ($cartSubtotal < floatval($coupon['min_cart_value'])) {
+            return $response->json([
+                'error' => "Minimum cart subtotal of ₹" . number_format($coupon['min_cart_value'], 2) . " is required to apply this coupon."
+            ], 400);
+        }
+
+        // Calculate discount
+        $discount = 0.00;
+        if ($coupon['type'] === 'FLAT') {
+            $discount = floatval($coupon['value']);
+        } else if ($coupon['type'] === 'PERCENTAGE') {
+            $discount = ($cartSubtotal * floatval($coupon['value'])) / 100.00;
+        }
+
+        // Clip discount to subtotal
+        if ($discount > $cartSubtotal) {
+            $discount = $cartSubtotal;
+        }
+
+        // Store coupon details in session for checkout
+        $_SESSION['applied_coupon'] = [
+            'id' => $coupon['id'],
+            'code' => $coupon['code'],
+            'type' => $coupon['type'],
+            'value' => floatval($coupon['value']),
+            'discount' => $discount
+        ];
+
+        return $response->json([
+            'success' => true,
+            'code' => $coupon['code'],
+            'discount' => $discount,
+            'new_total' => $cartSubtotal - $discount
         ]);
     }
 

@@ -57,6 +57,9 @@ $config = Application::$app->config;
                                 <li><a class="dropdown-item" href="/profile"><i class="fa-regular fa-id-card me-2 text-muted"></i> My Profile</a></li>
                                 <li><a class="dropdown-item" href="/orders"><i class="fa-solid fa-box-open me-2 text-muted"></i> My Orders</a></li>
                                 <li><a class="dropdown-item" href="/wallet"><i class="fa-solid fa-wallet me-2 text-muted"></i> Wallet (₹<?= number_format($user['balance'] ?? 0, 2) ?>)</a></li>
+                                <?php if ($user['role'] === 'RETAILER'): ?>
+                                    <li><a class="dropdown-item" href="/support"><i class="fa-solid fa-headset me-2 text-muted"></i> Support Helpdesk</a></li>
+                                <?php endif; ?>
                                 
                                 <?php if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])): ?>
                                     <li><hr class="dropdown-divider"></li>
@@ -190,8 +193,28 @@ $config = Application::$app->config;
         </div>
         <!-- Totals & Checkout -->
         <div class="p-4 border-top" id="cart-drawer-footer" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-2" style="font-size: 0.85rem;">
+                <span class="fw-semibold text-muted">Subtotal</span>
+                <span class="fw-bold text-dark" id="cart-subtotal-display">₹0.00</span>
+            </div>
+
+            <!-- Coupon Apply Form -->
+            <div class="mb-3 border-bottom pb-3">
+                <label class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.65rem; letter-spacing: 0.5px;">B2B Coupon Code</label>
+                <div class="input-group input-group-sm">
+                    <input type="text" id="coupon-code-input" class="form-control" placeholder="e.g. WELCOMB2B" style="text-transform: uppercase;">
+                    <button class="btn btn-outline-secondary" type="button" id="apply-coupon-btn" style="border-color: #F43397; color: #F43397;">Apply</button>
+                </div>
+                <div id="coupon-message" class="small mt-1" style="display: none; font-size: 0.75rem;"></div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2 text-success" id="coupon-discount-row" style="display: none; font-size: 0.85rem;">
+                <span class="fw-semibold">Discount (<span id="coupon-applied-code"></span>)</span>
+                <span class="fw-bold" id="cart-discount-display">-₹0.00</span>
+            </div>
+
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="fw-semibold text-muted">Estimated Subtotal</span>
+                <span class="fw-bold text-dark">Estimated Total</span>
                 <span class="fs-4 fw-bold text-pink" id="cart-total-display" style="color: #F43397;">₹0.00</span>
             </div>
             
@@ -302,13 +325,57 @@ $config = Application::$app->config;
                 html += '</div>';
 
                 $('#cart-drawer-items').html(html);
-                $('#cart-total-display').text('₹' + parseFloat(res.subtotal).toLocaleString('en-IN', {minimumFractionDigits: 2}));
+                $('#cart-subtotal-display').text('₹' + parseFloat(res.subtotal).toLocaleString('en-IN', {minimumFractionDigits: 2}));
+                
+                if (res.discount > 0) {
+                    $('#coupon-discount-row').show();
+                    $('#coupon-applied-code').text(res.coupon_code);
+                    $('#cart-discount-display').text('-₹' + parseFloat(res.discount).toLocaleString('en-IN', {minimumFractionDigits: 2}));
+                    $('#coupon-message').text('Coupon applied successfully!').removeClass('text-danger').addClass('text-success').show();
+                    $('#coupon-code-input').val(res.coupon_code);
+                } else {
+                    $('#coupon-discount-row').hide();
+                    $('#coupon-message').hide();
+                }
+
+                $('#cart-total-display').text('₹' + parseFloat(res.total).toLocaleString('en-IN', {minimumFractionDigits: 2}));
                 $('#cart-drawer-footer').show();
                 
                 // Set Badge count
                 const count = res.items.reduce((sum, item) => sum + parseInt(item.quantity), 0);
                 $('#cart-count-badge').text(count).show();
             }
+
+            // Apply Coupon click event
+            $('#apply-coupon-btn').on('click', function() {
+                const code = $('#coupon-code-input').val().trim();
+                const subtotalDisplay = $('#cart-subtotal-display').text().replace(/[^\d.]/g, '');
+                const subtotal = parseFloat(subtotalDisplay) || 0;
+
+                if (code === '') {
+                    $('#coupon-message').text('Please enter a coupon code.').removeClass('text-success').addClass('text-danger').show();
+                    return;
+                }
+
+                $.ajax({
+                    url: '/cart/coupon',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ code: code, subtotal: subtotal }),
+                    dataType: 'json',
+                    success: function(res) {
+                        if (res.success) {
+                            loadCartItems();
+                        } else {
+                            $('#coupon-message').text(res.error || 'Failed to apply coupon.').removeClass('text-success').addClass('text-danger').show();
+                        }
+                    },
+                    error: function(xhr) {
+                        const err = xhr.responseJSON ? xhr.responseJSON.error : 'Invalid coupon code or minimum cart value constraint.';
+                        $('#coupon-message').text(err).removeClass('text-success').addClass('text-danger').show();
+                    }
+                });
+            });
 
             // Handle Qty Add/Subtract & Delete
             $(document).on('click', '.qty-btn', function() {

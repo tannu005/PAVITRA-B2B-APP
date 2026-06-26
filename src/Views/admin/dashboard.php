@@ -79,6 +79,18 @@
                 <div class="fw-semibold text-dark small">Trace Errors <span class="badge bg-danger ms-1"><?= $stats['errors'] ?></span></div>
             </a>
         </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="/admin/settings" class="card shadow-sm border text-center p-3 h-100 text-decoration-none hover-card">
+                <i class="fa-solid fa-sliders text-pink mb-2 fs-3"></i>
+                <div class="fw-semibold text-dark small">Platform Settings</div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="/admin/support" class="card shadow-sm border text-center p-3 h-100 text-decoration-none hover-card">
+                <i class="fa-solid fa-headset text-pink mb-2 fs-3"></i>
+                <div class="fw-semibold text-dark small">Helpdesk Queue</div>
+            </a>
+        </div>
     </div>
 </div>
 

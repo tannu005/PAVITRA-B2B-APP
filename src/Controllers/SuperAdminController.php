@@ -375,6 +375,64 @@ class SuperAdminController extends Controller {
         return $response->json(['success' => true]);
     }
 
+    // Settings configuration view
+    public function settings(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+
+        $db = Application::$app->db;
+        $stmt = $db->query("SELECT setting_key, setting_value FROM system_settings");
+        $settings = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR) ?: [];
+
+        return $this->render('admin/settings', [
+            'title' => 'System Settings Configuration - Viraasat B2B',
+            'settings' => $settings
+        ]);
+    }
+
+    // Save settings configurations
+    public function saveSettings(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+
+        $body = $request->getBody();
+        $db = Application::$app->db;
+
+        try {
+            $db->beginTransaction();
+
+            $allowedKeys = [
+                'company_name', 'brand_name', 'logo_url', 'gst_number', 'cin_number', 'pan_number',
+                'support_email', 'support_mobile', 'whatsapp_number', 'office_address',
+                'smtp_host', 'smtp_port', 'smtp_user', 'smtp_password',
+                'payment_gateway_key', 'payment_gateway_secret'
+            ];
+
+            $stmt = $db->prepare("INSERT INTO system_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+
+            foreach ($allowedKeys as $key) {
+                if (isset($body[$key])) {
+                    $stmt->execute([$key, trim($body[$key])]);
+                }
+            }
+
+            $db->commit();
+            // Reload configuration in app instance
+            Application::$app->loadConfig();
+
+            $_SESSION['settings_success'] = 'System settings updated successfully!';
+            $response->redirect('/admin/settings');
+            return;
+        } catch (\Throwable $e) {
+            $db->rollBack();
+            return $this->render('admin/settings', [
+                'title' => 'System Settings Configuration - Viraasat B2B',
+                'settings' => $body,
+                'error' => 'Settings save failed: ' . $e->getMessage()
+            ]);
+        }
+    }
+
     // View error logs
     public function errors(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);

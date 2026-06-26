@@ -53,6 +53,7 @@ $app->router->post('/cart/add', [App\Controllers\RetailerController::class, 'add
 $app->router->post('/cart/update', [App\Controllers\RetailerController::class, 'updateCart']);
 $app->router->post('/cart/remove', [App\Controllers\RetailerController::class, 'removeFromCart']);
 $app->router->get('/cart', [App\Controllers\RetailerController::class, 'cartView']);
+$app->router->post('/cart/coupon', [App\Controllers\RetailerController::class, 'applyCoupon']);
 $app->router->post('/checkout', [App\Controllers\RetailerController::class, 'checkout']);
 $app->router->get('/orders', [App\Controllers\RetailerController::class, 'orders']);
 $app->router->get('/wallet', [App\Controllers\RetailerController::class, 'wallet']);
@@ -67,6 +68,27 @@ $app->router->get('/terms-conditions', [App\Controllers\RetailerController::clas
 $app->router->get('/refund-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/shipping-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
 
+// HSN GST Invoices Routes
+$app->router->get('/order/invoice/{id}', [App\Controllers\InvoiceController::class, 'printInvoice']);
+
+// Support Helpdesk Routes
+$app->router->get('/support', [App\Controllers\SupportController::class, 'index']);
+$app->router->get('/support/create', [App\Controllers\SupportController::class, 'createView']);
+$app->router->post('/support/create', [App\Controllers\SupportController::class, 'create']);
+$app->router->get('/support/ticket/{id}', [App\Controllers\SupportController::class, 'viewTicket']);
+$app->router->post('/support/ticket/{id}/reply', [App\Controllers\SupportController::class, 'reply']);
+$app->router->get('/admin/support', [App\Controllers\SupportController::class, 'adminIndex']);
+$app->router->get('/admin/support/ticket/{id}', [App\Controllers\SupportController::class, 'adminViewTicket']);
+$app->router->post('/admin/support/ticket/{id}/reply', [App\Controllers\SupportController::class, 'adminReply']);
+$app->router->post('/admin/support/ticket/{id}/status', [App\Controllers\SupportController::class, 'adminStatus']);
+
+// Returns & Refunds Routes
+$app->router->get('/orders/return/{id}', [App\Controllers\ReturnController::class, 'createView']);
+$app->router->post('/orders/return/{id}', [App\Controllers\ReturnController::class, 'create']);
+$app->router->get('/seller/returns', [App\Controllers\ReturnController::class, 'sellerIndex']);
+$app->router->post('/seller/returns/{id}/approve', [App\Controllers\ReturnController::class, 'sellerApprove']);
+$app->router->post('/seller/returns/{id}/verify', [App\Controllers\ReturnController::class, 'sellerVerify']);
+$app->router->post('/admin/returns/{id}/refund', [App\Controllers\ReturnController::class, 'adminRefund']);
 
 // Super Admin Suite Routes
 $app->router->get('/admin', [App\Controllers\SuperAdminController::class, 'dashboard']);
@@ -80,6 +102,8 @@ $app->router->get('/admin/settlements', [App\Controllers\SuperAdminController::c
 $app->router->post('/admin/settlements/process', [App\Controllers\SuperAdminController::class, 'processSettlements']);
 $app->router->get('/admin/commissions', [App\Controllers\SuperAdminController::class, 'commissions']);
 $app->router->post('/admin/commissions/rule', [App\Controllers\SuperAdminController::class, 'saveCommissionRule']);
+$app->router->get('/admin/settings', [App\Controllers\SuperAdminController::class, 'settings']);
+$app->router->post('/admin/settings', [App\Controllers\SuperAdminController::class, 'saveSettings']);
 $app->router->get('/admin/errors', [App\Controllers\SuperAdminController::class, 'errors']);
 
 // Seller (Weaver) Dashboard Routes
@@ -97,6 +121,7 @@ $app->router->get('/seller/settlements', [App\Controllers\SellerController::clas
 $app->router->get('/delivery', [App\Controllers\DeliveryController::class, 'dashboard']);
 $app->router->post('/delivery/status', [App\Controllers\DeliveryController::class, 'updateDeliveryStatus']);
 $app->router->post('/delivery/verify-otp', [App\Controllers\DeliveryController::class, 'verifyDeliveryOtp']);
+
 
 // --- DEFINING REST API ENDPOINTS ---
 $app->router->post('/api/auth/login', [App\Controllers\ApiController::class, 'login']);
