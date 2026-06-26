@@ -24,6 +24,7 @@ Viraasat B2B is built using a modern, scalable architecture designed for high pe
 *   **Backend**: PHP 8.3+ utilizing custom Object-Oriented Programming (OOP), Model-View-Controller (MVC) architecture, PSR-4 compliant autoloading, and transaction-based accounting.
 *   **Database**: MySQL 8+ / MariaDB with 86 tables, strict foreign keys, indexes, triggers, and audit logs.
 *   **Frontend**: HTML5, CSS3, Bootstrap 5.3+, JavaScript ES6+, and jQuery AJAX for dynamic cart management and live dashboard operations.
+*   **Compliance Suite**: Full coupons checkout engine, support ticketing desk system, multi-party returns/refund workflow, settings console, and print-optimized HSN GST invoice generation.
 *   **Aesthetics**: Styled to match Meesho’s look-and-feel (pink brand accents `#F43397`, clean product cards, responsive grid structures, and interactive drawers).
 
 ---
@@ -60,9 +61,12 @@ meesho-b2b/
     │   ├── ApiController.php   # Token-based REST API endpoints for Flutter/Mobile Apps
     │   ├── AuthController.php  # Registration, centralized login, and session controllers
     │   ├── DeliveryController.php# Courier dispatcher, tracking, and OTP verification handlers
+    │   ├── InvoiceController.php# GST HSN details retriever and invoice printer
     │   ├── RetailerController.php# Storefront catalog, AJAX cart operations, and checkouts
+    │   ├── ReturnController.php # Retailer returns portal and seller approval workflow
     │   ├── SellerController.php # Saree creations, inventory updates, and order dispatches
-    │   └── SuperAdminController.php # KYC approvals, settlements ledger, and commission controls
+    │   ├── SupportController.php# Retailer helpdesk tickets and admin notes workspace
+    │   └── SuperAdminController.php # KYC approvals, settings UI, settlements ledger, and commission controls
     └── Views/                  # PHP Views templates
         ├── admin/              # Super Admin screens (Sellers, Products, KYC, Settlements, Commissions, Trace Logs)
         ├── auth/               # Centralized Log-in & Registration pages
@@ -132,6 +136,13 @@ We translated the Meesho-style B2B marketplace requirement into an optimal 86-ta
 
 ### Step 6: Installer & Auto-Migration System
 *   Coded `public/install.php` to allow one-click setups, checking SQL connection integrity, creating databases, and loading schemas and seeds.
+
+### Step 7: Phase 15 Compliance Suite Integration
+*   **Coupons Checkout Validation**: Integrated a dynamic coupon check at cart views and split pro-rated deductions during order placement.
+*   **Ticketing Helpdesk**: Constructed support ticket creation, category categorization, and administrator notes workspaces.
+*   **Returns Workflow**: Enabled return request submissions on delivered items, seller reviews, courier collection assignments, and automatic wallet credit reversals.
+*   **GST Invoice Sheet**: Programmed a print-optimized tax invoice layout rendering HSN codes, split CGST/SGST taxes, pro-rated discounts, and auto-printing on load.
+*   **Settings Editor Panel**: Developed an admin configuration control view to update legal parameters and SMS/email credentials.
 
 ---
 
