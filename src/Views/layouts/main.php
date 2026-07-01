@@ -152,67 +152,6 @@ $config = Application::$app->config;
         {{content}}
     </main>
 
-    <!-- Saree B2B Footer -->
-    <!-- Nishorama-Style White Footer (A to Z Ditto) -->
-    <footer style="background-color: #FFF; color: #1c1c1c; border-top: 1px solid #ECEFF1; font-family: 'Plus Jakarta Sans', sans-serif;" class="py-5 mt-5">
-        <div class="container-xl">
-            <!-- Center JOIN THE MOVEMENT Header -->
-            <div class="text-center mb-5">
-                <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.18em; font-weight: 700; color: #482922; font-size: 1.6rem; text-transform: uppercase;">Join the Movement</h2>
-            </div>
-            
-            <div class="row g-4 text-start" style="font-size: 0.85rem; line-height: 1.8;">
-                <!-- Column 1: Contact Us -->
-                <div class="col-md-5">
-                    <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing: 0.1em; color: #482922; font-size: 0.78rem;">Contact Us</h6>
-                    <p class="text-secondary mb-3">
-                        <strong>Virasat Textiles Pvt Ltd</strong><br>
-                        Corporate Office Address: Varanasi Handloom Cluster, Uttar Pradesh, 221001
-                    </p>
-                    <p class="text-secondary mb-3">
-                        <strong>Email:</strong> wholesale@virasat.com
-                    </p>
-                    <p class="text-secondary mb-3">
-                        <strong>Mob:</strong> +91 9999999999
-                    </p>
-                    <p class="text-secondary">
-                        <strong>Opening Hours:</strong> Mon to Sat: 10:30 AM - 6:30 PM
-                    </p>
-                </div>
-                
-                <!-- Column 2: Support -->
-                <div class="col-md-4">
-                    <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing: 0.1em; color: #482922; font-size: 0.78rem;">Support</h6>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="/about-us" class="text-secondary text-decoration-none footer-hover-link">About Us</a>
-                        <a href="/support" class="text-secondary text-decoration-none footer-hover-link">Contact Us</a>
-                        <a href="/support" class="text-secondary text-decoration-none footer-hover-link">FAQ's</a>
-                        <a href="/orders" class="text-secondary text-decoration-none footer-hover-link">Return/Exchange My Order</a>
-                    </div>
-                </div>
-                
-                <!-- Column 3: Policies -->
-                <div class="col-md-3">
-                    <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing: 0.1em; color: #482922; font-size: 0.78rem;">Policies</h6>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Privacy Policy</a>
-                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Shipping & Delivery Policy</a>
-                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Return & Exchange Policy</a>
-                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
-            
-            <hr class="my-4" style="border-color: #eee;">
-            
-            <div class="row align-items-center text-secondary" style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;">
-                <div class="col text-center text-uppercase">
-                    © <?= date('Y') ?> - Virasat Powered by Shopify
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <!-- Cart Sliding Drawer -->
     <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
     <div class="cart-drawer" id="cart-drawer-box">
