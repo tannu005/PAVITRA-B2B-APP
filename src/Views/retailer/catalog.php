@@ -1,310 +1,681 @@
-<!-- Meesho-Style B2B Catalog Storefront -->
-<div class="container-xl py-4">
-    <!-- Promotional Hero Banner -->
-    <div class="meesho-promo-banner d-flex flex-column flex-md-row align-items-md-center justify-content-between p-4 p-md-5 mb-4">
-        <div class="meesho-promo-text mb-3 mb-md-0">
-            <span class="badge bg-danger text-uppercase px-3 py-2 mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">DIRECT FROM WEAVERS</span>
-            <h2 class="fw-extrabold text-pink mt-1">Varanasi Handloom Cluster B2B</h2>
-            <p class="text-muted mb-0 fs-5">Buy in wholesale lots at authentic local cost. Direct settlement & fast dispatch.</p>
+<?php
+// =============================================
+// VIRASAT WHOLESALE SAREE MARKETPLACE
+// NISHORAMA-STYLE 10-SECTION LANDING PAGE
+// =============================================
+
+// Reusable helper function to render a product card matching Nishorama specifications
+function renderProductCard($p) {
+    $hoverImg = '/saree-banner1.png';
+    if (strpos($p['image_url'], 'kanjeevaram') !== false) {
+        $hoverImg = '/saree-banner2.png';
+    } else if (strpos($p['image_url'], 'patola') !== false) {
+        $hoverImg = '/saree-banner3.png';
+    } else if (strpos($p['image_url'], 'tissue') !== false) {
+        $hoverImg = '/saree-banner4.png';
+    } else if (strpos($p['image_url'], 'banarasi') !== false) {
+        $hoverImg = '/saree-banner1.png';
+    }
+    
+    $price = floatval($p['price']);
+    $wholesalePrice = floatval($p['wholesale_price']);
+    $discVal = $price > $wholesalePrice ? round((($price - $wholesalePrice) / $price) * 100) : 0;
+    
+    $badges = ['New In', 'Most Popular', 'Limited Stock', 'Best Seller'];
+    $badgeColors = ['#1a1a1a', '#8B6914', '#C75000', '#2E7D32'];
+    $badgeIdx = $p['id'] % 4;
+    
+    ob_start();
+    ?>
+    <div class="meesho-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>">
+        <div class="nisho-card-img-wrapper position-relative">
+            <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="nisho-card-img" loading="lazy">
+            <img src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="nisho-card-img-hover" loading="lazy">
+            <!-- Wishlist Heart -->
+            <button class="wishlist-heart-btn" onclick="event.stopPropagation(); $(this).toggleClass('active'); showToast($(this).hasClass('active') ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+            <!-- Badge -->
+            <?php if ($discVal > 0): ?>
+                <span class="badge position-absolute border-0 text-white" style="top: 8px; left: 8px; font-size: 0.6rem; border-radius: 2px; font-weight: 700; padding: 4px 8px; letter-spacing: 0.05em; text-transform: uppercase; background-color: <?= $badgeColors[$badgeIdx] ?>;"><?= $discVal ?>% OFF</span>
+            <?php else: ?>
+                <span class="badge position-absolute border-0 text-white" style="top: 8px; left: 8px; font-size: 0.6rem; border-radius: 2px; font-weight: 700; padding: 4px 8px; letter-spacing: 0.05em; text-transform: uppercase; background-color: <?= $badgeColors[$badgeIdx] ?>;"><?= $badges[$badgeIdx] ?></span>
+            <?php endif; ?>
+            <!-- Quick Add -->
+            <button class="nisho-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold" style="bottom: 0; left: 0; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
+                + Quick Add
+            </button>
         </div>
-        <div class="meesho-promo-badge bg-white p-3 rounded shadow-sm border border-pink text-center" style="min-width: 180px;">
-            <div class="fs-6 fw-bold text-muted text-uppercase" style="font-size: 0.7rem !important;">MOQ Starts At</div>
-            <div class="fs-2 fw-black text-pink">3-5 Pcs</div>
-            <div class="text-secondary small">Viraasat Woven Guarantee</div>
+        <div class="meesho-card-body text-center pt-2 pb-3">
+            <h6 class="meesho-card-title mb-1 text-uppercase" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; color: #1c1c1c;"><?= htmlspecialchars($p['title']) ?></h6>
+            <div class="meesho-price-wholesale fw-bold text-dark mb-1" style="font-size: 0.88rem;">
+                Rs. <?= number_format($wholesalePrice) ?>
+                <?php if ($price > $wholesalePrice): ?>
+                    <span class="text-decoration-line-through text-muted fw-normal ms-1" style="font-size: 0.72rem;">Rs. <?= number_format($price) ?></span>
+                <?php endif; ?>
+            </div>
+            <div class="nisho-card-sizes text-uppercase">S | M | L | XL | Free Size</div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+// Detect if filters are active
+$isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort) || ($minPrice > 0) || ($maxPrice > 0);
+?>
+
+<!-- Meesho-Style Catalog Storefront -->
+<div class="container-xl py-2 py-md-4">
+    <!-- Mobile Category Pills (Horizontal Scroll) -->
+    <div class="meesho-category-scroll d-flex d-md-none px-3 mb-2">
+        <a href="/" class="category-circle-item <?= empty($selectedCategory) ? 'active' : '' ?>">
+            <div class="category-circle-img d-flex align-items-center justify-content-center bg-primary-subtle text-primary fw-bold" style="font-size: 1.15rem; font-family: var(--font-headings);">All</div>
+            <div class="category-circle-title">All Sarees</div>
+        </a>
+        <a href="/?category=Kanjeevaram+Silk" class="category-circle-item <?= $selectedCategory === 'Kanjeevaram Silk' ? 'active' : '' ?>">
+            <img src="/kanjeevaram.png" class="category-circle-img" alt="Kanjeevaram">
+            <div class="category-circle-title">Kanjeevaram</div>
+        </a>
+        <a href="/?category=Banarasi+Brocade" class="category-circle-item <?= $selectedCategory === 'Banarasi Brocade' ? 'active' : '' ?>">
+            <img src="/banarasi.png" class="category-circle-img" alt="Banarasi">
+            <div class="category-circle-title">Banarasi</div>
+        </a>
+        <a href="/?category=Patola+Silk" class="category-circle-item <?= $selectedCategory === 'Patola Silk' ? 'active' : '' ?>">
+            <img src="/patola.png" class="category-circle-img" alt="Patola">
+            <div class="category-circle-title">Patola</div>
+        </a>
+        <a href="/?category=Organza+Silk" class="category-circle-item <?= $selectedCategory === 'Organza Silk' ? 'active' : '' ?>">
+            <img src="/tissue.png" class="category-circle-img" alt="Organza">
+            <div class="category-circle-title">Organza</div>
+        </a>
+    </div>
+
+    <?php if (!$isFiltered): ?>
+    <!-- ========================================== -->
+    <!-- NISHORAMA 10-SECTION EDITORIAL HOMEPAGE    -->
+    <!-- ========================================== -->
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 1: HERO BANNER (Full Width, 65vh)  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="heroCarousel" class="carousel slide carousel-fade mb-0" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+        </div>
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner1.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
+                    <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                        <span style="border-left: 3px solid #FFF; padding-left: 12px;">Wedding Season 2026</span>
+                    </div>
+                    <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
+                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Shaadi Ka Ghar</h1>
+                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">Virasat Banarasi Bridal Collection</p>
+                        <a href="/?category=Banarasi+Brocade" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner2.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
+                    <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                        <span style="border-left: 3px solid #FFF; padding-left: 12px;">Handloomed Zari Heritage</span>
+                    </div>
+                    <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
+                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Royal Kanjeevaram</h1>
+                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">Wholesale Temple Silk Weaves</p>
+                        <a href="/?category=Kanjeevaram+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner3.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
+                    <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                        <span style="border-left: 3px solid #FFF; padding-left: 12px;">Double Ikat Masterpiece</span>
+                    </div>
+                    <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
+                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Patan Patola</h1>
+                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">GI-Tagged Handloom Craft</p>
+                        <a href="/?category=Patola+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="carousel-item">
+                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner4.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
+                    <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                        <span style="border-left: 3px solid #FFF; padding-left: 12px;">Sheer Elegance</span>
+                    </div>
+                    <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
+                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Organza & Tissue</h1>
+                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">Lightweight Premium Drapes</p>
+                        <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 2: CAROUSEL #1 — VIRASAT MUSE      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">Virasat Muse</h3>
+                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Curated Most Wanted Wholesale Handlooms</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-none d-md-flex gap-2">
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                </div>
+                <a href="/?sort=price_high" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+            </div>
+        </div>
+        <div class="nisho-carousel-container">
+            <?php
+            $museCollection = $products;
+            usort($museCollection, function($a, $b) { return $b['wholesale_price'] <=> $a['wholesale_price']; });
+            foreach (array_slice($museCollection, 0, 8) as $item): ?>
+                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 3: PROMOTIONAL BANNER — SHAADI     -->
+    <!-- Parallax full-width image + text overlay    -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="w-100 my-5 overflow-hidden position-relative" style="height: 45vh; min-height: 320px; max-height: 480px; background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png'); background-size: cover; background-position: center; background-attachment: fixed;">
+        <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center text-white p-4">
+            <p class="text-uppercase mb-2" style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.35em; font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.6);">Wholesale Wedding Collection</p>
+            <h2 class="text-uppercase fw-bold mb-3" style="font-family: 'Rozha One', serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 0.05em; text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Tyoharcore</h2>
+            <p class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); max-width: 500px;">Festive silks handpicked for the bridal season. Bulk orders with exclusive wholesale margins.</p>
+            <a href="/?category=Banarasi+Brocade" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; border-width: 2px;">Explore Collection</a>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 4: CAROUSEL #2 — NEW ARRIVALS       -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">New Arrivals</h3>
+                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Fresh Off the Handloom — Just Landed</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-none d-md-flex gap-2">
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                </div>
+                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+            </div>
+        </div>
+        <div class="nisho-carousel-container">
+            <?php foreach (array_slice($products, 0, 8) as $item): ?>
+                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 5: CATEGORY SHOWCASE GRID           -->
+    <!-- 4 large tiles with hover zoom effects       -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="my-5 py-4" id="home-categories-grid">
+        <div class="text-center mb-5">
+            <h2 class="text-uppercase fw-bold" style="font-family: 'Rozha One', serif; font-size: 2.2rem; letter-spacing: 0.04em; color: #482922;">Shop by Weaving Style</h2>
+            <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.25em; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;">Weaver-Direct GI-Tagged Handloom Masterpieces</p>
+        </div>
+        <div class="row g-3 g-md-4 justify-content-center">
+            <?php
+            $cats = [
+                ['name' => 'Banarasi', 'img' => '/saree-banner1.png', 'link' => '/?category=Banarasi+Brocade', 'count' => '120+ designs'],
+                ['name' => 'Kanjeevaram', 'img' => '/saree-banner2.png', 'link' => '/?category=Kanjeevaram+Silk', 'count' => '85+ designs'],
+                ['name' => 'Patan Patola', 'img' => '/saree-banner3.png', 'link' => '/?category=Patola+Silk', 'count' => '45+ designs'],
+                ['name' => 'Organza', 'img' => '/saree-banner4.png', 'link' => '/?category=Organza+Silk', 'count' => '60+ designs'],
+            ];
+            foreach ($cats as $cat): ?>
+            <div class="col-6 col-md-3">
+                <a href="<?= $cat['link'] ?>" class="nisho-cat-block position-relative d-block overflow-hidden" style="height: 400px; text-decoration: none;">
+                    <div class="nisho-cat-img w-100 h-100" style="background-image: url('<?= $cat['img'] ?>'); background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                    <div class="nisho-cat-overlay position-absolute d-flex flex-column justify-content-end p-4 text-white" style="background: linear-gradient(transparent 40%, rgba(0,0,0,0.7)); top: 0; left: 0; right: 0; bottom: 0;">
+                        <h4 class="fw-bold text-uppercase mb-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em;"><?= $cat['name'] ?></h4>
+                        <span class="text-white-50 text-uppercase" style="font-size: 0.62rem; letter-spacing: 0.12em; font-weight: 700;"><?= $cat['count'] ?> — Explore →</span>
+                    </div>
+                </a>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 6: CAROUSEL #3 — GOODBYE DEALS     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">Goodbye Deals <span style="font-size: 1.2rem;">;)</span></h3>
+                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Last Pieces at Best Wholesale Discounts</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-none d-md-flex gap-2">
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                </div>
+                <a href="/?sort=price_low" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+            </div>
+        </div>
+        <div class="nisho-carousel-container">
+            <?php
+            $deals = $products;
+            usort($deals, function($a, $b) { return $a['wholesale_price'] <=> $b['wholesale_price']; });
+            foreach (array_slice($deals, 0, 8) as $item): ?>
+                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 7: VALUE PROPOSITION                -->
+    <!-- 3 columns with icons                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="my-5 py-5 border-top border-bottom" style="background-color: #FAF8F6; font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="row g-4 text-center">
+            <div class="col-4">
+                <div class="mb-3"><i class="fa-solid fa-truck-fast" style="font-size: 2rem; color: #482922;"></i></div>
+                <h6 class="fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 0.08em; color: #1c1c1c;">Fast Shipping</h6>
+                <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">Dispatched in 24-48 hours from weaver hubs across India.</p>
+            </div>
+            <div class="col-4">
+                <div class="mb-3"><i class="fa-solid fa-arrow-rotate-left" style="font-size: 2rem; color: #482922;"></i></div>
+                <h6 class="fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 0.08em; color: #1c1c1c;">7-Day Easy Returns</h6>
+                <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">Hassle-free returns and exchanges on all wholesale orders.</p>
+            </div>
+            <div class="col-4">
+                <div class="mb-3"><i class="fa-solid fa-certificate" style="font-size: 2rem; color: #482922;"></i></div>
+                <h6 class="fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 0.08em; color: #1c1c1c;">Premium Quality</h6>
+                <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">100% GI-certified authentic handloom with weaver verification.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 8: EDITORIAL VIDEO BANNER           -->
+    <!-- Full-width looping video with overlay        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="my-5">
+        <div class="position-relative overflow-hidden w-100" style="height: 45vh; min-height: 320px; max-height: 480px;">
+            <video class="w-100 h-100" style="object-fit: cover;" autoplay loop muted playsinline>
+                <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0227e870878a9c7eb1c11069f2e96d9&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+            </video>
+            <div class="position-absolute d-flex flex-column justify-content-center align-items-center text-center text-white p-4" style="top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4);">
+                <p class="text-uppercase mb-2" style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.35em; font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.6);">Heritage Storytelling</p>
+                <h2 class="text-uppercase fw-bold mb-3" style="font-family: 'Rozha One', serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 0.05em; text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Desi Romance</h2>
+                <p class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); max-width: 450px;">A rhythmic celebration of warp and weft. Traditional sarees reimagined for the modern wholesale buyer.</p>
+                <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Explore Story</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 9: CAROUSEL #4 — BESTSELLERS        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">Wholesale Bestsellers</h3>
+                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Top-Selling Sarees Among Our B2B Retailers</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-none d-md-flex gap-2">
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                </div>
+                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+            </div>
+        </div>
+        <div class="nisho-carousel-container">
+            <?php
+            $bestsellers = $products;
+            shuffle($bestsellers);
+            foreach (array_slice($bestsellers, 0, 8) as $item): ?>
+                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 10: NEWSLETTER / CTA                -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="w-100 py-5 mt-5" style="background-color: #482922; font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="container text-center py-4">
+            <h3 class="text-uppercase fw-bold mb-2" style="font-size: 1.8rem; letter-spacing: 0.08em; color: #FFF; font-family: 'Rozha One', serif;">Join the Movement</h3>
+            <p class="mb-4" style="font-size: 0.85rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.55);">Get 10% off your first wholesale order. Stay updated on exclusive handloom drops.</p>
+            <form class="d-flex justify-content-center gap-2 mx-auto" style="max-width: 480px;" onsubmit="event.preventDefault(); showToast('Subscribed successfully! 🎉'); $(this).find('input').val('');">
+                <input type="email" class="form-control rounded-0 border-0 py-2 px-3" placeholder="Enter your email address" required style="font-size: 0.85rem; background: rgba(255,255,255,0.12); color: #FFF;">
+                <button type="submit" class="btn btn-light rounded-0 px-4 text-uppercase fw-bold" style="font-size: 0.8rem; letter-spacing: 0.12em; color: #482922; white-space: nowrap;">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <?php else: ?>
+    <!-- ========================================== -->
+    <!-- FILTERED PRODUCT CATALOG GRID VIEW         -->
+    <!-- ========================================== -->
+
+    <!-- Refinement Bar -->
+    <div class="d-flex justify-content-between align-items-center py-3 px-2 border-bottom mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-outline-dark btn-sm rounded-0 border-0 text-uppercase fw-bold" id="refinement-filters-btn" style="font-size: 0.72rem; letter-spacing: 0.1em; color: #482922;">
+                <i class="fa-solid fa-sliders me-1"></i> Filter & Refine
+            </button>
+            <span class="text-uppercase text-secondary" style="font-size: 0.72rem; letter-spacing: 0.08em; font-weight: 600;">
+                <?= count($products) ?> products
+                <?php if (!empty($selectedCategory)): ?>
+                    / <span class="text-dark fw-bold"><?= htmlspecialchars($selectedCategory) ?></span>
+                <?php endif; ?>
+            </span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-nowrap text-secondary text-uppercase d-none d-sm-inline" style="font-size: 0.68rem; letter-spacing: 0.08em; font-weight: 700;">Sort:</span>
+            <select class="form-select form-select-sm border-0 bg-transparent rounded-0" id="sort-selector" style="width: 170px; font-size: 0.78rem; text-transform: uppercase; font-weight: 600; padding: 4px 8px; letter-spacing: 0.04em;">
+                <option value="" <?= empty($sort) ? 'selected' : '' ?>>Featured</option>
+                <option value="price_low" <?= $sort === 'price_low' ? 'selected' : '' ?>>Price: Low to High</option>
+                <option value="price_high" <?= $sort === 'price_high' ? 'selected' : '' ?>>Price: High to Low</option>
+            </select>
         </div>
     </div>
 
     <div class="row">
-        <!-- Sidebar Filters -->
-        <aside class="col-lg-3 mb-4">
-            <form id="filter-form" method="GET" action="/" class="meesho-filter-panel shadow-sm">
-                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                    <h5 class="fw-bold mb-0" style="font-size: 1.05rem;"><i class="fa-solid fa-sliders me-2 text-pink"></i>Filters</h5>
-                    <a href="/" class="text-pink text-decoration-none small fw-semibold">Clear All</a>
-                </div>
-
-                <!-- Search Carryover (hidden) -->
-                <?php if (!empty($searchQuery)): ?>
-                    <input type="hidden" name="search" value="<?= htmlspecialchars($searchQuery) ?>">
-                <?php endif; ?>
-
-                <!-- Sort Carryover (hidden) -->
-                <?php if (!empty($sort)): ?>
-                    <input type="hidden" name="sort" value="<?= htmlspecialchars($sort) ?>">
-                <?php endif; ?>
-
-                <!-- Category Filter -->
-                <div class="meesho-filter-section">
-                    <h6 class="meesho-filter-title">Weaving Category</h6>
-                    <div class="d-flex flex-column gap-2" style="max-height: 200px; overflow-y: auto;">
-                        <label class="meesho-filter-option mb-0">
-                            <input type="radio" name="category" value="" <?= empty($selectedCategory) ? 'checked' : '' ?> onchange="this.form.submit()">
-                            <span>All Categories</span>
-                        </label>
-                        <?php foreach ($categoriesList as $cat): ?>
-                            <label class="meesho-filter-option mb-0">
-                                <input type="radio" name="category" value="<?= htmlspecialchars($cat['name']) ?>" <?= $selectedCategory === $cat['name'] ? 'checked' : '' ?> onchange="this.form.submit()">
-                                <span><?= htmlspecialchars($cat['name']) ?></span>
-                            </label>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <!-- Price Range Filter -->
-                <div class="meesho-filter-section">
-                    <h6 class="meesho-filter-title">Wholesale Price (₹)</h6>
-                    <div class="row g-2 mb-2">
-                        <div class="col-6">
-                            <input type="number" name="min_price" class="form-control form-control-sm" placeholder="Min" value="<?= $minPrice > 0 ? intval($minPrice) : '' ?>">
-                        </div>
-                        <div class="col-6">
-                            <input type="number" name="max_price" class="form-control form-control-sm" placeholder="Max" value="<?= $maxPrice > 0 ? intval($maxPrice) : '' ?>">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-meesho-pink btn-sm w-100 py-1">Apply Price</button>
-                </div>
-
-                <!-- Guarantee Tag -->
-                <div class="bg-light p-3 rounded border" style="font-size: 0.75rem;">
-                    <div class="fw-bold text-success mb-1"><i class="fa fa-circle-check me-1"></i>Viraasat Certified</div>
-                    All weavers are registered under GI tag registry and verified by our operational team.
-                </div>
-            </form>
-        </aside>
-
-        <!-- Product Grid & Sorting -->
-        <section class="col-lg-9">
-            <!-- Grid Header Controls -->
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 bg-white p-3 rounded border shadow-sm gap-2">
-                <div class="text-muted" style="font-size: 0.9rem;">
-                    Showing <span class="fw-semibold text-dark"><?= count($products) ?></span> handloom products
-                    <?php if (!empty($selectedCategory)): ?>
-                        in <span class="badge bg-pink-light text-pink fs-7"><?= htmlspecialchars($selectedCategory) ?></span>
-                    <?php endif; ?>
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                    <span class="text-nowrap text-muted" style="font-size: 0.85rem;">Sort By:</span>
-                    <select class="form-select form-select-sm border-secondary-subtle" id="sort-selector" style="width: 170px;">
-                        <option value="" <?= empty($sort) ? 'selected' : '' ?>>Trending / New</option>
-                        <option value="price_low" <?= $sort === 'price_low' ? 'selected' : '' ?>>Price: Low to High</option>
-                        <option value="price_high" <?= $sort === 'price_high' ? 'selected' : '' ?>>Price: High to Low</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Products Feed Grid -->
+        <section class="col-12" id="product-feed-section">
             <?php if (empty($products)): ?>
-                <div class="card p-5 text-center shadow-sm border border-light">
-                    <i class="fa-solid fa-face-frown text-muted mb-3" style="font-size: 3rem;"></i>
+                <div class="text-center py-5">
+                    <i class="fa-solid fa-box-open text-muted mb-3" style="font-size: 3.5rem;"></i>
                     <h5 class="fw-bold">No Products Found</h5>
-                    <p class="text-muted mb-0">Try clearing price filters or search query to view active inventory.</p>
+                    <p class="text-muted mb-3">Try adjusting your filters or search for something else.</p>
+                    <a href="/" class="btn btn-dark rounded-0 px-4 py-2 text-uppercase fw-bold" style="font-size: 0.8rem; letter-spacing: 0.1em;">← Back to Collections</a>
                 </div>
             <?php else: ?>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3 g-md-4">
                     <?php foreach ($products as $p): ?>
-                        <div class="col">
-                            <!-- Meesho Card -->
-                            <div class="meesho-product-card product-card-trigger" data-id="<?= $p['id'] ?>">
-                                <div class="meesho-card-img-wrapper">
-                                    <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="meesho-card-img">
-                                </div>
-                                <div class="meesho-card-body">
-                                    <div class="small text-pink fw-semibold text-uppercase mb-1" style="font-size: 0.65rem;"><?= htmlspecialchars($p['category_name']) ?></div>
-                                    <h6 class="meesho-card-title mb-1"><?= htmlspecialchars($p['title']) ?></h6>
-                                    
-                                    <!-- Price Row -->
-                                    <div class="meesho-card-price-row align-items-center">
-                                        <span class="meesho-price-wholesale">₹<?= number_format($p['wholesale_price']) ?></span>
-                                        <span class="meesho-price-retail text-decoration-line-through text-muted small">₹<?= number_format($p['price']) ?></span>
-                                        <span class="meesho-price-discount fw-bold small text-pink"><?= intval((($p['price'] - $p['wholesale_price']) / $p['price']) * 100) ?>% Off</span>
-                                    </div>
-                                    
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <!-- Rating -->
-                                        <div class="meesho-rating-badge">
-                                            <span>4.2</span> <i class="fa-solid fa-star" style="font-size: 0.65rem;"></i>
-                                        </div>
-                                        <!-- SKU code -->
-                                        <span class="text-muted" style="font-size: 0.75rem;">SKU: <?= htmlspecialchars($p['sku']) ?></span>
-                                    </div>
-
-                                    <!-- MOQ alert -->
-                                    <div class="meesho-moq-tag">
-                                        MOQ: <?= $p['bulk_threshold'] ?> Pcs
-                                    </div>
-
-                                    <div class="meesho-delivery-tag mt-3 w-100 text-center">
-                                        🛡 Weaver-Direct Verified Delivery
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="col"><?= renderProductCard($p) ?></div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
         </section>
     </div>
+    <?php endif; ?>
 </div>
 
-<!-- Product Details Modal Overlay -->
-<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+<!-- Product Details Modal -->
+<div class="modal fade" id="productDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content meesho-modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="productDetailModalLabel">Saree Specification</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title fw-bold">Saree Specification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body" id="modal-content-body">
-                <!-- Loaded dynamically via AJAX -->
                 <div class="text-center py-5">
-                    <div class="spinner-border text-pink" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
+                    <div class="spinner-border" style="color: #482922;" role="status"><span class="visually-hidden">Loading...</span></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Page Specific JS -->
+<!-- Page JS -->
 <script>
-    $(document).ready(function() {
-        // Sorting filter selector submit
-        $('#sort-selector').on('change', function() {
-            const val = $(this).val();
-            const urlParams = new URLSearchParams(window.location.search);
-            if (val) {
-                urlParams.set('sort', val);
-            } else {
-                urlParams.delete('sort');
-            }
-            window.location.search = urlParams.toString();
-        });
+$(document).ready(function() {
+    // Carousel arrow navigation
+    $('.nisho-carousel-prev').on('click', function() {
+        const c = $(this).closest('.carousel-section-wrapper').find('.nisho-carousel-container');
+        c.animate({ scrollLeft: c.scrollLeft() - 320 }, 300);
+    });
+    $('.nisho-carousel-next').on('click', function() {
+        const c = $(this).closest('.carousel-section-wrapper').find('.nisho-carousel-container');
+        c.animate({ scrollLeft: c.scrollLeft() + 320 }, 300);
+    });
 
-        // Trigger Detail Modal
-        $('.product-card-trigger').on('click', function(e) {
-            // Prevent trigger if they click an internal button
-            if ($(e.target).closest('button').length > 0) return;
-            
-            const productId = $(this).data('id');
-            $('#productDetailModal').modal('show');
-            $('#modal-content-body').html(`
-                <div class="text-center py-5">
-                    <div class="spinner-border text-danger" style="color: var(--meesho-pink) !important;" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            `);
+    // Sort selector
+    $('#sort-selector').on('change', function() {
+        const val = $(this).val();
+        const u = new URLSearchParams(window.location.search);
+        val ? u.set('sort', val) : u.delete('sort');
+        window.location.search = u.toString();
+    });
 
-            $.ajax({
-                url: '/product/' + productId,
-                method: 'GET',
-                dataType: 'json',
-                success: function(p) {
-                    const priceFormatted = parseFloat(p.price).toLocaleString('en-IN');
-                    const wholesaleFormatted = parseFloat(p.wholesale_price).toLocaleString('en-IN');
-                    const discount = Math.round(((p.price - p.wholesale_price) / p.price) * 100);
+    // Product detail modal
+    $('.product-card-trigger').on('click', function(e) {
+        if ($(e.target).closest('.wishlist-heart-btn').length > 0) return;
+        const productId = $(this).data('id');
+        $('#productDetailModal').modal('show');
+        $('#modal-content-body').html('<div class="text-center py-5"><div class="spinner-border" style="color: #482922;"><span class="visually-hidden">Loading...</span></div></div>');
 
-                    const html = `
-                        <div class="row g-4">
-                            <!-- Image Column -->
-                            <div class="col-md-5">
-                                <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid rounded border w-100" style="max-height: 450px; object-fit: cover;">
+        $.ajax({
+            url: '/product/' + productId,
+            method: 'GET',
+            dataType: 'json',
+            success: function(p) {
+                const wf = parseFloat(p.wholesale_price).toLocaleString('en-IN');
+                const pf = parseFloat(p.price).toLocaleString('en-IN');
+                const disc = Math.round(((p.price - p.wholesale_price) / p.price) * 100);
+                $('#modal-content-body').html(`
+                    <div class="row g-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <div class="col-md-5">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
+                        </div>
+                        <div class="col-md-7">
+                            <div class="text-uppercase text-muted mb-1" style="font-size: 0.62rem; letter-spacing: 0.12em; font-weight: 700;">${p.category_name}</div>
+                            <h3 class="fw-bold text-uppercase mb-2" style="font-size: 1.3rem; letter-spacing: 0.04em; color: #1c1c1c;">${p.title}</h3>
+                            <p class="text-muted small mb-3">SKU: <code class="text-dark">${p.sku}</code></p>
+                            <div class="mb-4">
+                                <span class="fs-3 fw-bold text-dark">Rs. ${wf}</span>
+                                <span class="text-decoration-line-through text-muted ms-2" style="font-size: 0.88rem;">Rs. ${pf}</span>
+                                <span class="text-danger small fw-bold ms-2">${disc}% OFF</span>
+                                <div class="small text-muted mt-1" style="font-size: 0.72rem;">Wholesale Rate (Min Order: ${p.bulk_threshold} Pcs)</div>
                             </div>
-                            <!-- Content Details Column -->
-                            <div class="col-md-7">
-                                <div class="badge bg-pink text-white mb-2" style="background-color: var(--meesho-pink);">${p.category_name}</div>
-                                <h4 class="fw-bold mb-2">${p.title}</h4>
-                                <p class="text-muted small mb-3">SKU: <code class="text-dark">${p.sku}</code></p>
-                                
-                                <!-- Pricing block -->
-                                <div class="bg-light p-3 rounded mb-3 border">
-                                    <div class="d-flex align-items-baseline gap-2 mb-1">
-                                        <span class="fs-3 fw-bold text-dark">₹${wholesaleFormatted}</span>
-                                        <span class="text-decoration-line-through text-muted">₹${priceFormatted}</span>
-                                        <span class="text-pink fw-bold">${discount}% OFF</span>
-                                    </div>
-                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-1 mb-2">Wholesale Tier Rate</span>
-                                    <p class="small text-muted mb-0">Buy <strong>${p.bulk_threshold} or more pieces</strong> of this item to activate the wholesale rate. Single pieces are sold at ₹${priceFormatted}.</p>
+                            <div class="mb-4">
+                                <label class="fw-bold text-muted mb-2 d-block" style="font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;">Select Size</label>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    ${['S','M','L','XL','Free Size'].map((s,i) => `<button class="btn btn-outline-dark px-3 py-1 rounded-0" style="font-size: 0.78rem; ${i===0?'background:#1a1a1a;color:white;border-color:#1a1a1a;':'border-color:#ccc;color:#555;'}" onclick="$(this).parent().find('button').css({'background':'transparent','color':'#555','border-color':'#ccc'}); $(this).css({'background':'#1a1a1a','color':'white','border-color':'#1a1a1a'});">${s}</button>`).join('')}
                                 </div>
-
-                                <!-- Specs -->
-                                <h6 class="fw-bold text-uppercase text-muted" style="font-size: 0.75rem;">Saree Specification</h6>
-                                <table class="table table-sm table-bordered mb-3 text-secondary" style="font-size: 0.85rem;">
-                                    <tr>
-                                        <th class="bg-light" style="width: 30%;">Color</th>
-                                        <td>${p.color || 'Standard Woven'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">Size / Length</th>
-                                        <td>${p.size || '6.3 Meters (With Blouse Piece)'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">Weight</th>
-                                        <td>${p.weight ? p.weight + ' g' : 'Approx 700g'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">Dimensions</th>
-                                        <td>${p.dimensions || '6.3m x 1.2m'}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">In Stock</th>
-                                        <td><span class="badge bg-success-subtle text-success">${p.stock} units available</span></td>
-                                    </tr>
-                                </table>
-
-                                <!-- Description -->
-                                <h6 class="fw-bold text-uppercase text-muted" style="font-size: 0.75rem;">Weaving Craft Description</h6>
-                                <p style="font-size: 0.85rem; line-height: 1.6; color: #555;">${p.description}</p>
-
-                                <!-- Add to Cart Row -->
-                                <div class="row g-2 align-items-center mt-3 pt-3 border-top">
-                                    <div class="col-4 col-sm-3">
-                                        <select class="form-select border-secondary-subtle" id="modal-qty-select">
-                                            ${[...Array(15).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
-                                        </select>
-                                    </div>
-                                    <div class="col-8 col-sm-9">
-                                        <button class="btn btn-meesho-pink w-100 py-2" id="modal-add-cart-btn" data-variant-id="${p.variant_id}">
-                                            <i class="fa fa-shopping-bag me-2"></i> Add to Wholesale Cart
-                                        </button>
-                                    </div>
+                            </div>
+                            <div class="mb-4 border-top pt-3">
+                                <h6 class="fw-bold text-uppercase text-dark mb-2" style="font-size: 0.7rem; letter-spacing: 0.08em;">Details</h6>
+                                <div class="d-flex flex-column gap-1 text-muted" style="font-size: 0.8rem;">
+                                    <div><strong>Color:</strong> ${p.color || 'Traditional Woven'}</div>
+                                    <div><strong>Weight:</strong> ${p.weight ? p.weight + 'g' : '~700g'}</div>
+                                    <div><strong>Dimensions:</strong> ${p.dimensions || '6.3m × 1.2m'}</div>
+                                    <div><strong>Stock:</strong> <span class="badge bg-success-subtle text-success border border-success-subtle">${p.stock} units</span></div>
+                                </div>
+                            </div>
+                            <div class="mb-3"><p style="font-size: 0.8rem; line-height: 1.6; color: #555;">${p.description}</p></div>
+                            <div class="row g-2 align-items-center pt-3 border-top">
+                                <div class="col-4 col-sm-3">
+                                    <select class="form-select border-dark rounded-0 py-2" id="modal-qty-select" style="font-size: 0.82rem;">
+                                        ${[...Array(15).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
+                                    </select>
+                                </div>
+                                <div class="col-8 col-sm-9">
+                                    <button class="btn w-100 py-2 text-uppercase fw-bold" id="modal-add-cart-btn" data-variant-id="${p.variant_id}" style="background:#1a1a1a; color:white; border:none; border-radius:0; letter-spacing:0.15em; font-size:0.82rem;">
+                                        <i class="fa fa-shopping-bag me-2"></i> Add to Bag
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    `;
-                    $('#modal-content-body').html(html);
-                },
-                error: function() {
-                    $('#modal-content-body').html('<p class="text-danger text-center py-5">Product details failed to load.</p>');
-                }
-            });
-        });
-
-        // Add to Cart from Modal
-        $(document).on('click', '#modal-add-cart-btn', function() {
-            const variantId = $(this).data('variant-id');
-            const qty = parseInt($('#modal-qty-select').val() || 1);
-            
-            $(this).prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Adding...');
-
-            $.ajax({
-                url: '/cart/add',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ variant_id: variantId, quantity: qty }),
-                dataType: 'json',
-                success: function(res) {
-                    $('#productDetailModal').modal('hide');
-                    // Trigger slider open
-                    $('#cart-trigger-btn').click();
-                },
-                error: function(xhr) {
-                    const err = xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add item to cart';
-                    alert(err);
-                    $('#modal-add-cart-btn').prop('disabled', false).html('<i class="fa fa-shopping-bag me-2"></i> Add to Wholesale Cart');
-                }
-            });
+                    </div>
+                `);
+            },
+            error: function() {
+                $('#modal-content-body').html('<p class="text-danger text-center py-5">Failed to load product details.</p>');
+            }
         });
     });
+
+    // Add to Cart
+    $(document).on('click', '#modal-add-cart-btn', function() {
+        const btn = $(this);
+        const variantId = btn.data('variant-id');
+        const qty = parseInt($('#modal-qty-select').val() || 1);
+        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Adding...');
+        $.ajax({
+            url: '/cart/add', method: 'POST', contentType: 'application/json',
+            data: JSON.stringify({ variant_id: variantId, quantity: qty }), dataType: 'json',
+            success: function() {
+                $('#productDetailModal').modal('hide');
+                $('#cart-trigger-btn').click();
+            },
+            error: function(xhr) {
+                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add to cart');
+                btn.prop('disabled', false).html('<i class="fa fa-shopping-bag me-2"></i> Add to Bag');
+            }
+        });
+    });
+    
+    // Filter modal trigger
+    $('#refinement-filters-btn').on('click', function() { $('#filtersModal').modal('show'); });
+
+    // Auto-scroll to products when filtered
+    const u = new URLSearchParams(window.location.search);
+    if (u.has('category') || u.has('sort') || u.has('search') || u.has('min_price')) {
+        setTimeout(function() {
+            const t = $('#product-feed-section');
+            if (t.length) { $('html, body').animate({ scrollTop: t.offset().top - 120 }, 600); }
+        }, 200);
+    }
+
+    // ═══ NISHORAMA SCROLL-TRIGGERED ANIMATIONS ═══
+    if ('IntersectionObserver' in window) {
+        // Animate carousel sections, banners, category grid, value props
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.carousel-section-wrapper, #home-categories-grid, .nisho-footer').forEach(el => {
+            el.classList.add('nisho-anim-section');
+            sectionObserver.observe(el);
+        });
+
+        // Animate individual product cards with stagger
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    $(entry.target).addClass('visible');
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05 });
+        document.querySelectorAll('.meesho-product-card.minimal').forEach(el => cardObserver.observe(el));
+
+        // Animate category tiles
+        const tileObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, i * 120);
+                    tileObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.nisho-cat-block').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+            tileObserver.observe(el);
+        });
+    }
+
+    // ═══ HERO CAROUSEL: Pause on hover ═══
+    const heroCarousel = document.getElementById('heroCarousel');
+    if (heroCarousel) {
+        heroCarousel.addEventListener('mouseenter', () => {
+            bootstrap.Carousel.getInstance(heroCarousel)?.pause();
+        });
+        heroCarousel.addEventListener('mouseleave', () => {
+            bootstrap.Carousel.getInstance(heroCarousel)?.cycle();
+        });
+    }
+
+    // ═══ SMOOTH CAROUSEL DRAG-TO-SCROLL ═══
+    document.querySelectorAll('.nisho-carousel-container').forEach(container => {
+        let isDown = false, startX, scrollLeft;
+        container.addEventListener('mousedown', (e) => {
+            isDown = true; container.style.cursor = 'grabbing';
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
+        container.addEventListener('mouseleave', () => { isDown = false; container.style.cursor = 'grab'; });
+        container.addEventListener('mouseup', () => { isDown = false; container.style.cursor = 'grab'; });
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            container.scrollLeft = scrollLeft - (x - startX) * 1.5;
+        });
+        container.style.cursor = 'grab';
+    });
+});
 </script>
+
+<!-- Filters Modal -->
+<div class="modal fade" id="filtersModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content" style="border-radius: 12px;">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold"><i class="fa-solid fa-sliders me-2" style="color: #482922;"></i>Refine Catalog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="GET" action="/">
+                    <?php if (!empty($searchQuery)): ?>
+                        <input type="hidden" name="search" value="<?= htmlspecialchars($searchQuery) ?>">
+                    <?php endif; ?>
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.1em;">Weaving Category</h6>
+                        <div class="d-flex flex-column gap-2" style="max-height: 200px; overflow-y: auto;">
+                            <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.85rem;">
+                                <input type="radio" name="category" value="" <?= empty($selectedCategory) ? 'checked' : '' ?> onchange="this.form.submit()"> All Categories
+                            </label>
+                            <?php foreach ($categoriesList as $cat): ?>
+                                <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.85rem;">
+                                    <input type="radio" name="category" value="<?= htmlspecialchars($cat['name']) ?>" <?= $selectedCategory === $cat['name'] ? 'checked' : '' ?> onchange="this.form.submit()"> <?= htmlspecialchars($cat['name']) ?>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.1em;">Wholesale Price (₹)</h6>
+                        <div class="row g-2 mb-2">
+                            <div class="col-6"><input type="number" name="min_price" class="form-control form-control-sm rounded-0" placeholder="Min" value="<?= $minPrice > 0 ? intval($minPrice) : '' ?>"></div>
+                            <div class="col-6"><input type="number" name="max_price" class="form-control form-control-sm rounded-0" placeholder="Max" value="<?= $maxPrice > 0 ? intval($maxPrice) : '' ?>"></div>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.1em; background: #1a1a1a;">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

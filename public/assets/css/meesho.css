@@ -1,164 +1,211 @@
-/* Custom Meesho Styling for B2B Wholesale Marketplace */
+/* ==========================================================================
+   Viraasat B2B Premium Design System - Luxurious Meesho-Format Edition
+   ========================================================================== */
 
 :root {
-    --meesho-pink: #F43397;
-    --meesho-pink-hover: #DE217E;
-    --meesho-green: #038D63;
-    --meesho-green-light: #E8F5E9;
-    --meesho-background: #F8F9FA;
-    --meesho-text-main: #353535;
-    --meesho-text-muted: #757575;
-    --meesho-border: #EAEAEA;
-    --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* Brand Color Architecture */
+    --meesho-pink: #482922;
+    --meesho-pink-hover: #1c1c1c;
+    --meesho-pink-gradient: linear-gradient(135deg, #482922 0%, #1c1c1c 100%);
+    --meesho-pink-light: rgba(72, 41, 34, 0.03);
+    
+    --premium-gold: #C5A059;
+    --premium-gold-dark: #A37F3F;
+    --premium-gold-gradient: linear-gradient(135deg, #C5A059 0%, #9F7E3C 100%);
+    --premium-gold-light: rgba(197, 160, 89, 0.06);
+
+    --premium-dark: #1E1E24;
+    --premium-dark-muted: #64646F;
+    --premium-light-bg: #FAF9FB; /* Subtle warmth */
+    --premium-border: #E8E8EC;
+
+    /* Typography */
+    --font-headings: 'Playfair Display', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    
+    /* Shadows & Transitions */
+    --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+    --hover-shadow: 0 25px 50px rgba(244, 51, 151, 0.06);
+    --btn-shadow: 0 4px 15px rgba(244, 51, 151, 0.15);
+    
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Global Reset & Typography */
 body {
-    font-family: var(--font-family);
-    color: var(--meesho-text-main);
-    background-color: var(--meesho-background);
+    font-family: var(--font-body);
+    color: var(--premium-dark);
+    background-color: var(--premium-light-bg);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
 }
 
-/* Primary buttons in Meesho Pink */
+h1, h2, h3, h4 {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    color: var(--premium-dark);
+}
+
+h5, h6 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: var(--premium-dark);
+}
+
+/* Premium Buttons */
 .btn-meesho-pink {
-    background-color: var(--meesho-pink);
+    background: var(--meesho-pink-gradient);
     color: white;
+    font-family: var(--font-body);
     font-weight: 600;
-    border: 1px solid var(--meesho-pink);
-    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.8rem;
+    box-shadow: var(--btn-shadow);
+    transition: var(--transition-smooth);
 }
 .btn-meesho-pink:hover {
-    background-color: var(--meesho-pink-hover);
+    background: var(--meesho-pink-gradient);
+    opacity: 0.95;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(244, 51, 151, 0.25);
     color: white;
-    border-color: var(--meesho-pink-hover);
 }
 
 .btn-meesho-outline {
     background-color: transparent;
     color: var(--meesho-pink);
+    font-family: var(--font-body);
     font-weight: 600;
-    border: 1px solid var(--meesho-pink);
-    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--meesho-pink);
+    border-radius: 8px;
+    padding: 0.65rem 1.6rem;
+    transition: var(--transition-smooth);
 }
 .btn-meesho-outline:hover {
-    background-color: rgba(244, 51, 151, 0.05);
+    background-color: var(--meesho-pink-light);
     color: var(--meesho-pink-hover);
     border-color: var(--meesho-pink-hover);
+    transform: translateY(-2px);
 }
 
-/* Header bar */
+/* Header Layout (Meesho Accurate but Premium) */
 .meesho-header {
-    background-color: white;
-    border-bottom: 1px solid var(--meesho-border);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--premium-border);
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.015);
 }
 .meesho-header-top {
-    padding: 0.75rem 0;
+    padding: 0.95rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .meesho-logo {
-    font-size: 1.8rem;
+    font-family: var(--font-headings);
+    font-size: 2.1rem;
     font-weight: 800;
+    font-style: italic;
     color: var(--meesho-pink);
     text-decoration: none;
-    letter-spacing: -0.5px;
+    letter-spacing: -1.5px;
 }
 .meesho-search-form {
     flex: 1;
-    max-width: 500px;
-    margin: 0 2rem;
+    max-width: 550px;
+    margin: 0 3rem;
     position: relative;
 }
 .meesho-search-input {
     width: 100%;
-    padding: 0.55rem 1rem 0.55rem 2.5rem;
-    border: 1px solid #C8C8C8;
-    border-radius: 4px;
+    padding: 0.7rem 1rem 0.7rem 2.8rem;
+    border: 1px solid #E2E2E6;
+    border-radius: 12px;
     font-size: 0.9rem;
+    font-weight: 500;
     outline: none;
     background-color: #F8F9FA;
-    transition: border-color 0.2s;
+    transition: var(--transition-smooth);
+    color: var(--premium-dark);
 }
 .meesho-search-input:focus {
     border-color: var(--meesho-pink);
     background-color: white;
+    box-shadow: 0 0 20px rgba(244, 51, 151, 0.05);
 }
 .meesho-search-icon {
     position: absolute;
-    left: 0.85rem;
+    left: 1.1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--meesho-text-muted);
+    color: var(--premium-dark-muted);
+    font-size: 0.95rem;
 }
 .meesho-nav-items {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2.2rem;
 }
 .meesho-nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: var(--meesho-text-main);
+    color: var(--premium-dark-muted);
     text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 0.78rem;
+    font-weight: 600;
     cursor: pointer;
     background: none;
     border: none;
     padding: 0;
     position: relative;
+    transition: var(--transition-smooth);
 }
 .meesho-nav-item:hover {
     color: var(--meesho-pink);
 }
 .meesho-nav-item i {
-    font-size: 1.25rem;
-    margin-bottom: 0.15rem;
+    font-size: 1.35rem;
+    margin-bottom: 0.25rem;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.meesho-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: var(--meesho-pink);
-    color: white;
-    font-size: 0.65rem;
-    padding: 0.1rem 0.35rem;
-    border-radius: 50%;
-    font-weight: 700;
+.meesho-nav-item:hover i {
+    transform: translateY(-3px) scale(1.05);
 }
 
-/* Category subheader */
+/* Category navigation */
 .meesho-subcategory-bar {
     background-color: white;
-    border-bottom: 1px solid var(--meesho-border);
+    border-bottom: 1px solid var(--premium-border);
     overflow-x: auto;
     white-space: nowrap;
 }
 .meesho-subcategory-list {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    padding: 0.75rem 0;
+    gap: 2.8rem;
+    padding: 0.95rem 0;
     margin: 0;
     list-style: none;
 }
-@media (max-width: 992px) {
-    .meesho-subcategory-list {
-        justify-content: flex-start;
-        padding-left: 1rem;
-    }
-}
 .meesho-subcategory-link {
-    color: var(--meesho-text-main);
+    color: var(--premium-dark-muted);
     text-decoration: none;
     font-size: 0.9rem;
-    font-weight: 500;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid transparent;
+    font-weight: 600;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid transparent;
+    transition: var(--transition-smooth);
+    letter-spacing: 0.2px;
 }
 .meesho-subcategory-link:hover,
 .meesho-subcategory-link.active {
@@ -166,26 +213,27 @@ body {
     border-bottom-color: var(--meesho-pink);
 }
 
-/* Meesho Product Card */
+/* Borderless Luxury Saree Card */
 .meesho-product-card {
     background: white;
-    border: 1px solid var(--meesho-border);
-    border-radius: 8px;
+    border: none;
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: var(--transition-smooth);
     cursor: pointer;
     height: 100%;
     display: flex;
     flex-direction: column;
+    box-shadow: var(--card-shadow);
 }
 .meesho-product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
 }
 .meesho-card-img-wrapper {
     position: relative;
-    padding-top: 120%; /* Vertical saree aspect ratio */
-    background-color: #F8F9FA;
+    padding-top: 125%; /* vertical layout */
+    background-color: var(--premium-light-bg);
     overflow: hidden;
 }
 .meesho-card-img {
@@ -195,18 +243,24 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.meesho-product-card:hover .meesho-card-img {
+    transform: scale(1.04);
 }
 .meesho-card-body {
-    padding: 0.85rem;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 .meesho-card-title {
-    font-size: 0.85rem;
-    color: var(--meesho-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    color: var(--premium-dark-muted);
     font-weight: 500;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.45rem;
+    line-height: 1.4;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -215,29 +269,30 @@ body {
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.55rem;
 }
 .meesho-price-wholesale {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #333333;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--premium-dark);
 }
 .meesho-price-retail {
     font-size: 0.85rem;
     text-decoration: line-through;
-    color: var(--meesho-text-muted);
+    color: rgba(0, 0, 0, 0.35);
 }
 .meesho-price-discount {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--meesho-pink);
-    font-weight: 600;
+    font-weight: 700;
 }
 .meesho-rating-badge {
     background-color: var(--meesho-green);
     color: white;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    padding: 0.15rem 0.4rem;
+    padding: 0.18rem 0.45rem;
     border-radius: 12px;
     display: inline-flex;
     align-items: center;
@@ -245,97 +300,133 @@ body {
     width: fit-content;
 }
 .meesho-rating-count {
-    font-size: 0.75rem;
-    color: var(--meesho-text-muted);
+    font-size: 0.72rem;
+    color: rgba(0, 0, 0, 0.4);
     margin-left: 0.35rem;
 }
 .meesho-delivery-tag {
-    font-size: 0.75rem;
-    color: var(--meesho-text-muted);
-    background-color: #F0F3F7;
-    padding: 0.15rem 0.4rem;
-    border-radius: 4px;
+    font-size: 0.72rem;
+    color: var(--meesho-green);
+    background-color: rgba(3, 141, 99, 0.06);
+    padding: 0.22rem 0.55rem;
+    border-radius: 6px;
     width: fit-content;
     margin-top: auto;
-    font-weight: 500;
+    font-weight: 700;
+    letter-spacing: 0.1px;
 }
 .meesho-moq-tag {
-    font-size: 0.7rem;
-    color: var(--meesho-pink);
-    background-color: rgba(244, 51, 151, 0.05);
-    border: 1px dashed var(--meesho-pink);
-    padding: 0.15rem 0.4rem;
-    border-radius: 2px;
-    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    color: var(--premium-gold-dark);
+    background-color: var(--premium-gold-light);
+    border: 1px dashed var(--premium-gold);
+    padding: 0.22rem 0.55rem;
+    border-radius: 4px;
+    margin-top: 0.55rem;
     width: fit-content;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.1px;
 }
 
 /* Sidebar filter */
 .meesho-filter-panel {
     background-color: white;
-    border: 1px solid var(--meesho-border);
-    border-radius: 8px;
-    padding: 1.25rem;
+    border: none;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
 }
 .meesho-filter-section {
-    border-bottom: 1px solid var(--meesho-border);
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-}
-.meesho-filter-section:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
+    border-bottom: 1px solid var(--premium-border);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
 }
 .meesho-filter-title {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 0.75rem;
-    color: var(--meesho-text-main);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.95rem;
+    color: var(--premium-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
 }
 .meesho-filter-option {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--meesho-text-main);
-    margin-bottom: 0.45rem;
+    gap: 0.75rem;
+    font-size: 0.88rem;
+    color: var(--premium-dark-muted);
+    margin-bottom: 0.6rem;
     cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+.meesho-filter-option:hover {
+    color: var(--meesho-pink);
 }
 .meesho-filter-option input {
     accent-color: var(--meesho-pink);
+    width: 17px;
+    height: 17px;
 }
 
-/* Promo Banner Slider */
+/* Promo Banner Slider (Luxury Hero Look) */
 .meesho-promo-banner {
-    background-color: #FFF0F6;
-    border-radius: 8px;
-    padding: 2rem;
+    background: linear-gradient(135deg, #0F0C20 0%, #1D1537 35%, #7E1E50 70%, #9C1F5E 100%);
+    border-radius: 20px;
+    padding: 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2rem;
-    border: 1px solid rgba(244, 51, 151, 0.1);
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+.meesho-promo-banner::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background: radial-gradient(circle, rgba(244,51,151,0.08) 0%, transparent 70%);
+    pointer-events: none;
 }
 .meesho-promo-text h2 {
-    color: var(--meesho-pink);
+    font-family: var(--font-headings);
+    color: white;
     font-weight: 800;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.6rem;
+    margin-bottom: 0.6rem;
 }
-
-/* Modals */
-.meesho-modal-content {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+.meesho-promo-text p {
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.05rem;
 }
-.meesho-modal-header {
-    border-bottom: 1px solid var(--meesho-border);
+.meesho-promo-text .badge {
+    background: var(--premium-gold-gradient) !important;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #121216 !important;
 }
-.meesho-modal-footer {
-    border-top: 1px solid var(--meesho-border);
+.meesho-promo-badge {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+.meesho-promo-badge .text-pink {
+    background: var(--meesho-pink-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
 }
 
 /* Cart Drawer */
@@ -347,12 +438,12 @@ body {
     max-width: 480px;
     height: 100%;
     background-color: white;
-    box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    box-shadow: -15px 0 45px rgba(0,0,0,0.1);
     z-index: 1050;
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cart-drawer.open {
     transform: translateX(0);
@@ -360,7 +451,8 @@ body {
 .cart-drawer-backdrop {
     position: fixed;
     inset: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(18, 18, 22, 0.55);
+    backdrop-filter: blur(6px);
     z-index: 1040;
     display: none;
 }
@@ -368,12 +460,1100 @@ body {
     display: block;
 }
 
-/* Footer Links Hover Transitions */
+/* SaaS Dashboard Styling */
+.card-stat {
+    background: white;
+    border: none;
+    border-radius: 16px;
+    padding: 1.6rem;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+}
+.card-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+}
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.1rem;
+}
+.stat-icon.pink {
+    background-color: var(--meesho-pink-light);
+    color: var(--meesho-pink);
+}
+.stat-icon.gold {
+    background-color: var(--premium-gold-light);
+    color: var(--premium-gold-dark);
+}
+.stat-icon.green {
+    background-color: rgba(3, 141, 99, 0.05);
+    color: var(--meesho-green);
+}
+
+.table-premium {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+}
+.table-premium tbody tr {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.01);
+    transition: var(--transition-smooth);
+}
+.table-premium tbody tr:hover {
+    transform: scale(1.003);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+}
+.table-premium th {
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: var(--premium-dark-muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: none;
+    padding: 1rem;
+}
+.table-premium td {
+    padding: 1.25rem 1rem;
+    border-top: 1px solid var(--premium-border);
+    border-bottom: 1px solid var(--premium-border);
+    vertical-align: middle;
+}
+.table-premium td:first-child {
+    border-left: 1px solid var(--premium-border);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+.table-premium td:last-child {
+    border-right: 1px solid var(--premium-border);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Badge status codes */
+.badge-status {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: inline-block;
+}
+.badge-status.placed {
+    background-color: #E3F2FD;
+    color: #1E88E5;
+}
+.badge-status.accepted {
+    background-color: #FFF3E0;
+    color: #FB8C00;
+}
+.badge-status.packed {
+    background-color: #EDE7F6;
+    color: #5E35B1;
+}
+.badge-status.shipped {
+    background-color: #E8F5E9;
+    color: #43A047;
+}
+.badge-status.delivered {
+    background-color: #D4EDDA;
+    color: #155724;
+}
+.badge-status.cancelled {
+    background-color: #F8D7DA;
+    color: #721C24;
+}
+
+/* Helpdesk ticket chat bubbles */
+.chat-bubble {
+    max-width: 75%;
+    padding: 1.1rem;
+    border-radius: 16px;
+    margin-bottom: 1.1rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+.chat-bubble.sent {
+    background: var(--meesho-pink-gradient);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 4px 20px rgba(244, 51, 151, 0.12);
+}
+.chat-bubble.received {
+    background-color: white;
+    color: var(--premium-dark);
+    margin-right: auto;
+    border-bottom-left-radius: 2px;
+    border: 1px solid var(--premium-border);
+}
+
+/* Footer links style */
 .footer-link {
-    color: rgba(255, 255, 255, 0.6) !important;
-    transition: color 0.15s ease-in-out;
+    color: rgba(255, 255, 255, 0.5) !important;
+    transition: var(--transition-smooth);
     text-decoration: none;
+    font-weight: 500;
 }
 .footer-link:hover {
     color: var(--meesho-pink) !important;
+    padding-left: 5px;
+}
+
+/* Mobile bottom navigation bar (Meesho APK Style) */
+.meesho-mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 62px;
+    background-color: white;
+    border-top: 1px solid var(--premium-border);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.03);
+    z-index: 1040;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--premium-dark-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    width: 25%;
+    text-align: center;
+}
+
+.mobile-nav-item i {
+    font-size: 1.25rem;
+    margin-bottom: 0.2rem;
+}
+
+.mobile-nav-item:hover,
+.mobile-nav-item.active {
+    color: var(--meesho-pink);
+}
+
+/* Responsive visibility rules */
+@media (max-width: 768px) {
+    .meesho-mobile-nav {
+        display: flex;
+    }
+    body {
+        padding-bottom: 75px; /* Offset for the bottom nav bar */
+    }
+    /* Hide top header descriptors to resemble APK header */
+    .meesho-nav-item span {
+        display: none;
+    }
+    .meesho-nav-items {
+        gap: 1.2rem;
+    }
+    .meesho-subcategory-bar {
+        display: none;
+    }
+}
+
+.meesho-back-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--meesho-pink-light);
+    transition: var(--transition-smooth);
+}
+.meesho-back-arrow:hover {
+    background-color: rgba(244, 51, 151, 0.1);
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    /* Hide desktop-specific header structure on mobile */
+    .meesho-header {
+        display: none !important;
+    }
+    
+    /* Layout offsets for sticky top and bottom controls */
+    body {
+        padding-top: 110px; /* Offset for mobile top header */
+        padding-bottom: 75px; /* Offset for bottom nav bar */
+    }
+    
+    /* Responsive overrides for catalog container */
+    .meesho-subcategory-bar {
+        display: none !important;
+    }
+
+    /* Product Card Mobile Sizing */
+    .meesho-card-body {
+        padding: 0.65rem;
+    }
+    .meesho-card-title {
+        font-size: 0.76rem;
+        margin-bottom: 0.15rem;
+        color: #55555d;
+        font-weight: 500;
+    }
+    .meesho-price-wholesale {
+        font-size: 0.98rem;
+        font-weight: 700;
+    }
+    .meesho-price-retail {
+        font-size: 0.7rem;
+    }
+    .meesho-price-discount {
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+    .meesho-moq-tag {
+        font-size: 0.6rem;
+        padding: 0.1rem 0.25rem;
+        margin-top: 0.25rem;
+    }
+    .meesho-delivery-tag {
+        font-size: 0.62rem;
+        padding: 0.12rem 0.35rem;
+        font-weight: 600;
+    }
+    .meesho-rating-badge {
+        font-size: 0.65rem;
+        padding: 0.08rem 0.25rem;
+        border-radius: 4px;
+    }
+}
+
+/* Ditto Meesho Mobile App Header (Sticky) */
+.meesho-mobile-header {
+    display: none;
+}
+@media (max-width: 768px) {
+    .meesho-mobile-header {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid var(--premium-border);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        z-index: 1030;
+        padding: 0.6rem 0.8rem;
+    }
+}
+
+.mobile-header-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.mobile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid #eee;
+}
+
+.refer-badge {
+    background-color: #FFF0F6;
+    border: 1px solid rgba(244, 51, 151, 0.15);
+    color: var(--meesho-pink);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.mobile-header-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    color: var(--premium-dark);
+}
+.mobile-header-icons a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.25rem;
+    position: relative;
+}
+
+/* Mobile Search Box */
+.meesho-mobile-search {
+    position: relative;
+    width: 100%;
+}
+.meesho-mobile-search-input {
+    width: 100%;
+    padding: 0.55rem 2.4rem 0.55rem 2.2rem;
+    border: 1px solid #C8C8D0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    outline: none;
+    background-color: white;
+    color: var(--premium-dark);
+}
+.meesho-mobile-search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888890;
+    font-size: 0.85rem;
+}
+.meesho-mobile-search-right-icons {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0.8rem;
+    color: #888890;
+    font-size: 0.88rem;
+}
+
+/* Categories Horizontal Scroll Rail */
+.meesho-category-scroll {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    padding: 0.8rem 0;
+    margin: 0 -0.8rem;
+}
+.meesho-category-scroll::-webkit-scrollbar {
+    display: none; /* Safari / Chrome */
+}
+.category-circle-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 68px;
+    text-decoration: none;
+    color: var(--premium-dark-muted);
+    transition: var(--transition-smooth);
+}
+.category-circle-item:hover,
+.category-circle-item.active {
+    color: var(--meesho-pink);
+}
+.category-circle-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #EAEAEA;
+    padding: 2px;
+    background-color: white;
+    margin-bottom: 0.3rem;
+}
+.category-circle-title {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+    white-space: normal;
+    word-break: break-word;
+    height: 28px;
+    overflow: hidden;
+}
+
+/* Refinement Sticky Tab Bar */
+.meesho-refinement-bar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-top: 1px solid var(--premium-border);
+    border-bottom: 1px solid var(--premium-border);
+    margin: 0 -0.8rem 1rem -0.8rem;
+    position: sticky;
+    top: 104px;
+    z-index: 1020;
+}
+.refinement-btn {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 0.65rem 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    border-right: 1px solid var(--premium-border);
+}
+.refinement-btn:last-child {
+    border-right: none;
+}
+.refinement-btn.active {
+    color: var(--meesho-pink);
+}
+
+/* Card Overlays (Wishlist Heart & Trusted badge) */
+.wishlist-heart-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    color: #bbb;
+    transition: var(--transition-smooth);
+    z-index: 10;
+}
+.wishlist-heart-btn:hover,
+.wishlist-heart-btn.active {
+    color: #E91E63;
+    transform: scale(1.05);
+}
+
+.trusted-badge-pill {
+    background-color: #F3E5F5;
+    color: #7B1FA2;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.12rem 0.35rem;
+    border-radius: 4px;
+    letter-spacing: 0.1px;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.rating-count-text {
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 500;
+    margin-left: 0.15rem;
+}
+
+/* Back Arrow trigger inside mobile header context */
+.mobile-header-back-arrow {
+    color: var(--premium-dark);
+    font-size: 1.15rem;
+    margin-right: 0.65rem;
+    text-decoration: none;
+}
+
+/* Nisho Muse Rebranding Styles */
+.nisho-logo {
+    font-family: 'Rozha One', serif !important;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #1a1a1a !important;
+    text-decoration: none;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+.nisho-logo:hover {
+    transform: scale(1.05);
+}
+
+.nisho-logo-sm {
+    font-family: 'Rozha One', serif !important;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: white !important;
+    background-color: #1a1a1a;
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    line-height: 1;
+}
+
+.nisho-desktop-menu {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.nisho-desktop-menu a {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #1a1a1a;
+    text-decoration: none;
+    padding: 2px 4px;
+    transition: color 0.2s ease;
+}
+.nisho-desktop-menu a:hover {
+    color: var(--meesho-pink);
+}
+
+.nisho-download-btn {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 1040;
+    background-color: #000;
+    color: #fff !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    padding: 10px 18px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+.nisho-download-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    background-color: #1a1a1a;
+}
+
+/* Minimalist Centered Card overrides for Nisho Muse look */
+.meesho-product-card.minimal {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 1.5rem;
+}
+.meesho-product-card.minimal .meesho-card-img-wrapper {
+    border-radius: 0px !important;
+    background-color: #f7f7f7;
+    margin-bottom: 12px;
+}
+.meesho-product-card.minimal .meesho-card-body {
+    padding: 0 !important;
+    text-align: center;
+}
+.meesho-product-card.minimal .meesho-card-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    margin-bottom: 4px;
+    height: auto !important;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+}
+.meesho-product-card.minimal .meesho-price-wholesale {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1c1c1c;
+}
+.meesho-product-card.minimal .rating-count-text {
+    font-size: 0.65rem;
+}.nisho-hero-banner {
+    background-image: linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)), url('/nisho-hero.png');
+    background-size: cover;
+    background-position: center;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+@media (max-width: 768px) {
+    .nisho-hero-banner {
+        height: 240px;
+    }
+    /* Mobile Category Scroll Viewport Styling (Nishorama Ditto) */
+    .meesho-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #FFF;
+        padding: 8px 12px !important;
+        border-bottom: 1px solid #ECEFF1;
+    }
+    .meesho-header .container-xl {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+    .meesho-header .nisho-logo {
+        font-size: 2rem !important;
+    }
+    .meesho-header .meesho-nav-items {
+        display: none !important;
+    }
+    .nisho-desktop-menu {
+        width: 100% !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    .nisho-desktop-menu::-webkit-scrollbar {
+        display: none !important;
+    }
+    .nisho-desktop-menu .menu-row-1,
+    .nisho-desktop-menu .menu-row-2 {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 16px !important;
+        padding: 2px 4px !important;
+    }
+    .nisho-desktop-menu a {
+        font-size: 0.68rem !important;
+        display: inline-block !important;
+    }
+}
+
+/* Scroll Animation Classes */
+.meesho-product-card.minimal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.meesho-product-card.minimal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Luxury Saree Hover Image-Swap (Nishorama Ditto) */
+.nisho-card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+}
+.nisho-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nisho-card-img-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.meesho-product-card:hover .nisho-card-img {
+    opacity: 0;
+    transform: scale(1.05);
+}
+.meesho-product-card:hover .nisho-card-img-hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Categories Grid Block Overlay & Zoom (Nishorama Ditto) */
+.nisho-cat-block {
+    border-radius: 0px;
+    border: 1px solid #eee;
+}
+.nisho-cat-block:hover .nisho-cat-img {
+    transform: scale(1.06);
+}
+.nisho-cat-overlay {
+    transition: background 0.3s ease;
+}
+.nisho-cat-block:hover .nisho-cat-overlay {
+    background: linear-gradient(transparent, rgba(0,0,0,0.72)) !important;
+}
+
+/* Quick Add button slide animation */
+.nisho-quick-add-btn {
+    z-index: 5;
+    opacity: 0;
+}
+.meesho-product-card:hover .nisho-quick-add-btn {
+    transform: translateY(0) !important;
+    opacity: 1;
+}
+.nisho-quick-add-btn:hover {
+    background-color: #1a1a1a !important;
+}
+
+/* Card sizes list */
+.nisho-card-sizes {
+    font-size: 0.65rem;
+    color: #888;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+.meesho-product-card:hover .nisho-card-sizes {
+    color: #482922;
+}
+
+/* Horizontal scroll collections carousel styling */
+.nisho-carousel-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+.nisho-carousel-container::-webkit-scrollbar {
+    height: 4px;
+}
+.nisho-carousel-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.nisho-carousel-container::-webkit-scrollbar-thumb {
+    background: #482922;
+    border-radius: 2px;
+}
+.nisho-carousel-item {
+    flex: 0 0 calc(25% - 15px); /* 4 columns on desktop */
+}
+@media (max-width: 991px) {
+    .nisho-carousel-item {
+        flex: 0 0 calc(33.333% - 14px); /* 3 columns on tablet */
+    }
+}
+@media (max-width: 576px) {
+    .nisho-carousel-item {
+        flex: 0 0 calc(50% - 10px); /* 2 columns on mobile */
+        scroll-snap-align: start;
+    }
+    .nisho-carousel-container {
+        scroll-snap-type: x mandatory;
+        padding-bottom: 10px;
+    }
+}
+
+/* ══════════════════════════════════════════════════════
+   NISHORAMA-STYLE ANIMATIONS & TRANSITIONS
+   ══════════════════════════════════════════════════════ */
+
+/* Section Fade-In on Scroll */
+@keyframes nishoFadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes nishoFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes nishoSlideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes nishoSlideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes nishoPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+@keyframes nishoShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+@keyframes nishoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes nishoCounterSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes nishoHeartBeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.3); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.3); }
+    70% { transform: scale(1); }
+}
+
+/* Scroll-triggered section animation classes */
+.nisho-anim-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nisho-anim-section.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered card reveal */
+.nisho-carousel-item:nth-child(1) { transition-delay: 0s; }
+.nisho-carousel-item:nth-child(2) { transition-delay: 0.08s; }
+.nisho-carousel-item:nth-child(3) { transition-delay: 0.16s; }
+.nisho-carousel-item:nth-child(4) { transition-delay: 0.24s; }
+.nisho-carousel-item:nth-child(5) { transition-delay: 0.32s; }
+.nisho-carousel-item:nth-child(6) { transition-delay: 0.40s; }
+.nisho-carousel-item:nth-child(7) { transition-delay: 0.48s; }
+.nisho-carousel-item:nth-child(8) { transition-delay: 0.56s; }
+
+/* Hero Carousel Enhanced */
+.carousel-fade .carousel-item {
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.carousel-fade .carousel-item.active {
+    z-index: 1;
+}
+.carousel-fade .carousel-item-start,
+.carousel-fade .carousel-item-end {
+    z-index: 0;
+}
+.carousel-indicators [data-bs-target] {
+    width: 32px;
+    height: 3px;
+    background-color: rgba(255,255,255,0.45);
+    border: none;
+    border-radius: 2px;
+    transition: all 0.4s ease;
+}
+.carousel-indicators .active {
+    background-color: #FFF;
+    width: 48px;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+}
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+    opacity: 1;
+}
+
+/* Hero Text Animations */
+.carousel-item.active h1 {
+    animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+.carousel-item.active p {
+    animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+.carousel-item.active .btn {
+    animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+}
+
+/* Parallax Banner Shimmer */
+@media (max-width: 768px) {
+    [style*='background-attachment: fixed'] {
+        background-attachment: scroll !important;
+    }
+}
+
+/* Product Card Hover Lift */
+.meesho-product-card.minimal:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 20px 50px rgba(72, 41, 34, 0.08) !important;
+}
+
+/* Wishlist Heart Bounce */
+.wishlist-heart-btn.active {
+    animation: nishoHeartBeat 0.6s ease-in-out;
+    color: #E91E63 !important;
+}
+
+/* Section Title Decorative Line */
+.carousel-section-wrapper h3::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 2px;
+    background: #482922;
+    margin-top: 8px;
+}
+
+/* Value Proposition Icons Animation */
+.col-4:hover .fa-solid {
+    animation: nishoFloat 1.5s ease-in-out infinite;
+    color: #C5A059 !important;
+}
+
+/* Category Grid Enhanced Hover */
+.nisho-cat-block::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #482922, #C5A059);
+    transform: scaleX(0);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+}
+.nisho-cat-block:hover::after {
+    transform: scaleX(1);
+}
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Newsletter Input Glow */
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.15) !important;
+    outline: none !important;
+}
+
+/* Sticky Header Animation - Compact on scroll */
+.meesho-header.scrolled {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    background: rgba(255,255,255,0.97) !important;
+}
+
+/* Premium Footer Styles */
+.nisho-footer {
+    background-color: #1a1a1a;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    padding: 60px 0 0;
+}
+.nisho-footer h5 {
+    color: #FFF;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+}
+.nisho-footer a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: all 0.3s ease;
+    display: block;
+    margin-bottom: 0.6rem;
+}
+.nisho-footer a:hover {
+    color: #C5A059;
+    padding-left: 4px;
+}
+.nisho-footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 20px 0;
+    margin-top: 40px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+}
+.nisho-footer-social a {
+    display: inline-flex !important;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.55) !important;
+    font-size: 0.95rem;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+}
+.nisho-footer-social a:hover {
+    background: #C5A059;
+    color: #1a1a1a !important;
+    transform: translateY(-3px);
+    padding-left: 0 !important;
+}
+
+/* Loading Skeleton Shimmer */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: nishoShimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+/* Mobile Improvements */
+@media (max-width: 576px) {
+    .carousel-section-wrapper h3 {
+        font-size: 1.3rem !important;
+    }
+    .carousel-section-wrapper p {
+        font-size: 0.58rem !important;
+    }
+    #home-categories-grid h2 {
+        font-size: 1.4rem !important;
+    }
+    #home-categories-grid p {
+        font-size: 0.6rem !important;
+    }
+    .nisho-cat-block {
+        height: 240px !important;
+    }
+    .nisho-cat-overlay h4 {
+        font-size: 0.85rem !important;
+    }
+    .nisho-cat-overlay span {
+        font-size: 0.55rem !important;
+    }
+}
+
+/* Hide on mobile helper */
+.hide-on-mobile {
+    display: block;
+}
+@media (max-width: 768px) {
+    .hide-on-mobile {
+        display: none !important;
+    }
+}
+
+/* Modal Premium Styling */
+.meesho-modal-content {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.meesho-modal-content .modal-header {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 1.2rem 1.5rem;
+}
+.meesho-modal-content .modal-body {
+    padding: 1.5rem;
+}
+
+/* Scrollbar Global Styles */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(72, 41, 34, 0.2);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(72, 41, 34, 0.4);
 }

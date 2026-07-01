@@ -1,13 +1,14 @@
-<div class="container-xl py-5" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
-    <div class="card p-4 p-md-5" style="width: 100%; max-width: 520px; border-radius: 8px; border: 1px solid var(--meesho-border); background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-        <div class="text-center mb-4 position-relative">
-            <a href="/" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Home</a>
-            <h2 class="fw-bold mb-1" style="color: var(--meesho-pink); letter-spacing: -0.5px;">Join Viraasat</h2>
-            <p class="text-muted" style="font-size: 0.9rem;">Register your B2B wholesale profile</p>
+<div class="container-xl py-5" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="p-4" style="width: 100%; max-width: 540px; background: transparent;">
+        <div class="text-center mb-5 position-relative">
+            <a href="/" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0 p-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Home</a>
+            <h2 class="mb-2" style="font-family: 'Rozha One', serif; font-size: 2.2rem; color: #1a1a1a; letter-spacing: -1px;">विरासत</h2>
+            <h4 class="fw-bold text-uppercase mb-1" style="letter-spacing: 0.15em; font-size: 1.15rem; color: #1a1a1a; font-family: 'Plus Jakarta Sans', sans-serif;">Create Account</h4>
+            <p class="text-muted" style="font-size: 0.85rem;">Register your wholesale profile</p>
         </div>
 
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger py-2 px-3 mb-3" style="font-size: 0.85rem;">
+            <div class="alert alert-danger py-2 px-3 mb-4 rounded-0" style="font-size: 0.82rem; border-left: 3px solid #dc3545;">
                 <ul class="mb-0 ps-3">
                     <?php foreach ($errors as $error): ?>
                         <li><?= htmlspecialchars($error) ?></li>
@@ -18,36 +19,36 @@
 
         <form action="/register" method="POST" id="register-form">
             <!-- Full Name -->
-            <div class="mb-3">
-                <label for="name" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Full Name</label>
-                <input type="text" class="form-control py-2" id="name" name="name" required placeholder="e.g. Ramesh Kumar" value="<?= htmlspecialchars($name ?? '') ?>">
+            <div class="mb-4">
+                <label for="name" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Full Name</label>
+                <input type="text" class="form-control nisho-input" id="name" name="name" required placeholder="e.g. Ramesh Kumar" value="<?= htmlspecialchars($name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <!-- Email & Mobile row -->
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="email" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Email Address</label>
-                    <input type="email" class="form-control py-2" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>">
+                <div class="col-md-6 mb-4">
+                    <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
+                    <input type="email" class="form-control nisho-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label for="mobile" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Mobile Number</label>
-                    <input type="text" class="form-control py-2" id="mobile" name="mobile" required placeholder="e.g. +91 9999999999" value="<?= htmlspecialchars($mobile ?? '') ?>">
+                <div class="col-md-6 mb-4">
+                    <label for="mobile" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Mobile Number</label>
+                    <input type="text" class="form-control nisho-input" id="mobile" name="mobile" required placeholder="e.g. +91 9999999999" value="<?= htmlspecialchars($mobile ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                 </div>
             </div>
 
             <!-- Password -->
-            <div class="mb-3">
-                <label for="password" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Password</label>
-                <input type="password" class="form-control py-2" id="password" name="password" required placeholder="Minimum 6 characters">
+            <div class="mb-4">
+                <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
+                <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="Minimum 6 characters" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <!-- Role Dropdown ("Join As") -->
-            <div class="mb-3">
-                <label for="role_id" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Join Platform As</label>
-                <select class="form-select py-2" id="role_id" name="role_id" required>
-                    <option value="">Select Profile Role...</option>
+            <div class="mb-4">
+                <label for="role_id" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Join Platform As</label>
+                <select class="form-select nisho-input" id="role_id" name="role_id" required style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <option value="" class="text-dark">Select Profile Role...</option>
                     <?php foreach ($roles as $role): ?>
-                        <option value="<?= $role['id'] ?>" <?= intval($role_id ?? 0) === intval($role['id']) ? 'selected' : '' ?>>
+                        <option value="<?= $role['id'] ?>" <?= intval($role_id ?? 0) === intval($role['id']) ? 'selected' : '' ?> class="text-dark">
                             <?php 
                                 if ($role['name'] === 'RETAILER') echo 'Retailer / Boutique Owner (Buyer)';
                                 elseif ($role['name'] === 'SELLER') echo 'Master Weaver / Wholesaler (Seller)';
@@ -60,23 +61,33 @@
             </div>
 
             <!-- Shop / Company Name -->
-            <div class="mb-4">
-                <label id="shop-label" for="shop_company_name" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Shop / Company Name</label>
-                <input type="text" class="form-control py-2" id="shop_company_name" name="shop_company_name" required placeholder="e.g. Sri Lakshmi Saree Loom" value="<?= htmlspecialchars($shop_company_name ?? '') ?>">
+            <div class="mb-5">
+                <label id="shop-label" for="shop_company_name" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Shop / Company Name</label>
+                <input type="text" class="form-control nisho-input" id="shop_company_name" name="shop_company_name" required placeholder="e.g. Sri Lakshmi Saree Loom" value="<?= htmlspecialchars($shop_company_name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-meesho-pink w-100 py-2 fs-6 mb-3">
+            <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
                 Create Account
             </button>
         </form>
 
-        <div class="text-center mt-2" style="font-size: 0.85rem;">
+        <div class="text-center mt-4" style="font-size: 0.85rem;">
             <span class="text-muted">Already have an account?</span>
-            <a href="/login" class="fw-semibold text-decoration-none ms-1" style="color: var(--meesho-pink);">Sign In Here</a>
+            <a href="/login" class="fw-bold text-decoration-none ms-1 text-dark border-bottom border-dark">Sign In Here</a>
         </div>
     </div>
 </div>
+
+<style>
+.nisho-input:focus {
+    border-bottom-color: #1a1a1a !important;
+    box-shadow: none !important;
+}
+.btn:hover {
+    background-color: #333 !important;
+}
+</style>
 
 <script>
     $(document).ready(function() {

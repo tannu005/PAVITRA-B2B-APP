@@ -16,9 +16,9 @@ $config = Application::$app->config;
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <!-- Custom Meesho CSS -->
-    <link rel="stylesheet" href="/assets/css/meesho.css">
+    <link rel="stylesheet" href="/assets/css/meesho.css?v=<?= time() ?>">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
@@ -29,106 +29,123 @@ $config = Application::$app->config;
         ⚡ Lowest Prices • Free Shipping on Bulk Orders • Weaver-Direct Verified Quality
     </div>
 
-    <!-- Header Navigation -->
-    <header class="meesho-header">
-        <div class="container-xl">
-            <div class="meesho-header-top">
-                <!-- Brand Logo -->
-                <a href="/" class="meesho-logo">
-                    <?= htmlspecialchars($config['brand_name'] ?? 'Viraasat') ?>
-                </a>
-
-                <!-- Search box -->
-                <form class="meesho-search-form" id="search-form" method="GET" action="/">
-                    <i class="fa fa-search meesho-search-icon"></i>
-                    <input type="text" name="search" class="meesho-search-input" placeholder="Try Saree, Kanjeevaram, Silk, Banarasi..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-                </form>
-
-                <!-- Navigation Controls -->
-                <div class="meesho-nav-items">
-                    <?php if ($user): ?>
-                        <!-- Profile Trigger / Dropdown -->
-                        <div class="dropdown">
-                            <button class="meesho-nav-item dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-user"></i>
-                                <span><?= htmlspecialchars(explode(' ', $user['name'])[0]) ?></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="profileDropdown">
-                                <li><a class="dropdown-item" href="/profile"><i class="fa-regular fa-id-card me-2 text-muted"></i> My Profile</a></li>
-                                <li><a class="dropdown-item" href="/orders"><i class="fa-solid fa-box-open me-2 text-muted"></i> My Orders</a></li>
-                                <li><a class="dropdown-item" href="/wallet"><i class="fa-solid fa-wallet me-2 text-muted"></i> Wallet (₹<?= number_format($user['balance'] ?? 0, 2) ?>)</a></li>
-                                <?php if ($user['role'] === 'RETAILER'): ?>
-                                    <li><a class="dropdown-item" href="/support"><i class="fa-solid fa-headset me-2 text-muted"></i> Support Helpdesk</a></li>
-                                <?php endif; ?>
-                                
-                                <?php if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])): ?>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-primary fw-semibold" href="/admin"><i class="fa-solid fa-chart-line me-2"></i> Admin Suite</a></li>
-                                <?php elseif ($user['role'] === 'SELLER'): ?>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-primary fw-semibold" href="/seller"><i class="fa-solid fa-shop me-2"></i> Seller Panel</a></li>
-                                <?php elseif ($user['role'] === 'DELIVERY'): ?>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-primary fw-semibold" href="/delivery"><i class="fa-solid fa-truck me-2"></i> Delivery Panel</a></li>
-                                <?php endif; ?>
-                                
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="/logout"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    <?php else: ?>
-                        <!-- Guest Sign In Link -->
-                        <a href="/login" class="meesho-nav-item text-decoration-none">
-                            <i class="fa-regular fa-user"></i>
-                            <span>Sign In</span>
-                        </a>
-                    <?php endif; ?>
-
-                    <!-- Notifications Dropdown -->
-                    <div class="dropdown">
-                        <button class="meesho-nav-item" type="button" id="notifButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-regular fa-bell"></i>
-                            <span>Alerts</span>
-                            <span class="meesho-badge" id="notif-count" style="display: none;">0</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end mt-2 p-3" aria-labelledby="notifButton" style="width: 320px; max-height: 400px; overflow-y: auto;">
-                            <h6 class="dropdown-header px-0 pb-2 border-bottom mb-2 d-flex justify-content-between align-items-center">
-                                <span>Notifications</span>
-                                <button class="btn btn-sm btn-link text-decoration-none p-0 text-pink" id="mark-all-read-btn" style="font-size: 0.75rem; display: none;">Clear all</button>
-                            </h6>
-                            <div id="notif-list" class="text-center py-3 text-muted" style="font-size: 0.85rem;">
-                                No new notifications
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cart Drawer Trigger -->
-                    <button class="meesho-nav-item" id="cart-trigger-btn">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                        <span>Cart</span>
-                        <span class="meesho-badge" id="cart-count-badge" style="display: none;">0</span>
-                    </button>
-                </div>
+    <!-- Meesho-Style Mobile Top Header -->
+    <header class="meesho-mobile-header">
+        <div class="mobile-header-top-row">
+            <div class="d-flex align-items-center">
+                <?php if ($_SERVER['REQUEST_URI'] !== '/' && $_SERVER['REQUEST_URI'] !== ''): ?>
+                    <a href="javascript:history.back()" class="mobile-header-back-arrow">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                <?php else: ?>
+                    <a href="/" class="nisho-logo" style="font-size: 1.8rem; margin-right: 10px;">वि</a>
+                <?php endif; ?>
             </div>
+
+            <a href="/" style="text-decoration: none;">
+                <span class="refer-badge">
+                    <i class="fa-solid fa-gift"></i> Refer & Earn
+                </span>
+            </a>
+
+            <div class="mobile-header-icons">
+                <a href="/support" title="Support"><i class="fa-solid fa-headset"></i></a>
+                <a href="javascript:void(0)" id="cart-trigger-btn-mobile" title="Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="badge bg-danger rounded-circle position-absolute p-1" id="cart-count-badge-mobile" style="display: none; font-size: 0.52rem; top: -5px; right: -5px;">0</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="meesho-mobile-search">
+            <form id="search-form-mobile" method="GET" action="/">
+                <i class="fa fa-search meesho-mobile-search-icon"></i>
+                <input type="text" name="search" class="meesho-mobile-search-input" placeholder="Search by Keyword or Product ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                <div class="meesho-mobile-search-right-icons">
+                    <i class="fa-solid fa-microphone"></i>
+                    <i class="fa-solid fa-camera ms-2"></i>
+                </div>
+            </form>
         </div>
     </header>
 
-    <!-- Subheader Category Navigation -->
-    <nav class="meesho-subcategory-bar">
-        <div class="container-xl">
-            <ul class="meesho-subcategory-list" id="category-nav">
-                <li><a href="/" class="meesho-subcategory-link <?= empty($_GET['category']) ? 'active' : '' ?>">All Sarees</a></li>
-                <!-- Loaded dynamically or static seeder categories -->
-                <li><a href="/?category=Kanjeevaram+Silk" class="meesho-subcategory-link <?= ($_GET['category'] ?? '') === 'Kanjeevaram Silk' ? 'active' : '' ?>">Kanjeevaram</a></li>
-                <li><a href="/?category=Banarasi+Brocade" class="meesho-subcategory-link <?= ($_GET['category'] ?? '') === 'Banarasi Brocade' ? 'active' : '' ?>">Banarasi</a></li>
-                <li><a href="/?category=Patola+Silk" class="meesho-subcategory-link <?= ($_GET['category'] ?? '') === 'Patola Silk' ? 'active' : '' ?>">Patola</a></li>
-                <li><a href="/?category=Chanderi+Weave" class="meesho-subcategory-link <?= ($_GET['category'] ?? '') === 'Chanderi Weave' ? 'active' : '' ?>">Chanderi</a></li>
-                <li><a href="/?category=Organza+Silk" class="meesho-subcategory-link <?= ($_GET['category'] ?? '') === 'Organza Silk' ? 'active' : '' ?>">Organza</a></li>
-                <li><a href="/?category=Mysore+Crepe+Silk" class="meesho-subcategory-link <?= ($_GET['category'] ?? '') === 'Mysore Crepe Silk' ? 'active' : '' ?>">Mysore Silk</a></li>
-                <li><a href="/?category=Jamdani+Muslin" class="meesho-subcategory-link <?= ($_GET['category'] ?? '') === 'Jamdani Muslin' ? 'active' : '' ?>">Jamdani</a></li>
-            </ul>
+    <!-- Header Navigation (Desktop/Tablet) -->
+    <header class="meesho-header py-2">
+        <div class="container-xl d-flex align-items-center justify-content-between">
+            <!-- Brand Logo (Hindi character) -->
+            <a href="/" class="nisho-logo">वि</a>
+
+            <!-- Center Menu Links (Nisho Muse Two-Row style) -->
+            <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
+                <div class="menu-row-1 d-flex gap-4">
+                    <a href="/?category=Organza+Silk">VIRASAT MUSE</a>
+                    <a href="/?sort=price_high">MOST WANTED</a>
+                    <a href="/">NEW ARRIVALS</a>
+                    <a href="/">ALL SAREES</a>
+                    <a href="/?category=Banarasi+Brocade">BANARASI</a>
+                    <a href="/?category=Kanjeevaram+Silk">KANJEEVARAM</a>
+                    <a href="/?category=Patola+Silk">PATOLA</a>
+                </div>
+                <div class="menu-row-2 d-flex gap-4">
+                    <a href="/?category=Organza+Silk">ORGANZA</a>
+                    <a href="/?category=Chanderi+Weave">CHANDERI</a>
+                    <a href="/?category=Mysore+Crepe+Silk">MYSORE SILK</a>
+                    <a href="/?category=Jamdani+Muslin">JAMDANI</a>
+                    <div class="dropdown d-inline-block collections-dropdown">
+                        <a href="#" class="dropdown-toggle text-decoration-none text-dark" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 500;">COLLECTIONS</a>
+                        <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VirasatOffice-SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VIRASAT OFFICE-SS1</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VIRASATHAVELI - SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Mysore+Crepe+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">DESI ROMANCE</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Chanderi+Weave" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">SHAADI KA GHAR</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
+                        </ul>
+                    </div>
+                    <a href="/?sort=price_low" class="text-danger fw-bold">GOODBYE DEALS ;)</a>
+                </div>
+            </div>
+
+            <!-- Right Navigation Controls -->
+            <div class="meesho-nav-items gap-3 align-items-center">
+                <!-- Search Trigger Toggle -->
+                <a href="javascript:void(0)" class="text-dark me-2" onclick="$('#search-dropdown').toggle()"><i class="fa-solid fa-magnifying-glass fs-5"></i></a>
+                
+                <?php if ($user): ?>
+                    <!-- Profile dropdown -->
+                    <div class="dropdown d-inline-block">
+                        <button class="bg-transparent border-0 p-0 text-dark dropdown-toggle no-caret" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-regular fa-user fs-5"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="/profile"><i class="fa-regular fa-id-card me-2 text-muted"></i> My Profile</a></li>
+                            <li><a class="dropdown-item" href="/orders"><i class="fa-solid fa-box-open me-2 text-muted"></i> My Orders</a></li>
+                            <li><a class="dropdown-item" href="/wallet"><i class="fa-solid fa-wallet me-2 text-muted"></i> Wallet (₹<?= number_format($user['balance'] ?? 0, 2) ?>)</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="/logout"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a href="/login" class="text-dark"><i class="fa-regular fa-user fs-5"></i></a>
+                <?php endif; ?>
+                
+                <a href="/support" class="text-dark"><i class="fa-regular fa-heart fs-5"></i></a>
+                
+                <button class="bg-transparent border-0 p-0 text-dark position-relative" id="cart-trigger-btn">
+                    <i class="fa-solid fa-bag-shopping fs-5"></i>
+                    <span class="badge bg-danger rounded-circle position-absolute p-1" id="cart-count-badge" style="display: none; font-size: 0.52rem; top: -5px; right: -5px;">0</span>
+                </button>
+            </div>
         </div>
-    </nav>
+        
+        <!-- Dropdown Search input -->
+        <div class="container-xl py-2" id="search-dropdown" style="display: none; border-top: 1px solid #eee;">
+            <form class="meesho-search-form w-100 max-width-none" id="search-form" method="GET" action="/">
+                <i class="fa fa-search meesho-search-icon"></i>
+                <input type="text" name="search" class="meesho-search-input" placeholder="Search by Keyword or Product ID..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+            </form>
+        </div>
+    </header>
 
     <!-- Main Content Rendering -->
     <main>
@@ -136,45 +153,61 @@ $config = Application::$app->config;
     </main>
 
     <!-- Saree B2B Footer -->
-    <footer style="background-color: #222; color: #FFF; border-top: 4px solid var(--meesho-pink);" class="py-5 mt-5">
+    <!-- Nishorama-Style White Footer (A to Z Ditto) -->
+    <footer style="background-color: #FFF; color: #1c1c1c; border-top: 1px solid #ECEFF1; font-family: 'Plus Jakarta Sans', sans-serif;" class="py-5 mt-5">
         <div class="container-xl">
-            <div class="row">
-                <!-- Column 1: Brand & Bio -->
-                <div class="col-md-5 mb-4">
-                    <h5 class="text-uppercase fw-bold text-pink mb-3" style="color: #F43397; font-size: 1.2rem; letter-spacing: 0.5px;"><?= htmlspecialchars($config['brand_name'] ?? 'Viraasat B2B') ?></h5>
-                    <p class="text-white-50" style="font-size: 0.9rem; line-height: 1.7; max-width: 420px;">
-                        Preserving the rich Indian textile heritage by bridging local master weavers directly with boutique retailers. Scalable, commission-controlled, and fully automated wholesale transactions.
+            <!-- Center JOIN THE MOVEMENT Header -->
+            <div class="text-center mb-5">
+                <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.18em; font-weight: 700; color: #482922; font-size: 1.6rem; text-transform: uppercase;">Join the Movement</h2>
+            </div>
+            
+            <div class="row g-4 text-start" style="font-size: 0.85rem; line-height: 1.8;">
+                <!-- Column 1: Contact Us -->
+                <div class="col-md-5">
+                    <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing: 0.1em; color: #482922; font-size: 0.78rem;">Contact Us</h6>
+                    <p class="text-secondary mb-3">
+                        <strong>Virasat Textiles Pvt Ltd</strong><br>
+                        Corporate Office Address: Varanasi Handloom Cluster, Uttar Pradesh, 221001
+                    </p>
+                    <p class="text-secondary mb-3">
+                        <strong>Email:</strong> wholesale@virasat.com
+                    </p>
+                    <p class="text-secondary mb-3">
+                        <strong>Mob:</strong> +91 9999999999
+                    </p>
+                    <p class="text-secondary">
+                        <strong>Opening Hours:</strong> Mon to Sat: 10:30 AM - 6:30 PM
                     </p>
                 </div>
-                <!-- Column 2: Corporate Address & Contact -->
-                <div class="col-md-4 mb-4">
-                    <h6 class="text-uppercase fw-semibold text-pink mb-3" style="color: #F43397; font-size: 0.9rem; letter-spacing: 0.5px;">Corporate Office</h6>
-                    <p class="text-white-50 mb-0" style="font-size: 0.9rem; line-height: 1.7;">
-                        <?= htmlspecialchars($config['office_address'] ?? 'Varanasi Handloom Cluster, Uttar Pradesh') ?><br>
-                        <span class="d-block mt-2"><strong>Email:</strong> <?= htmlspecialchars($config['support_email'] ?? 'wholesale@viraasat.com') ?></span>
-                        <span class="d-block"><strong>Support Mobile:</strong> <?= htmlspecialchars($config['support_mobile'] ?? '+91 9999999999') ?></span>
-                    </p>
+                
+                <!-- Column 2: Support -->
+                <div class="col-md-4">
+                    <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing: 0.1em; color: #482922; font-size: 0.78rem;">Support</h6>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="/about-us" class="text-secondary text-decoration-none footer-hover-link">About Us</a>
+                        <a href="/support" class="text-secondary text-decoration-none footer-hover-link">Contact Us</a>
+                        <a href="/support" class="text-secondary text-decoration-none footer-hover-link">FAQ's</a>
+                        <a href="/orders" class="text-secondary text-decoration-none footer-hover-link">Return/Exchange My Order</a>
+                    </div>
                 </div>
-                <!-- Column 3: Quick Links & CMS Policies -->
-                <div class="col-md-3 mb-4">
-                    <h6 class="text-uppercase fw-semibold text-pink mb-3" style="color: #F43397; font-size: 0.9rem; letter-spacing: 0.5px;">Marketplace Info</h6>
-                    <div class="d-flex flex-column gap-2" style="font-size: 0.9rem;">
-                        <a href="/about-us" class="footer-link">About Us</a>
-                        <a href="/contact-us" class="footer-link">Contact Support</a>
-                        <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
-                        <a href="/terms-conditions" class="footer-link">Terms & Conditions</a>
-                        <a href="/refund-policy" class="footer-link">Refund & Return Policy</a>
-                        <a href="/shipping-policy" class="footer-link">Shipping Policy</a>
+                
+                <!-- Column 3: Policies -->
+                <div class="col-md-3">
+                    <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing: 0.1em; color: #482922; font-size: 0.78rem;">Policies</h6>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Privacy Policy</a>
+                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Shipping & Delivery Policy</a>
+                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Return & Exchange Policy</a>
+                        <a href="/terms-conditions" class="text-secondary text-decoration-none footer-hover-link">Terms of Service</a>
                     </div>
                 </div>
             </div>
-            <hr class="my-4" style="background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.1);">
-            <div class="row" style="font-size: 0.8rem; color: rgba(255,255,255,0.4);">
-                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-                    © <?= date('Y') ?> <?= htmlspecialchars($config['company_name'] ?? 'Viraasat Textiles Private Limited') ?>. All rights reserved.
-                </div>
-                <div class="col-md-6 text-center text-md-end text-white-50">
-                    Designed for Handloom GI Weaving Clusters
+            
+            <hr class="my-4" style="border-color: #eee;">
+            
+            <div class="row align-items-center text-secondary" style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;">
+                <div class="col text-center text-uppercase">
+                    © <?= date('Y') ?> - Virasat Powered by Shopify
                 </div>
             </div>
         </div>
@@ -203,7 +236,7 @@ $config = Application::$app->config;
                 <label class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.65rem; letter-spacing: 0.5px;">B2B Coupon Code</label>
                 <div class="input-group input-group-sm">
                     <input type="text" id="coupon-code-input" class="form-control" placeholder="e.g. WELCOMB2B" style="text-transform: uppercase;">
-                    <button class="btn btn-outline-secondary" type="button" id="apply-coupon-btn" style="border-color: #F43397; color: #F43397;">Apply</button>
+                    <button class="btn btn-outline-secondary" type="button" id="apply-coupon-btn" style="border-color: #482922; color: #482922;">Apply</button>
                 </div>
                 <div id="coupon-message" class="small mt-1" style="display: none; font-size: 0.75rem;"></div>
             </div>
@@ -215,7 +248,7 @@ $config = Application::$app->config;
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="fw-bold text-dark">Estimated Total</span>
-                <span class="fs-4 fw-bold text-pink" id="cart-total-display" style="color: #F43397;">₹0.00</span>
+                <span class="fs-4 fw-bold text-pink" id="cart-total-display" style="color: #482922;">₹0.00</span>
             </div>
             
             <div class="mb-4">
@@ -236,7 +269,7 @@ $config = Application::$app->config;
     <script>
         $(document).ready(function() {
             // Notifications & Cart Handlers
-            $('#cart-trigger-btn').on('click', function() {
+            $('#cart-trigger-btn, #cart-trigger-btn-mobile').on('click', function() {
                 openCart();
             });
 
@@ -282,7 +315,7 @@ $config = Application::$app->config;
                         </div>
                     `);
                     $('#cart-drawer-footer').hide();
-                    $('#cart-count-badge').hide();
+                    $('#cart-count-badge, #cart-count-badge-mobile').hide();
                     return;
                 }
 
@@ -343,7 +376,7 @@ $config = Application::$app->config;
                 
                 // Set Badge count
                 const count = res.items.reduce((sum, item) => sum + parseInt(item.quantity), 0);
-                $('#cart-count-badge').text(count).show();
+                $('#cart-count-badge, #cart-count-badge-mobile').text(count).show();
             }
 
             // Apply Coupon click event
@@ -455,9 +488,139 @@ $config = Application::$app->config;
                 });
             });
 
-            // Dynamic categories loading from backend if needed
-            // Currently categories are loaded on the subheader directly
+            // Scrolled sticky header animation
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 30) {
+                    $('.meesho-header').addClass('scrolled');
+                } else {
+                    $('.meesho-header').removeClass('scrolled');
+                }
+            });
+
+            // Scroll Intersection Observer for fading-in product cards
+            if ('IntersectionObserver' in window) {
+                const cardObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            $(entry.target).addClass('visible');
+                        }
+                    });
+                }, { threshold: 0.05 });
+
+                // Bind observer to existing and future minimal cards
+                $(document).find('.meesho-product-card.minimal').each(function() {
+                    cardObserver.observe(this);
+                });
+            }
+
+            // Global Toast Notification Helper
+            window.showToast = function(msg) {
+                $('#toast-message').text(msg);
+                const toastEl = document.getElementById('app-toast');
+                if (toastEl && window.bootstrap) {
+                    const toast = window.bootstrap.Toast.getOrCreateInstance(toastEl);
+                    toast.show();
+                } else {
+                    alert(msg);
+                }
+            };
         });
     </script>
+    
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
+        <div id="app-toast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-message"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ═══════════ NISHORAMA PREMIUM FOOTER ═══════════ -->
+    <footer class="nisho-footer">
+        <div class="container">
+            <div class="row g-4">
+                <!-- About Column -->
+                <div class="col-lg-3 col-md-6">
+                    <a href="/" class="nisho-logo d-inline-block mb-3" style="font-size: 2rem; color: #FFF !important;">वि</a>
+                    <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
+                    <div class="nisho-footer-social mt-3">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h5>Quick Links</h5>
+                    <a href="/">New Arrivals</a>
+                    <a href="/?category=Banarasi+Brocade">Banarasi</a>
+                    <a href="/?category=Kanjeevaram+Silk">Kanjeevaram</a>
+                    <a href="/?category=Patola+Silk">Patola</a>
+                    <a href="/?category=Organza+Silk">Organza</a>
+                </div>
+                <!-- Help -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h5>Help & Support</h5>
+                    <a href="/support">Contact Us</a>
+                    <a href="/orders">Track Order</a>
+                    <a href="/about-us">About Us</a>
+                    <a href="/support">FAQs</a>
+                    <a href="/about-us">Size Guide</a>
+                </div>
+                <!-- Policies -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h5>Policies</h5>
+                    <a href="/about-us">Shipping Info</a>
+                    <a href="/about-us">Returns & Refunds</a>
+                    <a href="/about-us">Privacy Policy</a>
+                    <a href="/about-us">Terms of Service</a>
+                </div>
+                <!-- Wholesale Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5>Wholesale Enquiry</h5>
+                    <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">Minimum order: 5 pieces per design. Bulk discounts available for orders of 50+ pieces.</p>
+                    <div class="d-flex gap-2 mt-3 flex-wrap">
+                        <span style="font-size: 1.4rem; color: rgba(255,255,255,0.3);"><i class="fa-brands fa-cc-visa"></i></span>
+                        <span style="font-size: 1.4rem; color: rgba(255,255,255,0.3);"><i class="fa-brands fa-cc-mastercard"></i></span>
+                        <span style="font-size: 1.4rem; color: rgba(255,255,255,0.3);"><i class="fa-brands fa-google-pay"></i></span>
+                        <span style="font-size: 1.4rem; color: rgba(255,255,255,0.3);"><i class="fa-brands fa-cc-amex"></i></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Bottom -->
+            <div class="nisho-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <span>© 2026 Virasat Wholesale Sarees. All Rights Reserved.</span>
+                <span class="mt-2 mt-md-0">Crafted with ❤️ for Indian Handloom Heritage</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Nishorama-Style Mobile Bottom Navigation Bar -->
+    <div class="meesho-mobile-nav">
+        <a href="/" class="mobile-nav-item <?= $_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '' ? 'active' : '' ?>">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="/about-us" class="mobile-nav-item <?= str_contains($_SERVER['REQUEST_URI'], '/about-us') ? 'active' : '' ?>">
+            <i class="fa-solid fa-border-all"></i>
+            <span>Categories</span>
+        </a>
+        <a href="/support" class="mobile-nav-item <?= str_contains($_SERVER['REQUEST_URI'], '/support') ? 'active' : '' ?>">
+            <i class="fa-solid fa-heart"></i>
+            <span>Wishlist</span>
+        </a>
+        <a href="/profile" class="mobile-nav-item <?= str_contains($_SERVER['REQUEST_URI'], '/profile') ? 'active' : '' ?>">
+            <i class="fa-solid fa-user"></i>
+            <span>Account</span>
+        </a>
+    </div>
+    
+    <!-- Floating Download App Button (Nisho Style) -->
+    <a href="/about-us" class="nisho-download-btn text-decoration-none d-flex align-items-center">
+        <span class="nisho-logo-sm">वि</span> DOWNLOAD APP
+    </a>
 </body>
 </html>

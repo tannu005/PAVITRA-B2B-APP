@@ -82,7 +82,7 @@
 
                                 <?php if ($order['status'] === 'DELIVERED'): ?>
                                     <div class="mt-3 mb-2 d-flex gap-2">
-                                        <a href="/orders/return/<?= $order['id'] ?>" class="btn btn-outline-pink btn-sm flex-grow-1 py-1 fw-bold" style="border-color: #F43397; color: #F43397;"><i class="fa fa-rotate-left me-1"></i> Return Items</a>
+                                        <a href="/orders/return/<?= $order['id'] ?>" class="btn btn-outline-pink btn-sm flex-grow-1 py-1 fw-bold" style="border-color: #482922; color: #482922;"><i class="fa fa-rotate-left me-1"></i> Return Items</a>
                                         <a href="/order/invoice/<?= $order['id'] ?>" target="_blank" class="btn btn-outline-secondary btn-sm flex-grow-1 py-1 fw-bold"><i class="fa fa-file-invoice me-1"></i> Invoice</a>
                                     </div>
                                 <?php endif; ?>

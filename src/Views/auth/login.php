@@ -1,13 +1,14 @@
-<div class="container-xl py-5" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
-    <div class="card p-4 p-md-5" style="width: 100%; max-width: 480px; border-radius: 8px; border: 1px solid var(--meesho-border); background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-        <div class="text-center mb-4 position-relative">
-            <a href="/" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Home</a>
-            <h2 class="fw-bold mb-1" style="color: var(--meesho-pink); letter-spacing: -0.5px;">Viraasat Wholesale</h2>
-            <p class="text-muted" style="font-size: 0.9rem;">Sign in to your B2B account</p>
+<div class="container-xl py-5" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="p-4" style="width: 100%; max-width: 440px; background: transparent;">
+        <div class="text-center mb-5 position-relative">
+            <a href="/" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0 p-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Home</a>
+            <h2 class="mb-2" style="font-family: 'Rozha One', serif; font-size: 2.2rem; color: #1a1a1a; letter-spacing: -1px;">विरासत</h2>
+            <h4 class="fw-bold text-uppercase mb-1" style="letter-spacing: 0.15em; font-size: 1.15rem; color: #1a1a1a; font-family: 'Plus Jakarta Sans', sans-serif;">Join the Movement</h4>
+            <p class="text-muted" style="font-size: 0.85rem;">Sign in to your wholesale profile</p>
         </div>
 
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger py-2 px-3 mb-3" style="font-size: 0.85rem;">
+            <div class="alert alert-danger py-2 px-3 mb-4 rounded-0" style="font-size: 0.82rem; border-left: 3px solid #dc3545;">
                 <ul class="mb-0 ps-3">
                     <?php foreach ($errors as $error): ?>
                         <li><?= htmlspecialchars($error) ?></li>
@@ -18,32 +19,32 @@
 
         <form action="/login" method="POST" id="login-form">
             <!-- Email -->
-            <div class="mb-3">
-                <label for="email" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Email Address</label>
-                <input type="email" class="form-control py-2" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>">
+            <div class="mb-4">
+                <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
+                <input type="email" class="form-control nisho-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <!-- Password -->
-            <div class="mb-4">
-                <label for="password" class="form-label fw-semibold text-muted" style="font-size: 0.75rem; text-transform: uppercase;">Password</label>
-                <input type="password" class="form-control py-2" id="password" name="password" required placeholder="••••••••">
+            <div class="mb-5">
+                <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
+                <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="••••••••" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <!-- Sign In Button -->
-            <button type="submit" class="btn btn-meesho-pink w-100 py-2 fs-6 mb-3">
+            <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
                 Sign In
             </button>
         </form>
 
-        <div class="text-center mt-3" style="font-size: 0.85rem;">
+        <div class="text-center mt-4" style="font-size: 0.85rem;">
             <span class="text-muted">Don't have an account?</span>
-            <a href="/register" class="fw-semibold text-decoration-none ms-1" style="color: var(--meesho-pink);">Register Here</a>
+            <a href="/register" class="fw-bold text-decoration-none ms-1 text-dark border-bottom border-dark">Register Here</a>
         </div>
         
-        <hr class="my-4 text-muted opacity-25">
+        <hr class="my-5 opacity-25">
         
-        <div class="bg-light p-3 rounded" style="font-size: 0.75rem; color: #666; border: 1px solid #EAEAEA;">
-            <strong>Demo Credentials:</strong><br>
+        <div class="p-3 bg-light border-start border-dark" style="font-size: 0.75rem; color: #555; background-color: #f8f9fa;">
+            <strong class="text-dark">Demo Credentials:</strong><br>
             • Retailer/Buyer: <code>boutique@meeshob2b.com</code> / <code>password123</code><br>
             • Seller/Weaver: <code>weaver@meeshob2b.com</code> / <code>password123</code><br>
             • Super Admin: <code>admin@meeshob2b.com</code> / <code>password123</code><br>
@@ -51,3 +52,13 @@
         </div>
     </div>
 </div>
+
+<style>
+.nisho-input:focus {
+    border-bottom-color: #1a1a1a !important;
+    box-shadow: none !important;
+}
+.btn:hover {
+    background-color: #333 !important;
+}
+</style>
