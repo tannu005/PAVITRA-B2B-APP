@@ -21,6 +21,21 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    flavorDimensions += "mode"
+    productFlavors {
+        create("online") {
+            dimension = "mode"
+            buildConfigField("Boolean", "OFFLINE_MODE", "false")
+        }
+        create("offline") {
+            dimension = "mode"
+            applicationIdSuffix = ".offline"
+            versionNameSuffix = "-offline"
+            buildConfigField("Boolean", "OFFLINE_MODE", "true")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -28,7 +43,7 @@ android {
     buildFeatures {
       compose = true
       aidl = false
-      buildConfig = false
+      buildConfig = true
       shaders = false
     }
 

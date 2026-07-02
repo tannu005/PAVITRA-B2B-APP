@@ -6,6 +6,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
+import com.example.viraasatb2b.BuildConfig
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -54,12 +55,18 @@ fun MainScreen(
   val context = LocalContext.current
   val prefs = remember { context.getSharedPreferences("pavitra_prefs", Context.MODE_PRIVATE) }
   
+  // Offline mode: load from bundled assets, no server needed
+  val isOfflineMode = BuildConfig.OFFLINE_MODE
+  val offlineUrl = "file:///android_asset/index.html"
+  
   // Try to load previously configured URL. Default to localtunnel URL.
   val storedUrl = prefs.getString("server_url", null)
   val defaultUrl = "https://pavitra-saree-wholesale.loca.lt/"
   
   // Migrate old localtunnel URL preference if it exists
-  val activeUrl = if (storedUrl != null && storedUrl.contains("old-kids-wave.loca.lt")) {
+  val activeUrl = if (isOfflineMode) {
+    offlineUrl
+  } else if (storedUrl != null && storedUrl.contains("old-kids-wave.loca.lt")) {
     prefs.edit().putString("server_url", defaultUrl).apply()
     defaultUrl
   } else {
@@ -71,11 +78,11 @@ fun MainScreen(
   
   var isLoading by remember { mutableStateOf(true) }
   var loadError by remember { mutableStateOf(false) }
-  var showSettings by remember { mutableStateOf(false) }
+  var showSettings by remember { mutableStateOf(if (isOfflineMode) false else false) }
   var inputUrl by remember { mutableStateOf(activeUrl) }
 
   // Custom header to bypass Localtunnel landing reminder page
-  val bypassHeaders = remember { mapOf("Bypass-Tunnel-Reminder" to "true") }
+  val bypassHeaders = remember { if (isOfflineMode) emptyMap() else mapOf("Bypass-Tunnel-Reminder" to "true") }
 
   // Intercept back gestures
   BackHandler(enabled = (webViewInstance?.canGoBack() == true) && !loadError && !showSettings) {
@@ -138,8 +145,13 @@ fun MainScreen(
               userAgentString = "PavitraB2B-Android-APK"
               useWideViewPort = true
               loadWithOverviewMode = true
+              allowFileAccess = true
             }
-            loadUrl(savedUrl, bypassHeaders)
+            if (isOfflineMode) {
+              loadUrl(savedUrl)
+            } else {
+              loadUrl(savedUrl, bypassHeaders)
+            }
             webViewInstance = this
           }
         },
