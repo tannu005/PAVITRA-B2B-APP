@@ -107,8 +107,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <div class="menu-row-1 d-flex gap-4">
                     <a href="/?category=Organza+Silk" class="nisho-menu-link">PAVITRA MUSE</a>
                     <a href="/?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
-                    <a href="/" class="nisho-menu-link">NEW ARRIVALS</a>
-                    <a href="/" class="nisho-menu-link">ALL SAREES</a>
+                    <a href="/?sort=newest" class="nisho-menu-link">NEW ARRIVALS</a>
+                    <a href="/?all_sarees=true" class="nisho-menu-link">ALL SAREES</a>
                     <a href="/?category=Banarasi+Brocade" class="nisho-menu-link">BANARASI</a>
                     <a href="/?category=Kanjeevaram+Silk" class="nisho-menu-link">KANJEEVARAM</a>
                     <a href="/?category=Patola+Silk" class="nisho-menu-link">PATOLA</a>
@@ -521,7 +521,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <!-- Quick Links -->
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>Quick Links</h5>
-                    <a href="/">New Arrivals</a>
+                    <a href="/?sort=newest">New Arrivals</a>
                     <a href="/?category=Banarasi+Brocade">Banarasi</a>
                     <a href="/?category=Kanjeevaram+Silk">Kanjeevaram</a>
                     <a href="/?category=Patola+Silk">Patola</a>

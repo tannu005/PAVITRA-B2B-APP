@@ -555,7 +555,7 @@ $(document).ready(function() {
 
     // Auto-scroll to products when filtered
     const u = new URLSearchParams(window.location.search);
-    if (u.has('category') || u.has('sort') || u.has('search') || u.has('min_price')) {
+    if (u.has('category') || u.has('sort') || u.has('search') || u.has('min_price') || u.has('all_sarees')) {
         setTimeout(function() {
             const t = $('#product-feed-section');
             if (t.length) { $('html, body').animate({ scrollTop: t.offset().top - 120 }, 600); }
