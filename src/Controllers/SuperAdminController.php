@@ -414,12 +414,41 @@ class SuperAdminController extends Controller {
 
             $stmt = $db->prepare("INSERT INTO system_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
 
+            foreach ($allowedKeys as $key) {
+                if (isset($body[$key])) {
+                    $stmt->execute([$key, trim($body[$key])]);
+                }
+            }
+
+            $db->commit();
+            // Reload configuration in app instance
+            Application::$app->loadConfig();
+
+            $_SESSION['settings_success'] = 'System settings updated successfully!';
+            $response->redirect('/admin/settings');
+            return;
+        } catch (\Throwable $e) {
+            $db->rollBack();
+            return $this->render('admin/settings', [
+                'title' => 'System Settings Configuration - Pavitra B2B',
+                'settings' => $body,
+                'error' => 'Settings save failed: ' . $e->getMessage()
+            ]);
+        }
+    }
+
     public function sessions(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
 
         $db = Application::$app->db;
-        $sessions = $db->query("\n            SELECT us.*, u.name as user_name, u.email, r.name as role_name\n            FROM user_sessions us\n            JOIN users u ON us.user_id = u.id\n            JOIN roles r ON u.role_id = r.id\n            ORDER BY us.last_active DESC, us.id DESC\n        ")->fetchAll() ?: [];
+        $sessions = $db->query("
+            SELECT us.*, u.name as user_name, u.email, r.name as role_name
+            FROM user_sessions us
+            JOIN users u ON us.user_id = u.id
+            JOIN roles r ON u.role_id = r.id
+            ORDER BY us.last_active DESC, us.id DESC
+        ")->fetchAll() ?: [];
 
         return $this->render('admin/sessions', [
             'title' => 'Device Management & Session Control',
@@ -450,35 +479,18 @@ class SuperAdminController extends Controller {
         if (!$user) return;
 
         $db = Application::$app->db;
-        $logs = $db->query("\n            SELECT al.*, u.name as user_name, u.email\n            FROM activity_logs al\n            LEFT JOIN users u ON al.user_id = u.id\n            ORDER BY al.created_at DESC, al.id DESC\n            LIMIT 200\n        ")->fetchAll() ?: [];
+        $logs = $db->query("
+            SELECT al.*, u.name as user_name, u.email
+            FROM activity_logs al
+            LEFT JOIN users u ON al.user_id = u.id
+            ORDER BY al.created_at DESC, al.id DESC
+            LIMIT 200
+        ")->fetchAll() ?: [];
 
         return $this->render('admin/activity', [
             'title' => 'Login Logs & Activity Audit Trail',
             'logs' => $logs
         ]);
-    }
-
-            foreach ($allowedKeys as $key) {
-                if (isset($body[$key])) {
-                    $stmt->execute([$key, trim($body[$key])]);
-                }
-            }
-
-            $db->commit();
-            // Reload configuration in app instance
-            Application::$app->loadConfig();
-
-            $_SESSION['settings_success'] = 'System settings updated successfully!';
-            $response->redirect('/admin/settings');
-            return;
-        } catch (\Throwable $e) {
-            $db->rollBack();
-            return $this->render('admin/settings', [
-                'title' => 'System Settings Configuration - Pavitra B2B',
-                'settings' => $body,
-                'error' => 'Settings save failed: ' . $e->getMessage()
-            ]);
-        }
     }
 
     // View error logs
