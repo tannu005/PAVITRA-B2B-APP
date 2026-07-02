@@ -22,6 +22,7 @@
                 <?php endif; ?>
 
                 <form action="/seller/products/create" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <!-- Core Specs -->
                     <h5 class="fw-bold mb-3 text-pink">1. Saree Information</h5>
                     <div class="row g-3 mb-4">

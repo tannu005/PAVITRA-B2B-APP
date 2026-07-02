@@ -21,6 +21,7 @@
                 <?php endif; ?>
 
                 <form action="/support/create" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <div class="row g-3 mb-4">
                         <div class="col-md-8">
                             <label for="subject" class="form-label small fw-semibold text-muted text-uppercase">Ticket Subject <span class="text-danger">*</span></label>

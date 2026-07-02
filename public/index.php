@@ -105,6 +105,9 @@ $app->router->post('/admin/commissions/rule', [App\Controllers\SuperAdminControl
 $app->router->get('/admin/settings', [App\Controllers\SuperAdminController::class, 'settings']);
 $app->router->post('/admin/settings', [App\Controllers\SuperAdminController::class, 'saveSettings']);
 $app->router->get('/admin/errors', [App\Controllers\SuperAdminController::class, 'errors']);
+$app->router->get('/admin/sessions', [App\Controllers\SuperAdminController::class, 'sessions']);
+$app->router->post('/admin/sessions/revoke', [App\Controllers\SuperAdminController::class, 'revokeSession']);
+$app->router->get('/admin/activity', [App\Controllers\SuperAdminController::class, 'activityLogs']);
 
 // Seller (Weaver) Dashboard Routes
 $app->router->get('/seller', [App\Controllers\SellerController::class, 'dashboard']);

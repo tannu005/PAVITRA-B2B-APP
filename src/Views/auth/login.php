@@ -18,6 +18,7 @@
         <?php endif; ?>
 
         <form action="/login" method="POST" id="login-form">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
             <!-- Email -->
             <div class="mb-4">
                 <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>

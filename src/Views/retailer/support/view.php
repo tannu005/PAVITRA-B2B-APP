@@ -53,6 +53,7 @@
                 <!-- Ticket Reply Form -->
                 <?php if ($ticket['status'] !== 'CLOSED'): ?>
                     <form action="/support/ticket/<?= $ticket['id'] ?>/reply" method="POST" class="border-top pt-3">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                         <div class="mb-3">
                             <label for="message" class="form-label small fw-semibold text-muted text-uppercase">Post Response Reply</label>
                             <textarea class="form-control" id="message" name="message" rows="3" required placeholder="Type your reply message here..."></textarea>

@@ -22,6 +22,7 @@
                 <?php endif; ?>
 
                 <form action="/profile" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <div class="row g-3 mb-4">
                         <!-- Full Name -->
                         <div class="col-md-6">

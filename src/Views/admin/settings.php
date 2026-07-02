@@ -22,6 +22,7 @@
     <?php endif; ?>
 
     <form action="/admin/settings" method="POST">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
         <div class="row g-4">
             <!-- Left Side: Company Identity & Compliance -->
             <div class="col-lg-7">
@@ -42,8 +43,16 @@
                             <input type="text" class="form-control" id="logo_url" name="logo_url" value="<?= htmlspecialchars($settings['logo_url'] ?? '') ?>">
                         </div>
                         <div class="col-12">
-                            <label for="office_address" class="form-label small fw-semibold text-muted text-uppercase">Registered Office Address</label>
-                            <textarea class="form-control" id="office_address" name="office_address" rows="2" required><?= htmlspecialchars($settings['office_address'] ?? '') ?></textarea>
+                            <label for="favicon_url" class="form-label small fw-semibold text-muted text-uppercase">Favicon URL</label>
+                            <input type="text" class="form-control" id="favicon_url" name="favicon_url" value="<?= htmlspecialchars($settings['favicon_url'] ?? '') ?>">
+                        </div>
+                        <div class="col-12">
+                            <label for="registered_office_address" class="form-label small fw-semibold text-muted text-uppercase">Registered Office Address</label>
+                            <textarea class="form-control" id="registered_office_address" name="registered_office_address" rows="2" required><?= htmlspecialchars($settings['registered_office_address'] ?? ($settings['office_address'] ?? '')) ?></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="corporate_office_address" class="form-label small fw-semibold text-muted text-uppercase">Corporate Office Address</label>
+                            <textarea class="form-control" id="corporate_office_address" name="corporate_office_address" rows="2"><?= htmlspecialchars($settings['corporate_office_address'] ?? '') ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -86,6 +95,10 @@
                             <label for="whatsapp_number" class="form-label small fw-semibold text-muted text-uppercase">WhatsApp API</label>
                             <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number" value="<?= htmlspecialchars($settings['whatsapp_number'] ?? '') ?>">
                         </div>
+                        <div class="col-md-6">
+                            <label for="google_maps_api_key" class="form-label small fw-semibold text-muted text-uppercase">Google Maps API Key</label>
+                            <input type="text" class="form-control" id="google_maps_api_key" name="google_maps_api_key" value="<?= htmlspecialchars($settings['google_maps_api_key'] ?? '') ?>">
+                        </div>
                     </div>
                 </div>
 
@@ -113,6 +126,29 @@
                 </div>
 
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
+                    <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-share-nodes me-2"></i>Social & Delivery Integrations</h5>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="social_facebook" class="form-label small fw-semibold text-muted text-uppercase">Facebook Link</label>
+                            <input type="text" class="form-control" id="social_facebook" name="social_facebook" value="<?= htmlspecialchars($settings['social_facebook'] ?? '') ?>">
+                        </div>
+                        <div class="col-12">
+                            <label for="social_instagram" class="form-label small fw-semibold text-muted text-uppercase">Instagram Link</label>
+                            <input type="text" class="form-control" id="social_instagram" name="social_instagram" value="<?= htmlspecialchars($settings['social_instagram'] ?? '') ?>">
+                        </div>
+                        <div class="col-12">
+                            <label for="social_youtube" class="form-label small fw-semibold text-muted text-uppercase">YouTube Link</label>
+                            <input type="text" class="form-control" id="social_youtube" name="social_youtube" value="<?= htmlspecialchars($settings['social_youtube'] ?? '') ?>">
+                        </div>
+                        <div class="col-12">
+                            <label for="social_linkedin" class="form-label small fw-semibold text-muted text-uppercase">LinkedIn Link</label>
+                            <input type="text" class="form-control" id="social_linkedin" name="social_linkedin" value="<?= htmlspecialchars($settings['social_linkedin'] ?? '') ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-credit-card me-2"></i>Razorpay Gateway API</h5>
                     
                     <div class="row g-3">
@@ -123,6 +159,37 @@
                         <div class="col-12">
                             <label for="payment_gateway_secret" class="form-label small fw-semibold text-muted text-uppercase">Razorpay Secret Key</label>
                             <input type="password" class="form-control" id="payment_gateway_secret" name="payment_gateway_secret" value="<?= htmlspecialchars($settings['payment_gateway_secret'] ?? '') ?>" placeholder="••••••••••••••••">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border border-light p-4 bg-white mb-4">
+                    <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-shield-halved me-2"></i>Cloudflare & Messaging Keys</h5>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="cloudflare_account_id" class="form-label small fw-semibold text-muted text-uppercase">Cloudflare Account ID</label>
+                            <input type="text" class="form-control" id="cloudflare_account_id" name="cloudflare_account_id" value="<?= htmlspecialchars($settings['cloudflare_account_id'] ?? '') ?>">
+                        </div>
+                        <div class="col-12">
+                            <label for="cloudflare_api_token" class="form-label small fw-semibold text-muted text-uppercase">Cloudflare API Token</label>
+                            <input type="password" class="form-control" id="cloudflare_api_token" name="cloudflare_api_token" value="<?= htmlspecialchars($settings['cloudflare_api_token'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sms_gateway_key" class="form-label small fw-semibold text-muted text-uppercase">SMS Gateway Key</label>
+                            <input type="text" class="form-control" id="sms_gateway_key" name="sms_gateway_key" value="<?= htmlspecialchars($settings['sms_gateway_key'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sms_gateway_secret" class="form-label small fw-semibold text-muted text-uppercase">SMS Gateway Secret</label>
+                            <input type="password" class="form-control" id="sms_gateway_secret" name="sms_gateway_secret" value="<?= htmlspecialchars($settings['sms_gateway_secret'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="whatsapp_api_key" class="form-label small fw-semibold text-muted text-uppercase">WhatsApp API Key</label>
+                            <input type="text" class="form-control" id="whatsapp_api_key" name="whatsapp_api_key" value="<?= htmlspecialchars($settings['whatsapp_api_key'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="whatsapp_api_secret" class="form-label small fw-semibold text-muted text-uppercase">WhatsApp API Secret</label>
+                            <input type="password" class="form-control" id="whatsapp_api_secret" name="whatsapp_api_secret" value="<?= htmlspecialchars($settings['whatsapp_api_secret'] ?? '') ?>">
                         </div>
                     </div>
                 </div>

@@ -2,13 +2,29 @@
 use Core\Application;
 $user = Application::$app->getSessionUser();
 $config = Application::$app->config;
+$csrfToken = Application::$app->getCsrfToken();
+$pageTitle = htmlspecialchars($params['title'] ?? $config['company_name'] ?? 'Viraasat B2B');
+$pageDescription = htmlspecialchars($params['description'] ?? 'Enterprise-grade B2B wholesale marketplace for sellers, retailers, and delivery partners.');
+$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$canonicalPath = strtok($_SERVER['REQUEST_URI'] ?? '/', '?') ?: '/';
+$canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPath;
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($params['title'] ?? $config['company_name'] ?? 'Viraasat B2B') ?></title>
+    <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken) ?>">
+    <meta name="description" content="<?= $pageDescription ?>">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#482922">
+    <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+    <meta property="og:title" content="<?= $pageTitle ?>">
+    <meta property="og:description" content="<?= $pageDescription ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<?= htmlspecialchars($config['brand_name'] ?? 'Viraasat B2B') ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>">
+    <title><?= $pageTitle ?></title>
     <!-- Bootstrap 5.3+ CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome for Icons -->
@@ -16,16 +32,22 @@ $config = Application::$app->config;
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Nunito:ital,wght@0,300..900;1,300..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <!-- Custom Meesho CSS -->
     <link rel="stylesheet" href="/assets/css/meesho.css?v=<?= time() ?>">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        window.__CSRF_TOKEN__ = <?= json_encode($csrfToken) ?>;
+        $.ajaxSetup({
+            headers: { 'X-CSRF-Token': window.__CSRF_TOKEN__ }
+        });
+    </script>
 </head>
 <body>
 
     <!-- Promotion Nav -->
-    <div style="background-color: #F8F9FA; border-bottom: 1px solid #ECEFF1; font-size: 0.75rem; font-weight: 500; color: #555;" class="py-2 hide-on-mobile text-center">
+    <div class="py-2 hide-on-mobile text-center" style="background-color: #F8F9FA; border-bottom: 1px solid #ECEFF1; color: #555;">
         ⚡ Lowest Prices • Free Shipping on Bulk Orders • Weaver-Direct Verified Quality
     </div>
 
@@ -38,7 +60,7 @@ $config = Application::$app->config;
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php else: ?>
-                    <a href="/" class="nisho-logo" style="font-size: 1.8rem; margin-right: 10px;">वि</a>
+                    <a href="/" class="nisho-logo" style="margin-right: 10px;">वि</a>
                 <?php endif; ?>
             </div>
 
@@ -78,21 +100,21 @@ $config = Application::$app->config;
             <!-- Center Menu Links (Nisho Muse Two-Row style) -->
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
-                    <a href="/?category=Organza+Silk">VIRASAT MUSE</a>
-                    <a href="/?sort=price_high">MOST WANTED</a>
-                    <a href="/">NEW ARRIVALS</a>
-                    <a href="/">ALL SAREES</a>
-                    <a href="/?category=Banarasi+Brocade">BANARASI</a>
-                    <a href="/?category=Kanjeevaram+Silk">KANJEEVARAM</a>
-                    <a href="/?category=Patola+Silk">PATOLA</a>
+                    <a href="/?category=Organza+Silk" class="nisho-menu-link">VIRASAT MUSE</a>
+                    <a href="/?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
+                    <a href="/" class="nisho-menu-link">NEW ARRIVALS</a>
+                    <a href="/" class="nisho-menu-link">ALL SAREES</a>
+                    <a href="/?category=Banarasi+Brocade" class="nisho-menu-link">BANARASI</a>
+                    <a href="/?category=Kanjeevaram+Silk" class="nisho-menu-link">KANJEEVARAM</a>
+                    <a href="/?category=Patola+Silk" class="nisho-menu-link">PATOLA</a>
                 </div>
                 <div class="menu-row-2 d-flex gap-4">
-                    <a href="/?category=Organza+Silk">ORGANZA</a>
-                    <a href="/?category=Chanderi+Weave">CHANDERI</a>
-                    <a href="/?category=Mysore+Crepe+Silk">MYSORE SILK</a>
-                    <a href="/?category=Jamdani+Muslin">JAMDANI</a>
+                    <a href="/?category=Organza+Silk" class="nisho-menu-link">ORGANZA</a>
+                    <a href="/?category=Chanderi+Weave" class="nisho-menu-link">CHANDERI</a>
+                    <a href="/?category=Mysore+Crepe+Silk" class="nisho-menu-link">MYSORE SILK</a>
+                    <a href="/?category=Jamdani+Muslin" class="nisho-menu-link">JAMDANI</a>
                     <div class="dropdown d-inline-block collections-dropdown">
-                        <a href="#" class="dropdown-toggle text-decoration-none text-dark" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: 500;">COLLECTIONS</a>
+                        <a href="#" class="dropdown-toggle text-decoration-none text-dark nisho-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
                         <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VirasatOffice-SS2</a></li>
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VIRASAT OFFICE-SS1</a></li>
@@ -102,7 +124,7 @@ $config = Application::$app->config;
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
                         </ul>
                     </div>
-                    <a href="/?sort=price_low" class="text-danger fw-bold">GOODBYE DEALS ;)</a>
+                    <a href="/?sort=price_low" class="text-danger fw-bold nisho-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
                 </div>
             </div>
 
@@ -557,9 +579,5 @@ $config = Application::$app->config;
         </a>
     </div>
     
-    <!-- Floating Download App Button (Nisho Style) -->
-    <a href="/about-us" class="nisho-download-btn text-decoration-none d-flex align-items-center">
-        <span class="nisho-logo-sm">वि</span> DOWNLOAD APP
-    </a>
 </body>
 </html>

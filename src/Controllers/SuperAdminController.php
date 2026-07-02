@@ -402,13 +402,61 @@ class SuperAdminController extends Controller {
             $db->beginTransaction();
 
             $allowedKeys = [
-                'company_name', 'brand_name', 'logo_url', 'gst_number', 'cin_number', 'pan_number',
-                'support_email', 'support_mobile', 'whatsapp_number', 'office_address',
+                'company_name', 'brand_name', 'logo_url', 'favicon_url', 'gst_number', 'cin_number', 'pan_number',
+                'support_email', 'support_mobile', 'whatsapp_number', 'registered_office_address', 'corporate_office_address',
+                'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin',
                 'smtp_host', 'smtp_port', 'smtp_user', 'smtp_password',
-                'payment_gateway_key', 'payment_gateway_secret'
+                'sms_gateway_key', 'sms_gateway_secret',
+                'whatsapp_api_key', 'whatsapp_api_secret',
+                'payment_gateway_key', 'payment_gateway_secret',
+                'cloudflare_account_id', 'cloudflare_api_token', 'google_maps_api_key'
             ];
 
             $stmt = $db->prepare("INSERT INTO system_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+
+    public function sessions(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
+        if (!$user) return;
+
+        $db = Application::$app->db;
+        $sessions = $db->query("\n            SELECT us.*, u.name as user_name, u.email, r.name as role_name\n            FROM user_sessions us\n            JOIN users u ON us.user_id = u.id\n            JOIN roles r ON u.role_id = r.id\n            ORDER BY us.last_active DESC, us.id DESC\n        ")->fetchAll() ?: [];
+
+        return $this->render('admin/sessions', [
+            'title' => 'Device Management & Session Control',
+            'sessions' => $sessions
+        ]);
+    }
+
+    public function revokeSession(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
+        if (!$user) return;
+
+        $body = $request->getBody();
+        $token = trim($body['token'] ?? '');
+
+        if ($token === '') {
+            return $response->json(['error' => 'Invalid session token'], 400);
+        }
+
+        $db = Application::$app->db;
+        $stmt = $db->prepare("DELETE FROM user_sessions WHERE token = ?");
+        $stmt->execute([$token]);
+
+        return $response->json(['success' => true]);
+    }
+
+    public function activityLogs(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
+        if (!$user) return;
+
+        $db = Application::$app->db;
+        $logs = $db->query("\n            SELECT al.*, u.name as user_name, u.email\n            FROM activity_logs al\n            LEFT JOIN users u ON al.user_id = u.id\n            ORDER BY al.created_at DESC, al.id DESC\n            LIMIT 200\n        ")->fetchAll() ?: [];
+
+        return $this->render('admin/activity', [
+            'title' => 'Login Logs & Activity Audit Trail',
+            'logs' => $logs
+        ]);
+    }
 
             foreach ($allowedKeys as $key) {
                 if (isset($body[$key])) {

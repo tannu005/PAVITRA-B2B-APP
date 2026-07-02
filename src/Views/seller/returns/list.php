@@ -67,14 +67,17 @@
                                     <?php if ($r['status'] === 'REQUESTED'): ?>
                                         <div class="d-flex flex-column gap-1 align-items-end">
                                             <form action="/seller/returns/<?= $r['id'] ?>/approve" method="POST">
+                                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                                                 <button type="submit" class="btn btn-primary btn-sm w-100">Approve Request</button>
                                             </form>
                                             <form action="/seller/returns/<?= $r['id'] ?>/verify" method="POST">
+                                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                                                 <button type="submit" class="btn btn-success btn-sm w-100">Approve & Refund Reversal</button>
                                             </form>
                                         </div>
                                     <?php elseif ($r['status'] === 'APPROVED'): ?>
                                         <form action="/seller/returns/<?= $r['id'] ?>/verify" method="POST">
+                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                                             <button type="submit" class="btn btn-success btn-sm"><i class="fa-solid fa-circle-check me-1"></i> Verify & Process Refund</button>
                                         </form>
                                     <?php else: ?>

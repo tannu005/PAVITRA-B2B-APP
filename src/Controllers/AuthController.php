@@ -8,6 +8,27 @@ use Core\Response;
 use Core\Application;
 
 class AuthController extends Controller {
+    protected function createWebSession(array $user, string $context = 'WEB_LOGIN'): void {
+        $db = Application::$app->db;
+        $token = bin2hex(random_bytes(32));
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $agent = $_SERVER['HTTP_USER_AGENT'] ?? 'Web-Browser';
+
+        $stmtSession = $db->prepare("INSERT INTO user_sessions (user_id, token, ip_address, user_agent) VALUES (?, ?, ?, ?)");
+        $stmtSession->execute([$user['id'], $token, $ip, $agent]);
+
+        $_SESSION['session_token'] = $token;
+        $_SESSION['session_device'] = $agent;
+
+        $stmtLog = $db->prepare("INSERT INTO activity_logs (user_id, activity, details, ip_address) VALUES (?, ?, ?, ?)");
+        $stmtLog->execute([
+            $user['id'],
+            $context,
+            $agent,
+            $ip
+        ]);
+    }
+
     public function loginView(Request $request, Response $response) {
         if (Application::$app->getSessionUser()) {
             $response->redirect('/');
@@ -36,11 +57,8 @@ class AuthController extends Controller {
                 } else {
                     // Success log-in
                     $_SESSION['user_id'] = $user['id'];
-                    
-                    // Log activity
-                    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
-                    $stmtLog = $db->prepare("INSERT INTO activity_logs (user_id, activity, details, ip_address) VALUES (?, 'LOGIN', 'Successful login via web interface', ?)");
-                    $stmtLog->execute([$user['id'], $ip]);
+
+                    $this->createWebSession($user, 'LOGIN');
 
                     // Redirect based on role
                     if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])) {
@@ -149,10 +167,14 @@ class AuthController extends Controller {
                 $stmtWallet = $db->prepare("INSERT INTO wallets (user_id, balance) VALUES (?, 0.00)");
                 $stmtWallet->execute([$userId]);
 
+                $stmtLog = $db->prepare("INSERT INTO activity_logs (user_id, activity, details, ip_address) VALUES (?, 'REGISTER', ?, ?)");
+                $stmtLog->execute([$userId, 'Registered from web signup form', $_SERVER['REMOTE_ADDR'] ?? '']);
+
                 $db->commit();
 
                 // Auto login
                 $_SESSION['user_id'] = $userId;
+                $this->createWebSession(['id' => $userId], 'REGISTER');
                 
                 // Redirect
                 if ($role['name'] === 'SELLER') {
@@ -186,7 +208,28 @@ class AuthController extends Controller {
     }
 
     public function logout(Request $request, Response $response) {
+        $db = Application::$app->db;
+        if (!empty($_SESSION['session_token'])) {
+            try {
+                $stmt = $db->prepare("DELETE FROM user_sessions WHERE token = ?");
+                $stmt->execute([$_SESSION['session_token']]);
+            } catch (\Throwable $e) {
+                // Ignore logout cleanup failures.
+            }
+        }
+
+        if (!empty($_SESSION['user_id'])) {
+            try {
+                $stmt = $db->prepare("INSERT INTO activity_logs (user_id, activity, details, ip_address) VALUES (?, 'LOGOUT', 'User logged out', ?)");
+                $stmt->execute([$_SESSION['user_id'], $_SERVER['REMOTE_ADDR'] ?? '']);
+            } catch (\Throwable $e) {
+                // Ignore logging failures during logout.
+            }
+        }
+
         unset($_SESSION['user_id']);
+        unset($_SESSION['session_token']);
+        unset($_SESSION['session_device']);
         session_destroy();
         $response->redirect('/login');
     }

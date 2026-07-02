@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>/</loc></url>
+  <url><loc>/login</loc></url>
+  <url><loc>/register</loc></url>
+  <url><loc>/about-us</loc></url>
+  <url><loc>/contact-us</loc></url>
+  <url><loc>/privacy-policy</loc></url>
+  <url><loc>/terms-conditions</loc></url>
+  <url><loc>/refund-policy</loc></url>
+  <url><loc>/shipping-policy</loc></url>
+  <url><loc>/support</loc></url>
+  <url><loc>/seller</loc></url>
+  <url><loc>/admin</loc></url>
+  <url><loc>/delivery</loc></url>
+</urlset>

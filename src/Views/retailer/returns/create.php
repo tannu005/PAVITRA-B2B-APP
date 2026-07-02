@@ -17,6 +17,7 @@
                 <?php endif; ?>
 
                 <form action="/orders/return/<?= $order['id'] ?>" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2">Select Items to Return</h5>
                     
                     <div class="table-responsive mb-4">

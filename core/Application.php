@@ -22,6 +22,9 @@ class Application {
             session_start();
         }
 
+        $this->ensureCsrfToken();
+        $this->applySecurityHeaders();
+
         // Initialize Database
         $this->db = new Database();
         
@@ -35,6 +38,35 @@ class Application {
         } catch (\Throwable $e) {
             $this->handleException($e);
         }
+    }
+
+    public function getCsrfToken(): string {
+        return $_SESSION['csrf_token'] ?? '';
+    }
+
+    public function validateCsrfToken(?string $token): bool {
+        $sessionToken = $_SESSION['csrf_token'] ?? '';
+        return !empty($sessionToken) && is_string($token) && hash_equals($sessionToken, $token);
+    }
+
+    protected function ensureCsrfToken(): void {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+    }
+
+    protected function applySecurityHeaders(): void {
+        if (headers_sent()) {
+            return;
+        }
+
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: SAMEORIGIN');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+        header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
+        header('Cross-Origin-Opener-Policy: same-origin');
+        header('Cross-Origin-Resource-Policy: same-origin');
+        header("Content-Security-Policy: default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https: data: blob:; media-src 'self' https: data: blob:; connect-src 'self' https:; frame-src 'self' https:;");
     }
 
     public function getSessionUser(): ?array {

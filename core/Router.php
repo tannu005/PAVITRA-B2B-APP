@@ -28,6 +28,10 @@ class Router {
     public function resolve() {
         $path = $this->normalizePath($this->request->getPath());
         $method = $this->request->getMethod();
+
+        if ($method === 'POST' && !str_starts_with($path, '/api/')) {
+            $this->enforceCsrf();
+        }
         
         // Find matching route
         $callback = $this->routes[$method][$path] ?? null;
@@ -79,6 +83,17 @@ class Router {
 
         $this->response->setStatusCode(500);
         return 'Internal Server Error';
+    }
+
+    protected function enforceCsrf(): void {
+        $body = $this->request->getBody();
+        $token = $body['csrf_token'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
+
+        if (!Application::$app->validateCsrfToken(is_string($token) ? $token : null)) {
+            $this->response->setStatusCode(419);
+            echo 'CSRF token validation failed.';
+            exit;
+        }
     }
 
     public function renderView(string $view, array $params = []) {

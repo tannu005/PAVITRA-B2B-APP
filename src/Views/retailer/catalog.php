@@ -42,19 +42,18 @@ function renderProductCard($p) {
                 <span class="badge position-absolute border-0 text-white" style="top: 8px; left: 8px; font-size: 0.6rem; border-radius: 2px; font-weight: 700; padding: 4px 8px; letter-spacing: 0.05em; text-transform: uppercase; background-color: <?= $badgeColors[$badgeIdx] ?>;"><?= $badges[$badgeIdx] ?></span>
             <?php endif; ?>
             <!-- Quick Add -->
-            <button class="nisho-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold" style="bottom: 0; left: 0; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
+            <button class="nisho-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold nisho-section-link" style="bottom: 0; left: 0; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
                 + Quick Add
             </button>
         </div>
         <div class="meesho-card-body text-center pt-2 pb-3">
-            <h6 class="meesho-card-title mb-1 text-uppercase" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; color: #1c1c1c;"><?= htmlspecialchars($p['title']) ?></h6>
-            <div class="meesho-price-wholesale fw-bold text-dark mb-1" style="font-size: 0.88rem;">
+            <h6 class="meesho-card-title mb-1 text-uppercase nisho-product-title"><?= htmlspecialchars($p['title']) ?></h6>
+            <div class="meesho-price-wholesale fw-bold text-dark mb-1 nisho-product-price">
                 Rs. <?= number_format($wholesalePrice) ?>
                 <?php if ($price > $wholesalePrice): ?>
-                    <span class="text-decoration-line-through text-muted fw-normal ms-1" style="font-size: 0.72rem;">Rs. <?= number_format($price) ?></span>
+                    <span class="text-decoration-line-through text-muted fw-normal ms-1 nisho-product-price-compare">Rs. <?= number_format($price) ?></span>
                 <?php endif; ?>
             </div>
-            <div class="nisho-card-sizes text-uppercase">S | M | L | XL | Free Size</div>
         </div>
     </div>
     <?php
@@ -114,9 +113,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Wedding Season 2026</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Shaadi Ka Ghar</h1>
-                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">Virasat Banarasi Bridal Collection</p>
-                        <a href="/?category=Banarasi+Brocade" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Shaadi Ka Ghar</h1>
+                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Virasat Banarasi Bridal Collection</p>
+                        <a href="/?category=Banarasi+Brocade" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -127,9 +126,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Handloomed Zari Heritage</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Royal Kanjeevaram</h1>
-                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">Wholesale Temple Silk Weaves</p>
-                        <a href="/?category=Kanjeevaram+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Royal Kanjeevaram</h1>
+                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Wholesale Temple Silk Weaves</p>
+                        <a href="/?category=Kanjeevaram+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -140,9 +139,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Double Ikat Masterpiece</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Patan Patola</h1>
-                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">GI-Tagged Handloom Craft</p>
-                        <a href="/?category=Patola+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Patan Patola</h1>
+                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">GI-Tagged Handloom Craft</p>
+                        <a href="/?category=Patola+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -153,9 +152,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Sheer Elegance</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2" style="font-family: 'Rozha One', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); text-transform: uppercase; line-height: 1;">Organza & Tissue</h1>
-                        <p class="mb-3 text-uppercase" style="letter-spacing: 0.3em; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7);">Lightweight Premium Drapes</p>
-                        <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Organza & Tissue</h1>
+                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Lightweight Premium Drapes</p>
+                        <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -171,18 +170,18 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- ═══════════════════════════════════════════ -->
     <!-- SECTION 2: CAROUSEL #1 — VIRASAT MUSE      -->
     <!-- ═══════════════════════════════════════════ -->
-    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">Virasat Muse</h3>
-                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Curated Most Wanted Wholesale Handlooms</p>
+                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Virasat Muse</h2>
+                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Curated Most Wanted Wholesale Handlooms</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/?sort=price_high" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?sort=price_high" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
         <div class="nisho-carousel-container">
@@ -201,28 +200,28 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- ═══════════════════════════════════════════ -->
     <div class="w-100 my-5 overflow-hidden position-relative" style="height: 45vh; min-height: 320px; max-height: 480px; background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png'); background-size: cover; background-position: center; background-attachment: fixed;">
         <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center text-white p-4">
-            <p class="text-uppercase mb-2" style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.35em; font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.6);">Wholesale Wedding Collection</p>
-            <h2 class="text-uppercase fw-bold mb-3" style="font-family: 'Rozha One', serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 0.05em; text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Tyoharcore</h2>
+            <p class="text-uppercase mb-2 nisho-hero-subtitle" style="color: rgba(255,255,255,0.6);">Wholesale Wedding Collection</p>
+            <h2 class="text-uppercase mb-3 nisho-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Tyoharcore</h2>
             <p class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); max-width: 500px;">Festive silks handpicked for the bridal season. Bulk orders with exclusive wholesale margins.</p>
-            <a href="/?category=Banarasi+Brocade" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; border-width: 2px;">Explore Collection</a>
+            <a href="/?category=Banarasi+Brocade" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="border-width: 2px;">Explore Collection</a>
         </div>
     </div>
 
     <!-- ═══════════════════════════════════════════ -->
     <!-- SECTION 4: CAROUSEL #2 — NEW ARRIVALS       -->
     <!-- ═══════════════════════════════════════════ -->
-    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">New Arrivals</h3>
-                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Fresh Off the Handloom — Just Landed</p>
+                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">New Arrivals</h2>
+                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Fresh Off the Handloom — Just Landed</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
         <div class="nisho-carousel-container">
@@ -238,8 +237,8 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- ═══════════════════════════════════════════ -->
     <div class="my-5 py-4" id="home-categories-grid">
         <div class="text-center mb-5">
-            <h2 class="text-uppercase fw-bold" style="font-family: 'Rozha One', serif; font-size: 2.2rem; letter-spacing: 0.04em; color: #482922;">Shop by Weaving Style</h2>
-            <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.25em; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;">Weaver-Direct GI-Tagged Handloom Masterpieces</p>
+            <h2 class="text-uppercase fw-normal nisho-section-title">Shop by Weaving Style</h2>
+            <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Weaver-Direct GI-Tagged Handloom Masterpieces</p>
         </div>
         <div class="row g-3 g-md-4 justify-content-center">
             <?php
@@ -254,8 +253,8 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                 <a href="<?= $cat['link'] ?>" class="nisho-cat-block position-relative d-block overflow-hidden" style="height: 400px; text-decoration: none;">
                     <div class="nisho-cat-img w-100 h-100" style="background-image: url('<?= $cat['img'] ?>'); background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);"></div>
                     <div class="nisho-cat-overlay position-absolute d-flex flex-column justify-content-end p-4 text-white" style="background: linear-gradient(transparent 40%, rgba(0,0,0,0.7)); top: 0; left: 0; right: 0; bottom: 0;">
-                        <h4 class="fw-bold text-uppercase mb-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em;"><?= $cat['name'] ?></h4>
-                        <span class="text-white-50 text-uppercase" style="font-size: 0.62rem; letter-spacing: 0.12em; font-weight: 700;"><?= $cat['count'] ?> — Explore →</span>
+                        <h4 class="fw-bold text-uppercase mb-0 nisho-section-title" style="color: #FFF !important;"><?= $cat['name'] ?></h4>
+                        <span class="text-white-50 text-uppercase nisho-section-subtitle" style="color: rgba(255,255,255,0.5) !important;"><?= $cat['count'] ?> — Explore →</span>
                     </div>
                 </a>
             </div>
@@ -266,18 +265,18 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- ═══════════════════════════════════════════ -->
     <!-- SECTION 6: CAROUSEL #3 — GOODBYE DEALS     -->
     <!-- ═══════════════════════════════════════════ -->
-    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">Goodbye Deals <span style="font-size: 1.2rem;">;)</span></h3>
-                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Last Pieces at Best Wholesale Discounts</p>
+                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Goodbye Deals <span style="font-size: 1.2rem;">;)</span></h2>
+                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Last Pieces at Best Wholesale Discounts</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/?sort=price_low" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?sort=price_low" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
         <div class="nisho-carousel-container">
@@ -294,21 +293,21 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- SECTION 7: VALUE PROPOSITION                -->
     <!-- 3 columns with icons                        -->
     <!-- ═══════════════════════════════════════════ -->
-    <div class="my-5 py-5 border-top border-bottom" style="background-color: #FAF8F6; font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="my-5 py-5 border-top border-bottom" style="background-color: #FAF8F6; font-family: 'Nunito', sans-serif;">
         <div class="row g-4 text-center">
             <div class="col-4">
                 <div class="mb-3"><i class="fa-solid fa-truck-fast" style="font-size: 2rem; color: #482922;"></i></div>
-                <h6 class="fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 0.08em; color: #1c1c1c;">Fast Shipping</h6>
+                <h6 class="fw-bold text-uppercase nisho-section-subtitle" style="color: #1c1c1c;">Fast Shipping</h6>
                 <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">Dispatched in 24-48 hours from weaver hubs across India.</p>
             </div>
             <div class="col-4">
                 <div class="mb-3"><i class="fa-solid fa-arrow-rotate-left" style="font-size: 2rem; color: #482922;"></i></div>
-                <h6 class="fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 0.08em; color: #1c1c1c;">7-Day Easy Returns</h6>
+                <h6 class="fw-bold text-uppercase nisho-section-subtitle" style="color: #1c1c1c;">7-Day Easy Returns</h6>
                 <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">Hassle-free returns and exchanges on all wholesale orders.</p>
             </div>
             <div class="col-4">
                 <div class="mb-3"><i class="fa-solid fa-certificate" style="font-size: 2rem; color: #482922;"></i></div>
-                <h6 class="fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 0.08em; color: #1c1c1c;">Premium Quality</h6>
+                <h6 class="fw-bold text-uppercase nisho-section-subtitle" style="color: #1c1c1c;">Premium Quality</h6>
                 <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">100% GI-certified authentic handloom with weaver verification.</p>
             </div>
         </div>
@@ -319,34 +318,35 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- Full-width looping video with overlay        -->
     <!-- ═══════════════════════════════════════════ -->
     <div class="my-5">
-        <div class="position-relative overflow-hidden w-100" style="height: 45vh; min-height: 320px; max-height: 480px;">
-            <video class="w-100 h-100" style="object-fit: cover;" autoplay loop muted playsinline>
-                <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0227e870878a9c7eb1c11069f2e96d9&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+        <section class="nisho-video-banner position-relative overflow-hidden w-100">
+            <video class="nisho-video-media" autoplay loop muted playsinline poster="/saree-banner4.png" preload="metadata">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-waving-red-fabric-surface-40294-large.mp4" type="video/mp4">
             </video>
-            <div class="position-absolute d-flex flex-column justify-content-center align-items-center text-center text-white p-4" style="top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4);">
-                <p class="text-uppercase mb-2" style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.35em; font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.6);">Heritage Storytelling</p>
-                <h2 class="text-uppercase fw-bold mb-3" style="font-family: 'Rozha One', serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 0.05em; text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Desi Romance</h2>
-                <p class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); max-width: 450px;">A rhythmic celebration of warp and weft. Traditional sarees reimagined for the modern wholesale buyer.</p>
-                <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.2em; color: #482922;">Explore Story</a>
+            <div class="nisho-video-overlay"></div>
+            <div class="nisho-video-content position-absolute d-flex flex-column justify-content-center align-items-center text-center text-white p-4">
+                <p class="text-uppercase mb-2 nisho-hero-subtitle" style="color: rgba(255,255,255,0.6);">Heritage Storytelling</p>
+                <h2 class="text-uppercase mb-3 nisho-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Desi Romance</h2>
+                <p class="mb-4 nisho-video-copy">A rhythmic celebration of warp and weft. Traditional sarees reimagined for the modern wholesale buyer.</p>
+                <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Explore Story</a>
             </div>
-        </div>
+        </section>
     </div>
 
     <!-- ═══════════════════════════════════════════ -->
     <!-- SECTION 9: CAROUSEL #4 — BESTSELLERS        -->
     <!-- ═══════════════════════════════════════════ -->
-    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h3 class="text-uppercase fw-bold mb-0" style="font-family: 'Rozha One', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: #482922;">Wholesale Bestsellers</h3>
-                <p class="text-muted text-uppercase mb-0" style="font-size: 0.68rem; letter-spacing: 0.2em; font-weight: 700;">Top-Selling Sarees Among Our B2B Retailers</p>
+                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Wholesale Bestsellers</h2>
+                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Top-Selling Sarees Among Our B2B Retailers</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3" style="font-size: 0.7rem; letter-spacing: 0.1em; color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
         <div class="nisho-carousel-container">
@@ -362,12 +362,12 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- ═══════════════════════════════════════════ -->
     <!-- SECTION 10: NEWSLETTER / CTA                -->
     <!-- ═══════════════════════════════════════════ -->
-    <div class="w-100 py-5 mt-5" style="background-color: #482922; font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="w-100 py-5 mt-5" style="background-color: #482922; font-family: 'Nunito', sans-serif;">
         <div class="container text-center py-4">
-            <h3 class="text-uppercase fw-bold mb-2" style="font-size: 1.8rem; letter-spacing: 0.08em; color: #FFF; font-family: 'Rozha One', serif;">Join the Movement</h3>
+            <h3 class="text-uppercase fw-bold mb-2 nisho-section-title" style="color: #FFF !important;">Join the Movement</h3>
             <p class="mb-4" style="font-size: 0.85rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.55);">Get 10% off your first wholesale order. Stay updated on exclusive handloom drops.</p>
             <form class="d-flex justify-content-center gap-2 mx-auto" style="max-width: 480px;" onsubmit="event.preventDefault(); showToast('Subscribed successfully! 🎉'); $(this).find('input').val('');">
-                <input type="email" class="form-control rounded-0 border-0 py-2 px-3" placeholder="Enter your email address" required style="font-size: 0.85rem; background: rgba(255,255,255,0.12); color: #FFF;">
+                <input type="email" class="form-control rounded-0 border-0 py-2 px-3 nisho-newsletter-input" placeholder="Enter your email address" required style="font-size: 0.85rem; background: rgba(255,255,255,0.12); color: #FFF !important;">
                 <button type="submit" class="btn btn-light rounded-0 px-4 text-uppercase fw-bold" style="font-size: 0.8rem; letter-spacing: 0.12em; color: #482922; white-space: nowrap;">Subscribe</button>
             </form>
         </div>
@@ -490,12 +490,7 @@ $(document).ready(function() {
                                 <span class="text-danger small fw-bold ms-2">${disc}% OFF</span>
                                 <div class="small text-muted mt-1" style="font-size: 0.72rem;">Wholesale Rate (Min Order: ${p.bulk_threshold} Pcs)</div>
                             </div>
-                            <div class="mb-4">
-                                <label class="fw-bold text-muted mb-2 d-block" style="font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;">Select Size</label>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    ${['S','M','L','XL','Free Size'].map((s,i) => `<button class="btn btn-outline-dark px-3 py-1 rounded-0" style="font-size: 0.78rem; ${i===0?'background:#1a1a1a;color:white;border-color:#1a1a1a;':'border-color:#ccc;color:#555;'}" onclick="$(this).parent().find('button').css({'background':'transparent','color':'#555','border-color':'#ccc'}); $(this).css({'background':'#1a1a1a','color':'white','border-color':'#1a1a1a'});">${s}</button>`).join('')}
-                                </div>
-                            </div>
+                            <!-- Removed sizes as sarees are one-size-fits-all -->
                             <div class="mb-4 border-top pt-3">
                                 <h6 class="fw-bold text-uppercase text-dark mb-2" style="font-size: 0.7rem; letter-spacing: 0.08em;">Details</h6>
                                 <div class="d-flex flex-column gap-1 text-muted" style="font-size: 0.8rem;">

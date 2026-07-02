@@ -18,6 +18,7 @@
         <?php endif; ?>
 
         <form action="/register" method="POST" id="register-form">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
             <!-- Full Name -->
             <div class="mb-4">
                 <label for="name" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Full Name</label>

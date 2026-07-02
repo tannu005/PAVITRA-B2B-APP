@@ -43,6 +43,7 @@
 
                 <!-- Reply / Post message form -->
                 <form action="/admin/support/ticket/<?= $ticket['id'] ?>/reply" method="POST" class="border-top pt-3">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <div class="mb-3">
                         <label for="message" class="form-label small fw-semibold text-muted text-uppercase">Post Message Reply</label>
                         <textarea class="form-control" id="message" name="message" rows="3" required placeholder="Type your support response..."></textarea>
@@ -68,6 +69,7 @@
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2">Ticket State</h5>
                 
                 <form action="/admin/support/ticket/<?= $ticket['id'] ?>/status" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <div class="mb-3">
                         <label for="status" class="form-label small fw-semibold text-muted text-uppercase">Oversight Status</label>
                         <select class="form-select form-select-sm" id="status" name="status" onchange="this.form.submit()">
