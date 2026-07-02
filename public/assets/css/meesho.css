@@ -2149,3 +2149,12 @@ html {
 .android-apk .pavitra-edge-trigger {
     bottom: 105px !important;
 }
+
+#sort-selector {
+    width: 90px !important;
+}
+@media (min-width: 576px) {
+    #sort-selector {
+        width: 140px !important;
+    }
+}

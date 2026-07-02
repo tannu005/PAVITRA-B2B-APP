@@ -395,24 +395,24 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- ========================================== -->
 
     <!-- Refinement Bar -->
-    <div class="d-flex justify-content-between align-items-center py-3 px-2 border-bottom mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-        <div class="d-flex align-items-center gap-3">
-            <button class="btn btn-outline-dark btn-sm rounded-0 border-0 text-uppercase fw-bold" id="refinement-filters-btn" style="font-size: 0.72rem; letter-spacing: 0.1em; color: #482922;">
-                <i class="fa-solid fa-sliders me-1"></i> Filter & Refine
+    <div class="d-flex justify-content-between align-items-center py-2 px-3 border rounded-3 mb-4 refinement-toolbar" style="font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF8F5; border-color: #EFECE6 !important;">
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-outline-dark btn-sm rounded-pill border-0 text-uppercase fw-bold p-0 d-flex align-items-center" id="refinement-filters-btn" style="font-size: 0.65rem; letter-spacing: 0.08em; color: #482922; background: transparent;">
+                <span class="d-inline-flex align-items-center justify-content-center bg-white border rounded-circle me-1" style="width: 24px; height: 24px; border-color: #EFECE6 !important;"><i class="fa-solid fa-sliders" style="font-size: 0.7rem;"></i></span> Filter
             </button>
-            <span class="text-uppercase text-secondary" style="font-size: 0.72rem; letter-spacing: 0.08em; font-weight: 600;">
-                <?= count($products) ?> products
+            <span class="text-uppercase text-muted d-inline-block border-start ps-2" style="font-size: 0.62rem; letter-spacing: 0.06em; font-weight: 600; border-color: #EFECE6 !important; padding-top: 2px;">
+                <?= count($products) ?> Pcs
                 <?php if (!empty($selectedCategory)): ?>
-                    / <span class="text-dark fw-bold"><?= htmlspecialchars($selectedCategory) ?></span>
+                    / <span class="text-dark fw-bold"><?= htmlspecialchars(str_replace(' Silk', '', str_replace(' Brocade', '', str_replace(' Weave', '', $selectedCategory)))) ?></span>
                 <?php endif; ?>
             </span>
         </div>
-        <div class="d-flex align-items-center gap-2">
-            <span class="text-nowrap text-secondary text-uppercase d-none d-sm-inline" style="font-size: 0.68rem; letter-spacing: 0.08em; font-weight: 700;">Sort:</span>
-            <select class="form-select form-select-sm border-0 bg-transparent rounded-0" id="sort-selector" style="width: 170px; font-size: 0.78rem; text-transform: uppercase; font-weight: 600; padding: 4px 8px; letter-spacing: 0.04em;">
+        <div class="d-flex align-items-center gap-1">
+            <span class="text-nowrap text-secondary text-uppercase d-none d-sm-inline" style="font-size: 0.65rem; letter-spacing: 0.08em; font-weight: 700;">Sort:</span>
+            <select class="form-select form-select-sm border-0 bg-transparent rounded-0 py-0" id="sort-selector" style="font-size: 0.68rem; text-transform: uppercase; font-weight: 700; padding: 2px 20px 2px 4px; letter-spacing: 0.04em; color: #1a1a1a; cursor: pointer;">
                 <option value="" <?= empty($sort) ? 'selected' : '' ?>>Featured</option>
-                <option value="price_low" <?= $sort === 'price_low' ? 'selected' : '' ?>>Price: Low to High</option>
-                <option value="price_high" <?= $sort === 'price_high' ? 'selected' : '' ?>>Price: High to Low</option>
+                <option value="price_low" <?= $sort === 'price_low' ? 'selected' : '' ?>>Price: L-H</option>
+                <option value="price_high" <?= $sort === 'price_high' ? 'selected' : '' ?>>Price: H-L</option>
             </select>
         </div>
     </div>
