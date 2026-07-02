@@ -27,7 +27,7 @@ function renderProductCard($p) {
     
     ob_start();
     ?>
-    <div class="meesho-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>">
+    <div class="meesho-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>" data-json="<?= htmlspecialchars(json_encode($p), ENT_QUOTES, 'UTF-8') ?>">
         <div class="nisho-card-img-wrapper position-relative">
             <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="nisho-card-img" loading="lazy">
             <img src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="nisho-card-img-hover" loading="lazy">
@@ -476,67 +476,58 @@ $(document).ready(function() {
         window.location.search = u.toString();
     });
 
-    // Product detail modal
+    // Product detail modal - rendered instantly from pre-loaded JSON properties
     $('.product-card-trigger').on('click', function(e) {
         if ($(e.target).closest('.wishlist-heart-btn').length > 0) return;
-        const productId = $(this).data('id');
-        $('#productDetailModal').modal('show');
-        $('#modal-content-body').html('<div class="text-center py-5"><div class="spinner-border" style="color: #482922;"><span class="visually-hidden">Loading...</span></div></div>');
+        const p = $(this).data('json');
+        if (!p) return;
 
-        $.ajax({
-            url: '/product/' + productId,
-            method: 'GET',
-            dataType: 'json',
-            success: function(p) {
-                const wf = parseFloat(p.wholesale_price).toLocaleString('en-IN');
-                const pf = parseFloat(p.price).toLocaleString('en-IN');
-                const disc = Math.round(((p.price - p.wholesale_price) / p.price) * 100);
-                $('#modal-content-body').html(`
-                    <div class="row g-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                        <div class="col-md-5">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
-                        </div>
-                        <div class="col-md-7">
-                            <div class="text-uppercase text-muted mb-1" style="font-size: 0.62rem; letter-spacing: 0.12em; font-weight: 700;">${p.category_name}</div>
-                            <h3 class="fw-bold text-uppercase mb-2" style="font-size: 1.3rem; letter-spacing: 0.04em; color: #1c1c1c;">${p.title}</h3>
-                            <p class="text-muted small mb-3">SKU: <code class="text-dark">${p.sku}</code></p>
-                            <div class="mb-4">
-                                <span class="fs-3 fw-bold text-dark">Rs. ${wf}</span>
-                                <span class="text-decoration-line-through text-muted ms-2" style="font-size: 0.88rem;">Rs. ${pf}</span>
-                                <span class="text-danger small fw-bold ms-2">${disc}% OFF</span>
-                                <div class="small text-muted mt-1" style="font-size: 0.72rem;">Wholesale Rate (Min Order: ${p.bulk_threshold} Pcs)</div>
-                            </div>
-                            <!-- Removed sizes as sarees are one-size-fits-all -->
-                            <div class="mb-4 border-top pt-3">
-                                <h6 class="fw-bold text-uppercase text-dark mb-2" style="font-size: 0.7rem; letter-spacing: 0.08em;">Details</h6>
-                                <div class="d-flex flex-column gap-1 text-muted" style="font-size: 0.8rem;">
-                                    <div><strong>Color:</strong> ${p.color || 'Traditional Woven'}</div>
-                                    <div><strong>Weight:</strong> ${p.weight ? p.weight + 'g' : '~700g'}</div>
-                                    <div><strong>Dimensions:</strong> ${p.dimensions || '6.3m × 1.2m'}</div>
-                                    <div><strong>Stock:</strong> <span class="badge bg-success-subtle text-success border border-success-subtle">${p.stock} units</span></div>
-                                </div>
-                            </div>
-                            <div class="mb-3"><p style="font-size: 0.8rem; line-height: 1.6; color: #555;">${p.description}</p></div>
-                            <div class="row g-2 align-items-center pt-3 border-top">
-                                <div class="col-4 col-sm-3">
-                                    <select class="form-select border-dark rounded-0 py-2" id="modal-qty-select" style="font-size: 0.82rem;">
-                                        ${[...Array(15).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
-                                    </select>
-                                </div>
-                                <div class="col-8 col-sm-9">
-                                    <button class="btn w-100 py-2 text-uppercase fw-bold" id="modal-add-cart-btn" data-variant-id="${p.variant_id}" style="background:#1a1a1a; color:white; border:none; border-radius:0; letter-spacing:0.15em; font-size:0.82rem;">
-                                        <i class="fa fa-shopping-bag me-2"></i> Add to Bag
-                                    </button>
-                                </div>
-                            </div>
+        $('#productDetailModal').modal('show');
+
+        const wf = parseFloat(p.wholesale_price).toLocaleString('en-IN');
+        const pf = parseFloat(p.price).toLocaleString('en-IN');
+        const disc = Math.round(((p.price - p.wholesale_price) / p.price) * 100);
+
+        $('#modal-content-body').html(`
+            <div class="row g-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                <div class="col-md-5">
+                    <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
+                </div>
+                <div class="col-md-7">
+                    <div class="text-uppercase text-muted mb-1" style="font-size: 0.62rem; letter-spacing: 0.12em; font-weight: 700;">${p.category_name}</div>
+                    <h3 class="fw-bold text-uppercase mb-2" style="font-size: 1.3rem; letter-spacing: 0.04em; color: #1c1c1c;">${p.title}</h3>
+                    <p class="text-muted small mb-3">SKU: <code class="text-dark">${p.sku}</code></p>
+                    <div class="mb-4">
+                        <span class="fs-3 fw-bold text-dark">Rs. ${wf}</span>
+                        <span class="text-decoration-line-through text-muted ms-2" style="font-size: 0.88rem;">Rs. ${pf}</span>
+                        <span class="text-danger small fw-bold ms-2">${disc}% OFF</span>
+                        <div class="small text-muted mt-1" style="font-size: 0.72rem;">Wholesale Rate (Min Order: ${p.bulk_threshold} Pcs)</div>
+                    </div>
+                    <div class="mb-4 border-top pt-3">
+                        <h6 class="fw-bold text-uppercase text-dark mb-2" style="font-size: 0.7rem; letter-spacing: 0.08em;">Details</h6>
+                        <div class="d-flex flex-column gap-1 text-muted" style="font-size: 0.8rem;">
+                            <div><strong>Color:</strong> ${p.color || 'Traditional Woven'}</div>
+                            <div><strong>Weight:</strong> ${p.weight ? p.weight + 'g' : '~700g'}</div>
+                            <div><strong>Dimensions:</strong> ${p.dimensions || '6.3m × 1.2m'}</div>
+                            <div><strong>Stock:</strong> <span class="badge bg-success-subtle text-success border border-success-subtle">${p.stock} units</span></div>
                         </div>
                     </div>
-                `);
-            },
-            error: function() {
-                $('#modal-content-body').html('<p class="text-danger text-center py-5">Failed to load product details.</p>');
-            }
-        });
+                    <div class="mb-3"><p style="font-size: 0.8rem; line-height: 1.6; color: #555;">${p.description}</p></div>
+                    <div class="row g-2 align-items-center pt-3 border-top">
+                        <div class="col-4 col-sm-3">
+                            <select class="form-select border-dark rounded-0 py-2" id="modal-qty-select" style="font-size: 0.82rem;">
+                                ${[...Array(15).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="col-8 col-sm-9">
+                            <button class="btn w-100 py-2 text-uppercase fw-bold" id="modal-add-cart-btn" data-variant-id="${p.variant_id}" style="background:#1a1a1a; color:white; border:none; border-radius:0; letter-spacing:0.15em; font-size:0.82rem;">
+                                <i class="fa fa-shopping-bag me-2"></i> Add to Bag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
     });
 
     // Add to Cart

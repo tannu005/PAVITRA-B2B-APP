@@ -22,7 +22,7 @@ class RetailerController extends Controller {
         
         // Build query
         $sql = "
-            SELECT p.*, pv.wholesale_price, pv.price, pv.image_url, pv.bulk_threshold, pv.stock, pv.sku, c.name as category_name 
+            SELECT p.*, pv.id as variant_id, pv.wholesale_price, pv.price, pv.image_url, pv.bulk_threshold, pv.stock, pv.sku, pv.color, pv.weight, pv.dimensions, c.name as category_name 
             FROM products p 
             JOIN product_variants pv ON pv.product_id = p.id
             JOIN categories c ON p.category_id = c.id
