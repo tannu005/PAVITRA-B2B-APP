@@ -13,7 +13,8 @@ class Request {
     }
 
     public function getMethod(): string {
-        return strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
+        $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
+        return $method === 'HEAD' ? 'GET' : $method;
     }
 
     public function isGet(): bool {

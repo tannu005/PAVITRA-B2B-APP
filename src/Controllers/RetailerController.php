@@ -60,13 +60,19 @@ class RetailerController extends Controller {
             $sql .= " ORDER BY p.id DESC";
         }
 
-        $stmt = $db->prepare($sql);
-        $stmt->execute($params);
-        $products = $stmt->fetchAll() ?: [];
+        // Cache products query for 60 seconds to support 25K concurrent users
+        $cacheKey = "catalog_products_" . md5(serialize([$category, $search, $sort, $minPrice, $maxPrice]));
+        $products = Application::$app->cache->remember($cacheKey, 60, function() use ($db, $sql, $params) {
+            $stmt = $db->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll() ?: [];
+        });
 
-        // Fetch categories list for filters sidebar
-        $stmtCat = $db->query("SELECT id, name FROM categories");
-        $categoriesList = $stmtCat->fetchAll() ?: [];
+        // Cache categories list for 1 hour
+        $categoriesList = Application::$app->cache->remember('categories_list', 3600, function() use ($db) {
+            $stmtCat = $db->query("SELECT id, name FROM categories");
+            return $stmtCat->fetchAll() ?: [];
+        });
 
         return $this->render('retailer/catalog', [
             'title' => 'Pavitra B2B Wholesale - Meesho Style Shop',

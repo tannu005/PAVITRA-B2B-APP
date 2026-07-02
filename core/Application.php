@@ -8,6 +8,7 @@ class Application {
     public Request $request;
     public Response $response;
     public Database $db;
+    public Cache $cache;
     public ?array $sessionUser = null;
     public array $config = [];
 
@@ -27,6 +28,9 @@ class Application {
 
         // Initialize Database
         $this->db = new Database();
+        
+        // Initialize Cache
+        $this->cache = new Cache();
         
         // Load Company Configuration
         $this->loadConfig();

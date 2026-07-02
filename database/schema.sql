@@ -302,7 +302,8 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
   `bulk_threshold` INT DEFAULT 5,
   `stock` INT DEFAULT 0,
   `image_url` VARCHAR(255) DEFAULT NULL,
-  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  INDEX (`wholesale_price`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 26. product_images
