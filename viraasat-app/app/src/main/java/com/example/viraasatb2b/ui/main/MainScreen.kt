@@ -59,14 +59,14 @@ fun MainScreen(
   val isOfflineMode = BuildConfig.OFFLINE_MODE
   val offlineUrl = "file:///android_asset/index.html"
   
-  // Try to load previously configured URL. Default to localtunnel URL.
+  // Try to load previously configured URL. Default to Cloudflare tunnel URL.
   val storedUrl = prefs.getString("server_url", null)
-  val defaultUrl = "https://pavitra-sarees-b2b.loca.lt/"
+  val defaultUrl = "https://arts-diffs-prepare-mall.trycloudflare.com/"
   
-  // Migrate old localtunnel URL preference if it exists
+  // Migrate all old localtunnel/loca.lt URLs to the new stable Cloudflare tunnel
   val activeUrl = if (isOfflineMode) {
     offlineUrl
-  } else if (storedUrl != null && (storedUrl.contains("old-kids-wave.loca.lt") || storedUrl.contains("pavitra-saree-wholesale.loca.lt") || storedUrl.contains("pavitra-b2b.loca.lt") || storedUrl.contains("pavitra-app.loca.lt"))) {
+  } else if (storedUrl != null && storedUrl.contains(".loca.lt")) {
     prefs.edit().putString("server_url", defaultUrl).apply()
     defaultUrl
   } else {
