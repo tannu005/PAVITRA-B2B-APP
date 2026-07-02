@@ -61,12 +61,12 @@ fun MainScreen(
   
   // Try to load previously configured URL. Default to localtunnel URL.
   val storedUrl = prefs.getString("server_url", null)
-  val defaultUrl = "https://pavitra-b2b.loca.lt/"
+  val defaultUrl = "https://pavitra-app.loca.lt/"
   
   // Migrate old localtunnel URL preference if it exists
   val activeUrl = if (isOfflineMode) {
     offlineUrl
-  } else if (storedUrl != null && (storedUrl.contains("old-kids-wave.loca.lt") || storedUrl.contains("pavitra-saree-wholesale.loca.lt"))) {
+  } else if (storedUrl != null && (storedUrl.contains("old-kids-wave.loca.lt") || storedUrl.contains("pavitra-saree-wholesale.loca.lt") || storedUrl.contains("pavitra-b2b.loca.lt"))) {
     prefs.edit().putString("server_url", defaultUrl).apply()
     defaultUrl
   } else {
