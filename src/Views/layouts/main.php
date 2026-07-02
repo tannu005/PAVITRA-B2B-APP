@@ -43,6 +43,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             headers: { 'X-CSRF-Token': window.__CSRF_TOKEN__ }
         });
     </script>
+    <script>
+        if (navigator.userAgent.indexOf('PavitraB2B-Android-APK') > -1) {
+            document.documentElement.classList.add('android-apk');
+        }
+    </script>
 </head>
 <body>
 

@@ -2121,3 +2121,31 @@ html {
         bottom: 85px;
     }
 }
+
+/* Center Filter Modal with Background Blur */
+#filtersModal.modal {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#filtersModal .modal-dialog {
+    margin: 1.75rem auto;
+    max-width: 88%;
+}
+@media (min-width: 576px) {
+    #filtersModal .modal-dialog {
+        max-width: 420px;
+    }
+}
+
+/* Android WebView specific fixes for Edge-to-Edge Navigation Overlap */
+.android-apk .meesho-mobile-nav {
+    height: 76px !important;
+    padding-bottom: 16px !important;
+}
+.android-apk body {
+    padding-bottom: 90px !important;
+}
+.android-apk .pavitra-edge-trigger {
+    bottom: 105px !important;
+}

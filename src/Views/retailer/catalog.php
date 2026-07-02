@@ -653,7 +653,7 @@ $(document).ready(function() {
 
 <!-- Filters Modal -->
 <div class="modal fade" id="filtersModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 12px;">
             <div class="modal-header border-bottom-0 pb-0">
                 <h5 class="modal-title fw-bold"><i class="fa-solid fa-sliders me-2" style="color: #482922;"></i>Refine Catalog</h5>
