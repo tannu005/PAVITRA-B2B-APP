@@ -635,6 +635,21 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
     <script>
         $(document).ready(function() {
+            // Function to check if we are on the landing page (home page without active filters/search)
+            function updateEdgeTriggerVisibility() {
+                const isLandingPage = (window.location.pathname === '/' || window.location.pathname === '') && 
+                                       (!window.location.search || window.location.search === '?' || window.location.search === '');
+                if (isLandingPage) {
+                    $('#pavitra-edge-trigger-btn').hide();
+                    $('#pavitra-edge-sidebar').removeClass('open');
+                } else {
+                    $('#pavitra-edge-trigger-btn').show();
+                }
+            }
+
+            // Run initial visibility check
+            updateEdgeTriggerVisibility();
+
             // Toggle sidebar panel on trigger button click
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
                 e.stopPropagation();

@@ -2,7 +2,7 @@
     <div class="p-4" style="width: 100%; max-width: 540px; background: transparent;">
         <div class="text-center mb-5 position-relative">
             <a href="/" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0 p-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Home</a>
-            <h2 class="mb-2" style="font-family: 'Rozha One', serif; font-size: 2.2rem; color: #1a1a1a; letter-spacing: -1px;">विरासत</h2>
+            <h2 class="mb-2" style="font-family: 'Rozha One', serif; font-size: 2.2rem; color: #1a1a1a; letter-spacing: -1px;">पवित्र</h2>
             <h4 class="fw-bold text-uppercase mb-1" style="letter-spacing: 0.15em; font-size: 1.15rem; color: #1a1a1a; font-family: 'Plus Jakarta Sans', sans-serif;">Create Account</h4>
             <p class="text-muted" style="font-size: 0.85rem;">Register your wholesale profile</p>
         </div>
