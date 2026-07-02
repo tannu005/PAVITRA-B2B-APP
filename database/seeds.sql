@@ -62,16 +62,16 @@ INSERT INTO `gst_rates` (`id`, `hsn_code`, `percentage`, `description`) VALUES
 
 -- 7. Insert default company settings
 INSERT INTO `system_settings` (`setting_key`, `setting_value`) VALUES
-('company_name', 'Viraasat Textiles Private Limited'),
-('brand_name', 'Viraasat B2B'),
+('company_name', 'Pavitra Textiles Private Limited'),
+('brand_name', 'Pavitra B2B'),
 ('logo_url', '/assets/images/logo-pink.png'),
 ('gst_number', '09AAAAA1111A1Z1'),
 ('cin_number', 'U17110UP2026PTC123456'),
 ('pan_number', 'AAAAA1111A'),
-('support_email', 'wholesale@viraasat.com'),
+('support_email', 'wholesale@pavitra.com'),
 ('support_mobile', '+91 9999999999'),
 ('whatsapp_number', '+91 9999999999'),
-('office_address', 'Viraasat Textiles & Crafts Association, Varanasi Handloom Cluster, Uttar Pradesh, 221001'),
+('office_address', 'Pavitra Textiles & Crafts Association, Varanasi Handloom Cluster, Uttar Pradesh, 221001'),
 ('smtp_host', 'smtp.mailtrap.io'),
 ('smtp_port', '2525'),
 ('smtp_user', 'YOUR_SMTP_USER'),
@@ -89,10 +89,10 @@ INSERT INTO `wallets` (`id`, `user_id`, `balance`) VALUES (1, 1, 0.00);
 -- 9. Seed some demo users
 -- Seller / Weaver
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role_id`, `status`, `is_verified_email`, `is_verified_mobile`) VALUES
-(2, 'Viraasat Weavers Ltd.', 'weaver@meeshob2b.com', '+91 8888888888', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 3, 'ACTIVE', 1, 1);
+(2, 'Pavitra Weavers Ltd.', 'weaver@meeshob2b.com', '+91 8888888888', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 3, 'ACTIVE', 1, 1);
 
 INSERT INTO `seller_profiles` (`user_id`, `company_name`, `brand_name`, `registration_number`, `pan_number`, `gst_number`, `commission_rate`, `balance`) VALUES
-(2, 'Viraasat Weavers & Artisans Guild', 'Viraasat Loom', 'REG-12345', 'BBBBB2222B', '09BBBBB2222B2Z2', 8.50, 150000.00);
+(2, 'Pavitra Weavers & Artisans Guild', 'Pavitra Loom', 'REG-12345', 'BBBBB2222B', '09BBBBB2222B2Z2', 8.50, 150000.00);
 
 INSERT INTO `wallets` (`id`, `user_id`, `balance`) VALUES (2, 2, 150000.00);
 
@@ -145,12 +145,12 @@ INSERT INTO `product_variants` (`id`, `product_id`, `sku`, `color`, `size`, `wei
 
 -- 11. Seed CMS Pages
 INSERT INTO `cms_pages` (`title`, `slug`, `content`, `meta_title`, `meta_description`, `active`) VALUES
-('About Us', 'about-us', '<h1>About Viraasat B2B</h1><p>Viraasat B2B is a premier handloom weaver-direct B2B wholesale marketplace, bridging the gap between local master weavers and boutique retailers nationwide. We preserve Indian textile heritage while offering competitive wholesale pricing, dynamic commission systems, and integrated logistics.</p>', 'About Us - Viraasat B2B Wholesale Saree Marketplace', 'Learn about Viraasat B2B Wholesale and how we bridge local master weavers and retailers.', 1),
-('Contact Us', 'contact-us', '<h1>Contact Viraasat Support</h1><p>Need support or assistance with wholesale orders, bulk weaver registration, or shipping status? Reach out to our 24/7 dedicated service desk.</p><ul><li><strong>Support Helpline:</strong> +91 9999999999</li><li><strong>WhatsApp Desk:</strong> +91 9999999999</li><li><strong>Email Address:</strong> wholesale@viraasat.com</li><li><strong>Registered Office:</strong> Varanasi Handloom Cluster, Uttar Pradesh, 221001</li></ul>', 'Contact Us - Viraasat B2B Support Desk', 'Get in touch with Viraasat B2B support desk for order tracking and weaver inquiries.', 1),
-('Privacy Policy', 'privacy-policy', '<h1>Privacy Policy</h1><p>Your privacy is important to us. Viraasat B2B ensures the protection of user accounts, KYC documents, wallet ledger entries, and transaction details with enterprise-grade encryption. We do not sell or share business credentials or financial transaction history with third parties.</p>', 'Privacy Policy - Viraasat B2B Compliance', 'Privacy Policy and data security guidelines for Viraasat B2B Wholesale Marketplace.', 1),
-('Terms & Conditions', 'terms-conditions', '<h1>Terms & Conditions</h1><p>By registering on Viraasat B2B, sellers (weavers), retailers (boutique buyers), and delivery riders agree to abide by our fair transaction guidelines. Wholesale prices apply only above MOQ thresholds. Settlements are disbursed on delivery completion, subject to commission rates and GST rules.</p>', 'Terms & Conditions - Viraasat B2B Merchant Agreement', 'Terms and conditions for buying and selling on Viraasat B2B marketplace.', 1),
-('Refund Policy', 'refund-policy', '<h1>Refund & Return Policy</h1><p>We want you to be completely satisfied with your handloom sarees. Retailers can request returns within 7 days of delivery. Upon seller approval and driver pickup verification, refunds are automatically credited back to the retailer\'s wallet ledger.</p>', 'Refund & Return Policy - Viraasat B2B', 'Refund and return guidelines for boutique buyers and weavers on Viraasat B2B.', 1),
-('Shipping Policy', 'shipping-policy', '<h1>Shipping & Logistics Policy</h1><p>Orders are dispatched by registered weavers within 24-48 hours of acceptance. Our logistics network assigns courier drivers with integrated routing and handover verification via secure 4-digit customer OTP codes.</p>', 'Shipping Policy - Viraasat B2B Courier Logistics', 'Shipping and logistics handbook for delivery partners and merchants.', 1);
+('About Us', 'about-us', '<h1>About Pavitra B2B</h1><p>Pavitra B2B is a premier handloom weaver-direct B2B wholesale marketplace, bridging the gap between local master weavers and boutique retailers nationwide. We preserve Indian textile heritage while offering competitive wholesale pricing, dynamic commission systems, and integrated logistics.</p>', 'About Us - Pavitra B2B Wholesale Saree Marketplace', 'Learn about Pavitra B2B Wholesale and how we bridge local master weavers and retailers.', 1),
+('Contact Us', 'contact-us', '<h1>Contact Pavitra Support</h1><p>Need support or assistance with wholesale orders, bulk weaver registration, or shipping status? Reach out to our 24/7 dedicated service desk.</p><ul><li><strong>Support Helpline:</strong> +91 9999999999</li><li><strong>WhatsApp Desk:</strong> +91 9999999999</li><li><strong>Email Address:</strong> wholesale@pavitra.com</li><li><strong>Registered Office:</strong> Varanasi Handloom Cluster, Uttar Pradesh, 221001</li></ul>', 'Contact Us - Pavitra B2B Support Desk', 'Get in touch with Pavitra B2B support desk for order tracking and weaver inquiries.', 1),
+('Privacy Policy', 'privacy-policy', '<h1>Privacy Policy</h1><p>Your privacy is important to us. Pavitra B2B ensures the protection of user accounts, KYC documents, wallet ledger entries, and transaction details with enterprise-grade encryption. We do not sell or share business credentials or financial transaction history with third parties.</p>', 'Privacy Policy - Pavitra B2B Compliance', 'Privacy Policy and data security guidelines for Pavitra B2B Wholesale Marketplace.', 1),
+('Terms & Conditions', 'terms-conditions', '<h1>Terms & Conditions</h1><p>By registering on Pavitra B2B, sellers (weavers), retailers (boutique buyers), and delivery riders agree to abide by our fair transaction guidelines. Wholesale prices apply only above MOQ thresholds. Settlements are disbursed on delivery completion, subject to commission rates and GST rules.</p>', 'Terms & Conditions - Pavitra B2B Merchant Agreement', 'Terms and conditions for buying and selling on Pavitra B2B marketplace.', 1),
+('Refund Policy', 'refund-policy', '<h1>Refund & Return Policy</h1><p>We want you to be completely satisfied with your handloom sarees. Retailers can request returns within 7 days of delivery. Upon seller approval and driver pickup verification, refunds are automatically credited back to the retailer\'s wallet ledger.</p>', 'Refund & Return Policy - Pavitra B2B', 'Refund and return guidelines for boutique buyers and weavers on Pavitra B2B.', 1),
+('Shipping Policy', 'shipping-policy', '<h1>Shipping & Logistics Policy</h1><p>Orders are dispatched by registered weavers within 24-48 hours of acceptance. Our logistics network assigns courier drivers with integrated routing and handover verification via secure 4-digit customer OTP codes.</p>', 'Shipping Policy - Pavitra B2B Courier Logistics', 'Shipping and logistics handbook for delivery partners and merchants.', 1);
 
 -- 12. Seed Coupons
 INSERT INTO `coupons` (`code`, `type`, `value`, `min_cart_value`, `start_date`, `end_date`, `max_uses`, `active`) VALUES

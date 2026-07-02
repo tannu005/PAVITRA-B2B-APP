@@ -99,9 +99,9 @@ class Application {
         } catch (\PDOException $e) {
             // DB not yet installed/migrated, load defaults
             $this->config = [
-                'company_name' => 'Viraasat Wholesale',
-                'brand_name' => 'Viraasat',
-                'support_email' => 'support@viraasat.com',
+                'company_name' => 'Pavitra Wholesale',
+                'brand_name' => 'Pavitra',
+                'support_email' => 'support@pavitra.com',
                 'support_mobile' => '+91 9999999999',
             ];
         }

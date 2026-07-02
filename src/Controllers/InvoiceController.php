@@ -66,7 +66,7 @@ class InvoiceController extends Controller {
         $items = $stmtItems->fetchAll() ?: [];
 
         // Load company settings
-        $companyName = Application::$app->config['company_name'] ?? 'Viraasat B2B';
+        $companyName = Application::$app->config['company_name'] ?? 'Pavitra B2B';
         $companyGst = Application::$app->config['gst_number'] ?? '09AAAAA1111A1Z1';
         $companyAddress = Application::$app->config['office_address'] ?? 'Varanasi, UP';
 
@@ -79,3 +79,4 @@ class InvoiceController extends Controller {
         ]);
     }
 }
+

@@ -69,7 +69,7 @@ class RetailerController extends Controller {
         $categoriesList = $stmtCat->fetchAll() ?: [];
 
         return $this->render('retailer/catalog', [
-            'title' => 'Viraasat B2B Wholesale - Meesho Style Shop',
+            'title' => 'Pavitra B2B Wholesale - Meesho Style Shop',
             'products' => $products,
             'categoriesList' => $categoriesList,
             'selectedCategory' => $category,
@@ -408,7 +408,7 @@ class RetailerController extends Controller {
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'DEBIT', ?, ?, 'ORDER_PURCHASE', ?)
             ");
-            $stmtTx->execute([$walletId, $netSubtotal, "Bulk order payment for Viraasat catalog sarees", $newBalance]);
+            $stmtTx->execute([$walletId, $netSubtotal, "Bulk order payment for Pavitra catalog sarees", $newBalance]);
 
             // Create shipping address entry if new
             $stmtAddr = $db->prepare("INSERT INTO user_addresses (user_id, address_line1, city, state, pin_code) VALUES (?, ?, 'Varanasi', 'Uttar Pradesh', '221001')");
@@ -508,7 +508,7 @@ class RetailerController extends Controller {
         }
 
         return $this->render('retailer/orders', [
-            'title' => 'My Bulk Orders - Viraasat B2B',
+            'title' => 'My Bulk Orders - Pavitra B2B',
             'orders' => $ordersList
         ]);
     }
@@ -533,7 +533,7 @@ class RetailerController extends Controller {
         }
 
         return $this->render('retailer/wallet', [
-            'title' => 'Wallet Ledger - Viraasat B2B',
+            'title' => 'Wallet Ledger - Pavitra B2B',
             'wallet' => $wallet,
             'transactions' => $transactions
         ]);
@@ -544,7 +544,7 @@ class RetailerController extends Controller {
         $user = $this->checkAuth();
         if (!$user) return;
         return $this->render('retailer/profile', [
-            'title' => 'Account Settings - Viraasat B2B',
+            'title' => 'Account Settings - Pavitra B2B',
             'user' => $user
         ]);
     }
@@ -573,7 +573,7 @@ class RetailerController extends Controller {
         }
 
         return $this->render('retailer/profile', [
-            'title' => 'Account Settings - Viraasat B2B',
+            'title' => 'Account Settings - Pavitra B2B',
             'errors' => $errors,
             'user' => $user
         ]);
@@ -662,3 +662,4 @@ class RetailerController extends Controller {
         ]);
     }
 }
+

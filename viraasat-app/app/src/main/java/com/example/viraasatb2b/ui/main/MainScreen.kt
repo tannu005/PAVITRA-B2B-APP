@@ -51,11 +51,11 @@ fun MainScreen(
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
-  val prefs = remember { context.getSharedPreferences("viraasat_prefs", Context.MODE_PRIVATE) }
+  val prefs = remember { context.getSharedPreferences("pavitra_prefs", Context.MODE_PRIVATE) }
   
   // Try to load previously configured URL. Default to localtunnel URL.
   val storedUrl = prefs.getString("server_url", null)
-  val defaultUrl = "https://viraasat-saree-wholesale.loca.lt/"
+  val defaultUrl = "https://pavitra-saree-wholesale.loca.lt/"
   
   // Migrate old localtunnel URL preference if it exists
   val activeUrl = if (storedUrl != null && storedUrl.contains("old-kids-wave.loca.lt")) {
@@ -134,7 +134,7 @@ fun MainScreen(
               domStorageEnabled = true
               databaseEnabled = true
               mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-              userAgentString = "ViraasatB2B-Android-APK"
+              userAgentString = "PavitraB2B-Android-APK"
               useWideViewPort = true
               loadWithOverviewMode = true
             }
@@ -178,7 +178,7 @@ fun MainScreen(
             contentAlignment = Alignment.Center
           ) {
             Text(
-              text = "\u0935\u093f",
+              text = "\u092a",
               color = Color.White,
               fontSize = 38.sp,
               fontWeight = FontWeight.Bold
@@ -188,7 +188,7 @@ fun MainScreen(
           Spacer(modifier = Modifier.height(20.dp))
 
           Text(
-            text = "Viraasat B2B",
+            text = "Pavitra B2B",
             fontSize = 24.sp,
             fontWeight = FontWeight.ExtraBold,
             color = Color(0xFF212529),
@@ -271,7 +271,7 @@ fun MainScreen(
             Spacer(modifier = Modifier.height(8.dp))
             
             Text(
-              text = if (loadError) "Could not connect to the B2B store. Please check your internet connection and try again." else "Configure the base URL of your Viraasat development or production server. The default is set to our demo public tunnel.",
+              text = if (loadError) "Could not connect to the B2B store. Please check your internet connection and try again." else "Configure the base URL of your Pavitra development or production server. The default is set to our demo public tunnel.",
               fontSize = if (loadError) 13.sp else 12.sp,
               color = Color(0xFF495057),
               textAlign = TextAlign.Center,

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:windowSoftInputMode="adjustResize"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.ViraasatB2B">
+        android:theme="@style/Theme.PavitraB2B">
         <activity
             android:name=".MainActivity"
             android:exported="true">

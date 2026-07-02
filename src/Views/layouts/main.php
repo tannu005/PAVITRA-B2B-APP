@@ -60,7 +60,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php else: ?>
-                    <a href="/" class="nisho-logo" style="margin-right: 10px;">वि</a>
+                    <a href="/" class="nisho-logo" style="margin-right: 10px;">प</a>
                 <?php endif; ?>
             </div>
 
@@ -95,12 +95,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <header class="meesho-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
             <!-- Brand Logo (Hindi character) -->
-            <a href="/" class="nisho-logo">वि</a>
+            <a href="/" class="nisho-logo">प</a>
 
             <!-- Center Menu Links (Nisho Muse Two-Row style) -->
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
-                    <a href="/?category=Organza+Silk" class="nisho-menu-link">VIRASAT MUSE</a>
+                    <a href="/?category=Organza+Silk" class="nisho-menu-link">PAVITRA MUSE</a>
                     <a href="/?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
                     <a href="/" class="nisho-menu-link">NEW ARRIVALS</a>
                     <a href="/" class="nisho-menu-link">ALL SAREES</a>
@@ -116,9 +116,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <div class="dropdown d-inline-block collections-dropdown">
                         <a href="#" class="dropdown-toggle text-decoration-none text-dark nisho-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
                         <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VirasatOffice-SS2</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VIRASAT OFFICE-SS1</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">VIRASATHAVELI - SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraOffice-SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PAVITRA OFFICE-SS1</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PAVITRAHAVELI - SS2</a></li>
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Mysore+Crepe+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">DESI ROMANCE</a></li>
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Chanderi+Weave" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">SHAADI KA GHAR</a></li>
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
@@ -504,7 +504,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <div class="row g-4">
                 <!-- About Column -->
                 <div class="col-lg-3 col-md-6">
-                    <a href="/" class="nisho-logo d-inline-block mb-3" style="font-size: 2rem; color: #FFF !important;">वि</a>
+                    <a href="/" class="nisho-logo d-inline-block mb-3" style="font-size: 2rem; color: #FFF !important;">प</a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
                     <div class="nisho-footer-social mt-3">
                         <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -553,7 +553,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
             <!-- Footer Bottom -->
             <div class="nisho-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <span>© 2026 Virasat Wholesale Sarees. All Rights Reserved.</span>
+                <span>© 2026 Pavitra Wholesale Sarees. All Rights Reserved.</span>
                 <span class="mt-2 mt-md-0">Crafted with ❤️ for Indian Handloom Heritage</span>
             </div>
         </div>

@@ -35,7 +35,7 @@ class SuperAdminController extends Controller {
         $totalCommission = $db->query("SELECT SUM(commission_deducted) FROM seller_settlements WHERE status = 'SUCCESS'")->fetchColumn() ?: 0.00;
 
         return $this->render('admin/dashboard', [
-            'title' => 'Super Admin Console - Viraasat B2B',
+            'title' => 'Super Admin Console - Pavitra B2B',
             'stats' => [
                 'sellers' => $totalSellers,
                 'retailers' => $totalRetailers,
@@ -385,7 +385,7 @@ class SuperAdminController extends Controller {
         $settings = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR) ?: [];
 
         return $this->render('admin/settings', [
-            'title' => 'System Settings Configuration - Viraasat B2B',
+            'title' => 'System Settings Configuration - Pavitra B2B',
             'settings' => $settings
         ]);
     }
@@ -474,7 +474,7 @@ class SuperAdminController extends Controller {
         } catch (\Throwable $e) {
             $db->rollBack();
             return $this->render('admin/settings', [
-                'title' => 'System Settings Configuration - Viraasat B2B',
+                'title' => 'System Settings Configuration - Pavitra B2B',
                 'settings' => $body,
                 'error' => 'Settings save failed: ' . $e->getMessage()
             ]);
@@ -496,3 +496,4 @@ class SuperAdminController extends Controller {
         ]);
     }
 }
+

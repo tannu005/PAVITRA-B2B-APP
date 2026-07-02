@@ -1,6 +1,6 @@
 <?php
 // =============================================
-// VIRASAT WHOLESALE SAREE MARKETPLACE
+// PAVITRA WHOLESALE SAREE MARKETPLACE
 // NISHORAMA-STYLE 10-SECTION LANDING PAGE
 // =============================================
 
@@ -114,7 +114,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
                         <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Shaadi Ka Ghar</h1>
-                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Virasat Banarasi Bridal Collection</p>
+                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Pavitra Banarasi Bridal Collection</p>
                         <a href="/?category=Banarasi+Brocade" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
@@ -168,12 +168,12 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     </div>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 2: CAROUSEL #1 — VIRASAT MUSE      -->
+    <!-- SECTION 2: CAROUSEL #1 — PAVITRA MUSE      -->
     <!-- ═══════════════════════════════════════════ -->
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Virasat Muse</h2>
+                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Pavitra Muse</h2>
                 <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Curated Most Wanted Wholesale Handlooms</p>
             </div>
             <div class="d-flex align-items-center gap-2">

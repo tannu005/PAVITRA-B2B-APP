@@ -49,7 +49,7 @@ class SellerController extends Controller {
         $recentOrders = $stmtRecent->fetchAll() ?: [];
 
         return $this->render('seller/dashboard', [
-            'title' => 'Weaver Hub Dashboard - Viraasat B2B',
+            'title' => 'Weaver Hub Dashboard - Pavitra B2B',
             'balance' => $balance,
             'totalProducts' => $totalProducts,
             'totalOrders' => $totalOrders,
@@ -408,3 +408,4 @@ class SellerController extends Controller {
         ]);
     }
 }
+

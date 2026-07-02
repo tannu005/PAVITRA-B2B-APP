@@ -33,7 +33,7 @@ class AuthController extends Controller {
         if (Application::$app->getSessionUser()) {
             $response->redirect('/');
         }
-        return $this->render('auth/login', ['title' => 'Sign In - Viraasat B2B']);
+        return $this->render('auth/login', ['title' => 'Sign In - Pavitra B2B']);
     }
 
     public function login(Request $request, Response $response) {
@@ -78,7 +78,7 @@ class AuthController extends Controller {
         }
 
         return $this->render('auth/login', [
-            'title' => 'Sign In - Viraasat B2B',
+            'title' => 'Sign In - Pavitra B2B',
             'errors' => $errors,
             'email' => $email
         ]);
@@ -94,7 +94,7 @@ class AuthController extends Controller {
         $roles = $stmt->fetchAll();
 
         return $this->render('auth/register', [
-            'title' => 'Create B2B Account - Viraasat B2B',
+            'title' => 'Create B2B Account - Pavitra B2B',
             'roles' => $roles
         ]);
     }
@@ -196,7 +196,7 @@ class AuthController extends Controller {
         $roles = $stmtRoles->fetchAll();
 
         return $this->render('auth/register', [
-            'title' => 'Create B2B Account - Viraasat B2B',
+            'title' => 'Create B2B Account - Pavitra B2B',
             'errors' => $errors,
             'roles' => $roles,
             'name' => $name,
@@ -234,3 +234,4 @@ class AuthController extends Controller {
         $response->redirect('/login');
     }
 }
+

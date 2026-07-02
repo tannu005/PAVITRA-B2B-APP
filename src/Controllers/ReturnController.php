@@ -43,7 +43,7 @@ class ReturnController extends Controller {
         $items = $stmtItems->fetchAll() ?: [];
 
         return $this->render('retailer/returns/create', [
-            'title' => 'Request Bulk Return - Viraasat B2B',
+            'title' => 'Request Bulk Return - Pavitra B2B',
             'order' => $order,
             'items' => $items
         ]);
@@ -350,3 +350,4 @@ class ReturnController extends Controller {
         }
     }
 }
+
