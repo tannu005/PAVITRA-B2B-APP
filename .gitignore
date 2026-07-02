@@ -13,3 +13,13 @@ vendor/
 error_log
 *.log
 *.tmp
+
+# Agent / Editor configurations
+.agents/
+.cursor/
+.github/
+.jetro/
+.mcp.json
+
+
+
