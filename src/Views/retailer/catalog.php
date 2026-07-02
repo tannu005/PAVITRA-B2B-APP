@@ -69,24 +69,40 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- Mobile Category Pills (Horizontal Scroll) -->
     <div class="meesho-category-scroll d-flex d-md-none px-3 mb-2">
         <a href="/" class="category-circle-item <?= empty($selectedCategory) ? 'active' : '' ?>">
-            <div class="category-circle-img d-flex align-items-center justify-content-center bg-primary-subtle text-primary fw-bold" style="font-size: 1.15rem; font-family: var(--font-headings);">All</div>
+            <?php if (empty($selectedCategory)): ?>
+                <div class="category-circle-img d-flex align-items-center justify-content-center bg-primary text-white fw-bold" style="font-size: 1rem; border: none; background-color: #0D6EFD !important;">All</div>
+            <?php else: ?>
+                <div class="category-circle-img d-flex align-items-center justify-content-center bg-light text-dark fw-semibold" style="font-size: 1rem; border: 1px solid #ECEFF1;">All</div>
+            <?php endif; ?>
             <div class="category-circle-title">All Sarees</div>
         </a>
         <a href="/?category=Kanjeevaram+Silk" class="category-circle-item <?= $selectedCategory === 'Kanjeevaram Silk' ? 'active' : '' ?>">
-            <img src="/kanjeevaram.png" class="category-circle-img" alt="Kanjeevaram">
+            <img src="/kanjeevaram_1782883481838.png" class="category-circle-img" alt="Kanjeevaram">
             <div class="category-circle-title">Kanjeevaram</div>
         </a>
         <a href="/?category=Banarasi+Brocade" class="category-circle-item <?= $selectedCategory === 'Banarasi Brocade' ? 'active' : '' ?>">
-            <img src="/banarasi.png" class="category-circle-img" alt="Banarasi">
+            <img src="/banarasi_1782883519429.png" class="category-circle-img" alt="Banarasi">
             <div class="category-circle-title">Banarasi</div>
         </a>
         <a href="/?category=Patola+Silk" class="category-circle-item <?= $selectedCategory === 'Patola Silk' ? 'active' : '' ?>">
-            <img src="/patola.png" class="category-circle-img" alt="Patola">
+            <img src="/patola_1782883499288.png" class="category-circle-img" alt="Patola">
             <div class="category-circle-title">Patola</div>
         </a>
         <a href="/?category=Organza+Silk" class="category-circle-item <?= $selectedCategory === 'Organza Silk' ? 'active' : '' ?>">
-            <img src="/tissue.png" class="category-circle-img" alt="Organza">
+            <img src="/tissue_1782883588057.png" class="category-circle-img" alt="Organza">
             <div class="category-circle-title">Organza</div>
+        </a>
+        <a href="/?category=Chanderi+Weave" class="category-circle-item <?= $selectedCategory === 'Chanderi Weave' ? 'active' : '' ?>">
+            <img src="/banarasi_1782883568122.png" class="category-circle-img" alt="Chanderi">
+            <div class="category-circle-title">Chanderi</div>
+        </a>
+        <a href="/?category=Mysore+Crepe+Silk" class="category-circle-item <?= $selectedCategory === 'Mysore Crepe Silk' ? 'active' : '' ?>">
+            <img src="/kanjeevaram_1782883536799.png" class="category-circle-img" alt="Mysore Silk">
+            <div class="category-circle-title">Mysore Silk</div>
+        </a>
+        <a href="/?category=Jamdani+Muslin" class="category-circle-item <?= $selectedCategory === 'Jamdani Muslin' ? 'active' : '' ?>">
+            <img src="/patola_1782883552751.png" class="category-circle-img" alt="Jamdani">
+            <div class="category-circle-title">Jamdani</div>
         </a>
     </div>
 

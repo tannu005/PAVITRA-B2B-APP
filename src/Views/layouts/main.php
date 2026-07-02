@@ -3,7 +3,7 @@ use Core\Application;
 $user = Application::$app->getSessionUser();
 $config = Application::$app->config;
 $csrfToken = Application::$app->getCsrfToken();
-$pageTitle = htmlspecialchars($params['title'] ?? $config['company_name'] ?? 'Viraasat B2B');
+$pageTitle = htmlspecialchars($params['title'] ?? $config['company_name'] ?? 'Pavitra B2B');
 $pageDescription = htmlspecialchars($params['description'] ?? 'Enterprise-grade B2B wholesale marketplace for sellers, retailers, and delivery partners.');
 $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 $canonicalPath = strtok($_SERVER['REQUEST_URI'] ?? '/', '?') ?: '/';
@@ -22,7 +22,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <meta property="og:title" content="<?= $pageTitle ?>">
     <meta property="og:description" content="<?= $pageDescription ?>">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="<?= htmlspecialchars($config['brand_name'] ?? 'Viraasat B2B') ?>">
+    <meta property="og:site_name" content="<?= htmlspecialchars($config['brand_name'] ?? 'Pavitra B2B') ?>">
     <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>">
     <title><?= $pageTitle ?></title>
     <!-- Bootstrap 5.3+ CSS -->
@@ -565,7 +565,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </a>
-        <a href="/about-us" class="mobile-nav-item <?= str_contains($_SERVER['REQUEST_URI'], '/about-us') ? 'active' : '' ?>">
+        <a href="/categories" class="mobile-nav-item <?= str_contains($_SERVER['REQUEST_URI'], '/categories') ? 'active' : '' ?>">
             <i class="fa-solid fa-border-all"></i>
             <span>Categories</span>
         </a>
@@ -579,5 +579,142 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </a>
     </div>
     
+    <!-- ═══════════ PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
+    <!-- Handle / Trigger Trigger Button -->
+    <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <!-- Slide-out vertical menu bar -->
+    <div class="pavitra-edge-panel" id="pavitra-edge-sidebar">
+        <!-- Home -->
+        <a href="/" class="pavitra-edge-item" title="Go to Home">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-house"></i>
+            </div>
+            <span>Home</span>
+        </a>
+
+        <!-- Profile / Account -->
+        <a href="/profile" class="pavitra-edge-item" title="Go to Profile">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <span>Profile</span>
+        </a>
+
+        <!-- Filters (Triggers filter drawer modal) -->
+        <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-sliders"></i>
+            </div>
+            <span>Filters</span>
+        </div>
+
+        <!-- Wishlist (Support tickets) -->
+        <a href="/support" class="pavitra-edge-item" title="Go to Wishlist & Support">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <span>Wishlist</span>
+        </a>
+
+        <!-- Cart (Triggers cart drawer) -->
+        <div class="pavitra-edge-item" id="pavitra-edge-cart-btn" title="View Cart">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+            <span>Cart</span>
+        </div>
+
+        <!-- Close Chevron -->
+        <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Toggle sidebar panel on trigger button click
+            $('#pavitra-edge-trigger-btn').on('click', function(e) {
+                e.stopPropagation();
+                $(this).toggleClass('active');
+                $('#pavitra-edge-sidebar').toggleClass('open');
+                
+                // Toggle chevron icon direction
+                const icon = $(this).find('i');
+                if ($(this).hasClass('active')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+            // Close sidebar when close button is clicked
+            $('#pavitra-edge-close-btn').on('click', function(e) {
+                e.stopPropagation();
+                closeEdgePanel();
+            });
+
+            // Close sidebar when clicking outside the panel
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#pavitra-edge-sidebar, #pavitra-edge-trigger-btn').length) {
+                    closeEdgePanel();
+                }
+            });
+
+            function closeEdgePanel() {
+                $('#pavitra-edge-trigger-btn').removeClass('active');
+                $('#pavitra-edge-sidebar').removeClass('open');
+                $('#pavitra-edge-trigger-btn').find("i").removeClass('fa-chevron-right').addClass('fa-chevron-left');
+            }
+
+            // Quick Access Cart action
+            $('#pavitra-edge-cart-btn').on('click', function(e) {
+                e.stopPropagation();
+                closeEdgePanel();
+                // Trigger standard header cart button click
+                $('#cart-trigger-btn').click();
+            });
+
+            // Quick Access Filter action
+            $('#pavitra-edge-filter-btn').on('click', function(e) {
+                e.stopPropagation();
+                closeEdgePanel();
+                
+                // Check if filters modal is available on this page (present in catalog.php)
+                const filterModalEl = document.getElementById('filtersModal');
+                if (filterModalEl) {
+                    // Open modal directly if on Catalog page
+                    if (window.bootstrap) {
+                        const filterModal = bootstrap.Modal.getOrCreateInstance(filterModalEl);
+                        filterModal.show();
+                    } else {
+                        $('#filtersModal').modal('show');
+                    }
+                } else {
+                    // If on other pages, redirect to catalog page with query parameter to trigger filters automatically
+                    window.location.href = '/?show_filters=true';
+                }
+            });
+
+            // Automatically trigger filters modal if redirected with parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('show_filters') && urlParams.get('show_filters') === 'true') {
+                const filterModalEl = document.getElementById('filtersModal');
+                if (filterModalEl) {
+                    setTimeout(function() {
+                        if (window.bootstrap) {
+                            const filterModal = bootstrap.Modal.getOrCreateInstance(filterModalEl);
+                            filterModal.show();
+                        } else {
+                            $('#filtersModal').modal('show');
+                        }
+                    }, 500);
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>

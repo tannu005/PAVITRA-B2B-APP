@@ -48,6 +48,7 @@ $app->router->get('/logout', [App\Controllers\AuthController::class, 'logout']);
 
 // Retailer (Buyer / Customer) Storefront Routes
 $app->router->get('/', [App\Controllers\RetailerController::class, 'index']);
+$app->router->get('/categories', [App\Controllers\RetailerController::class, 'categoriesView']);
 $app->router->get('/product/{id}', [App\Controllers\RetailerController::class, 'detail']);
 $app->router->post('/cart/add', [App\Controllers\RetailerController::class, 'addToCart']);
 $app->router->post('/cart/update', [App\Controllers\RetailerController::class, 'updateCart']);

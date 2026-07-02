@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Viraasat B2B Premium Design System - Luxurious Meesho-Format Edition
+   Pavitra B2B Premium Design System - Luxurious Meesho-Format Edition
    ========================================================================== */
 
 :root {
@@ -1992,4 +1992,132 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(72, 41, 34, 0.4);
+}
+
+/* ══════════════════════════════════════════════════════
+   PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL)
+   ══════════════════════════════════════════════════════ */
+
+/* Hidden / Floating Handle Trigger */
+.pavitra-edge-trigger {
+    position: fixed;
+    right: 16px;
+    bottom: 95px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #482922;
+    color: #FFF;
+    border: none;
+    box-shadow: 0 4px 16px rgba(72, 41, 34, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1045;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pavitra-edge-trigger:hover {
+    transform: scale(1.08);
+    background-color: #C5A059;
+    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+}
+.pavitra-edge-trigger i {
+    font-size: 1.15rem;
+    transition: transform 0.3s ease;
+}
+.pavitra-edge-trigger.active i {
+    transform: rotate(180deg);
+}
+
+/* Floating Vertical Panel (Matches Android Edge Panel) */
+.pavitra-edge-panel {
+    position: fixed;
+    right: -105px; /* Hidden offscreen by default */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    background-color: rgba(33, 37, 41, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    box-shadow: -5px 10px 30px rgba(0, 0, 0, 0.25);
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    z-index: 1040;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pavitra-edge-panel.open {
+    right: 16px; /* Visible */
+}
+
+/* Sidebar Menu Items */
+.pavitra-edge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none !important;
+    width: 100%;
+    cursor: pointer;
+}
+.pavitra-edge-icon-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #FFF;
+    color: #212529;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.pavitra-edge-item span {
+    font-size: 0.58rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+}
+.pavitra-edge-item:hover .pavitra-edge-icon-circle {
+    transform: scale(1.1);
+    background-color: #C5A059;
+    color: #FFF;
+}
+.pavitra-edge-item:hover span {
+    color: #C5A059;
+}
+
+/* Custom styled Close arrow button at the bottom of sidebar */
+.pavitra-edge-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: all 0.2s ease;
+}
+.pavitra-edge-close:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Hide edge trigger on extremely small screens if it overlaps bottom bar icons */
+@media (max-width: 360px) {
+    .pavitra-edge-trigger {
+        right: 8px;
+        bottom: 85px;
+    }
 }

@@ -28,7 +28,7 @@
             
             <!-- Guarantee Badge in Footer -->
             <div class="mt-4 p-4 text-center rounded border bg-light text-muted" style="font-size: 0.85rem;">
-                🛡️ Verified compliance and handloom GI protection document of <strong><?= htmlspecialchars($config['company_name'] ?? 'Viraasat B2B') ?></strong>.
+                🛡️ Verified compliance and handloom GI protection document of <strong><?= htmlspecialchars($config['company_name'] ?? 'Pavitra B2B') ?></strong>.
             </div>
         </div>
     </div>

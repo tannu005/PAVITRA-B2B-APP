@@ -1,5 +1,5 @@
 <?php
-// Installation and Migration Wizard for Viraasat B2B Platform
+// Installation and Migration Wizard for Pavitra B2B Platform
 
 $config = require dirname(__DIR__) . '/config/db.php';
 $status = '';
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Installation Wizard - Viraasat B2B</title>
+    <title>Installation Wizard - Pavitra B2B</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 <body>
     <div class="install-card">
         <div class="text-center mb-4">
-            <h2 class="fw-bold mb-1 text-pink">Viraasat B2B Platform</h2>
+            <h2 class="fw-bold mb-1 text-pink">Pavitra B2B Platform</h2>
             <p class="text-muted">Installation & Database Seeder Wizard</p>
         </div>
 

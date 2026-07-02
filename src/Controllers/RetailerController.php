@@ -661,5 +661,23 @@ class RetailerController extends Controller {
             'page' => $page
         ]);
     }
+
+    // Shop by category listing view (replaces about-us/theory page in bottom nav)
+    public function categoriesView(Request $request, Response $response) {
+        $categories = [
+            ['name' => 'Banarasi Brocade', 'image' => '/banarasi_1782883519429.png', 'slug' => 'Banarasi+Brocade', 'desc' => 'Bridal luxury zari drapes'],
+            ['name' => 'Kanjeevaram Silk', 'image' => '/kanjeevaram_1782883481838.png', 'slug' => 'Kanjeevaram+Silk', 'desc' => 'Classic South Indian heritage'],
+            ['name' => 'Patola Silk', 'image' => '/patola_1782883499288.png', 'slug' => 'Patola+Silk', 'desc' => 'Traditional double ikat weaves'],
+            ['name' => 'Organza Silk', 'image' => '/tissue_1782883588057.png', 'slug' => 'Organza+Silk', 'desc' => 'Lightweight sheer sophistication'],
+            ['name' => 'Chanderi Weave', 'image' => '/banarasi_1782883568122.png', 'slug' => 'Chanderi+Weave', 'desc' => 'Delicate textures and patterns'],
+            ['name' => 'Mysore Crepe Silk', 'image' => '/kanjeevaram_1782883536799.png', 'slug' => 'Mysore+Crepe+Silk', 'desc' => 'Smooth, rich royal silk'],
+            ['name' => 'Jamdani Muslin', 'image' => '/patola_1782883552751.png', 'slug' => 'Jamdani+Muslin', 'desc' => 'Fine transparent artistic weave']
+        ];
+        
+        return $this->render('retailer/categories', [
+            'title' => 'Shop by Category - Pavitra B2B',
+            'categories' => $categories
+        ]);
+    }
 }
 
