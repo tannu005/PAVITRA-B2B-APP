@@ -4,14 +4,14 @@
 
 :root {
     /* ═══════════════════════════════════════════════════════════
-       PAVITRA MYNTRA-STYLE PALETTE — Coral Pink × Charcoal × Gold
+       PAVITRA HERITAGE PALETTE — Terracotta Brown × Charcoal × Gold
        ═══════════════════════════════════════════════════════════ */
 
-    /* Primary — Myntra Vibrant Coral Pink */
-    --meesho-pink: #ff3f6c;
-    --meesho-pink-hover: #e02b55;
-    --meesho-pink-gradient: linear-gradient(135deg, #ff527b 0%, #ff3f6c 100%);
-    --meesho-pink-light: rgba(255, 63, 108, 0.05);
+    /* Primary — Heritage Terracotta Brown */
+    --meesho-pink: #482922;
+    --meesho-pink-hover: #2f1612;
+    --meesho-pink-gradient: linear-gradient(135deg, #5d352e 0%, #3d201b 100%);
+    --meesho-pink-light: rgba(72, 41, 34, 0.05);
 
     /* Gold Accent — Insider Gold Metallic */
     --premium-gold: #d5a249;
@@ -2022,7 +2022,7 @@ html {
     background: var(--meesho-pink-gradient);
     color: #FFF;
     border: 2px solid var(--premium-gold);
-    box-shadow: 0 4px 16px rgba(107, 29, 29, 0.35), var(--gold-glow);
+    box-shadow: 0 4px 16px rgba(72, 41, 34, 0.35), var(--gold-glow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2050,12 +2050,12 @@ html {
     top: 50%;
     transform: translateY(-50%);
     width: 80px;
-    background: linear-gradient(180deg, #3D0A0A 0%, #5C1A1A 50%, #3D0A0A 100%);
+    background: linear-gradient(180deg, #2f1612 0%, #482922 50%, #2f1612 100%);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(201, 151, 46, 0.35);
     border-radius: 20px;
-    box-shadow: -5px 10px 30px rgba(107, 29, 29, 0.35), inset 0 1px 0 rgba(201,151,46,0.15);
+    box-shadow: -5px 10px 30px rgba(72, 41, 34, 0.35), inset 0 1px 0 rgba(201,151,46,0.15);
     padding: 16px 0;
     display: flex;
     flex-direction: column;

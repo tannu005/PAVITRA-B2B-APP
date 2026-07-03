@@ -80,11 +80,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             </defs>
                             <!-- Stylized Flute (Gold) -->
                             <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad)" stroke-width="2" stroke-linecap="round" />
-                            <circle cx="16" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="22" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="28" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="34" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="40" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="16" cy="28" r="0.8" fill="#482922" />
+                            <circle cx="22" cy="28" r="0.8" fill="#482922" />
+                            <circle cx="28" cy="28" r="0.8" fill="#482922" />
+                            <circle cx="34" cy="28" r="0.8" fill="#482922" />
+                            <circle cx="40" cy="28" r="0.8" fill="#482922" />
                             <!-- Stylized Peacock Feather Sweep (Gradient) -->
                             <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad)" opacity="0.85" />
                             <!-- Gold Spine of Feather -->
@@ -97,11 +97,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <?php endif; ?>
             </div>
 
-            <a href="/" style="text-decoration: none;">
-                <span class="refer-badge">
-                    <i class="fa-solid fa-gift"></i> Refer & Earn
-                </span>
-            </a>
 
             <div class="mobile-header-icons">
                 <a href="/support" title="Support"><i class="fa-solid fa-headset"></i></a>
@@ -142,11 +137,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </defs>
                     <!-- Stylized Flute (Gold) -->
                     <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad-desktop)" stroke-width="2" stroke-linecap="round" />
-                    <circle cx="16" cy="28" r="0.8" fill="#ff3f6c" />
-                    <circle cx="22" cy="28" r="0.8" fill="#ff3f6c" />
-                    <circle cx="28" cy="28" r="0.8" fill="#ff3f6c" />
-                    <circle cx="34" cy="28" r="0.8" fill="#ff3f6c" />
-                    <circle cx="40" cy="28" r="0.8" fill="#ff3f6c" />
+                    <circle cx="16" cy="28" r="0.8" fill="#482922" />
+                    <circle cx="22" cy="28" r="0.8" fill="#482922" />
+                    <circle cx="28" cy="28" r="0.8" fill="#482922" />
+                    <circle cx="34" cy="28" r="0.8" fill="#482922" />
+                    <circle cx="40" cy="28" r="0.8" fill="#482922" />
                     <!-- Stylized Peacock Feather Sweep (Gradient) -->
                     <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad-desktop)" opacity="0.85" />
                     <!-- Gold Spine of Feather -->
@@ -636,11 +631,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             </defs>
                             <!-- Stylized Flute (Gold) -->
                             <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad-footer)" stroke-width="2" stroke-linecap="round" />
-                            <circle cx="16" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="22" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="28" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="34" cy="28" r="0.8" fill="#ff3f6c" />
-                            <circle cx="40" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="16" cy="28" r="0.8" fill="#ffffff" />
+                            <circle cx="22" cy="28" r="0.8" fill="#ffffff" />
+                            <circle cx="28" cy="28" r="0.8" fill="#ffffff" />
+                            <circle cx="34" cy="28" r="0.8" fill="#ffffff" />
+                            <circle cx="40" cy="28" r="0.8" fill="#ffffff" />
                             <!-- Stylized Peacock Feather Sweep (Gradient) -->
                             <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad-footer)" opacity="0.85" />
                             <!-- Gold Spine of Feather -->
@@ -907,9 +902,112 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#scanner-loading').css('display', 'none');
             });
 
+            // Toggle sidebar panel on trigger button click
+            $('#pavitra-edge-trigger-btn').on('click', function(e) {
+                e.stopPropagation();
+                $(this).fadeOut(150);
+                $('#pavitra-edge-sidebar').addClass('open');
+            });
+
+            // Close sidebar when close button is clicked
+            $('#pavitra-edge-close-btn').on('click', function(e) {
+                e.stopPropagation();
+                closeEdgePanel();
+            });
+
+            // Close sidebar when clicking outside the panel
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#pavitra-edge-sidebar, #pavitra-edge-trigger-btn').length) {
+                    closeEdgePanel();
+                }
+            });
+
+            function closeEdgePanel() {
+                $('#pavitra-edge-sidebar').removeClass('open');
+                $('#pavitra-edge-trigger-btn').fadeIn(150);
+            }
+
+            // Quick Access Filter action
+            $('#pavitra-edge-filter-btn').on('click', function(e) {
+                e.stopPropagation();
+                closeEdgePanel();
+                const filterModalEl = document.getElementById('filtersModal');
+                if (filterModalEl) {
+                    if (window.bootstrap) {
+                        bootstrap.Modal.getOrCreateInstance(filterModalEl).show();
+                    } else {
+                        $('#filtersModal').modal('show');
+                    }
+                } else {
+                    window.location.href = '/?show_filters=true';
+                }
+            });
+
             $(window).trigger('scroll');
         });
     </script>
+
+    <!-- ═══════════ PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
+    <!-- Handle / Trigger Trigger Button -->
+    <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <!-- Slide-out vertical menu bar -->
+    <div class="pavitra-edge-panel" id="pavitra-edge-sidebar">
+        <!-- Home -->
+        <a href="/" class="pavitra-edge-item" title="Go to Home">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-house"></i>
+            </div>
+            <span>Home</span>
+        </a>
+
+        <!-- Profile / Account -->
+        <a href="/profile" class="pavitra-edge-item" title="Go to Profile">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <span>Profile</span>
+        </a>
+
+        <!-- Filters (Triggers filter drawer modal) -->
+        <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-sliders"></i>
+            </div>
+            <span>Filters</span>
+        </div>
+
+        <!-- Wishlist -->
+        <a href="/wishlist" class="pavitra-edge-item" title="My Wishlist">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <span>Wishlist</span>
+        </a>
+
+        <!-- Custom Studio -->
+        <a href="/customization" class="pavitra-edge-item" title="Saree Customization Studio">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span>Custom</span>
+        </a>
+
+        <!-- WhatsApp Chat -->
+        <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
+            <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
+                <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <span>WhatsApp</span>
+        </a>
+
+        <!-- Close Chevron -->
+        <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
 
 </body>
 </html>

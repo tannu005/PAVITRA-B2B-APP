@@ -486,45 +486,165 @@ $(document).ready(function() {
         $('#productDetailModal').modal('show');
 
         const wf = parseFloat(p.wholesale_price).toLocaleString('en-IN');
-        const pf = parseFloat(p.price).toLocaleString('en-IN');
-        const disc = Math.round(((p.price - p.wholesale_price) / p.price) * 100);
+        const mrp = (parseFloat(p.wholesale_price) + 8500).toLocaleString('en-IN');
+        const bankOfferPrice = (parseFloat(p.wholesale_price) - 149).toLocaleString('en-IN');
 
         $('#modal-content-body').html(`
-            <div class="row g-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                <div class="col-md-5">
-                    <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100 zoomable-saree-img" style="max-height: 500px; object-fit: cover;" title="Click to view details (Zoom)">
+            <div style="font-family: 'Plus Jakarta Sans', sans-serif; color: #282c3f;">
+                <!-- Full-bleed Image with Video Overlays -->
+                <div class="position-relative overflow-hidden bg-light text-center mb-3" style="margin: -15px -15px 15px -15px;">
+                    <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100 zoomable-saree-img" style="max-height: 520px; object-fit: cover;" title="Zoom Saree Pattern">
+                    
+                    <!-- Rating Badge (Screenshot styled) -->
+                    <span class="position-absolute bg-white px-2 py-1 shadow-sm rounded-3 d-flex align-items-center gap-1 fw-bold" style="bottom: 15px; right: 15px; font-size: 0.72rem; border: 1px solid #eaeaec;">
+                        <span>4.1</span>
+                        <span class="text-success"><i class="fa-solid fa-star"></i></span>
+                        <span class="text-muted border-start ps-1" style="font-weight: 500;">7.3k</span>
+                    </span>
+
+                    <!-- Video Preview Circle -->
+                    <div class="position-absolute d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="bottom: 15px; left: 15px; width: 44px; height: 44px; border: 2px solid var(--meesho-pink); cursor: pointer;" title="Play drape walkthrough">
+                        <i class="fa-solid fa-play" style="color: var(--meesho-pink); font-size: 0.95rem; margin-left: 2px;"></i>
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="text-uppercase text-muted mb-1" style="font-size: 0.62rem; letter-spacing: 0.12em; font-weight: 700;">${p.category_name}</div>
-                    <h3 class="fw-bold text-uppercase mb-2" style="font-size: 1.3rem; letter-spacing: 0.04em; color: #1c1c1c;">${p.title}</h3>
-                    <p class="text-muted small mb-3">SKU: <code class="text-dark">${p.sku}</code></p>
-                    <div class="mb-4">
-                        <span class="fs-3 fw-bold text-dark">Rs. ${wf}</span>
-                        <span class="text-decoration-line-through text-muted ms-2" style="font-size: 0.88rem;">Rs. ${pf}</span>
-                        <span class="text-danger small fw-bold ms-2">${disc}% OFF</span>
-                        <div class="small text-muted mt-1" style="font-size: 0.72rem;">Wholesale Rate (Min Order: ${p.bulk_threshold} Pcs)</div>
+
+                <!-- Three Action Pills Below Image -->
+                <div class="d-flex justify-content-between gap-2 mb-3">
+                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" style="font-size: 0.75rem; border-radius: 4px;">
+                        <i class="fa-solid fa-ruler-horizontal"></i> Size Guide
+                    </button>
+                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" style="font-size: 0.75rem; border-radius: 4px;">
+                        <i class="fa-regular fa-heart text-danger"></i> Wishlist
+                    </button>
+                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" style="font-size: 0.75rem; border-radius: 4px;">
+                        <i class="fa-solid fa-share-nodes"></i> Share
+                    </button>
+                </div>
+
+                <!-- Brand & Title Block -->
+                <div class="mb-3 px-1">
+                    <h5 class="fw-bold text-dark mb-1" style="font-size: 1.1rem; letter-spacing: -0.2px;">Anouk</h5>
+                    <p class="text-muted mb-2" style="font-size: 0.85rem; line-height: 1.4;">${p.title}</p>
+                    
+                    <!-- Price block (Screenshot exact) -->
+                    <div class="d-flex align-items-baseline gap-2 mb-1">
+                        <span class="fs-4 fw-bold text-dark">₹${wf}</span>
+                        <span class="text-decoration-line-through text-muted small">MRP ₹${mrp}</span>
+                        <span class="fw-bold text-warning small">(₹8,500 OFF)</span>
                     </div>
-                    <div class="mb-4 border-top pt-3">
-                        <h6 class="fw-bold text-uppercase text-dark mb-2" style="font-size: 0.7rem; letter-spacing: 0.08em;">Details</h6>
-                        <div class="d-flex flex-column gap-1 text-muted" style="font-size: 0.8rem;">
-                            <div><strong>Color:</strong> ${p.color || 'Traditional Woven'}</div>
-                            <div><strong>Weight:</strong> ${p.weight ? p.weight + 'g' : '~700g'}</div>
-                            <div><strong>Dimensions:</strong> ${p.dimensions || '6.3m × 1.2m'}</div>
-                            <div><strong>Stock:</strong> <span class="badge bg-success-subtle text-success border border-success-subtle">${p.stock} units</span></div>
+                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold" style="font-size: 0.65rem; padding: 3px 6px;">Thunder Deal</span>
+                </div>
+
+                <!-- Offers Card (Screenshot exact) -->
+                <div class="p-3 mb-3 bg-white border rounded-3 d-flex justify-content-between align-items-center" style="border-color: #eaeaec !important; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-success text-white text-uppercase" style="font-size: 0.58rem; padding: 3px 6px;">MEGA DEAL</span>
+                            <span class="fw-bold text-dark" style="font-size: 0.82rem;">Get at ₹${bankOfferPrice}</span>
+                        </div>
+                        <p class="text-muted mb-0" style="font-size: 0.72rem;"><span style="color: #3498db;"><i class="fa-solid fa-building-columns me-1"></i></span>Extra ₹149 Off with select B2B partner cards</p>
+                    </div>
+                    <span style="color: var(--meesho-pink); font-size: 0.78rem; font-weight: 700; cursor: pointer;">Details <i class="fa-solid fa-chevron-right ms-1"></i></span>
+                </div>
+
+                <!-- Color selector scrolling circles -->
+                <div class="mb-3 px-1">
+                    <h6 class="fw-bold text-muted text-uppercase mb-2" style="font-size: 0.65rem; letter-spacing: 0.05em;">Colour: Multi</h6>
+                    <div class="d-flex gap-2 overflow-auto pb-1" style="scrollbar-width: none;">
+                        <div class="rounded-circle p-0.5 border border-dark" style="width: 48px; height: 48px; overflow: hidden; cursor: pointer;">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="rounded-circle p-0.5 border" style="width: 48px; height: 48px; overflow: hidden; opacity: 0.7; filter: hue-rotate(60deg); cursor: pointer;">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="rounded-circle p-0.5 border" style="width: 48px; height: 48px; overflow: hidden; opacity: 0.7; filter: hue-rotate(150deg); cursor: pointer;">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="rounded-circle p-0.5 border" style="width: 48px; height: 48px; overflow: hidden; opacity: 0.7; filter: hue-rotate(240deg); cursor: pointer;">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
                         </div>
                     </div>
-                    <div class="mb-3"><p style="font-size: 0.8rem; line-height: 1.6; color: #555;">${p.description}</p></div>
-                    <div class="row g-2 align-items-center pt-3 border-top">
-                        <div class="col-4 col-sm-3">
-                            <select class="form-select border-dark rounded-0 py-2" id="modal-qty-select" style="font-size: 0.82rem;">
-                                ${[...Array(15).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
-                            </select>
+                </div>
+
+                <!-- Size selector -->
+                <div class="mb-4 px-1">
+                    <h6 class="fw-bold text-muted text-uppercase mb-2" style="font-size: 0.65rem; letter-spacing: 0.05em;">Size: Onesize</h6>
+                    <button class="btn btn-outline-dark fw-bold rounded-2 px-4 py-2" style="font-size: 0.8rem; border-color: #282c3f;">Onesize</button>
+                </div>
+
+                <!-- Delivery & Services block -->
+                <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
+                    <h6 class="fw-bold text-dark mb-3" style="font-size: 0.82rem;"><i class="fa-solid fa-truck me-2" style="color: #7f8c8d;"></i>Delivery & Services</h6>
+                    
+                    <!-- Pincode Checker (Screenshot exact) -->
+                    <div class="d-flex align-items-center justify-content-between mb-3 border p-2.5 rounded-2 bg-light-subtle">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-muted" style="font-size: 0.85rem;"><i class="fa-solid fa-location-dot"></i></span>
+                            <span class="fw-bold text-dark" style="font-size: 0.78rem;">Deliver to Tannu - C2-1308 Ashadeep...</span>
                         </div>
-                        <div class="col-8 col-sm-9">
-                            <button class="btn w-100 py-2 text-uppercase fw-bold" id="modal-add-cart-btn" data-variant-id="${p.variant_id}" style="background:#1a1a1a; color:white; border:none; border-radius:0; letter-spacing:0.15em; font-size:0.82rem;">
-                                <i class="fa fa-shopping-bag me-2"></i> Add to Bag
-                            </button>
+                        <span class="fw-bold text-uppercase" style="font-size: 0.72rem; color: var(--meesho-pink); cursor: pointer;">Change</span>
+                    </div>
+
+                    <!-- Delivery Date (Screenshot exact) -->
+                    <div class="p-2.5 rounded-2 border mb-3" style="background-color: #fff9fa; border-color: #ffe6e8 !important;">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-danger" style="font-size: 0.82rem;"><i class="fa-solid fa-circle-check"></i></span>
+                                <span class="fw-bold text-dark" style="font-size: 0.78rem;">Delivery in 2 days</span>
+                            </div>
+                            <span class="text-muted small">MRP ₹${mrp}</span>
                         </div>
+                    </div>
+
+                    <div class="text-muted" style="font-size: 0.78rem;">
+                        <div class="mb-2"><i class="fa-solid fa-ban text-danger me-2"></i>Pay on Delivery is not available for bulk trial orders</div>
+                        <div><i class="fa-solid fa-rotate-left text-success me-2"></i>Hassle free 7 days Return & Exchange</div>
+                    </div>
+                </div>
+
+                <!-- Product Specifications Grid (Screenshot exact) -->
+                <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
+                    <h6 class="fw-bold text-dark mb-3" style="font-size: 0.82rem;">Product Specifications</h6>
+                    <div class="row g-3 text-muted mb-3" style="font-size: 0.82rem;">
+                        <div class="col-6">
+                            <div class="small text-muted">Border</div>
+                            <div class="fw-bold text-dark">Embroidered Zari</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="small text-muted">Saree Fabric</div>
+                            <div class="fw-bold text-dark">${p.category_name}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="small text-muted">Ornamentation</div>
+                            <div class="fw-bold text-dark">Sequinned Weaves</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="small text-muted">Print or Pattern Types</div>
+                            <div class="fw-bold text-dark">Embellished Motifs</div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+
+                    <!-- Product Details Description -->
+                    <h6 class="fw-bold text-dark mb-2" style="font-size: 0.82rem;">Product Details</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.78rem; line-height: 1.6;">${p.description}</p>
+                </div>
+
+                <!-- Sticky bottom floating action buttons (Screenshot styled) -->
+                <div class="row g-2 pt-3 border-top mt-3" style="position: sticky; bottom: 0; background: #fff; padding-bottom: 10px; z-index: 10;">
+                    <div class="col-4">
+                        <select class="form-select border-dark rounded-2 py-2.5 fw-bold text-center" id="modal-qty-select" style="font-size: 0.85rem; border-color: #282c3f !important;">
+                            ${[...Array(15).keys()].map(i => `<option value="${i+1}">${i+1} Pcs</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="col-8 d-flex gap-2">
+                        <button class="btn btn-outline-dark w-50 py-2.5 fw-bold text-uppercase" id="modal-buy-now-btn" style="border-radius: 4px; font-size: 0.8rem; letter-spacing: 0.05em; border-color: var(--meesho-pink); color: var(--meesho-pink);">
+                            Buy Now
+                        </button>
+                        <button class="btn w-50 py-2.5 fw-bold text-uppercase text-white" id="modal-add-cart-btn" data-variant-id="${p.variant_id}" style="background: var(--meesho-pink); border-radius: 4px; font-size: 0.8rem; letter-spacing: 0.05em; border: none;">
+                            <i class="fa-solid fa-bag-shopping me-1"></i> Add to Bag
+                        </button>
                     </div>
                 </div>
             </div>

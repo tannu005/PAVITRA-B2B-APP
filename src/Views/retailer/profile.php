@@ -1,4 +1,4 @@
-<!-- Myntra-Style Premium Profile Page -->
+<!-- B2B Wholesale Saree Profile Page -->
 <div class="container-xl py-4" style="max-width: 600px; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f5f5f6; min-height: 90vh; padding-bottom: 80px;">
     
     <!-- Header Bar -->
@@ -7,85 +7,20 @@
             <a href="/" class="text-dark fs-5" style="text-decoration: none;"><i class="fa-solid fa-arrow-left"></i></a>
             <h5 class="fw-bold mb-0 text-dark" style="font-size: 1.1rem; letter-spacing: -0.2px;">Profile</h5>
         </div>
-        <div class="d-flex align-items-center gap-1 bg-light px-2 py-1 rounded-pill border" style="font-size: 0.8rem; font-weight: 700; color: #282c3f;">
-            <span style="color: #ff3f6c;"><i class="fa-solid fa-ticket-simple"></i></span>
-            <span>₹15</span>
-        </div>
     </div>
 
-    <!-- User Insider Welcome Banner -->
-    <div class="p-4 mb-4 rounded-3 border-0 position-relative overflow-hidden" style="background: linear-gradient(135deg, #fffdfa 0%, #f9f2e7 100%); border: 1px solid rgba(213,162,73,0.15) !important; box-shadow: 0 4px 15px rgba(213,162,73,0.05);">
-        <div class="row align-items-center">
-            <div class="col-8">
-                <h4 class="fw-bold text-dark mb-1" style="font-family: var(--font-headings); font-size: 1.6rem;"><?= htmlspecialchars($user['name']) ?> !</h4>
-                <div class="text-uppercase fw-bold mb-2" style="font-size: 0.65rem; color: #d5a249; letter-spacing: 0.1em;"><i class="fa-solid fa-crown me-1"></i> M INSIDER</div>
-                <p class="text-muted mb-3" style="font-size: 0.78rem; line-height: 1.4;">Become An Insider To Avail <strong style="color: #d5a249;">Extra Rewards</strong> and <strong style="color: #d5a249;">Better Discounts!</strong></p>
-                <a href="/customization" class="btn text-white px-3 py-1.5 fw-bold text-uppercase" style="background-color: #d5a249; font-size: 0.72rem; letter-spacing: 0.05em; border-radius: 4px; border: none; box-shadow: 0 4px 10px rgba(213, 162, 73, 0.2);">Know More</a>
-            </div>
-            <div class="col-4 text-end position-relative">
-                <!-- Golden crown graphic floating -->
-                <i class="fa-solid fa-crown text-warning fa-4x opacity-25" style="color: #d5a249 !important; transform: rotate(15deg);"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- Shopping for User Profile Switcher -->
-    <div class="bg-white p-3 rounded-3 border mb-4">
-        <h6 class="fw-bold text-dark mb-3" style="font-size: 0.85rem;">Shopping for <?= htmlspecialchars($user['name']) ?></h6>
-        <div class="d-flex gap-4 overflow-auto pb-1" style="scrollbar-width: none;">
-            <!-- Profile Avatar 1 (Current) -->
-            <div class="text-center" style="min-width: 60px;">
-                <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-1 position-relative" style="width: 50px; height: 50px; background-color: #ffeef2; border: 2px solid #ff3f6c; color: #ff3f6c; font-weight: 700; font-size: 1.2rem;">
-                    <?= strtoupper(substr($user['name'], 0, 1)) ?>
-                    <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle" style="width: 10px; height: 10px;" title="Active"></span>
-                </div>
-                <span class="d-block text-truncate text-dark fw-bold" style="font-size: 0.7rem; max-width: 65px;"><?= htmlspecialchars($user['name']) ?></span>
-            </div>
-            
-            <!-- Profile Avatar 2 (Buyer Partner) -->
-            <div class="text-center" style="min-width: 60px; opacity: 0.6;">
-                <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-1" style="width: 50px; height: 50px; background-color: #e8f5e9; border: 1px solid #c8e6c9; color: #2e7d32; font-weight: 600; font-size: 1.1rem;">
-                    B
-                </div>
-                <span class="d-block text-truncate text-muted" style="font-size: 0.7rem; max-width: 65px;">Buyer</span>
-            </div>
-
-            <!-- Profile Avatar 3 (Admin Mode) -->
-            <div class="text-center" style="min-width: 60px; opacity: 0.6;">
-                <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-1 position-relative" style="width: 50px; height: 50px; background-color: #e3f2fd; border: 1px solid #bbdefb; color: #1565c0; font-weight: 600; font-size: 1.1rem;">
-                    A
-                    <span class="position-absolute translate-middle-x start-50 badge bg-dark text-white" style="font-size: 0.45rem; bottom: -5px; padding: 2px 4px; border-radius: 4px;">Admin</span>
-                </div>
-                <span class="d-block text-truncate text-muted" style="font-size: 0.7rem; max-width: 65px;">Store Admin</span>
-            </div>
-
-            <!-- Profile Avatar 4 (Add new) -->
-            <div class="text-center" style="min-width: 60px; cursor: pointer;">
-                <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-1 border border-dashed" style="width: 50px; height: 50px; background-color: #fafafa; color: #888; font-size: 1.2rem;">
-                    <i class="fa-solid fa-plus"></i>
-                </div>
-                <span class="d-block text-muted" style="font-size: 0.7rem;">Add User</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Action Pills Row -->
-    <div class="d-flex gap-2 overflow-auto mb-4 pb-1" style="scrollbar-width: none;">
-        <button class="btn btn-sm bg-white border rounded-pill px-3 py-1.5 fw-bold text-dark" style="font-size: 0.75rem; white-space: nowrap;">Basics <i class="fa-solid fa-chevron-right ms-1" style="font-size: 0.6rem; color: #888;"></i></button>
-        <button class="btn btn-sm bg-white border rounded-pill px-3 py-1.5 fw-bold text-dark" style="font-size: 0.75rem; white-space: nowrap;">Size Details <i class="fa-solid fa-chevron-right ms-1" style="font-size: 0.6rem; color: #888;"></i></button>
-        <button class="btn btn-sm bg-white border rounded-pill px-3 py-1.5 fw-bold text-dark" style="font-size: 0.75rem; white-space: nowrap;">Skin & Hair <i class="fa-solid fa-chevron-right ms-1" style="font-size: 0.6rem; color: #888;"></i></button>
-    </div>
-
-    <!-- Daily Myncash Magic Card -->
-    <div class="p-3 mb-4 rounded-3 border-0 d-flex align-items-center justify-content-between" style="background: linear-gradient(90deg, #fff3d6 0%, #ffe09d 100%); border: 1px solid rgba(213, 162, 73, 0.1) !important; box-shadow: 0 4px 12px rgba(213, 162, 73, 0.05);">
+    <!-- User Welcome Banner -->
+    <div class="p-4 mb-4 rounded-3 border-0 position-relative overflow-hidden bg-white" style="border: 1px solid var(--premium-border) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
         <div class="d-flex align-items-center gap-3">
-            <span style="font-size: 1.8rem; color: #ff9f43;"><i class="fa-solid fa-calendar-check animate-bounce"></i></span>
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; background-color: var(--meesho-pink-light); color: var(--meesho-pink); font-weight: 700; font-size: 1.6rem; border: 2px solid var(--meesho-pink);">
+                <?= strtoupper(substr($user['name'], 0, 1)) ?>
+            </div>
             <div>
-                <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Daily Myncash Magic!</h6>
-                <p class="text-muted mb-0" style="font-size: 0.7rem;">Win up to <strong class="text-dark">₹200 now</strong></p>
+                <h4 class="fw-bold text-dark mb-1" style="font-family: var(--font-headings); font-size: 1.5rem;"><?= htmlspecialchars($user['name']) ?></h4>
+                <p class="text-muted mb-0" style="font-size: 0.8rem;"><i class="fa-regular fa-envelope me-1"></i> <?= htmlspecialchars($user['email']) ?></p>
+                <p class="text-muted mb-0" style="font-size: 0.8rem;"><i class="fa-solid fa-phone me-1"></i> <?= htmlspecialchars($user['mobile']) ?></p>
             </div>
         </div>
-        <a href="/customization" class="btn btn-sm btn-dark text-white fw-bold text-uppercase px-3 rounded-pill" style="font-size: 0.68rem; background-color: #282c3f; border: none;">Play</a>
     </div>
 
     <!-- 2x2 Grid Cards -->
@@ -94,23 +29,23 @@
         <div class="col-6">
             <a href="/orders" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
-                    <span class="fs-4" style="color: #ff3f6c;"><i class="fa-solid fa-box-archive"></i></span>
+                    <span class="fs-4" style="color: var(--meesho-pink);"><i class="fa-solid fa-box-archive"></i></span>
                     <div>
-                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">Orders</h6>
+                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">My Orders</h6>
                         <span class="text-muted" style="font-size: 0.65rem;">Track shipments</span>
                     </div>
                 </div>
                 <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-right"></i></span>
             </a>
         </div>
-        <!-- Card 2: Insider -->
+        <!-- Card 2: Custom Studio -->
         <div class="col-6">
             <a href="/customization" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
-                    <span class="fs-4" style="color: #d5a249;"><i class="fa-solid fa-crown"></i></span>
+                    <span class="fs-4" style="color: var(--premium-gold);"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
                     <div>
-                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">Insider</h6>
-                        <span class="text-muted" style="font-size: 0.65rem;">Gold tier benefits</span>
+                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">Custom Studio</h6>
+                        <span class="text-muted" style="font-size: 0.65rem;">Embroidery orders</span>
                     </div>
                 </div>
                 <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-right"></i></span>
@@ -122,21 +57,21 @@
                 <div class="d-flex align-items-center gap-3">
                     <span class="fs-4" style="color: #3498db;"><i class="fa-solid fa-headset"></i></span>
                     <div>
-                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">Help Center</h6>
-                        <span class="text-muted" style="font-size: 0.65rem;">24/7 weaver chat</span>
+                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">Help Desk</h6>
+                        <span class="text-muted" style="font-size: 0.65rem;">Weaver chat support</span>
                     </div>
                 </div>
                 <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-right"></i></span>
             </a>
         </div>
-        <!-- Card 4: Coupons -->
+        <!-- Card 4: Wallet -->
         <div class="col-6">
             <a href="/wallet" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
-                    <span class="fs-4" style="color: #e67e22;"><i class="fa-solid fa-ticket-simple"></i></span>
+                    <span class="fs-4" style="color: #2ecc71;"><i class="fa-solid fa-wallet"></i></span>
                     <div>
-                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">Coupons</h6>
-                        <span class="text-muted" style="font-size: 0.65rem;">Active discounts</span>
+                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">My Wallet</h6>
+                        <span class="text-muted" style="font-size: 0.65rem;">View trade balance</span>
                     </div>
                 </div>
                 <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-right"></i></span>
@@ -144,84 +79,99 @@
         </div>
     </div>
 
-    <!-- Vertical List Options -->
+    <!-- Vertical List Saree Wholesale Features -->
     <div class="bg-white rounded-3 border overflow-hidden mb-4">
-        <!-- Item 1: Ultimate Glam Clan -->
+        <!-- Item 1: B2B Credit & Trade Terms -->
+        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-b2b-terms">
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-building-circle-check" style="color: var(--meesho-pink);"></i></span>
+                <div>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">B2B Credit & Trade Terms</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Verify GSTIN credentials and trade credit limit</p>
+                </div>
+            </div>
+            <span id="b2b-terms-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+
+        <!-- Collapsible B2B Verification Credentials -->
+        <div id="b2b-terms-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem; line-height: 1.6;">
+            <div class="mb-2"><strong>GST Identification Number (GSTIN):</strong> <code class="text-dark">09AAAAA1111A1Z1</code> (Verified)</div>
+            <div class="mb-2"><strong>Tax registration type:</strong> Wholesaler / Retailer Composition Scheme</div>
+            <div class="mb-2"><strong>Trade credit limit:</strong> <span class="text-dark fw-bold">₹1,00,000.00</span> (85,000.00 available)</div>
+            <div><strong>Payment terms:</strong> Net-30 days billing terms on approved weaver loom invoices</div>
+        </div>
+
+        <!-- Item 2: Loom Booking & Customization -->
         <a href="/customization" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-wand-magic-sparkles" style="color: #9b59b6;"></i></span>
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-scissors" style="color: var(--premium-gold);"></i></span>
                 <div>
-                    <div class="d-flex align-items-center gap-2">
-                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Ultimate Glam Clan</h6>
-                        <span class="badge bg-danger rounded-pill" style="font-size: 0.55rem; padding: 2px 6px;">NEW</span>
-                    </div>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Pavitra Influencer program for buyers</p>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Loom Booking & Customization</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Book active handloom weaver machines for custom borders</p>
                 </div>
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
 
-        <!-- Item 2: Cashback Offer -->
-        <a href="/wallet" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
+        <!-- Item 3: Weaver Direct Directory -->
+        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-weaver-dir">
             <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-credit-card" style="color: #ff3f6c;"></i></span>
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-map-location-dot" style="color: #16a085;"></i></span>
                 <div>
-                    <div class="d-flex align-items-center gap-2">
-                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Get 7.5% Cashback on Store</h6>
-                        <span class="badge bg-danger rounded-pill" style="font-size: 0.55rem; padding: 2px 6px;">NEW</span>
-                    </div>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Joining fee waived on SBI Card co-brand</p>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Weaver Direct Clusters</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Explore geographical GI-tagged weaver source cities</p>
+                </div>
+            </div>
+            <span id="weaver-dir-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+
+        <div id="weaver-dir-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem;">
+            <ul class="mb-0 ps-3">
+                <li class="mb-1"><strong>Banaras (UP):</strong> Brocade, Katan Silk, Georgette Handlooms</li>
+                <li class="mb-1"><strong>Kanchipuram (TN):</strong> Heavy Zari Mulberry Silk Weavers</li>
+                <li class="mb-1"><strong>Patan (GJ):</strong> Double-Ikat Patola Master Weavers</li>
+                <li class="mb-1"><strong>Mysore (KA):</strong> Royal Crepe Silk weaving cooperatives</li>
+                <li><strong>Santipur (WB):</strong> Muslin and Jamdani traditional hand-spin looms</li>
+            </ul>
+        </div>
+
+        <!-- Item 4: Bulk Shipping & Logistics -->
+        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-logistics">
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-truck-moving" style="color: #34495e;"></i></span>
+                <div>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Bulk Shipping & Logistics</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Estimate freight charges and view logistic partners</p>
+                </div>
+            </div>
+            <span id="logistics-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+
+        <div id="logistics-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem;">
+            <div class="mb-1"><strong>Weaver-to-Store Logistics:</strong> BlueDart Heavy & Gati Transport</div>
+            <div class="mb-1"><strong>Estimated Transport Time:</strong> 3-5 business days weaver direct</div>
+            <div><strong>Bulk Rates:</strong> Free transport logistics for orders exceeding 25 pieces</div>
+        </div>
+
+        <!-- Item 5: Sample Swatch Requests -->
+        <a href="/support/create" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-palette" style="color: #e74c3c;"></i></span>
+                <div>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Request Yarn & Swatches</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Submit thread sample queries to weavers before bulk ordering</p>
                 </div>
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
-
-        <!-- Item 3: Personal Loan -->
-        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
-            <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-hand-holding-dollar" style="color: #2ecc71;"></i></span>
-                <div>
-                    <div class="d-flex align-items-center gap-2">
-                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Business Credit Loan</h6>
-                        <span class="badge bg-danger rounded-pill" style="font-size: 0.55rem; padding: 2px 6px;">NEW</span>
-                    </div>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Get instant credit limit up to Rs.10,00,000</p>
-                </div>
-            </div>
-            <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
-        </div>
-
-        <!-- Item 4: Payments & Currencies -->
-        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" style="text-decoration: none;">
-            <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-wallet" style="color: #e67e22;"></i></span>
-                <div>
-                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Payments & Currencies</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">View balance and saved payment methods</p>
-                </div>
-            </div>
-            <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
-        </div>
-
-        <!-- Item 5: Earn & Redeem -->
-        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" style="text-decoration: none;">
-            <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-gift" style="color: #e74c3c;"></i></span>
-                <div>
-                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Earn & Redeem</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">View rewards balance and prize cards</p>
-                </div>
-            </div>
-            <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
-        </div>
 
         <!-- Item 6: Manage Account Settings -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-account-settings" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-user-gear" style="color: #34495e;"></i></span>
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-user-gear" style="color: #7f8c8d;"></i></span>
                 <div>
                     <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Manage Account Settings</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Manage your contact name and email settings</p>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Manage your login contact name and email settings</p>
                 </div>
             </div>
             <span id="settings-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
@@ -266,34 +216,22 @@
         <!-- Item 7: Wishlist -->
         <a href="/wishlist" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-heart" style="color: #ff3f6c;"></i></span>
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-heart" style="color: var(--meesho-pink);"></i></span>
                 <div>
                     <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Wishlist</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Your most loved saree styles</p>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Your saved saree designs</p>
                 </div>
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
 
-        <!-- Item 8: Suggestions -->
-        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
-            <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-wand-magic-sparkles" style="color: #f1c40f;"></i></span>
-                <div>
-                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Pavitra Suggests</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">100% personalized loom recommendations for you</p>
-                </div>
-            </div>
-            <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
-        </a>
-
-        <!-- Item 9: Settings -->
+        <!-- Item 8: General Notification Settings -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-gears" style="color: #7f8c8d;"></i></span>
                 <div>
                     <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Settings</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Manage push notifications and security keys</p>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Manage weaver notification channels & keys</p>
                 </div>
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
@@ -343,30 +281,30 @@
 .cursor-pointer {
     cursor: pointer;
 }
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-}
-.animate-bounce {
-    animation: bounce 2s infinite;
-}
 </style>
 
 <script>
 $(document).ready(function() {
-    // Toggle collapsible account edit form
-    $('#toggle-account-settings').on('click', function(e) {
-        e.preventDefault();
-        var block = $('#account-settings-form-block');
-        var chevron = $('#settings-chevron').find('i');
-        if (block.is(':visible')) {
-            block.slideUp(200);
-            chevron.removeClass('fa-chevron-up').addClass('fa-chevron-down');
-        } else {
-            block.slideDown(200);
-            chevron.removeClass('fa-chevron-down').addClass('fa-chevron-up');
-        }
-    });
+    // Collapsible sections
+    function setupCollapse(triggerId, blockId, chevronId) {
+        $(triggerId).on('click', function(e) {
+            e.preventDefault();
+            var block = $(blockId);
+            var chevron = $(chevronId).find('i');
+            if (block.is(':visible')) {
+                block.slideUp(200);
+                chevron.removeClass('fa-chevron-up').addClass('fa-chevron-down');
+            } else {
+                block.slideDown(200);
+                chevron.removeClass('fa-chevron-down').addClass('fa-chevron-up');
+            }
+        });
+    }
+
+    setupCollapse('#toggle-account-settings', '#account-settings-form-block', '#settings-chevron');
+    setupCollapse('#toggle-b2b-terms', '#b2b-terms-block', '#b2b-terms-chevron');
+    setupCollapse('#toggle-weaver-dir', '#weaver-dir-block', '#weaver-dir-chevron');
+    setupCollapse('#toggle-logistics', '#logistics-block', '#logistics-chevron');
 
     // Trigger delete account confirmation modal
     $('#btn-delete-account').on('click', function() {
