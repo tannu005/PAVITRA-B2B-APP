@@ -4,30 +4,30 @@
 
 :root {
     /* ═══════════════════════════════════════════════════════════
-       PAVITRA LUXURY PALETTE — Royal Maroon × 22K Gold × Ivory
+       PAVITRA MYNTRA-STYLE PALETTE — Coral Pink × Charcoal × Gold
        ═══════════════════════════════════════════════════════════ */
 
-    /* Primary — Deep Royal Maroon (main brand color) */
-    --meesho-pink: #6B1D1D;
-    --meesho-pink-hover: #4A1010;
-    --meesho-pink-gradient: linear-gradient(135deg, #7D2020 0%, #4A1010 100%);
-    --meesho-pink-light: rgba(107, 29, 29, 0.05);
+    /* Primary — Myntra Vibrant Coral Pink */
+    --meesho-pink: #ff3f6c;
+    --meesho-pink-hover: #e02b55;
+    --meesho-pink-gradient: linear-gradient(135deg, #ff527b 0%, #ff3f6c 100%);
+    --meesho-pink-light: rgba(255, 63, 108, 0.05);
 
-    /* Gold Accent — 22-Karat Warm Gold */
-    --premium-gold: #C9972E;
-    --premium-gold-dark: #A67C1E;
-    --premium-gold-gradient: linear-gradient(135deg, #D4A53A 0%, #A67C1E 100%);
-    --premium-gold-light: rgba(201, 151, 46, 0.08);
+    /* Gold Accent — Insider Gold Metallic */
+    --premium-gold: #d5a249;
+    --premium-gold-dark: #b5832d;
+    --premium-gold-gradient: linear-gradient(135deg, #e3b865 0%, #d5a249 100%);
+    --premium-gold-light: rgba(213, 162, 73, 0.08);
 
-    /* Neutral Tones — Warm Ivory & Deep Charcoal */
-    --premium-dark: #1A1008;
-    --premium-dark-muted: #6B5F50;
-    --premium-light-bg: #FDF6EC;
-    --premium-border: #EDE0CB;
+    /* Neutral Tones — Myntra Cool Charcoal & Slate Gray */
+    --premium-dark: #282c3f;
+    --premium-dark-muted: #7e818c;
+    --premium-light-bg: #f5f5f6;
+    --premium-border: #eaeaec;
 
     /* Surface / Card backgrounds */
-    --surface-white: #FFFDF8;
-    --surface-warm: #FAF0DC;
+    --surface-white: #ffffff;
+    --surface-warm: #f9f9fa;
 
     /* Typography */
     --font-headings: 'Italiana', 'Playfair Display', Georgia, serif;

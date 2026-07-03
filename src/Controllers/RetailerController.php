@@ -606,6 +606,59 @@ class RetailerController extends Controller {
         ]);
     }
 
+    public function deleteAccount(Request $request, Response $response) {
+        $user = $this->checkAuth();
+        if (!$user) return;
+
+        $db = Application::$app->db;
+        try {
+            $db->beginTransaction();
+
+            $userId = $user['id'];
+
+            // 1. Delete associated data
+            $stmtSessions = $db->prepare("DELETE FROM user_sessions WHERE user_id = ?");
+            $stmtSessions->execute([$userId]);
+
+            $stmtLogs = $db->prepare("DELETE FROM activity_logs WHERE user_id = ?");
+            $stmtLogs->execute([$userId]);
+
+            $stmtSeller = $db->prepare("DELETE FROM seller_profiles WHERE user_id = ?");
+            $stmtSeller->execute([$userId]);
+
+            $stmtRetailer = $db->prepare("DELETE FROM retailer_profiles WHERE user_id = ?");
+            $stmtRetailer->execute([$userId]);
+
+            $stmtDelivery = $db->prepare("DELETE FROM delivery_partner_profiles WHERE user_id = ?");
+            $stmtDelivery->execute([$userId]);
+
+            $stmtWallet = $db->prepare("DELETE FROM wallets WHERE user_id = ?");
+            $stmtWallet->execute([$userId]);
+
+            // 2. Delete the user
+            $stmtUser = $db->prepare("DELETE FROM users WHERE id = ?");
+            $stmtUser->execute([$userId]);
+
+            $db->commit();
+
+            // 3. Destroy session and redirect to login
+            unset($_SESSION['user_id']);
+            unset($_SESSION['session_token']);
+            unset($_SESSION['session_device']);
+            session_destroy();
+
+            // Redirect to login
+            $response->redirect('/login');
+        } catch (\Throwable $e) {
+            $db->rollBack();
+            return $this->render('retailer/profile', [
+                'title' => 'Account Settings - Pavitra B2B',
+                'errors' => ['Failed to delete account: ' . $e->getMessage()],
+                'user' => $user
+            ]);
+        }
+    }
+
     // Apply coupon code via POST JSON
     public function applyCoupon(Request $request, Response $response) {
         $body = $request->getBody();

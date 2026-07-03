@@ -66,6 +66,7 @@ $app->router->get('/wishlist', [App\Controllers\RetailerController::class, 'wish
 $app->router->get('/customization', [App\Controllers\RetailerController::class, 'customizationView']);
 $app->router->get('/profile', [App\Controllers\RetailerController::class, 'profileView']);
 $app->router->post('/profile', [App\Controllers\RetailerController::class, 'updateProfile']);
+$app->router->post('/profile/delete-account', [App\Controllers\RetailerController::class, 'deleteAccount']);
 
 // Dynamic CMS Routes
 $app->router->get('/about-us', [App\Controllers\RetailerController::class, 'cmsPage']);

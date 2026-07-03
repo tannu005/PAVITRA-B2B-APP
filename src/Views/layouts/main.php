@@ -66,26 +66,32 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </a>
                 <?php else: ?>
                     <a href="/" class="nisho-logo" style="margin-right: 10px;">
-                        <svg viewBox="0 0 160 45" width="110" height="32" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <g fill="none" stroke-linecap="round">
-                                <!-- Flute (Bansuri) base in gold -->
-                                <path d="M 5 32 L 65 32" stroke="#C9972E" stroke-width="2" />
-                                <circle cx="12" cy="32" r="0.8" fill="#6B1D1D" />
-                                <circle cx="20" cy="32" r="0.8" fill="#6B1D1D" />
-                                <circle cx="28" cy="32" r="0.8" fill="#6B1D1D" />
-                                <circle cx="36" cy="32" r="0.8" fill="#6B1D1D" />
-                                <!-- Peacock feathers (Red, Green, Blue) from original -->
-                                <path d="M 12 30 C 8 18, 16 8, 26 6" stroke="#e74c3c" stroke-width="2.5" />
-                                <path d="M 20 30 C 16 20, 24 12, 34 10" stroke="#2ecc71" stroke-width="2.5" />
-                                <path d="M 28 30 C 24 22, 32 16, 42 14" stroke="#3498db" stroke-width="2.5" />
-                                <!-- Peacock eye feather on the right end -->
-                                <path d="M 58 32 C 60 22, 68 18, 64 28" stroke="#C9972E" stroke-width="1" />
-                                <ellipse cx="61" cy="26" rx="3" ry="5" fill="#6B1D1D" />
-                                <ellipse cx="61" cy="26" rx="1.5" ry="3" fill="#C9972E" />
-                                <circle cx="61" cy="26" r="0.8" fill="#3498db" />
-                            </g>
-                            <text x="72" y="28" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="700" fill="#6B1D1D" letter-spacing="1">pavitra</text>
-                            <text x="72" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#A67C1E" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                        <svg viewBox="0 0 180 45" width="110" height="32" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                            <defs>
+                                <linearGradient id="logo-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#e3b865" />
+                                    <stop offset="100%" stop-color="#d5a249" />
+                                </linearGradient>
+                                <linearGradient id="logo-peacock-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#ff3f6c" />
+                                    <stop offset="50%" stop-color="#d5a249" />
+                                    <stop offset="100%" stop-color="#03a685" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Stylized Flute (Gold) -->
+                            <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad)" stroke-width="2" stroke-linecap="round" />
+                            <circle cx="16" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="22" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="28" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="34" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="40" cy="28" r="0.8" fill="#ff3f6c" />
+                            <!-- Stylized Peacock Feather Sweep (Gradient) -->
+                            <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad)" opacity="0.85" />
+                            <!-- Gold Spine of Feather -->
+                            <path d="M 20 28 C 22 20, 32 12, 44 8" stroke="url(#logo-gold-grad)" stroke-width="1" fill="none" />
+                            <!-- Brand Typography -->
+                            <text x="60" y="24" font-family="'Italiana', serif" font-size="20" font-weight="700" fill="#282c3f" letter-spacing="0.5">pavitra</text>
+                            <text x="60" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#d5a249" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
                         </svg>
                     </a>
                 <?php endif; ?>
@@ -122,26 +128,32 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <header class="meesho-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
             <a href="/" class="nisho-logo">
-                <svg viewBox="0 0 160 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                    <g fill="none" stroke-linecap="round">
-                        <!-- Flute (Bansuri) base in gold -->
-                        <path d="M 5 32 L 65 32" stroke="#C9972E" stroke-width="2" />
-                        <circle cx="12" cy="32" r="0.8" fill="#6B1D1D" />
-                        <circle cx="20" cy="32" r="0.8" fill="#6B1D1D" />
-                        <circle cx="28" cy="32" r="0.8" fill="#6B1D1D" />
-                        <circle cx="36" cy="32" r="0.8" fill="#6B1D1D" />
-                        <!-- Peacock feathers (Red, Green, Blue) from original -->
-                        <path d="M 12 30 C 8 18, 16 8, 26 6" stroke="#e74c3c" stroke-width="2.5" />
-                        <path d="M 20 30 C 16 20, 24 12, 34 10" stroke="#2ecc71" stroke-width="2.5" />
-                        <path d="M 28 30 C 24 22, 32 16, 42 14" stroke="#3498db" stroke-width="2.5" />
-                        <!-- Peacock eye feather on the right end -->
-                        <path d="M 58 32 C 60 22, 68 18, 64 28" stroke="#C9972E" stroke-width="1" />
-                        <ellipse cx="61" cy="26" rx="3" ry="5" fill="#6B1D1D" />
-                        <ellipse cx="61" cy="26" rx="1.5" ry="3" fill="#C9972E" />
-                        <circle cx="61" cy="26" r="0.8" fill="#3498db" />
-                    </g>
-                    <text x="72" y="28" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="700" fill="#6B1D1D" letter-spacing="1">pavitra</text>
-                    <text x="72" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#A67C1E" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                    <defs>
+                        <linearGradient id="logo-gold-grad-desktop" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e3b865" />
+                            <stop offset="100%" stop-color="#d5a249" />
+                        </linearGradient>
+                        <linearGradient id="logo-peacock-grad-desktop" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#ff3f6c" />
+                            <stop offset="50%" stop-color="#d5a249" />
+                            <stop offset="100%" stop-color="#03a685" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Stylized Flute (Gold) -->
+                    <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad-desktop)" stroke-width="2" stroke-linecap="round" />
+                    <circle cx="16" cy="28" r="0.8" fill="#ff3f6c" />
+                    <circle cx="22" cy="28" r="0.8" fill="#ff3f6c" />
+                    <circle cx="28" cy="28" r="0.8" fill="#ff3f6c" />
+                    <circle cx="34" cy="28" r="0.8" fill="#ff3f6c" />
+                    <circle cx="40" cy="28" r="0.8" fill="#ff3f6c" />
+                    <!-- Stylized Peacock Feather Sweep (Gradient) -->
+                    <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad-desktop)" opacity="0.85" />
+                    <!-- Gold Spine of Feather -->
+                    <path d="M 20 28 C 22 20, 32 12, 44 8" stroke="url(#logo-gold-grad-desktop)" stroke-width="1" fill="none" />
+                    <!-- Brand Typography -->
+                    <text x="60" y="24" font-family="'Italiana', serif" font-size="20" font-weight="700" fill="#282c3f" letter-spacing="0.5">pavitra</text>
+                    <text x="60" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#d5a249" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
                 </svg>
             </a>
 
@@ -610,26 +622,32 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <!-- About Column -->
                 <div class="col-lg-3 col-md-6">
                     <a href="/" class="nisho-logo d-inline-block mb-3">
-                        <svg viewBox="0 0 160 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <g fill="none" stroke-linecap="round">
-                                <!-- Flute (Bansuri) base in gold -->
-                                <path d="M 5 32 L 65 32" stroke="#C9972E" stroke-width="2" />
-                                <circle cx="12" cy="32" r="0.8" fill="#FFF" />
-                                <circle cx="20" cy="32" r="0.8" fill="#FFF" />
-                                <circle cx="28" cy="32" r="0.8" fill="#FFF" />
-                                <circle cx="36" cy="32" r="0.8" fill="#FFF" />
-                                <!-- Peacock feathers (Red, Green, Blue) from original -->
-                                <path d="M 12 30 C 8 18, 16 8, 26 6" stroke="#e74c3c" stroke-width="2.5" />
-                                <path d="M 20 30 C 16 20, 24 12, 34 10" stroke="#2ecc71" stroke-width="2.5" />
-                                <path d="M 28 30 C 24 22, 32 16, 42 14" stroke="#3498db" stroke-width="2.5" />
-                                <!-- Peacock eye feather on the right end -->
-                                <path d="M 58 32 C 60 22, 68 18, 64 28" stroke="#C9972E" stroke-width="1" />
-                                <ellipse cx="61" cy="26" rx="3" ry="5" fill="#6B1D1D" />
-                                <ellipse cx="61" cy="26" rx="1.5" ry="3" fill="#C9972E" />
-                                <circle cx="61" cy="26" r="0.8" fill="#3498db" />
-                            </g>
-                            <text x="72" y="28" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="700" fill="#FFF" letter-spacing="1">pavitra</text>
-                            <text x="72" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#C9972E" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                        <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                            <defs>
+                                <linearGradient id="logo-gold-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#e3b865" />
+                                    <stop offset="100%" stop-color="#d5a249" />
+                                </linearGradient>
+                                <linearGradient id="logo-peacock-grad-footer" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#ff3f6c" />
+                                    <stop offset="50%" stop-color="#d5a249" />
+                                    <stop offset="100%" stop-color="#03a685" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Stylized Flute (Gold) -->
+                            <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad-footer)" stroke-width="2" stroke-linecap="round" />
+                            <circle cx="16" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="22" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="28" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="34" cy="28" r="0.8" fill="#ff3f6c" />
+                            <circle cx="40" cy="28" r="0.8" fill="#ff3f6c" />
+                            <!-- Stylized Peacock Feather Sweep (Gradient) -->
+                            <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad-footer)" opacity="0.85" />
+                            <!-- Gold Spine of Feather -->
+                            <path d="M 20 28 C 22 20, 32 12, 44 8" stroke="url(#logo-gold-grad-footer)" stroke-width="1" fill="none" />
+                            <!-- Brand Typography (White text for footer) -->
+                            <text x="60" y="24" font-family="'Italiana', serif" font-size="20" font-weight="700" fill="#ffffff" letter-spacing="0.5">pavitra</text>
+                            <text x="60" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#d5a249" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
                         </svg>
                     </a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
@@ -707,7 +725,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     </div>
 
 
-
+    <script>
+        $(document).ready(function() {
             // 🎙️ VOICE SEARCH FUNCTIONALITY (SpeechRecognition)
             var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (SpeechRecognition) {
