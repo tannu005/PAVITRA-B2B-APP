@@ -492,7 +492,7 @@ $(document).ready(function() {
         $('#modal-content-body').html(`
             <div class="row g-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                 <div class="col-md-5">
-                    <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
+                    <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100 zoomable-saree-img" style="max-height: 500px; object-fit: cover;" title="Click to view details (Zoom)">
                 </div>
                 <div class="col-md-7">
                     <div class="text-uppercase text-muted mb-1" style="font-size: 0.62rem; letter-spacing: 0.12em; font-weight: 700;">${p.category_name}</div>
@@ -891,9 +891,8 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-
-<!-- jQuery Script for Tab Toggles -->
 <script>
+// jQuery Script for Tab Toggles
 $(document).ready(function() {
     $('.filter-tab-btn').on('click', function() {
         // Toggle active class on sidebar tabs
@@ -904,6 +903,116 @@ $(document).ready(function() {
         var targetPane = $(this).data('target');
         $('.filter-pane-group').removeClass('active');
         $('#' + targetPane).addClass('active');
+    });
+
+    // ══════════════════════════════════════════════════════
+    // SAREE IMAGE ZOOM LIGHTBOX LOGIC
+    // ══════════════════════════════════════════════════════
+    $(document).on('click', '.zoomable-saree-img', function(e) {
+        var src = $(this).attr('src');
+        if (!src) return;
+
+        // Create lightbox structure dynamically
+        var lightboxHtml = `
+            <div class="pavitra-zoom-lightbox">
+                <button class="pavitra-zoom-close" title="Close"><i class="fa-solid fa-xmark"></i></button>
+                <div class="pavitra-zoom-wrapper">
+                    <img src="${src}" class="pavitra-zoom-img" alt="Zoom Saree">
+                </div>
+                <div class="pavitra-zoom-controls">
+                    <button class="pavitra-zoom-btn btn-zoom-out" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+                    <button class="pavitra-zoom-btn btn-zoom-reset" style="font-size: 0.8rem; font-weight: bold;" title="Reset Zoom">1:1</button>
+                    <button class="pavitra-zoom-btn btn-zoom-in" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+        `;
+        
+        $('body').append(lightboxHtml);
+        setTimeout(function() {
+            $('.pavitra-zoom-lightbox').addClass('show');
+        }, 10);
+
+        var scale = 1;
+        var posX = 0, posY = 0;
+        var startX = 0, startY = 0;
+        var isDragging = false;
+        var $img = $('.pavitra-zoom-img');
+        var $wrapper = $('.pavitra-zoom-wrapper');
+
+        function updateTransform() {
+            $img.css('transform', `translate3d(${posX}px, ${posY}px, 0) scale(${scale})`);
+        }
+
+        // Zoom In
+        $('.btn-zoom-in').on('click', function(e) {
+            e.stopPropagation();
+            scale = Math.min(scale + 0.5, 4);
+            updateTransform();
+        });
+
+        // Zoom Out
+        $('.btn-zoom-out').on('click', function(e) {
+            e.stopPropagation();
+            scale = Math.max(scale - 0.5, 0.5);
+            if (scale === 1) {
+                posX = 0;
+                posY = 0;
+            }
+            updateTransform();
+        });
+
+        // Reset Zoom
+        $('.btn-zoom-reset').on('click', function(e) {
+            e.stopPropagation();
+            scale = 1;
+            posX = 0;
+            posY = 0;
+            updateTransform();
+        });
+
+        // Close Lightbox
+        $('.pavitra-zoom-close, .pavitra-zoom-lightbox').on('click', function(e) {
+            if (e.target !== this && !$(e.target).closest('.pavitra-zoom-close').length) return;
+            $('.pavitra-zoom-lightbox').removeClass('show');
+            setTimeout(function() {
+                $('.pavitra-zoom-lightbox').remove();
+            }, 300);
+        });
+
+        // Drag/Pan Functionality
+        $wrapper.on('mousedown touchstart', function(e) {
+            e.preventDefault();
+            isDragging = true;
+            var clientX = e.clientX || (e.originalEvent.touches ? e.originalEvent.touches[0].clientX : 0);
+            var clientY = e.clientY || (e.originalEvent.touches ? e.originalEvent.touches[0].clientY : 0);
+            startX = clientX - posX;
+            startY = clientY - posY;
+        });
+
+        $(document).on('mousemove touchmove', function(e) {
+            if (!isDragging) return;
+            var clientX = e.clientX || (e.originalEvent.touches ? e.originalEvent.touches[0].clientX : 0);
+            var clientY = e.clientY || (e.originalEvent.touches ? e.originalEvent.touches[0].clientY : 0);
+            posX = clientX - startX;
+            posY = clientY - startY;
+            updateTransform();
+        });
+
+        $(document).on('mouseup touchend', function() {
+            isDragging = false;
+        });
+
+        // Mouse Wheel Zoom
+        $wrapper.on('wheel', function(e) {
+            e.preventDefault();
+            var delta = e.originalEvent.deltaY;
+            if (delta < 0) {
+                scale = Math.min(scale + 0.25, 4);
+            } else {
+                scale = Math.max(scale - 0.25, 0.5);
+            }
+            updateTransform();
+        });
     });
 });
 </script>

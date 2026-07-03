@@ -2243,3 +2243,112 @@ html {
 .filter-pane-group.active {
     display: block;
 }
+
+/* ══════════════════════════════════════════════════════
+   PAVITRA SAREE IMAGE ZOOM LIGHTBOX STYLING
+   ══════════════════════════════════════════════════════ */
+.pavitra-zoom-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 8, 7, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 12000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pavitra-zoom-lightbox.show {
+    opacity: 1;
+}
+.pavitra-zoom-wrapper {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+.pavitra-zoom-wrapper:active {
+    cursor: grabbing;
+}
+.pavitra-zoom-img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: center center;
+    will-change: transform;
+    border-radius: 4px;
+}
+.pavitra-zoom-controls {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    padding: 12px 24px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    z-index: 12010;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+.pavitra-zoom-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.15rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pavitra-zoom-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFF;
+    transform: scale(1.1);
+}
+.pavitra-zoom-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.35rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 12020;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+.pavitra-zoom-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFF;
+    transform: scale(1.1) rotate(90deg);
+}
+.zoomable-saree-img {
+    cursor: zoom-in !important;
+    transition: transform 0.3s ease;
+}
+.zoomable-saree-img:hover {
+    transform: scale(1.02);
+}
