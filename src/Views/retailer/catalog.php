@@ -61,7 +61,7 @@ function renderProductCard($p) {
 }
 
 // Detect if filters are active
-$isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort) || ($minPrice > 0) || ($maxPrice > 0);
+$isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort) || ($minPrice > 0) || ($maxPrice > 0) || !empty($_GET['all_sarees']);
 ?>
 
 <!-- Meesho-Style Catalog Storefront -->

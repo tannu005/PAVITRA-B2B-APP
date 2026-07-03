@@ -150,7 +150,7 @@ h6 {
 
 /* Header Layout — Luxury Ivory Style */
 .meesho-header {
-    background: linear-gradient(to bottom, #FFF7C2 0%, #FFFDF0 100%) !important;
+    background: rgba(253, 246, 236, 0.97);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border-bottom: 2px solid var(--premium-gold);
@@ -894,7 +894,7 @@ h6 {
 
     /* Layout offsets for sticky top and bottom controls */
     body {
-        padding-top: 140px !important;
+        padding-top: 108px !important;
         /* Offset for mobile top header to prevent overlapping categories */
         padding-bottom: 75px;
         /* Offset for bottom nav bar */
@@ -962,7 +962,7 @@ h6 {
         top: 0;
         left: 0;
         width: 100%;
-        background-color: var(--premium-light-bg);
+        background: linear-gradient(to bottom, #FFF7C2 0%, #FFFDF0 100%);
         border-bottom: 2px solid var(--premium-gold);
         box-shadow: 0 4px 20px rgba(107, 29, 29, 0.08);
         z-index: 1030;
@@ -1059,8 +1059,9 @@ h6 {
     overflow-x: auto;
     scrollbar-width: none;
     /* Firefox */
-    padding: 0.8rem 0;
+    padding: 0.8rem 0.8rem;
     margin: 0 -0.8rem;
+    background: linear-gradient(to bottom, #FFFDF0 0%, rgba(255,255,255,0) 100%) !important;
 }
 
 .meesho-category-scroll::-webkit-scrollbar {
@@ -1274,6 +1275,7 @@ h6 {
     background: transparent !important;
     padding: 0 !important;
     margin-bottom: 1.5rem;
+    cursor: pointer;
 }
 
 .meesho-product-card.minimal .meesho-card-img-wrapper {
@@ -1509,6 +1511,13 @@ h6 {
 
 .nisho-quick-add-btn:hover {
     background-color: #1a1a1a !important;
+}
+
+/* Hide Quick Add overlay on touch devices so tap-to-open works */
+@media (hover: none) and (pointer: coarse) {
+    .nisho-quick-add-btn {
+        display: none !important;
+    }
 }
 
 /* Card sizes list */

@@ -99,7 +99,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
 
             <div class="mobile-header-icons d-flex align-items-center gap-3">
-                <a href="javascript:void(0)" class="position-relative text-dark" title="Notifications" onclick="showToast('You have 1 new weaver credit update! 🔔');">
+                <a href="javascript:void(0)" class="position-relative text-dark" title="Notifications" data-bs-toggle="modal" data-bs-target="#notificationsModal">
                     <i class="fa-regular fa-bell fs-5"></i>
                     <span class="badge bg-danger rounded-circle position-absolute p-0 style-badge" style="width: 14px; height: 14px; font-size: 0.52rem; top: -5px; right: -5px; line-height: 14px; text-align: center;">1</span>
                 </a>
@@ -211,7 +211,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/login" class="text-dark"><i class="fa-regular fa-user fs-5"></i></a>
                 <?php endif; ?>
                 
-                <a href="javascript:void(0)" class="position-relative text-dark me-1" title="Notifications" onclick="showToast('You have 1 new weaver credit update! 🔔');">
+                <a href="javascript:void(0)" class="position-relative text-dark me-1" title="Notifications" data-bs-toggle="modal" data-bs-target="#notificationsModal">
                     <i class="fa-regular fa-bell fs-5"></i>
                     <span class="badge bg-danger rounded-circle position-absolute p-0" style="width: 14px; height: 14px; font-size: 0.52rem; top: -5px; right: -5px; line-height: 14px; text-align: center;">1</span>
                 </a>
@@ -1029,6 +1029,36 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
     <?php endif; ?>
+
+    <!-- Notifications Modal -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(5px); background-color: rgba(0, 0, 0, 0.4);">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
+                <div class="modal-header border-0 pb-0" style="padding: 1.25rem 1.25rem 0.5rem 1.25rem;">
+                    <h5 class="modal-title fw-bold d-flex align-items-center gap-2" style="font-family: var(--font-headings); color: #482922;">
+                        <i class="fa-solid fa-bell" style="color: var(--premium-gold);"></i> Notifications
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="d-flex gap-3 p-3 bg-white border rounded-3 mb-2" style="border-color: #eaeaec !important;">
+                        <div class="text-success"><i class="fa-solid fa-circle-check fs-4"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1" style="font-size: 0.85rem; color: #482922;">GSTIN Verified Successfully</h6>
+                            <p class="text-muted mb-0" style="font-size: 0.75rem; line-height: 1.4;">Your composition trade profile has been approved. Active limit: ₹1,50,000 credit.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 p-3 bg-white border rounded-3" style="border-color: #eaeaec !important;">
+                        <div class="text-primary" style="color: var(--meesho-pink) !important;"><i class="fa-solid fa-truck fs-4"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1" style="font-size: 0.85rem; color: #482922;">New Banaras Loom Alert</h6>
+                            <p class="text-muted mb-0" style="font-size: 0.75rem; line-height: 1.4;">Weaver direct Katan Silk collection has been updated in your area.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
