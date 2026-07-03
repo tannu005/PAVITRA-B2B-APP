@@ -576,13 +576,23 @@ $(document).ready(function() {
                 <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
                     <h6 class="fw-bold text-dark mb-3" style="font-size: 0.82rem;"><i class="fa-solid fa-truck me-2" style="color: #7f8c8d;"></i>Delivery & Services</h6>
                     
-                    <!-- Pincode Checker (Screenshot exact) -->
-                    <div class="d-flex align-items-center justify-content-between mb-3 border p-2.5 rounded-2 bg-light-subtle">
+                    <!-- Pincode Checker -->
+                    <div class="d-flex align-items-center justify-content-between mb-2 border p-2.5 rounded-2 bg-light-subtle">
                         <div class="d-flex align-items-center gap-2">
                             <span class="text-muted" style="font-size: 0.85rem;"><i class="fa-solid fa-location-dot"></i></span>
-                            <span class="fw-bold text-dark" style="font-size: 0.78rem;">Deliver to Tannu - C2-1308 Ashadeep...</span>
+                            <span class="fw-bold text-dark" style="font-size: 0.78rem;" id="modal-delivery-address-label">Check Delivery Availability</span>
                         </div>
-                        <span class="fw-bold text-uppercase" style="font-size: 0.72rem; color: var(--meesho-pink); cursor: pointer;">Change</span>
+                        <span class="fw-bold text-uppercase pincode-change-trigger" style="font-size: 0.72rem; color: var(--meesho-pink); cursor: pointer;">Check</span>
+                    </div>
+
+                    <!-- Collapsible pincode check input -->
+                    <div id="pincode-input-wrapper" style="display: none;" class="mb-3 border p-3 rounded-2 bg-light">
+                        <label class="form-label small fw-bold text-muted text-uppercase mb-1" style="font-size: 0.65rem;">Enter Pincode</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control rounded-0" id="delivery-pincode-input" placeholder="e.g. 110001" maxlength="6" style="font-size: 0.85rem;">
+                            <button class="btn btn-dark rounded-0 px-3 fw-bold text-uppercase" id="btn-apply-pincode" style="font-size: 0.75rem;">Apply</button>
+                        </div>
+                        <span class="text-danger small" id="pincode-error" style="display: none; font-size: 0.7rem;">Please enter a valid 6-digit pincode.</span>
                     </div>
 
                     <!-- Delivery Date (Screenshot exact) -->
@@ -619,8 +629,10 @@ $(document).ready(function() {
                             <div class="fw-bold text-dark">Sequinned Weaves</div>
                         </div>
                         <div class="col-6">
-                            <div class="small text-muted">Print or Pattern Types</div>
-                            <div class="fw-bold text-dark">Embellished Motifs</div>
+                            <div class="col-6">
+                                <div class="small text-muted">Print or Pattern Types</div>
+                                <div class="fw-bold text-dark">Embellished Motifs</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -629,6 +641,61 @@ $(document).ready(function() {
                     <!-- Product Details Description -->
                     <h6 class="fw-bold text-dark mb-2" style="font-size: 0.82rem;">Product Details</h6>
                     <p class="text-muted mb-0" style="font-size: 0.78rem; line-height: 1.6;">${p.description}</p>
+                </div>
+
+                <!-- Ratings & Reviews Section (Screenshot exact) -->
+                <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
+                    <h6 class="fw-bold text-dark mb-3" style="font-size: 0.85rem;">Ratings & Reviews</h6>
+                    
+                    <!-- Star count and pill details -->
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="bg-success text-white px-2 py-1 fw-bold rounded-2 d-inline-flex align-items-center gap-1" style="font-size: 1.1rem; background-color: #03a685 !important;">
+                            4 <i class="fa-solid fa-star" style="font-size: 0.75rem;"></i>
+                        </span>
+                        <span class="bg-light border px-3 py-1.5 rounded-pill text-muted fw-semibold d-inline-flex align-items-center justify-content-between" style="font-size: 0.78rem; width: 220px; cursor: pointer;">
+                            <span>7293 ratings | 1354 reviews</span>
+                            <span class="ms-1" style="font-size: 0.65rem;"><i class="fa-solid fa-chevron-right"></i></span>
+                        </span>
+                    </div>
+
+                    <!-- Scrollable Customer review pictures row -->
+                    <div class="d-flex gap-2 overflow-auto pb-2 mb-3" style="scrollbar-width: none;">
+                        <!-- Photo 1: Saree Video Walkthrough -->
+                        <div class="position-relative bg-light rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec;">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover;">
+                            <span class="position-absolute bg-black bg-opacity-50 text-white px-1.5 py-0.5 rounded-pill d-flex align-items-center gap-1" style="bottom: 8px; right: 8px; font-size: 0.58rem; font-weight: 700;">
+                                <i class="fa-solid fa-play"></i> 0:42
+                            </span>
+                        </div>
+                        <!-- Photo 2: User Drape sitting -->
+                        <div class="bg-light rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec; filter: hue-rotate(40deg);">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover;">
+                        </div>
+                        <!-- Photo 3: User Drape standing -->
+                        <div class="bg-light rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec; filter: hue-rotate(180deg);">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover;">
+                        </div>
+                        <!-- Photo 4: +1168 count -->
+                        <div class="position-relative bg-dark rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec;">
+                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100 opacity-50" style="object-fit: cover;">
+                            <span class="position-absolute translate-middle start-50 top-50 text-white fw-bold" style="font-size: 0.95rem;">+1168</span>
+                        </div>
+                    </div>
+
+                    <!-- Customer Reviews List -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold text-dark" style="font-size: 0.85rem;">Customer Reviews (1354)</span>
+                        <span class="fw-bold text-decoration-underline" style="font-size: 0.78rem; color: var(--meesho-pink); cursor: pointer;">View All</span>
+                    </div>
+
+                    <!-- Example top comment -->
+                    <div class="pt-2 border-top">
+                        <div class="d-flex align-items-center gap-1 mb-1" style="font-size: 0.72rem;">
+                            <span class="text-success"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                            <span class="text-muted border-start ps-1 ms-1">Anil S. (Verified Wholesaler)</span>
+                        </div>
+                        <p class="text-muted mb-0" style="font-size: 0.75rem; line-height: 1.4;">"Fabric and border quality exceeded our expectations. The zari thread work has a brilliant shine. Ordering 12 sets next."</p>
+                    </div>
                 </div>
 
                 <!-- Sticky bottom floating action buttons (Screenshot styled) -->
@@ -758,7 +825,20 @@ $(document).ready(function() {
             const x = e.pageX - container.offsetLeft;
             container.scrollLeft = scrollLeft - (x - startX) * 1.5;
         });
-        container.style.cursor = 'grab';
+    // Pincode collapsible checking form handlers
+    $(document).on('click', '.pincode-change-trigger', function() {
+        $('#pincode-input-wrapper').slideToggle(200);
+    });
+
+    $(document).on('click', '#btn-apply-pincode', function() {
+        const pin = $('#delivery-pincode-input').val().trim();
+        if (/^\d{6}$/.test(pin)) {
+            $('#pincode-error').hide();
+            $('#modal-delivery-address-label').text(`Deliver to Store - Pincode ${pin}`);
+            $('#pincode-input-wrapper').slideUp(200);
+        } else {
+            $('#pincode-error').show();
+        }
     });
 });
 </script>
