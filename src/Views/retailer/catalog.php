@@ -480,10 +480,23 @@ $(document).ready(function() {
     // Product detail modal - rendered instantly from pre-loaded JSON properties
     $(document).on('click', '.product-card-trigger', function(e) {
         if ($(e.target).closest('.wishlist-heart-btn').length > 0) return;
-        const p = $(this).data('json');
+        let p = $(this).data('json');
+        if (!p) {
+            const raw = $(this).attr('data-json');
+            if (raw) {
+                try { p = JSON.parse(raw); } catch(err) { console.error("JSON parse error:", err); }
+            }
+        }
         if (!p) return;
 
-        $('#productDetailModal').modal('show');
+        const modalEl = document.getElementById('productDetailModal');
+        if (modalEl) {
+            if (window.bootstrap) {
+                bootstrap.Modal.getOrCreateInstance(modalEl).show();
+            } else {
+                $(modalEl).modal('show');
+            }
+        }
 
         const wf = parseFloat(p.wholesale_price).toLocaleString('en-IN');
         const mrp = (parseFloat(p.wholesale_price) + 8500).toLocaleString('en-IN');
@@ -721,14 +734,19 @@ $(document).ready(function() {
     // Add to Cart
     $(document).on('click', '#modal-add-cart-btn', function() {
         const btn = $(this);
-        const variantId = btn.data('variant-id');
+        const variantId = btn.attr('data-variant-id');
         const qty = parseInt($('#modal-qty-select').val() || 1);
         btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Adding...');
         $.ajax({
             url: '/cart/add', method: 'POST', contentType: 'application/json',
             data: JSON.stringify({ variant_id: variantId, quantity: qty }), dataType: 'json',
             success: function() {
-                $('#productDetailModal').modal('hide');
+                const modalEl = document.getElementById('productDetailModal');
+                if (modalEl && window.bootstrap) {
+                    bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                } else {
+                    $('#productDetailModal').modal('hide');
+                }
                 $('#cart-trigger-btn').click();
             },
             error: function(xhr) {
@@ -742,7 +760,7 @@ $(document).ready(function() {
     $(document).on('click', '#modal-buy-now-btn', function() {
         const btn = $(this);
         const modalBtn = $('#modal-add-cart-btn');
-        const variantId = modalBtn.data('variant-id');
+        const variantId = modalBtn.attr('data-variant-id');
         const qty = parseInt($('#modal-qty-select').val() || 1);
         btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
         
@@ -753,7 +771,12 @@ $(document).ready(function() {
             data: JSON.stringify({ variant_id: variantId, quantity: qty }),
             dataType: 'json',
             success: function() {
-                $('#productDetailModal').modal('hide');
+                const modalEl = document.getElementById('productDetailModal');
+                if (modalEl && window.bootstrap) {
+                    bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                } else {
+                    $('#productDetailModal').modal('hide');
+                }
                 window.location.href = '/cart'; // Redirect directly to checkout/cart
             },
             error: function(xhr) {
@@ -778,7 +801,7 @@ $(document).ready(function() {
 
     // Share Handler inside Modal
     $(document).on('click', '.modal-share-btn', function() {
-        navigator.clipboard.writeText(window.location.origin + '/?show_product=' + $('#modal-add-cart-btn').data('variant-id'));
+        navigator.clipboard.writeText(window.location.origin + '/?show_product=' + $('#modal-add-cart-btn').attr('data-variant-id'));
         showToast('Product link copied to clipboard! 🔗');
     });
     
