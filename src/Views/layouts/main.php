@@ -130,6 +130,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         </ul>
                     </div>
                     <a href="/?sort=price_low" class="text-danger fw-bold nisho-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
+                    <a href="/customization" class="fw-bold nisho-menu-link text-uppercase" style="color: var(--premium-gold-dark) !important; border-bottom: 1.5px dashed var(--premium-gold-dark);">Custom Studio</a>
                 </div>
             </div>
 
@@ -584,6 +585,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </a>
     </div>
     
+    <!-- ═══════════ WHATSAPP FLOATING CHAT WIDGET ═══════════ -->
+    <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <!-- ═══════════ PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
     <!-- Handle / Trigger Trigger Button -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
@@ -631,6 +637,14 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
             <span>Cart</span>
         </div>
+
+        <!-- Custom Studio -->
+        <a href="/customization" class="pavitra-edge-item" title="Saree Customization Studio">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span>Custom</span>
+        </a>
 
         <!-- Close Chevron -->
         <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">

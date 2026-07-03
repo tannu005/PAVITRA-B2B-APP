@@ -59,6 +59,7 @@ $app->router->post('/checkout', [App\Controllers\RetailerController::class, 'che
 $app->router->get('/orders', [App\Controllers\RetailerController::class, 'orders']);
 $app->router->get('/wallet', [App\Controllers\RetailerController::class, 'wallet']);
 $app->router->get('/wishlist', [App\Controllers\RetailerController::class, 'wishlist']);
+$app->router->get('/customization', [App\Controllers\RetailerController::class, 'customizationView']);
 $app->router->get('/profile', [App\Controllers\RetailerController::class, 'profileView']);
 $app->router->post('/profile', [App\Controllers\RetailerController::class, 'updateProfile']);
 

@@ -643,39 +643,332 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- Filters Modal -->
+<!-- Filters Modal (Luxury 14-Criteria Accordion Format) -->
 <div class="modal fade" id="filtersModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 12px;">
-            <div class="modal-header border-bottom-0 pb-0">
-                <h5 class="modal-title fw-bold"><i class="fa-solid fa-sliders me-2" style="color: #482922;"></i>Refine Catalog</h5>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 520px;">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
+            <div class="modal-header border-0 pb-0" style="background-color: var(--premium-light-bg); border-top-left-radius: 16px; border-top-right-radius: 16px; padding: 1.25rem;">
+                <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--meesho-pink);"><i class="fa-solid fa-sliders me-2" style="color: var(--premium-gold);"></i>Refine Sarees</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-                <form method="GET" action="/">
+            <div class="modal-body p-0">
+                <form method="GET" action="/" id="saree-filters-form">
                     <?php if (!empty($searchQuery)): ?>
                         <input type="hidden" name="search" value="<?= htmlspecialchars($searchQuery) ?>">
                     <?php endif; ?>
-                    <div class="mb-4">
-                        <h6 class="fw-bold text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.1em;">Weaving Category</h6>
-                        <div class="d-flex flex-column gap-2" style="max-height: 200px; overflow-y: auto;">
-                            <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.85rem;">
-                                <input type="radio" name="category" value="" <?= empty($selectedCategory) ? 'checked' : '' ?> onchange="this.form.submit()"> All Categories
-                            </label>
-                            <?php foreach ($categoriesList as $cat): ?>
-                                <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.85rem;">
-                                    <input type="radio" name="category" value="<?= htmlspecialchars($cat['name']) ?>" <?= $selectedCategory === $cat['name'] ? 'checked' : '' ?> onchange="this.form.submit()"> <?= htmlspecialchars($cat['name']) ?>
-                                </label>
-                            <?php endforeach; ?>
+                    
+                    <div class="accordion accordion-flush" id="filterAccordion">
+                        
+                        <!-- 1. Fabric / Material -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFabric">
+                                    1. Fabric & Material
+                                </button>
+                            </h2>
+                            <div id="collapseFabric" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach (['Silk (Kanjeevaram, Banarasi)', 'Cotton', 'Georgette', 'Chiffon', 'Crepe', 'Linen', 'Satin', 'Synthetic Blends'] as $f): ?>
+                                            <input type="checkbox" class="btn-check" id="f-<?= md5($f) ?>" name="filter_fabric[]" value="<?= htmlspecialchars($f) ?>">
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="f-<?= md5($f) ?>"><?= htmlspecialchars($f) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- 2. Color Palette & Spectrum -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseColor">
+                                    2. Color & Spectrum Selector
+                                </button>
+                            </h2>
+                            <div id="collapseColor" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="mb-3">
+                                        <div class="d-flex flex-wrap gap-2 mb-2">
+                                            <?php foreach (['Red' => '#e74c3c', 'Blue' => '#3498db', 'Green' => '#2ecc71', 'Yellow' => '#f1c40f', 'Peach' => '#ffb8b8', 'Lavender' => '#dec9e9', 'White' => '#ffffff', 'Black' => '#000000', 'Beige' => '#f5f5dc', 'Ombre' => 'linear-gradient(to right, #6b1d1d, #c9972e)'] as $colorName => $colorHex): ?>
+                                                <input type="checkbox" class="btn-check" id="col-<?= $colorName ?>" name="filter_color[]" value="<?= $colorName ?>">
+                                                <label class="btn btn-outline-dark btn-sm rounded-0 d-flex align-items-center gap-1" style="font-size:0.65rem;" for="col-<?= $colorName ?>">
+                                                    <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:<?= $colorHex ?>; border:1px solid #ddd;"></span><?= $colorName ?>
+                                                </label>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                    <div class="border-top pt-2">
+                                        <label class="form-label mb-1" style="font-size: 0.72rem; font-weight:700;">Precise Spectrum Selector</label>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <input type="color" class="form-control-color border-0 p-0" name="custom_color_picker" value="#6B1D1D" style="width:34px; height:34px; cursor:pointer; background:none;">
+                                            <span class="text-muted small" style="font-size:0.68rem;">Tap color block to filter by custom color value</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Occasion / Usage -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOccasion">
+                                    3. Occasion & Usage
+                                </button>
+                            </h2>
+                            <div id="collapseOccasion" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach (['Casual / Daily wear', 'Office / Formal', 'Festive / Traditional', 'Wedding / Bridal', 'Party / Cocktail'] as $occ): ?>
+                                            <input type="checkbox" class="btn-check" id="occ-<?= md5($occ) ?>" name="filter_occasion[]" value="<?= htmlspecialchars($occ) ?>">
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="occ-<?= md5($occ) ?>"><?= htmlspecialchars($occ) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Wholesale Price Range -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice">
+                                    4. Price Range (₹)
+                                </button>
+                            </h2>
+                            <div id="collapsePrice" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-6">
+                                            <label class="small text-muted mb-1" style="font-size:0.68rem;">Minimum</label>
+                                            <input type="number" name="min_price" class="form-control form-control-sm rounded-0" placeholder="Min" value="<?= $minPrice > 0 ? intval($minPrice) : '' ?>">
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="small text-muted mb-1" style="font-size:0.68rem;">Maximum</label>
+                                            <input type="number" name="max_price" class="form-control form-control-sm rounded-0" placeholder="Max" value="<?= $maxPrice > 0 ? intval($maxPrice) : '' ?>">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column gap-2 border-top pt-2">
+                                        <label class="small text-muted" style="font-size:0.68rem; font-weight:700;">Predefined Brackets</label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="radio" name="price_bracket" value="under_1000" onchange="this.form.min_price.value=''; this.form.max_price.value='1000';"> Under ₹1,000
+                                        </label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="radio" name="price_bracket" value="1000_5000" onchange="this.form.min_price.value='1000'; this.form.max_price.value='5000';"> ₹1,000 – ₹5,000
+                                        </label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="radio" name="price_bracket" value="5001_10000" onchange="this.form.min_price.value='5001'; this.form.max_price.value='10000';"> ₹5,001 – ₹10,000
+                                        </label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="radio" name="price_bracket" value="above_10000" onchange="this.form.min_price.value='10001'; this.form.max_price.value='';"> ₹10,000+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Pattern / Design -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePattern">
+                                    5. Pattern & Design
+                                </button>
+                            </h2>
+                            <div id="collapsePattern" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach (['Plain / Solid', 'Printed (Floral/Motifs)', 'Embroidered / Zari / Sequined', 'Patchwork / Appliqué', 'Block Print / Handloom'] as $pat): ?>
+                                            <input type="checkbox" class="btn-check" id="pat-<?= md5($pat) ?>" name="filter_pattern[]" value="<?= htmlspecialchars($pat) ?>">
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="pat-<?= md5($pat) ?>"><?= htmlspecialchars($pat) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Saree Type / Regional Style -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRegional">
+                                    6. Saree Type & Weaving Style
+                                </button>
+                            </h2>
+                            <div id="collapseRegional" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach ($categoriesList as $cat): ?>
+                                            <input type="checkbox" class="btn-check" id="reg-<?= md5($cat['name']) ?>" name="filter_regional[]" value="<?= htmlspecialchars($cat['name']) ?>" <?= $selectedCategory === $cat['name'] ? 'checked' : '' ?>>
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="reg-<?= md5($cat['name']) ?>"><?= htmlspecialchars($cat['name']) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 7. Blouse Style / Options -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBlouse">
+                                    7. Blouse Style & Customization
+                                </button>
+                            </h2>
+                            <div id="collapseBlouse" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach (['Matching blouse included', 'Full Sleeve options', 'Short Sleeve / Sleeveless', 'Customizable blouse specs'] as $bl): ?>
+                                            <input type="checkbox" class="btn-check" id="bl-<?= md5($bl) ?>" name="filter_blouse[]" value="<?= htmlspecialchars($bl) ?>">
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="bl-<?= md5($bl) ?>"><?= htmlspecialchars($bl) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Length & Width -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDimensions">
+                                    8. Length & Width Dimensions
+                                </button>
+                            </h2>
+                            <div id="collapseDimensions" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach (['Standard length (5.5–6.5m)', 'Plus-size / Extended drape', 'Custom width variations'] as $dim): ?>
+                                            <input type="checkbox" class="btn-check" id="dim-<?= md5($dim) ?>" name="filter_dimensions[]" value="<?= htmlspecialchars($dim) ?>">
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="dim-<?= md5($dim) ?>"><?= htmlspecialchars($dim) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. User Ratings -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRatings">
+                                    9. User Ratings & Popularity
+                                </button>
+                            </h2>
+                            <div id="collapseRatings" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-column gap-2">
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_rating" value="4_star_above"> <span style="color:var(--premium-gold);"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span> 4-Star & Above
+                                        </label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_popular" value="trending"> <i class="fa-solid fa-fire me-1" style="color:#e67e22;"></i> Most Popular / Trending
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10. Brand / Artisan Hub -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrand">
+                                    10. Brand & Weaver Hubs
+                                </button>
+                            </h2>
+                            <div id="collapseBrand" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach (['Local Handloom Co-ops', 'Weaver Artisan Labels', 'Exclusive Boutique Brands'] as $br): ?>
+                                            <input type="checkbox" class="btn-check" id="br-<?= md5($br) ?>" name="filter_brand[]" value="<?= htmlspecialchars($br) ?>">
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="br-<?= md5($br) ?>"><?= htmlspecialchars($br) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Care Instructions -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCare">
+                                    11. Care Instructions
+                                </button>
+                            </h2>
+                            <div id="collapseCare" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <?php foreach (['Dry clean only', 'Machine washable', 'Gentle handwash recommended'] as $care): ?>
+                                            <input type="checkbox" class="btn-check" id="care-<?= md5($care) ?>" name="filter_care[]" value="<?= htmlspecialchars($care) ?>">
+                                            <label class="btn btn-outline-dark btn-sm rounded-0 text-uppercase" style="font-size:0.65rem;" for="care-<?= md5($care) ?>"><?= htmlspecialchars($care) ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 12. Availability & Logistics -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDelivery">
+                                    12. Availability & Same-day Shipping
+                                </button>
+                            </h2>
+                            <div id="collapseDelivery" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-column gap-2">
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_stock" value="in_stock" checked> In Stock / Ready to Ship
+                                        </label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_shipping" value="fast_delivery"> Same-Day Shipping / Express Dispatch
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 13. New Arrivals & Discounts -->
+                        <div class="accordion-item" style="background:none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeals">
+                                    13. New Arrivals & Bundle Discounts
+                                </button>
+                            </h2>
+                            <div id="collapseDeals" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-column gap-2">
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_newest" value="yes"> Recently Loomed (New Arrivals)
+                                        </label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_discount" value="yes"> Discounted Wholesale Bundles / Coupons
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 14. Sustainability / Ethical Production -->
+                        <div class="accordion-item" style="background:none; border-bottom:0;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold text-uppercase" style="font-size:0.75rem; letter-spacing:0.05em; background:none; color: var(--premium-dark);" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGreen">
+                                    14. Sustainability & Ethical Sourcing
+                                </button>
+                            </h2>
+                            <div id="collapseGreen" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body py-2">
+                                    <div class="d-flex flex-column gap-2">
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_organic" value="organic"> Organic Handloomed Cotton / Natural Silk
+                                        </label>
+                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
+                                            <input type="checkbox" name="filter_fairtrade" value="fairtrade"> Weaver Fair Trade Certified
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="mb-4">
-                        <h6 class="fw-bold text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.1em;">Wholesale Price (₹)</h6>
-                        <div class="row g-2 mb-2">
-                            <div class="col-6"><input type="number" name="min_price" class="form-control form-control-sm rounded-0" placeholder="Min" value="<?= $minPrice > 0 ? intval($minPrice) : '' ?>"></div>
-                            <div class="col-6"><input type="number" name="max_price" class="form-control form-control-sm rounded-0" placeholder="Max" value="<?= $maxPrice > 0 ? intval($maxPrice) : '' ?>"></div>
-                        </div>
-                        <button type="submit" class="btn btn-dark w-100 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.78rem; letter-spacing: 0.1em; background: #1a1a1a;">Apply Filters</button>
+
+                    <!-- Apply & Reset Buttons footer style -->
+                    <div class="p-3 border-0 d-flex gap-2" style="background-color: var(--premium-light-bg); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
+                        <button type="button" class="btn btn-outline-secondary w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;" onclick="document.getElementById('saree-filters-form').reset()">Clear All</button>
+                        <button type="submit" class="btn btn-meesho-pink w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;">Apply Filters</button>
                     </div>
                 </form>
             </div>

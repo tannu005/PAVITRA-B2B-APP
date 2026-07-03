@@ -555,6 +555,17 @@ class RetailerController extends Controller {
         ]);
     }
 
+    // Saree Customization Request View
+    public function customizationView(Request $request, Response $response) {
+        $user = $this->checkAuth(['RETAILER', 'SELLER']);
+        if (!$user) return;
+
+        return $this->render('retailer/customization', [
+            'title' => 'Saree Customization Request — Pavitra B2B',
+            'user' => $user
+        ]);
+    }
+
     // Profile detail manager view
     public function profileView(Request $request, Response $response) {
         $user = $this->checkAuth();
@@ -678,21 +689,74 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Shop by category listing view (replaces about-us/theory page in bottom nav)
+    // Virtual B2B Artisan Stores Directory listing view
     public function categoriesView(Request $request, Response $response) {
-        $categories = [
-            ['name' => 'Banarasi Brocade', 'image' => '/banarasi_1782883519429.png', 'slug' => 'Banarasi+Brocade', 'desc' => 'Bridal luxury zari drapes'],
-            ['name' => 'Kanjeevaram Silk', 'image' => '/kanjeevaram_1782883481838.png', 'slug' => 'Kanjeevaram+Silk', 'desc' => 'Classic South Indian heritage'],
-            ['name' => 'Patola Silk', 'image' => '/patola_1782883499288.png', 'slug' => 'Patola+Silk', 'desc' => 'Traditional double ikat weaves'],
-            ['name' => 'Organza Silk', 'image' => '/tissue_1782883588057.png', 'slug' => 'Organza+Silk', 'desc' => 'Lightweight sheer sophistication'],
-            ['name' => 'Chanderi Weave', 'image' => '/banarasi_1782883568122.png', 'slug' => 'Chanderi+Weave', 'desc' => 'Delicate textures and patterns'],
-            ['name' => 'Mysore Crepe Silk', 'image' => '/kanjeevaram_1782883536799.png', 'slug' => 'Mysore+Crepe+Silk', 'desc' => 'Smooth, rich royal silk'],
-            ['name' => 'Jamdani Muslin', 'image' => '/patola_1782883552751.png', 'slug' => 'Jamdani+Muslin', 'desc' => 'Fine transparent artistic weave']
+        $stores = [
+            [
+                'name' => 'Banaras Heritage Weaves',
+                'speciality' => 'Banarasi Brocade',
+                'artisan' => 'Mohammad Yaseen & Sons',
+                'location' => 'Varanasi, Uttar Pradesh',
+                'image' => '/banarasi_1782883519429.png',
+                'slug' => 'Banarasi+Brocade',
+                'rating' => '4.9',
+                'desc' => 'Pure silk handlooms with real silver and gold Zari work, carrying GI-tagged legacy from the ghats of Varanasi.'
+            ],
+            [
+                'name' => 'Kanchi Emperor Silks',
+                'speciality' => 'Kanjeevaram Silk',
+                'artisan' => 'K. Srinivasa Chari',
+                'location' => 'Kanchipuram, Tamil Nadu',
+                'image' => '/kanjeevaram_1782883481838.png',
+                'slug' => 'Kanjeevaram+Silk',
+                'rating' => '4.8',
+                'desc' => 'Heavy temple-border wedding silks woven with three shuttles and pure gold Zari thread for generational longevity.'
+            ],
+            [
+                'name' => 'Patan Double Ikat Guild',
+                'speciality' => 'Patola Silk',
+                'artisan' => 'The Salvi Family Collective',
+                'location' => 'Patan, Gujarat',
+                'image' => '/patola_1782883499288.png',
+                'slug' => 'Patola+Silk',
+                'rating' => '5.0',
+                'desc' => 'Masterful double-ikat Patola weaves. Each piece takes 6-12 months of meticulous color-resist tying and alignment.'
+            ],
+            [
+                'name' => 'Royal Chanderi Loom Hub',
+                'speciality' => 'Chanderi Weave',
+                'artisan' => 'Devi Prasad Weavers',
+                'location' => 'Chanderi, Madhya Pradesh',
+                'image' => '/banarasi_1782883568122.png',
+                'slug' => 'Chanderi+Weave',
+                'rating' => '4.7',
+                'desc' => 'Feather-light sheer drapes woven with high-twist cotton and silk blends, decorated with traditional gold booti.'
+            ],
+            [
+                'name' => 'Mysore Royal Silk Mills',
+                'speciality' => 'Mysore Crepe Silk',
+                'artisan' => 'Karnataka Silk Guild',
+                'location' => 'Mysore, Karnataka',
+                'image' => '/kanjeevaram_1782883536799.png',
+                'slug' => 'Mysore+Crepe+Silk',
+                'rating' => '4.8',
+                'desc' => 'Pure 100% natural crepe silks dyed in rich royal hues, offering unbeatable fall, drape, and smooth texture.'
+            ],
+            [
+                'name' => 'Vindhya Jamdani Artisans',
+                'speciality' => 'Jamdani Muslin',
+                'artisan' => 'Abdul & Fatima Rahman',
+                'location' => 'Nabadwip, West Bengal',
+                'image' => '/patola_1782883552751.png',
+                'slug' => 'Jamdani+Muslin',
+                'rating' => '4.9',
+                'desc' => 'Artistic transparent muslin drapes woven using supplementary weft hand-shuttling for a suspended motif look.'
+            ]
         ];
         
         return $this->render('retailer/categories', [
-            'title' => 'Shop by Category - Pavitra B2B',
-            'categories' => $categories
+            'title' => 'Master Weaver Stores Directory - Pavitra B2B',
+            'stores' => $stores
         ]);
     }
 }
