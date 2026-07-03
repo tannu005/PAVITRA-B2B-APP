@@ -32,7 +32,7 @@ if %errorlevel%==0 (
 
 REM 3. Start PHP server
 echo [3/4] Starting PHP development server on port 8000...
-start "PHP Server" /MIN "%PHP%" -S 127.0.0.1:8000 "%BASEDIR%\public\index.php"
+start "PHP Server" /MIN "%PHP%" -S 127.0.0.1:8000 -t "%BASEDIR%\public"
 timeout /t 2 /nobreak >nul
 echo      [OK] PHP server started at http://localhost:8000
 
