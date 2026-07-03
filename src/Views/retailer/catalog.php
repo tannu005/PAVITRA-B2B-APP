@@ -214,8 +214,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <!-- SECTION 3: PROMOTIONAL BANNER — SHAADI     -->
     <!-- Parallax full-width image + text overlay    -->
     <!-- ═══════════════════════════════════════════ -->
-    <div class="w-100 my-5 overflow-hidden position-relative" style="height: 45vh; min-height: 320px; max-height: 480px; background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png'); background-size: cover; background-position: center; background-attachment: fixed;">
-        <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center text-white p-4">
+    <div class="w-100 my-5 nisho-parallax-container" style="height: 45vh; min-height: 320px; max-height: 480px;">
+        <div class="nisho-parallax-bg" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png');"></div>
+        <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center text-white p-4" style="position: relative; z-index: 2;">
             <p class="text-uppercase mb-2 nisho-hero-subtitle" style="color: rgba(255,255,255,0.6);">Wholesale Wedding Collection</p>
             <h2 class="text-uppercase mb-3 nisho-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Tyoharcore</h2>
             <p class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); max-width: 500px;">Festive silks handpicked for the bridal season. Bulk orders with exclusive wholesale margins.</p>
