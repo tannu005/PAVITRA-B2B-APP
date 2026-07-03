@@ -70,7 +70,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <div class="meesho-category-scroll d-flex d-md-none px-3 mb-2">
         <a href="/" class="category-circle-item <?= empty($selectedCategory) ? 'active' : '' ?>">
             <?php if (empty($selectedCategory)): ?>
-                <div class="category-circle-img d-flex align-items-center justify-content-center bg-primary text-white fw-bold" style="font-size: 1rem; border: none; background-color: #0D6EFD !important;">All</div>
+                <div class="category-circle-img d-flex align-items-center justify-content-center text-white fw-bold" style="font-size: 1rem; border: none; background-color: var(--meesho-pink) !important;">All</div>
             <?php else: ?>
                 <div class="category-circle-img d-flex align-items-center justify-content-center bg-light text-dark fw-semibold" style="font-size: 1rem; border: 1px solid #ECEFF1;">All</div>
             <?php endif; ?>
