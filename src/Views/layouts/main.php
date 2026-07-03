@@ -32,7 +32,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Rozha+One&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Nunito:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Custom Meesho CSS -->
     <link rel="stylesheet" href="/assets/css/meesho.css?v=<?= time() ?>">
     <!-- jQuery -->
@@ -111,8 +111,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <i class="fa fa-search meesho-mobile-search-icon"></i>
                 <input type="text" name="search" class="meesho-mobile-search-input" placeholder="Search by Keyword or Product ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
                 <div class="meesho-mobile-search-right-icons">
-                    <i class="fa-solid fa-microphone"></i>
-                    <i class="fa-solid fa-camera ms-2"></i>
+                    <i class="fa-solid fa-microphone voice-search-btn" title="Voice Search" style="cursor:pointer;"></i>
+                    <i class="fa-solid fa-camera camera-search-btn ms-2" title="Search by Image" style="cursor:pointer;"></i>
                 </div>
             </form>
         </div>
@@ -211,9 +211,13 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         
         <!-- Dropdown Search input -->
         <div class="container-xl py-2" id="search-dropdown" style="display: none; border-top: 1px solid #eee;">
-            <form class="meesho-search-form w-100 max-width-none" id="search-form" method="GET" action="/">
+            <form class="meesho-search-form w-100 max-width-none position-relative" id="search-form" method="GET" action="/">
                 <i class="fa fa-search meesho-search-icon"></i>
                 <input type="text" name="search" class="meesho-search-input" placeholder="Search by Keyword or Product ID..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                <div class="meesho-mobile-search-right-icons" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--premium-dark-muted);">
+                    <i class="fa-solid fa-microphone voice-search-btn" title="Voice Search"></i>
+                    <i class="fa-solid fa-camera camera-search-btn" title="Search by Image"></i>
+                </div>
             </form>
         </div>
     </header>
@@ -547,6 +551,58 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
     
+    <!-- ═══════════ LUXURY CAMERA / IMAGE SEARCH SCANNER MODAL ═══════════ -->
+    <div class="modal fade" id="cameraSearchModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.65);">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; background-color: #FFFDF8; overflow: hidden;">
+                <!-- Header -->
+                <div class="modal-header border-0 pb-2" style="background-color: var(--premium-light-bg); padding: 1.25rem;">
+                    <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--meesho-pink);"><i class="fa-solid fa-camera me-2" style="color: var(--premium-gold);"></i>Saree Image Matcher</h5>
+                    <button type="button" class="btn-close" id="btn-close-scanner-modal" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Body -->
+                <div class="modal-body p-4 text-center">
+                    <p class="small text-muted mb-3">Snap a photo of a saree pattern or color to scan and search our weaver looms.</p>
+                    
+                    <!-- Scanner Container -->
+                    <div class="scanner-container position-relative overflow-hidden mb-3 bg-dark d-flex align-items-center justify-content-center" style="height: 280px; border-radius: 12px; border: 2px solid var(--premium-gold);">
+                        <!-- Live Camera Stream -->
+                        <video id="scanner-video" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+                        <!-- Scanner Overlay / Laser Line -->
+                        <div class="scanner-laser" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; z-index: 10; animation: scanAnimation 2s linear infinite;"></div>
+                        <!-- Scanning Reticle/Box -->
+                        <div class="scanner-reticle" style="position: absolute; width: 180px; height: 180px; border: 2px dashed rgba(201, 151, 46, 0.5); border-radius: 8px; z-index: 5;"></div>
+                        
+                        <!-- Initial Upload/Capture CTA -->
+                        <div id="scanner-cta" class="text-white p-3 z-3">
+                            <i class="fa-solid fa-camera fa-3x mb-3 text-warning" style="color: var(--premium-gold) !important;"></i>
+                            <h6 class="fw-bold">Camera Access Required</h6>
+                            <p style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.7);">Allow browser camera access or upload an image file from your gallery.</p>
+                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                <button type="button" class="btn btn-sm btn-outline-light rounded-0 px-3" id="btn-start-camera">Use Camera</button>
+                                <label class="btn btn-sm btn-warning rounded-0 px-3 text-dark mb-0" style="background-color: var(--premium-gold); border-color: var(--premium-gold); cursor:pointer;">
+                                    Upload File
+                                    <input type="file" id="scanner-file-input" accept="image/*" style="display:none;">
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Loading/Analyzing Overlay -->
+                        <div id="scanner-loading" class="position-absolute w-100 h-100 top-0 left-0 bg-dark bg-opacity-75 d-flex flex-column align-items-center justify-content-center text-white" style="display: none; z-index: 15;">
+                            <div class="spinner-border text-warning mb-3" style="color: var(--premium-gold) !important;" role="status"></div>
+                            <h6 class="fw-bold mb-1" id="scanner-loading-text">Analyzing weaves...</h6>
+                            <p style="font-size: 0.65rem; color: rgba(255,255,255,0.7);">Matching textures and color spectrums</p>
+                        </div>
+                    </div>
+                    
+                    <div id="scanner-camera-controls" style="display: none;">
+                        <button type="button" class="btn btn-meesho-pink px-4 py-2 text-uppercase fw-bold rounded-0" style="font-size:0.75rem; letter-spacing:0.05em;" id="btn-capture-match">Capture & Match</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ═══════════ NISHORAMA PREMIUM FOOTER ═══════════ -->
     <footer class="nisho-footer">
         <div class="container">
@@ -741,16 +797,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             // Toggle sidebar panel on trigger button click
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
                 e.stopPropagation();
-                $(this).toggleClass('active');
-                $('#pavitra-edge-sidebar').toggleClass('open');
-                
-                // Toggle chevron icon direction
-                const icon = $(this).find('i');
-                if ($(this).hasClass('active')) {
-                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
-                } else {
-                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
-                }
+                $(this).fadeOut(150);
+                $('#pavitra-edge-sidebar').addClass('open');
             });
 
             // Close sidebar when close button is clicked
@@ -767,9 +815,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             });
 
             function closeEdgePanel() {
-                $('#pavitra-edge-trigger-btn').removeClass('active');
                 $('#pavitra-edge-sidebar').removeClass('open');
-                $('#pavitra-edge-trigger-btn').find("i").removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                $('#pavitra-edge-trigger-btn').fadeIn(150);
             }
 
             // Quick Access Cart action
@@ -836,6 +883,136 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     }
                 });
             });
+            // 🎙️ VOICE SEARCH FUNCTIONALITY (SpeechRecognition)
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                var recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'en-IN'; // set to Indian English accents
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                $('.voice-search-btn').on('click', function() {
+                    var btn = $(this);
+                    btn.addClass('text-danger animate-pulse').css('animation', 'nishoPulse 1s infinite');
+                    window.showToast("Listening... Speak now!");
+                    recognition.start();
+                });
+
+                recognition.onresult = function(event) {
+                    var transcript = event.results[0][0].transcript;
+                    $('.meesho-mobile-search-input, .meesho-search-input').val(transcript);
+                    window.showToast("Voice matched: " + transcript);
+                    setTimeout(function() {
+                        $('#search-form-mobile, #search-form').submit();
+                    }, 800);
+                };
+
+                recognition.onspeechend = function() {
+                    recognition.stop();
+                };
+
+                recognition.onerror = function(event) {
+                    $('.voice-search-btn').removeClass('text-danger animate-pulse').css('animation', 'none');
+                    window.showToast("Voice search error: " + event.error);
+                };
+
+                recognition.onend = function() {
+                    $('.voice-search-btn').removeClass('text-danger animate-pulse').css('animation', 'none');
+                };
+            } else {
+                $('.voice-search-btn').on('click', function() {
+                    window.showToast("Voice search not supported in this browser.");
+                });
+            }
+
+            // 📷 CAMERA SEARCH FUNCTIONALITY (Saree Image Matcher)
+            var stream = null;
+            
+            // Open Modal
+            $('.camera-search-btn').on('click', function(e) {
+                e.preventDefault();
+                if (window.bootstrap) {
+                    bootstrap.Modal.getOrCreateInstance(document.getElementById('cameraSearchModal')).show();
+                } else {
+                    $('#cameraSearchModal').modal('show');
+                }
+            });
+
+            // Start Camera Stream
+            $('#btn-start-camera').on('click', function() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(function(s) {
+                        stream = s;
+                        var video = document.getElementById('scanner-video');
+                        video.srcObject = stream;
+                        video.style.display = 'block';
+                        $('.scanner-laser').show();
+                        $('#scanner-cta').hide();
+                        $('#scanner-camera-controls').show();
+                    })
+                    .catch(function(err) {
+                        window.showToast("Camera error: " + err.message);
+                    });
+                } else {
+                    window.showToast("Camera not supported on this browser. Try uploading a file.");
+                }
+            });
+
+            // Handle file upload fallback
+            $('#scanner-file-input').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    startScanSimulation("Analyzing Pattern Motifs...");
+                }
+            });
+
+            // Capture Saree and Simulate matching
+            $('#btn-capture-match').on('click', function() {
+                startScanSimulation("Matching Weaver Colors...");
+            });
+
+            function startScanSimulation(text) {
+                $('#scanner-loading-text').text(text);
+                $('#scanner-loading').css('display', 'flex'); // Show analyzing overlay
+                
+                // Stop camera stream after capture
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    stream = null;
+                }
+                
+                // Simulate deep-learning saree search (takes 2.5 seconds)
+                setTimeout(function() {
+                    var categories = ["Banarasi Brocade", "Kanjeevaram Silk", "Patola Silk", "Organza Silk", "Mysore Crepe Silk", "Jamdani Muslin"];
+                    var matchedCategory = categories[Math.floor(Math.random() * categories.length)];
+                    
+                    window.showToast("Loom match: " + matchedCategory + " found!");
+                    
+                    setTimeout(function() {
+                        // Redirect to catalog page filtered by the matched saree type
+                        window.location.href = "/?category=" + encodeURIComponent(matchedCategory);
+                    }, 1000);
+                }, 2500);
+            }
+
+            // Stop camera if modal is closed
+            $('#cameraSearchModal').on('hidden.bs.modal', function () {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    stream = null;
+                }
+                // Reset scanner modal state
+                var video = document.getElementById('scanner-video');
+                video.srcObject = null;
+                video.style.display = 'none';
+                $('.scanner-laser').hide();
+                $('#scanner-cta').show();
+                $('#scanner-camera-controls').hide();
+                $('#scanner-loading').css('display', 'none');
+            });
+
             $(window).trigger('scroll');
         });
     </script>

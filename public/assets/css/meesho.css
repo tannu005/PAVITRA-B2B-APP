@@ -30,8 +30,8 @@
     --surface-warm: #FAF0DC;
 
     /* Typography */
-    --font-headings: 'Cormorant Garamond', 'Instrument Sans', Georgia, serif;
-    --font-body: 'Nunito', sans-serif;
+    --font-headings: 'Italiana', 'Playfair Display', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', 'Nunito', sans-serif;
     --nisho-body-size: 14px;
     --nisho-body-line-height: 1.65;
     --nisho-logo-size: 28px;
@@ -2172,7 +2172,7 @@ html {
     }
 }
 
-/* Hardware-Accelerated Smooth Parallax Banners */
+/* Standard CSS Parallax Banners (Desktop Fixed, Mobile Scroll) */
 .nisho-parallax-container {
     position: relative;
     overflow: hidden;
@@ -2189,24 +2189,10 @@ html {
     background-attachment: fixed;
     z-index: 1;
 }
-
-/* Hardware-Accelerated Smooth Parallax Banners (Mobile & Desktop) */
-.nisho-parallax-container {
-    position: relative;
-    overflow: hidden;
-}
-.nisho-parallax-bg {
-    position: absolute;
-    top: -20%;
-    left: 0;
-    width: 100%;
-    height: 140%;
-    background-size: cover;
-    background-position: center;
-    background-attachment: scroll !important;
-    z-index: 1;
-    will-change: transform;
-    transform: translate3d(0, 0, 0);
+@media (max-width: 768px) {
+    .nisho-parallax-bg {
+        background-attachment: scroll !important;
+    }
 }
 
 /* Split-Screen Tabbed Filters Layout */
