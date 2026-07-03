@@ -545,6 +545,16 @@ class RetailerController extends Controller {
         ]);
     }
 
+    // Wishlist page — renders saved product IDs from client localStorage via PHP shell
+    public function wishlist(Request $request, Response $response) {
+        $user = $this->checkAuth(['RETAILER', 'SELLER']);
+        if (!$user) return;
+
+        return $this->render('retailer/wishlist', [
+            'title' => 'My Wishlist — Pavitra B2B',
+        ]);
+    }
+
     // Profile detail manager view
     public function profileView(Request $request, Response $response) {
         $user = $this->checkAuth();

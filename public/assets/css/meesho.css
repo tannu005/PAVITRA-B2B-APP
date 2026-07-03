@@ -3,25 +3,34 @@
    ========================================================================== */
 
 :root {
-    /* Brand Color Architecture */
-    --meesho-pink: #482922;
-    --meesho-pink-hover: #1c1c1c;
-    --meesho-pink-gradient: linear-gradient(135deg, #482922 0%, #1c1c1c 100%);
-    --meesho-pink-light: rgba(72, 41, 34, 0.03);
+    /* ═══════════════════════════════════════════════════════════
+       PAVITRA LUXURY PALETTE — Royal Maroon × 22K Gold × Ivory
+       ═══════════════════════════════════════════════════════════ */
 
-    --premium-gold: #C5A059;
-    --premium-gold-dark: #A37F3F;
-    --premium-gold-gradient: linear-gradient(135deg, #C5A059 0%, #9F7E3C 100%);
-    --premium-gold-light: rgba(197, 160, 89, 0.06);
+    /* Primary — Deep Royal Maroon (main brand color) */
+    --meesho-pink: #6B1D1D;
+    --meesho-pink-hover: #4A1010;
+    --meesho-pink-gradient: linear-gradient(135deg, #7D2020 0%, #4A1010 100%);
+    --meesho-pink-light: rgba(107, 29, 29, 0.05);
 
-    --premium-dark: #1E1E24;
-    --premium-dark-muted: #64646F;
-    --premium-light-bg: #FAF9FB;
-    /* Subtle warmth */
-    --premium-border: #E8E8EC;
+    /* Gold Accent — 22-Karat Warm Gold */
+    --premium-gold: #C9972E;
+    --premium-gold-dark: #A67C1E;
+    --premium-gold-gradient: linear-gradient(135deg, #D4A53A 0%, #A67C1E 100%);
+    --premium-gold-light: rgba(201, 151, 46, 0.08);
+
+    /* Neutral Tones — Warm Ivory & Deep Charcoal */
+    --premium-dark: #1A1008;
+    --premium-dark-muted: #6B5F50;
+    --premium-light-bg: #FDF6EC;
+    --premium-border: #EDE0CB;
+
+    /* Surface / Card backgrounds */
+    --surface-white: #FFFDF8;
+    --surface-warm: #FAF0DC;
 
     /* Typography */
-    --font-headings: 'Instrument Sans', sans-serif;
+    --font-headings: 'Cormorant Garamond', 'Instrument Sans', Georgia, serif;
     --font-body: 'Nunito', sans-serif;
     --nisho-body-size: 14px;
     --nisho-body-line-height: 1.65;
@@ -34,11 +43,12 @@
     --nisho-product-letter-spacing: 2.016px;
 
     /* Shadows & Transitions */
-    --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
-    --hover-shadow: 0 25px 50px rgba(244, 51, 151, 0.06);
-    --btn-shadow: 0 4px 15px rgba(244, 51, 151, 0.15);
+    --card-shadow: 0 4px 24px rgba(107, 29, 29, 0.07);
+    --hover-shadow: 0 16px 48px rgba(107, 29, 29, 0.13);
+    --btn-shadow: 0 4px 18px rgba(107, 29, 29, 0.22);
+    --gold-glow: 0 0 18px rgba(201, 151, 46, 0.25);
 
-    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Global Reset & Typography */
@@ -138,16 +148,16 @@ h6 {
     transform: translateY(-2px);
 }
 
-/* Header Layout (Meesho Accurate but Premium) */
+/* Header Layout — Luxury Ivory Style */
 .meesho-header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--premium-border);
+    background: rgba(253, 246, 236, 0.97);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 2px solid var(--premium-gold);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.015);
+    box-shadow: 0 4px 24px rgba(107, 29, 29, 0.08);
 }
 
 .meesho-header-top {
@@ -529,7 +539,7 @@ h6 {
 
 /* Promo Banner Slider (Luxury Hero Look) */
 .meesho-promo-banner {
-    background: linear-gradient(135deg, #0F0C20 0%, #1D1537 35%, #7E1E50 70%, #9C1F5E 100%);
+    background: linear-gradient(135deg, #1A0505 0%, #4A1010 35%, #7D2020 70%, #C9972E 100%);
     border-radius: 20px;
     padding: 3rem;
     display: flex;
@@ -801,9 +811,9 @@ h6 {
     left: 0;
     width: 100%;
     height: 62px;
-    background-color: white;
-    border-top: 1px solid var(--premium-border);
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.03);
+    background: linear-gradient(180deg, #FDF6EC 0%, #FAF0DC 100%);
+    border-top: 2px solid var(--premium-gold);
+    box-shadow: 0 -4px 20px rgba(107, 29, 29, 0.08);
     z-index: 1040;
     display: none;
     justify-content: space-around;
@@ -2006,10 +2016,10 @@ html {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: #482922;
+    background: var(--meesho-pink-gradient);
     color: #FFF;
-    border: none;
-    box-shadow: 0 4px 16px rgba(72, 41, 34, 0.3);
+    border: 2px solid var(--premium-gold);
+    box-shadow: 0 4px 16px rgba(107, 29, 29, 0.35), var(--gold-glow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2018,9 +2028,9 @@ html {
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .pavitra-edge-trigger:hover {
-    transform: scale(1.08);
-    background-color: #C5A059;
-    box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+    transform: scale(1.1);
+    background: var(--premium-gold-gradient);
+    box-shadow: 0 6px 24px rgba(201, 151, 46, 0.45);
 }
 .pavitra-edge-trigger i {
     font-size: 1.15rem;
@@ -2033,16 +2043,16 @@ html {
 /* Floating Vertical Panel (Matches Android Edge Panel) */
 .pavitra-edge-panel {
     position: fixed;
-    right: -105px; /* Hidden offscreen by default */
+    right: -105px;
     top: 50%;
     transform: translateY(-50%);
     width: 80px;
-    background-color: rgba(33, 37, 41, 0.94);
+    background: linear-gradient(180deg, #3D0A0A 0%, #5C1A1A 50%, #3D0A0A 100%);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(201, 151, 46, 0.35);
     border-radius: 20px;
-    box-shadow: -5px 10px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: -5px 10px 30px rgba(107, 29, 29, 0.35), inset 0 1px 0 rgba(201,151,46,0.15);
     padding: 16px 0;
     display: flex;
     flex-direction: column;
@@ -2068,18 +2078,19 @@ html {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: #FFF;
-    color: #212529;
+    background-color: rgba(253, 246, 236, 0.12);
+    color: #F5E6CC;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.05rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
+    border: 1px solid rgba(201, 151, 46, 0.2);
 }
 .pavitra-edge-item span {
     font-size: 0.58rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(245, 230, 204, 0.85);
     font-weight: 600;
     margin-top: 4px;
     text-transform: uppercase;
@@ -2088,11 +2099,13 @@ html {
 }
 .pavitra-edge-item:hover .pavitra-edge-icon-circle {
     transform: scale(1.1);
-    background-color: #C5A059;
+    background: var(--premium-gold-gradient);
     color: #FFF;
+    border-color: var(--premium-gold);
+    box-shadow: var(--gold-glow);
 }
 .pavitra-edge-item:hover span {
-    color: #C5A059;
+    color: var(--premium-gold);
 }
 
 /* Custom styled Close arrow button at the bottom of sidebar */

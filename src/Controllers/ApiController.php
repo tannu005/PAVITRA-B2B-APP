@@ -793,5 +793,32 @@ class ApiController extends Controller {
             return $response->json(['error' => 'Simulate failed: ' . $e->getMessage()], 500);
         }
     }
+
+    // Public: Single product variant detail for wishlist page
+    public function getProductVariant(Request $request, Response $response) {
+        $db = Application::$app->db;
+        $params = $request->getRouteParams();
+        $id = intval($params['id'] ?? 0);
+        if ($id <= 0) {
+            return $response->json(['error' => 'Invalid variant id'], 400);
+        }
+        $stmt = $db->prepare("
+            SELECT pv.id, pv.product_id, pv.wholesale_price, pv.price, pv.image_url, pv.color, pv.stock,
+                   p.title, p.description, c.name as category_name
+            FROM product_variants pv
+            JOIN products p ON pv.product_id = p.id
+            JOIN categories c ON p.category_id = c.id
+            WHERE pv.id = ? AND p.status = 'ACTIVE' AND p.is_approved = 1
+            LIMIT 1
+        ");
+        $stmt->execute([$id]);
+        $variant = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if (!$variant) {
+            return $response->json(['error' => 'Not found'], 404);
+        }
+        header('Content-Type: application/json');
+        echo json_encode($variant);
+        exit;
+    }
 }
 

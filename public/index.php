@@ -58,6 +58,7 @@ $app->router->post('/cart/coupon', [App\Controllers\RetailerController::class, '
 $app->router->post('/checkout', [App\Controllers\RetailerController::class, 'checkout']);
 $app->router->get('/orders', [App\Controllers\RetailerController::class, 'orders']);
 $app->router->get('/wallet', [App\Controllers\RetailerController::class, 'wallet']);
+$app->router->get('/wishlist', [App\Controllers\RetailerController::class, 'wishlist']);
 $app->router->get('/profile', [App\Controllers\RetailerController::class, 'profileView']);
 $app->router->post('/profile', [App\Controllers\RetailerController::class, 'updateProfile']);
 
@@ -146,6 +147,9 @@ $app->router->post('/api/delivery/update', [App\Controllers\ApiController::class
 // Mock triggers
 $app->router->post('/api/wallet/deposit', [App\Controllers\ApiController::class, 'depositSimulate']);
 $app->router->post('/api/kyc/simulate', [App\Controllers\ApiController::class, 'kycSimulate']);
+
+// Public product variant detail — used by wishlist page (no auth needed)
+$app->router->get('/api/product-variant/{id}', [App\Controllers\ApiController::class, 'getProductVariant']);
 
 // Run the application
 $app->run();

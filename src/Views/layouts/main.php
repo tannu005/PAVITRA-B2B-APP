@@ -17,7 +17,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken) ?>">
     <meta name="description" content="<?= $pageDescription ?>">
     <meta name="robots" content="index,follow">
-    <meta name="theme-color" content="#482922">
+    <meta name="theme-color" content="#6B1D1D">
     <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
     <meta property="og:title" content="<?= $pageTitle ?>">
     <meta property="og:description" content="<?= $pageDescription ?>">
@@ -32,7 +32,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Nunito:ital,wght@0,300..900;1,300..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Rozha+One&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Nunito:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <!-- Custom Meesho CSS -->
     <link rel="stylesheet" href="/assets/css/meesho.css?v=<?= time() ?>">
     <!-- jQuery -->
@@ -156,7 +156,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/login" class="text-dark"><i class="fa-regular fa-user fs-5"></i></a>
                 <?php endif; ?>
                 
-                <a href="/support" class="text-dark"><i class="fa-regular fa-heart fs-5"></i></a>
+                <a href="/wishlist" class="text-dark" title="My Wishlist"><i class="fa-regular fa-heart fs-5"></i></a>
                 
                 <button class="bg-transparent border-0 p-0 text-dark position-relative" id="cart-trigger-btn">
                     <i class="fa-solid fa-bag-shopping fs-5"></i>
@@ -574,7 +574,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <i class="fa-solid fa-border-all"></i>
             <span>Categories</span>
         </a>
-        <a href="/support" class="mobile-nav-item <?= str_contains($_SERVER['REQUEST_URI'], '/support') ? 'active' : '' ?>">
+        <a href="/wishlist" class="mobile-nav-item <?= str_contains($_SERVER['REQUEST_URI'], '/wishlist') ? 'active' : '' ?>">
             <i class="fa-solid fa-heart"></i>
             <span>Wishlist</span>
         </a>
@@ -616,8 +616,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <span>Filters</span>
         </div>
 
-        <!-- Wishlist (Support tickets) -->
-        <a href="/support" class="pavitra-edge-item" title="Go to Wishlist & Support">
+        <!-- Wishlist -->
+        <a href="/wishlist" class="pavitra-edge-item" title="My Wishlist">
             <div class="pavitra-edge-icon-circle">
                 <i class="fa-solid fa-heart"></i>
             </div>
