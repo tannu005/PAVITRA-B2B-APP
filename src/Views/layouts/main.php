@@ -65,7 +65,29 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php else: ?>
-                    <a href="/" class="nisho-logo" style="margin-right: 10px;">प</a>
+                    <a href="/" class="nisho-logo" style="margin-right: 10px;">
+                        <svg viewBox="0 0 160 45" width="110" height="32" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                            <g fill="none" stroke-linecap="round">
+                                <!-- Flute (Bansuri) base in gold -->
+                                <path d="M 5 32 L 65 32" stroke="#C9972E" stroke-width="2" />
+                                <circle cx="12" cy="32" r="0.8" fill="#6B1D1D" />
+                                <circle cx="20" cy="32" r="0.8" fill="#6B1D1D" />
+                                <circle cx="28" cy="32" r="0.8" fill="#6B1D1D" />
+                                <circle cx="36" cy="32" r="0.8" fill="#6B1D1D" />
+                                <!-- Peacock feathers (Red, Green, Blue) from original -->
+                                <path d="M 12 30 C 8 18, 16 8, 26 6" stroke="#e74c3c" stroke-width="2.5" />
+                                <path d="M 20 30 C 16 20, 24 12, 34 10" stroke="#2ecc71" stroke-width="2.5" />
+                                <path d="M 28 30 C 24 22, 32 16, 42 14" stroke="#3498db" stroke-width="2.5" />
+                                <!-- Peacock eye feather on the right end -->
+                                <path d="M 58 32 C 60 22, 68 18, 64 28" stroke="#C9972E" stroke-width="1" />
+                                <ellipse cx="61" cy="26" rx="3" ry="5" fill="#6B1D1D" />
+                                <ellipse cx="61" cy="26" rx="1.5" ry="3" fill="#C9972E" />
+                                <circle cx="61" cy="26" r="0.8" fill="#3498db" />
+                            </g>
+                            <text x="72" y="28" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="700" fill="#6B1D1D" letter-spacing="1">pavitra</text>
+                            <text x="72" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#A67C1E" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                        </svg>
+                    </a>
                 <?php endif; ?>
             </div>
 
@@ -99,8 +121,29 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <!-- Header Navigation (Desktop/Tablet) -->
     <header class="meesho-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
-            <!-- Brand Logo (Hindi character) -->
-            <a href="/" class="nisho-logo">प</a>
+            <a href="/" class="nisho-logo">
+                <svg viewBox="0 0 160 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                    <g fill="none" stroke-linecap="round">
+                        <!-- Flute (Bansuri) base in gold -->
+                        <path d="M 5 32 L 65 32" stroke="#C9972E" stroke-width="2" />
+                        <circle cx="12" cy="32" r="0.8" fill="#6B1D1D" />
+                        <circle cx="20" cy="32" r="0.8" fill="#6B1D1D" />
+                        <circle cx="28" cy="32" r="0.8" fill="#6B1D1D" />
+                        <circle cx="36" cy="32" r="0.8" fill="#6B1D1D" />
+                        <!-- Peacock feathers (Red, Green, Blue) from original -->
+                        <path d="M 12 30 C 8 18, 16 8, 26 6" stroke="#e74c3c" stroke-width="2.5" />
+                        <path d="M 20 30 C 16 20, 24 12, 34 10" stroke="#2ecc71" stroke-width="2.5" />
+                        <path d="M 28 30 C 24 22, 32 16, 42 14" stroke="#3498db" stroke-width="2.5" />
+                        <!-- Peacock eye feather on the right end -->
+                        <path d="M 58 32 C 60 22, 68 18, 64 28" stroke="#C9972E" stroke-width="1" />
+                        <ellipse cx="61" cy="26" rx="3" ry="5" fill="#6B1D1D" />
+                        <ellipse cx="61" cy="26" rx="1.5" ry="3" fill="#C9972E" />
+                        <circle cx="61" cy="26" r="0.8" fill="#3498db" />
+                    </g>
+                    <text x="72" y="28" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="700" fill="#6B1D1D" letter-spacing="1">pavitra</text>
+                    <text x="72" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#A67C1E" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                </svg>
+            </a>
 
             <!-- Center Menu Links (Nisho Muse Two-Row style) -->
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
@@ -510,7 +553,29 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <div class="row g-4">
                 <!-- About Column -->
                 <div class="col-lg-3 col-md-6">
-                    <a href="/" class="nisho-logo d-inline-block mb-3" style="font-size: 2rem; color: #FFF !important;">प</a>
+                    <a href="/" class="nisho-logo d-inline-block mb-3">
+                        <svg viewBox="0 0 160 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                            <g fill="none" stroke-linecap="round">
+                                <!-- Flute (Bansuri) base in gold -->
+                                <path d="M 5 32 L 65 32" stroke="#C9972E" stroke-width="2" />
+                                <circle cx="12" cy="32" r="0.8" fill="#FFF" />
+                                <circle cx="20" cy="32" r="0.8" fill="#FFF" />
+                                <circle cx="28" cy="32" r="0.8" fill="#FFF" />
+                                <circle cx="36" cy="32" r="0.8" fill="#FFF" />
+                                <!-- Peacock feathers (Red, Green, Blue) from original -->
+                                <path d="M 12 30 C 8 18, 16 8, 26 6" stroke="#e74c3c" stroke-width="2.5" />
+                                <path d="M 20 30 C 16 20, 24 12, 34 10" stroke="#2ecc71" stroke-width="2.5" />
+                                <path d="M 28 30 C 24 22, 32 16, 42 14" stroke="#3498db" stroke-width="2.5" />
+                                <!-- Peacock eye feather on the right end -->
+                                <path d="M 58 32 C 60 22, 68 18, 64 28" stroke="#C9972E" stroke-width="1" />
+                                <ellipse cx="61" cy="26" rx="3" ry="5" fill="#6B1D1D" />
+                                <ellipse cx="61" cy="26" rx="1.5" ry="3" fill="#C9972E" />
+                                <circle cx="61" cy="26" r="0.8" fill="#3498db" />
+                            </g>
+                            <text x="72" y="28" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="700" fill="#FFF" letter-spacing="1">pavitra</text>
+                            <text x="72" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#C9972E" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                        </svg>
+                    </a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
                     <div class="nisho-footer-social mt-3">
                         <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -584,11 +649,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <span>Account</span>
         </a>
     </div>
-    
-    <!-- ═══════════ WHATSAPP FLOATING CHAT WIDGET ═══════════ -->
-    <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-whatsapp-float" target="_blank" title="Chat on WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+
 
     <!-- ═══════════ PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
     <!-- Handle / Trigger Trigger Button -->
@@ -644,6 +705,14 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
             </div>
             <span>Custom</span>
+        </a>
+
+        <!-- WhatsApp Chat -->
+        <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
+            <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
+                <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <span>WhatsApp</span>
         </a>
 
         <!-- Close Chevron -->
@@ -747,6 +816,27 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     }, 500);
                 }
             }
+
+            // Hardware-Accelerated Smooth Parallax Banners Scroll Listener (Desktop & Mobile)
+            $(window).on('scroll', function() {
+                $('.nisho-parallax-container').each(function() {
+                    var container = $(this);
+                    var bg = container.find('.nisho-parallax-bg');
+                    if (bg.length) {
+                        var containerTop = container.offset().top;
+                        var containerHeight = container.outerHeight();
+                        var windowTop = $(window).scrollTop();
+                        var windowHeight = $(window).height();
+                        
+                        if (windowTop + windowHeight > containerTop && windowTop < containerTop + containerHeight) {
+                            var relativeScroll = (windowTop + windowHeight - containerTop) / (windowHeight + containerHeight);
+                            var yOffset = (relativeScroll - 0.5) * 80; // Translate range
+                            bg.css('transform', 'translate3d(0, ' + yOffset + 'px, 0)');
+                        }
+                    }
+                });
+            });
+            $(window).trigger('scroll');
         });
     </script>
 
