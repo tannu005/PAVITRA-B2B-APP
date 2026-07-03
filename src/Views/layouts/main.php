@@ -214,7 +214,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <form class="meesho-search-form w-100 max-width-none position-relative" id="search-form" method="GET" action="/">
                 <i class="fa fa-search meesho-search-icon"></i>
                 <input type="text" name="search" class="meesho-search-input" placeholder="Search by Keyword or Product ID..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-                <div class="meesho-mobile-search-right-icons" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--premium-dark-muted);">
+                <div class="meesho-mobile-search-right-icons" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--premium-dark-muted); z-index: 10 !important; pointer-events: auto !important;">
                     <i class="fa-solid fa-microphone voice-search-btn" title="Voice Search"></i>
                     <i class="fa-solid fa-camera camera-search-btn" title="Search by Image"></i>
                 </div>
@@ -953,10 +953,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         $('#scanner-camera-controls').show();
                     })
                     .catch(function(err) {
-                        window.showToast("Camera error: " + err.message);
+                        window.showToast("Camera access error: " + err.message);
+                        $('#scanner-file-input').click();
                     });
                 } else {
-                    window.showToast("Camera not supported on this browser. Try uploading a file.");
+                    window.showToast("Direct camera stream not supported. Please select an image file.");
+                    $('#scanner-file-input').click();
                 }
             });
 
