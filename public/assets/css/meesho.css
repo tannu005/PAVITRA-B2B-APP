@@ -150,14 +150,14 @@ h6 {
 
 /* Header Layout — Luxury Ivory Style */
 .meesho-header {
-    background: rgba(253, 246, 236, 0.97);
+    background: linear-gradient(to bottom, #FFF7C2 0%, #FFFDF0 100%) !important;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border-bottom: 2px solid var(--premium-gold);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 24px rgba(107, 29, 29, 0.08);
+    box-shadow: 0 4px 24px rgba(72, 41, 34, 0.08);
 }
 
 .meesho-header-top {
@@ -188,11 +188,11 @@ h6 {
     width: 100%;
     padding: 0.7rem 1rem 0.7rem 2.8rem;
     border: 1px solid #E2E2E6;
-    border-radius: 12px;
+    border-radius: 30px;
     font-size: 0.9rem;
     font-weight: 500;
     outline: none;
-    background-color: #F8F9FA;
+    background-color: #ffffff;
     transition: var(--transition-smooth);
     color: var(--premium-dark);
 }

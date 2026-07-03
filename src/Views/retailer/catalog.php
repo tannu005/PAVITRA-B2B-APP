@@ -238,7 +238,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?all_sarees=true" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
         <div class="nisho-carousel-container">
@@ -363,7 +363,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
                     <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?all_sarees=true" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
         <div class="nisho-carousel-container">
@@ -478,7 +478,7 @@ $(document).ready(function() {
     });
 
     // Product detail modal - rendered instantly from pre-loaded JSON properties
-    $('.product-card-trigger').on('click', function(e) {
+    $(document).on('click', '.product-card-trigger', function(e) {
         if ($(e.target).closest('.wishlist-heart-btn').length > 0) return;
         const p = $(this).data('json');
         if (!p) return;
@@ -510,13 +510,13 @@ $(document).ready(function() {
 
                 <!-- Three Action Pills Below Image -->
                 <div class="d-flex justify-content-between gap-2 mb-3">
-                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" style="font-size: 0.75rem; border-radius: 4px;">
+                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted modal-size-guide-btn" style="font-size: 0.75rem; border-radius: 4px;">
                         <i class="fa-solid fa-ruler-horizontal"></i> Size Guide
                     </button>
-                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" style="font-size: 0.75rem; border-radius: 4px;">
+                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted modal-wishlist-btn" style="font-size: 0.75rem; border-radius: 4px;">
                         <i class="fa-regular fa-heart text-danger"></i> Wishlist
                     </button>
-                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" style="font-size: 0.75rem; border-radius: 4px;">
+                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted modal-share-btn" style="font-size: 0.75rem; border-radius: 4px;">
                         <i class="fa-solid fa-share-nodes"></i> Share
                     </button>
                 </div>
@@ -736,6 +736,50 @@ $(document).ready(function() {
                 btn.prop('disabled', false).html('<i class="fa fa-shopping-bag me-2"></i> Add to Bag');
             }
         });
+    });
+
+    // Buy Now Handler
+    $(document).on('click', '#modal-buy-now-btn', function() {
+        const btn = $(this);
+        const modalBtn = $('#modal-add-cart-btn');
+        const variantId = modalBtn.data('variant-id');
+        const qty = parseInt($('#modal-qty-select').val() || 1);
+        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
+        
+        $.ajax({
+            url: '/cart/add',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ variant_id: variantId, quantity: qty }),
+            dataType: 'json',
+            success: function() {
+                $('#productDetailModal').modal('hide');
+                window.location.href = '/cart'; // Redirect directly to checkout/cart
+            },
+            error: function(xhr) {
+                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to buy now');
+                btn.prop('disabled', false).html('Buy Now');
+            }
+        });
+    });
+
+    // Size Guide Handler
+    $(document).on('click', '.modal-size-guide-btn', function() {
+        alert('Saree Size Guide:\nStandard Length: 5.5 meters\nBlouse Piece: 0.8 meters (unstitched)\nTotal Width: 1.1 meters');
+    });
+
+    // Wishlist Handler inside Modal
+    $(document).on('click', '.modal-wishlist-btn', function() {
+        $(this).toggleClass('active');
+        const isActive = $(this).hasClass('active');
+        $(this).find('i').toggleClass('fa-regular fa-solid').css('color', isActive ? '#e74c3c' : '');
+        showToast(isActive ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');
+    });
+
+    // Share Handler inside Modal
+    $(document).on('click', '.modal-share-btn', function() {
+        navigator.clipboard.writeText(window.location.origin + '/?show_product=' + $('#modal-add-cart-btn').data('variant-id'));
+        showToast('Product link copied to clipboard! 🔗');
     });
     
     // Filter modal trigger

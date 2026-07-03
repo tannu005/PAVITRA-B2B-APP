@@ -98,7 +98,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
 
 
-            <div class="mobile-header-icons">
+            <div class="mobile-header-icons d-flex align-items-center gap-3">
+                <a href="javascript:void(0)" class="position-relative text-dark" title="Notifications" onclick="showToast('You have 1 new weaver credit update! 🔔');">
+                    <i class="fa-regular fa-bell fs-5"></i>
+                    <span class="badge bg-danger rounded-circle position-absolute p-0 style-badge" style="width: 14px; height: 14px; font-size: 0.52rem; top: -5px; right: -5px; line-height: 14px; text-align: center;">1</span>
+                </a>
                 <a href="/support" title="Support"><i class="fa-solid fa-headset"></i></a>
                 <a href="javascript:void(0)" id="cart-trigger-btn-mobile" title="Cart">
                     <i class="fa-solid fa-bag-shopping"></i>
@@ -206,6 +210,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <?php else: ?>
                     <a href="/login" class="text-dark"><i class="fa-regular fa-user fs-5"></i></a>
                 <?php endif; ?>
+                
+                <a href="javascript:void(0)" class="position-relative text-dark me-1" title="Notifications" onclick="showToast('You have 1 new weaver credit update! 🔔');">
+                    <i class="fa-regular fa-bell fs-5"></i>
+                    <span class="badge bg-danger rounded-circle position-absolute p-0" style="width: 14px; height: 14px; font-size: 0.52rem; top: -5px; right: -5px; line-height: 14px; text-align: center;">1</span>
+                </a>
                 
                 <a href="/wishlist" class="text-dark" title="My Wishlist"><i class="fa-regular fa-heart fs-5"></i></a>
                 
@@ -902,6 +911,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#scanner-loading').css('display', 'none');
             });
 
+            <?php 
+            $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+            $requestPath = parse_url($requestUri, PHP_URL_PATH);
+            if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath) && $requestPath !== '/catalog'): 
+            ?>
             // Toggle sidebar panel on trigger button click
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
                 e.stopPropagation();
@@ -942,11 +956,17 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     window.location.href = '/?show_filters=true';
                 }
             });
+            <?php endif; ?>
 
             $(window).trigger('scroll');
         });
     </script>
 
+    <?php 
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+    $requestPath = parse_url($requestUri, PHP_URL_PATH);
+    if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath) && $requestPath !== '/catalog'): 
+    ?>
     <!-- ═══════════ PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
     <!-- Handle / Trigger Trigger Button -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
@@ -1008,6 +1028,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
+    <?php endif; ?>
 
 </body>
 </html>
