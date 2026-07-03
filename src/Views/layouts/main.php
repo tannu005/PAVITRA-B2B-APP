@@ -929,6 +929,38 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             // 📷 CAMERA SEARCH FUNCTIONALITY (Saree Image Matcher)
             var stream = null;
             
+            // Start Camera Stream Function
+            function startScannerCamera() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(function(s) {
+                        stream = s;
+                        var video = document.getElementById('scanner-video');
+                        video.srcObject = stream;
+                        video.style.display = 'block';
+                        $('.scanner-laser').show();
+                        $('.scanner-reticle').show();
+                        $('#scanner-cta').hide();
+                        $('#scanner-camera-controls').show();
+                    })
+                    .catch(function(err) {
+                        // If camera fails, show file CTA fallback
+                        $('#scanner-video').hide();
+                        $('.scanner-laser').hide();
+                        $('.scanner-reticle').hide();
+                        $('#scanner-cta').show();
+                        $('#scanner-camera-controls').hide();
+                        window.showToast("Camera access error: " + err.message);
+                    });
+                } else {
+                    $('#scanner-video').hide();
+                    $('.scanner-laser').hide();
+                    $('.scanner-reticle').hide();
+                    $('#scanner-cta').show();
+                    $('#scanner-camera-controls').hide();
+                }
+            }
+
             // Open Modal
             $('.camera-search-btn').on('click', function(e) {
                 e.preventDefault();
@@ -939,45 +971,60 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
             });
 
-            // Start Camera Stream
+            // Automatically start camera on modal open
+            $('#cameraSearchModal').on('shown.bs.modal', function () {
+                startScannerCamera();
+            });
+
+            // Re-trigger from CTA
             $('#btn-start-camera').on('click', function() {
-                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-                    .then(function(s) {
-                        stream = s;
-                        var video = document.getElementById('scanner-video');
-                        video.srcObject = stream;
-                        video.style.display = 'block';
-                        $('.scanner-laser').show();
-                        $('#scanner-cta').hide();
-                        $('#scanner-camera-controls').show();
-                    })
-                    .catch(function(err) {
-                        window.showToast("Camera access error: " + err.message);
-                        $('#scanner-file-input').click();
-                    });
-                } else {
-                    window.showToast("Direct camera stream not supported. Please select an image file.");
-                    $('#scanner-file-input').click();
-                }
+                startScannerCamera();
             });
 
             // Handle file upload fallback
             $('#scanner-file-input').on('change', function() {
                 var file = this.files[0];
                 if (file) {
+                    // Read file as base64 and store it
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        localStorage.setItem('captured_saree_pattern', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                    
                     startScanSimulation("Analyzing Pattern Motifs...");
                 }
             });
 
             // Capture Saree and Simulate matching
             $('#btn-capture-match').on('click', function() {
+                var video = document.getElementById('scanner-video');
+                if (video && stream) {
+                    try {
+                        var canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth || 640;
+                        canvas.height = video.videoHeight || 480;
+                        var ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        var dataURL = canvas.toDataURL('image/jpeg');
+                        localStorage.setItem('captured_saree_pattern', dataURL);
+                    } catch (e) {
+                        console.log("Canvas capture failed: " + e.message);
+                    }
+                }
                 startScanSimulation("Matching Weaver Colors...");
             });
 
             function startScanSimulation(text) {
+                // Hide video, CTA, and controls to prevent overlap
+                $('#scanner-video').hide();
+                $('#scanner-cta').hide();
+                $('#scanner-camera-controls').hide();
+                $('.scanner-laser').hide();
+                $('.scanner-reticle').hide();
+                
                 $('#scanner-loading-text').text(text);
-                $('#scanner-loading').css('display', 'flex'); // Show analyzing overlay
+                $('#scanner-loading').css('display', 'flex'); // Show analyzing overlay cleanly
                 
                 // Stop camera stream after capture
                 if (stream) {
@@ -1010,6 +1057,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 video.srcObject = null;
                 video.style.display = 'none';
                 $('.scanner-laser').hide();
+                $('.scanner-reticle').hide();
                 $('#scanner-cta').show();
                 $('#scanner-camera-controls').hide();
                 $('#scanner-loading').css('display', 'none');

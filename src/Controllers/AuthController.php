@@ -233,5 +233,143 @@ class AuthController extends Controller {
         session_destroy();
         $response->redirect('/login');
     }
+
+    public function forgotPasswordView(Request $request, Response $response) {
+        if (Application::$app->getSessionUser()) {
+            $response->redirect('/');
+        }
+        return $this->render('auth/forgot_password', ['title' => 'Reset Password - Pavitra B2B']);
+    }
+
+    public function forgotPassword(Request $request, Response $response) {
+        $body = $request->getBody();
+        $email = trim($body['email'] ?? '');
+        
+        $errors = [];
+        $success = null;
+
+        if (empty($email)) {
+            $errors[] = 'Email address is required.';
+        } else {
+            $db = Application::$app->db;
+            $stmt = $db->prepare("SELECT id FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+
+            if ($user) {
+                // Generate token
+                $token = bin2hex(random_bytes(32));
+                // Set expiry to 1 hour from now
+                $stmtUpdate = $db->prepare("UPDATE users SET reset_token = ?, reset_token_expires = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE email = ?");
+                $stmtUpdate->execute([$token, $email]);
+
+                // Create a simulated reset link
+                $resetLink = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/reset-password?token=" . $token;
+                
+                $success = "A password reset link has been generated: <a href='" . $resetLink . "' class='alert-link fw-bold text-decoration-underline'>" . $resetLink . "</a>. Please click it to reset your password.";
+            } else {
+                $errors[] = 'No account with this email address was found.';
+            }
+        }
+
+        return $this->render('auth/forgot_password', [
+            'title' => 'Reset Password - Pavitra B2B',
+            'errors' => $errors,
+            'success' => $success,
+            'email' => $email
+        ]);
+    }
+
+    public function resetPasswordView(Request $request, Response $response) {
+        $body = $request->getBody();
+        $token = trim($body['token'] ?? '');
+
+        if (empty($token)) {
+            $response->redirect('/forgot-password');
+            return;
+        }
+
+        $db = Application::$app->db;
+        $stmt = $db->prepare("SELECT id FROM users WHERE reset_token = ? AND reset_token_expires > NOW()");
+        $stmt->execute([$token]);
+        $user = $stmt->fetch();
+
+        if (!$user) {
+            return $this->render('auth/forgot_password', [
+                'title' => 'Reset Password - Pavitra B2B',
+                'errors' => ['The password reset link is invalid or has expired. Please request a new one.']
+            ]);
+        }
+
+        return $this->render('auth/forgot_password', [
+            'title' => 'Update Password - Pavitra B2B',
+            'token' => $token
+        ]);
+    }
+
+    public function resetPassword(Request $request, Response $response) {
+        $body = $request->getBody();
+        $token = trim($body['token'] ?? '');
+        $password = $body['password'] ?? '';
+        $confirmPassword = $body['confirm_password'] ?? '';
+
+        $errors = [];
+
+        if (empty($token)) {
+            $response->redirect('/forgot-password');
+            return;
+        }
+
+        if (strlen($password) < 6) {
+            $errors[] = 'Password must be at least 6 characters.';
+        }
+        if ($password !== $confirmPassword) {
+            $errors[] = 'Passwords do not match.';
+        }
+
+        $db = Application::$app->db;
+        
+        // Validate token again
+        $stmt = $db->prepare("SELECT id FROM users WHERE reset_token = ? AND reset_token_expires > NOW()");
+        $stmt->execute([$token]);
+        $user = $stmt->fetch();
+
+        if (!$user) {
+            $errors[] = 'The reset link is invalid or has expired.';
+        }
+
+        if (empty($errors)) {
+            try {
+                $db->beginTransaction();
+                
+                $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+                $stmtUpdate = $db->prepare("UPDATE users SET password_hash = ?, reset_token = NULL, reset_token_expires = NULL WHERE id = ?");
+                $stmtUpdate->execute([$passwordHash, $user['id']]);
+
+                $stmtLog = $db->prepare("INSERT INTO activity_logs (user_id, activity, details, ip_address) VALUES (?, 'PASSWORD_RESET', 'Password was successfully reset by token link', ?)");
+                $stmtLog->execute([$user['id'], $_SERVER['REMOTE_ADDR'] ?? '']);
+
+                $db->commit();
+
+                // Redirect to login page with a successful alert message
+                return $this->render('auth/login', [
+                    'title' => 'Sign In - Pavitra B2B',
+                    'errors' => [],
+                    'email' => '',
+                    'success' => 'Your password has been successfully reset! You can now log in using your new credentials.'
+                ]);
+
+            } catch (\Throwable $e) {
+                $db->rollBack();
+                $errors[] = 'Failed to reset password: ' . $e->getMessage();
+            }
+        }
+
+        return $this->render('auth/forgot_password', [
+            'title' => 'Update Password - Pavitra B2B',
+            'token' => $token,
+            'errors' => $errors
+        ]);
+    }
 }
 

@@ -38,9 +38,12 @@
             </div>
 
             <!-- Password -->
-            <div class="mb-4">
+            <div class="mb-4 position-relative">
                 <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
-                <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="Minimum 6 characters" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                <div class="position-relative">
+                    <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="Minimum 6 characters" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <span id="toggle-password" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 5;"><i class="fa-solid fa-eye"></i></span>
+                </div>
             </div>
 
             <!-- Role Dropdown ("Join As") -->
@@ -104,6 +107,19 @@
             } else {
                 $('#shop-label').text('Shop / Company Name');
                 $('#shop_company_name').attr('placeholder', 'e.g. Heritage Saree Boutique');
+            }
+        });
+
+        // Show/Hide password toggle
+        $('#toggle-password').on('click', function() {
+            var input = $('#password');
+            var icon = $(this).find('i');
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
             }
         });
     });

@@ -45,6 +45,10 @@ $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
 $app->router->get('/register', [App\Controllers\AuthController::class, 'registerView']);
 $app->router->post('/register', [App\Controllers\AuthController::class, 'register']);
 $app->router->get('/logout', [App\Controllers\AuthController::class, 'logout']);
+$app->router->get('/forgot-password', [App\Controllers\AuthController::class, 'forgotPasswordView']);
+$app->router->post('/forgot-password', [App\Controllers\AuthController::class, 'forgotPassword']);
+$app->router->get('/reset-password', [App\Controllers\AuthController::class, 'resetPasswordView']);
+$app->router->post('/reset-password', [App\Controllers\AuthController::class, 'resetPassword']);
 
 // Retailer (Buyer / Customer) Storefront Routes
 $app->router->get('/', [App\Controllers\RetailerController::class, 'index']);

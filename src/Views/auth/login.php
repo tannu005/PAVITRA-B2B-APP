@@ -7,6 +7,12 @@
             <p class="text-muted" style="font-size: 0.85rem;">Sign in to your wholesale profile</p>
         </div>
 
+        <?php if (!empty($success)): ?>
+            <div class="alert alert-success py-3 px-3 mb-4 rounded-0" style="font-size: 0.82rem; border-left: 3px solid #2ecc71; background-color: rgba(46, 204, 113, 0.05); color: #27ae60;">
+                <i class="fa-solid fa-circle-check me-2"></i> <?= htmlspecialchars($success) ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger py-2 px-3 mb-4 rounded-0" style="font-size: 0.82rem; border-left: 3px solid #dc3545;">
                 <ul class="mb-0 ps-3">
@@ -27,8 +33,14 @@
 
             <!-- Password -->
             <div class="mb-5">
-                <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
-                <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="••••••••" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label for="password" class="form-label fw-bold text-muted mb-0" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
+                    <a href="/forgot-password" class="text-decoration-none text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase;">Forgot?</a>
+                </div>
+                <div class="position-relative">
+                    <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="••••••••" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <span id="toggle-password" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 5;"><i class="fa-solid fa-eye"></i></span>
+                </div>
             </div>
 
             <!-- Sign In Button -->
@@ -63,3 +75,19 @@
     background-color: #333 !important;
 }
 </style>
+
+<script>
+$(document).ready(function() {
+    $('#toggle-password').on('click', function() {
+        var input = $('#password');
+        var icon = $(this).find('i');
+        if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+            input.attr('type', 'password');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+});
+</script>
