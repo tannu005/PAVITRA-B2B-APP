@@ -1,5 +1,3 @@
--- MySQL 8+ Database Seeds for Meesho-style B2B Wholesale Marketplace
-
 -- 1. Insert default roles
 INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 (1, 'SUPER_ADMIN', 'Super Administrator with full control over the platform'),
