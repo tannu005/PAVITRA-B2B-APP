@@ -48,6 +48,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             document.documentElement.classList.add('android-apk');
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
 
@@ -1028,7 +1029,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     
                     <!-- Scanner Viewfinder UI -->
                     <div id="qr-scanner-viewfinder" class="position-relative" style="width: 280px; height: 280px; border-radius: 16px; overflow: hidden; display: none; margin-bottom: 20vh;">
-                        <video id="qr-video" class="w-100 h-100 object-fit-cover" autoplay playsinline style="background-color: #222;"></video>
+                        <video id="qr-video" class="w-100 h-100 object-fit-cover" autoplay playsinline muted style="background-color: #222;"></video>
                         <!-- Viewfinder corners -->
                         <div class="position-absolute top-0 start-0 border-top border-start" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-top-left-radius: 16px;"></div>
                         <div class="position-absolute top-0 end-0 border-top border-end" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-top-right-radius: 16px;"></div>
@@ -1302,10 +1303,50 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         .then(function(stream) {
                             const video = document.getElementById('qr-video');
                             video.srcObject = stream;
+                            video.setAttribute("playsinline", true);
+                            video.muted = true;
+                            video.play();
+                            
+                            requestAnimationFrame(tick);
+                            
+                            function tick() {
+                                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                                    const canvasElement = document.createElement("canvas");
+                                    canvasElement.width = video.videoWidth;
+                                    canvasElement.height = video.videoHeight;
+                                    const canvas = canvasElement.getContext("2d");
+                                    canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                                    var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+                                    
+                                    if (typeof jsQR !== 'undefined') {
+                                        var code = jsQR(imageData.data, imageData.width, imageData.height, {
+                                            inversionAttempts: "dontInvert",
+                                        });
+                                        if (code && code.data) {
+                                            // Stop scanning
+                                            video.srcObject.getTracks().forEach(track => track.stop());
+                                            alert("Scanned Saree QR: " + code.data);
+                                            $('#qrScannerModal').modal('hide');
+                                            
+                                            // If it's a valid URL, redirect
+                                            if (code.data.startsWith('http') || code.data.startsWith('/')) {
+                                                window.location.href = code.data;
+                                            }
+                                            return;
+                                        }
+                                    }
+                                }
+                                if ($('#qrScannerModal').is(':visible')) {
+                                    requestAnimationFrame(tick);
+                                }
+                            }
                         })
                         .catch(function(err) {
                             console.error("Camera access denied or error:", err);
+                            alert("Camera access was denied or is unavailable. Please check browser permissions.");
                         });
+                } else {
+                    alert("Your browser does not support camera access.");
                 }
             });
         });
