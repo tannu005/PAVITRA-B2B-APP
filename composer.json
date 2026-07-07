@@ -1,6 +1,6 @@
 {
-    "name": "viraasat/meesho-b2b",
-    "description": "Meesho-style B2B Wholesale Marketplace",
+    "name": "pavitra/meesho-b2b",
+    "description": "Pavitra B2B Wholesale Marketplace",
     "type": "project",
     "require": {
         "php": ">=8.3.0"
