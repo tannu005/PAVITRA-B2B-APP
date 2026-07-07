@@ -60,38 +60,38 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <header class="meesho-mobile-header">
         <div class="mobile-header-top-row">
             <div class="d-flex align-items-center">
-                <?php if ($_SERVER['REQUEST_URI'] !== '/' && $_SERVER['REQUEST_URI'] !== ''): ?>
-                    <a href="javascript:history.back()" class="mobile-header-back-arrow">
+                <!-- Hamburger Side Menu Toggle -->
+                <a class="text-dark me-3" data-bs-toggle="offcanvas" href="#mobileSidebarMenu" role="button" aria-controls="mobileSidebarMenu" title="Open Menu">
+                    <i class="fa-solid fa-bars fs-5"></i>
+                </a>
+                <?php if ($_SERVER['REQUEST_URI'] !== '/' && $_SERVER['REQUEST_URI'] !== '' && !str_contains($_SERVER['REQUEST_URI'], '?category') && !str_contains($_SERVER['REQUEST_URI'], 'catalog')): ?>
+                    <a href="javascript:history.back()" class="mobile-header-back-arrow" style="margin-right:10px;">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php else: ?>
-                    <a href="/" class="nisho-logo" style="margin-right: 10px;">
-                        <svg viewBox="0 0 180 45" width="110" height="32" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <!-- Horizontal Flute (Brown) -->
-                            <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                            <!-- Flute holes (gold accents) -->
-                            <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
-                            
-                            <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
-                            <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
-                            <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
-                            <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
-                            
-                            <!-- Heart-shaped Peacock Feather on the right -->
-                            <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                            <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                            <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
-                            <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
-                            <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
-                            <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
+                    <a href="/" class="nisho-logo" style="margin-right: 10px; text-decoration: none;">
+                        <svg viewBox="0 0 220 50" width="130" height="30" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                            <defs>
+                                <linearGradient id="goldLotus" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#E2B961" />
+                                    <stop offset="50%" stop-color="#C59B3C" />
+                                    <stop offset="100%" stop-color="#8E6A1B" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Lotus Center -->
+                            <path d="M 25 40 C 25 40 12 25 25 10 C 38 25 25 40 25 40 Z" fill="url(#goldLotus)"/>
+                            <!-- Left Petals -->
+                            <path d="M 23 38 C 23 38 5 30 10 18 C 18 18 24 25 23 38 Z" fill="url(#goldLotus)" opacity="0.85"/>
+                            <path d="M 21 35 C 21 35 -2 25 5 15 C 15 10 22 20 21 35 Z" fill="url(#goldLotus)" opacity="0.7"/>
+                            <!-- Right Petals -->
+                            <path d="M 27 38 C 27 38 45 30 40 18 C 32 18 26 25 27 38 Z" fill="url(#goldLotus)" opacity="0.85"/>
+                            <path d="M 29 35 C 29 35 52 25 45 15 C 35 10 28 20 29 35 Z" fill="url(#goldLotus)" opacity="0.7"/>
+                            <!-- Base -->
+                            <path d="M 15 42 Q 25 48 35 42 Q 25 44 15 42 Z" fill="#8E6A1B"/>
                             
                             <!-- Brand Typography -->
-                            <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
-                            <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">Designer Saree</text>
+                            <text x="55" y="28" font-family="'Rozha One', serif" font-size="24" font-weight="700" fill="#482922">पवित्रा</text>
+                            <text x="57" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800" fill="#C59B3C" letter-spacing="2">DESIGNER</text>
                         </svg>
                     </a>
                 <?php endif; ?>
@@ -126,33 +126,29 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <!-- Header Navigation (Desktop/Tablet) -->
     <header class="meesho-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
-            <a href="/" class="nisho-logo">
-                <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                    <!-- Horizontal Flute (Brown) -->
-                    <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                    <!-- Flute holes (gold accents) -->
-                    <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
-                    
-                    <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
-                    <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
-                    <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
-                    <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
-                    
-                    <!-- Heart-shaped Peacock Feather on the right -->
-                    <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                    <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                    <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
-                    <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
-                    <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
-                    <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
+            <a href="/" class="nisho-logo" style="text-decoration: none;">
+                <svg viewBox="0 0 220 50" width="160" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
+                    <defs>
+                        <linearGradient id="goldLotusDesktop" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#E2B961" />
+                            <stop offset="50%" stop-color="#C59B3C" />
+                            <stop offset="100%" stop-color="#8E6A1B" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Lotus Center -->
+                    <path d="M 25 40 C 25 40 12 25 25 10 C 38 25 25 40 25 40 Z" fill="url(#goldLotusDesktop)"/>
+                    <!-- Left Petals -->
+                    <path d="M 23 38 C 23 38 5 30 10 18 C 18 18 24 25 23 38 Z" fill="url(#goldLotusDesktop)" opacity="0.85"/>
+                    <path d="M 21 35 C 21 35 -2 25 5 15 C 15 10 22 20 21 35 Z" fill="url(#goldLotusDesktop)" opacity="0.7"/>
+                    <!-- Right Petals -->
+                    <path d="M 27 38 C 27 38 45 30 40 18 C 32 18 26 25 27 38 Z" fill="url(#goldLotusDesktop)" opacity="0.85"/>
+                    <path d="M 29 35 C 29 35 52 25 45 15 C 35 10 28 20 29 35 Z" fill="url(#goldLotusDesktop)" opacity="0.7"/>
+                    <!-- Base -->
+                    <path d="M 15 42 Q 25 48 35 42 Q 25 44 15 42 Z" fill="#8E6A1B"/>
                     
                     <!-- Brand Typography -->
-                    <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
-                    <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">Designer Saree</text>
+                    <text x="55" y="28" font-family="'Rozha One', serif" font-size="24" font-weight="700" fill="#482922">पवित्रा</text>
+                    <text x="57" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800" fill="#C59B3C" letter-spacing="2">DESIGNER</text>
                 </svg>
             </a>
 
@@ -911,11 +907,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#scanner-loading').css('display', 'none');
             });
 
-            <?php 
-            $requestUri = $_SERVER['REQUEST_URI'] ?? '';
-            $requestPath = parse_url($requestUri, PHP_URL_PATH);
-            if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath)): 
-            ?>
+
             // Toggle sidebar panel on trigger button click
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
                 e.stopPropagation();
@@ -953,20 +945,15 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         $('#filtersModal').modal('show');
                     }
                 } else {
-                    window.location.href = '/catalog?show_filters=true';
+                    window.location.href = '/?show_filters=true';
                 }
             });
-            <?php endif; ?>
 
             $(window).trigger('scroll');
         });
     </script>
 
-    <?php 
-    $requestUri = $_SERVER['REQUEST_URI'] ?? '';
-    $requestPath = parse_url($requestUri, PHP_URL_PATH);
-    if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath)): 
-    ?>
+
     <!-- ═══════════ Pavitra Designer FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
     <!-- Handle / Trigger Trigger Button -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
@@ -975,38 +962,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
     <!-- Slide-out vertical menu bar -->
     <div class="pavitra-edge-panel" id="pavitra-edge-sidebar">
-        <!-- Home -->
-        <a href="/" class="pavitra-edge-item" title="Go to Home">
-            <div class="pavitra-edge-icon-circle">
-                <i class="fa-solid fa-house"></i>
-            </div>
-            <span>Home</span>
-        </a>
-
-        <!-- Profile / Account -->
-        <a href="/profile" class="pavitra-edge-item" title="Go to Profile">
-            <div class="pavitra-edge-icon-circle">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <span>Profile</span>
-        </a>
-
-        <!-- Filters (Triggers filter drawer modal) -->
-        <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
-            <div class="pavitra-edge-icon-circle">
-                <i class="fa-solid fa-sliders"></i>
-            </div>
-            <span>Filters</span>
-        </div>
-
-        <!-- Wishlist -->
-        <a href="/wishlist" class="pavitra-edge-item" title="My Wishlist">
-            <div class="pavitra-edge-icon-circle">
-                <i class="fa-solid fa-heart"></i>
-            </div>
-            <span>Wishlist</span>
-        </a>
-
         <!-- Custom Studio -->
         <a href="/customization" class="pavitra-edge-item" title="Saree Customization Studio">
             <div class="pavitra-edge-icon-circle">
@@ -1023,12 +978,27 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <span>WhatsApp</span>
         </a>
 
+        <!-- Filters (Triggers filter drawer modal) -->
+        <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-sliders"></i>
+            </div>
+            <span>Filters</span>
+        </div>
+        
+        <!-- Chatbot -->
+        <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
+            <div class="pavitra-edge-icon-circle">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+            <span>Chatbot</span>
+        </div>
+
         <!-- Close Chevron -->
         <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
-    <?php endif; ?>
 
     <!-- Notifications Modal -->
     <div class="modal fade" id="notificationsModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(5px); background-color: rgba(0, 0, 0, 0.4);">
@@ -1059,6 +1029,185 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
     </div>
+
+    <!-- Mobile Sidebar Menu (Offcanvas) -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebarMenu" aria-labelledby="mobileSidebarMenuLabel" style="width: 280px; border-right: none;">
+        <div class="offcanvas-header" style="background-color: #FDFBF7; border-bottom: 1px solid #ECEFF1;">
+            <h5 class="offcanvas-title" id="mobileSidebarMenuLabel" style="font-family: 'Rozha One', serif; font-size: 1.3rem; color: #482922;">पवित्रा</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <div class="list-group list-group-flush rounded-0">
+                <!-- Custom -->
+                <a href="/customization" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
+                    <i class="fa-solid fa-wand-magic-sparkles me-3" style="color: var(--meesho-pink);"></i> Custom
+                </a>
+                
+                <!-- Filters (Fixed 404) -->
+                <a href="/?show_filters=true" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
+                    <i class="fa-solid fa-sliders me-3" style="color: var(--meesho-pink);"></i> Filters
+                </a>
+                
+                <!-- Chatbot -->
+                <a href="#" data-bs-toggle="modal" data-bs-target="#chatbotModal" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
+                    <i class="fa-solid fa-robot me-3 text-primary"></i> Ask Pavitra AI (Chatbot)
+                </a>
+
+                <div class="border-top my-2"></div>
+                
+                <!-- WhatsApp -->
+                <a href="https://wa.me/919876543210" class="list-group-item list-group-item-action py-3 border-0 text-success" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
+                    <i class="fa-brands fa-whatsapp me-3 fs-5"></i> WhatsApp Support
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Modal -->
+    <div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
+                <div class="modal-header border-0 pb-0" style="padding: 1.25rem 1.25rem 0.5rem 1.25rem; background-color: var(--premium-gold); color: white; border-top-left-radius: 16px; border-top-right-radius: 16px;">
+                    <h5 class="modal-title fw-bold d-flex align-items-center gap-2" style="font-family: 'Rozha One', serif; color: #482922;">
+                        <i class="fa-solid fa-robot"></i> Pavitra AI Assistant
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0 d-flex flex-column" style="height: 400px; max-height: 70vh;">
+                    <!-- Chat Area -->
+                    <div id="chatbot-messages" class="flex-grow-1 p-3" style="overflow-y: auto; background-color: #F8F9FA;">
+                        <!-- Initial Bot Message -->
+                        <div class="d-flex mb-3">
+                            <div class="me-2 mt-auto mb-1">
+                                <div class="d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--premium-gold), #8B5A2B);">
+                                    <i class="fa-solid fa-robot text-white" style="font-size: 0.8rem;"></i>
+                                </div>
+                            </div>
+                            <div class="bg-white p-3 shadow-sm border" style="font-size: 0.9rem; max-width: 80%; border-radius: 16px 16px 16px 0px !important; border-color: #E2E8F0 !important;">
+                                <h6 class="fw-bold mb-2" style="color: #482922;"><i class="fa-solid fa-sparkles text-warning"></i> Namaste!</h6>
+                                I am the Pavitra AI Assistant. I can help you navigate our wholesale catalog and answer questions about bulk orders.<br><br>
+                                <span style="font-size: 0.8rem;" class="text-success"><i class="fa-solid fa-shield-halved"></i> Your privacy is fully protected and encrypted.</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Input Area -->
+                    <div class="p-3 bg-white border-top">
+                        <div class="input-group shadow-sm" style="border-radius: 20px; overflow: hidden;">
+                            <input type="text" id="chatbot-input" class="form-control border-0 bg-light px-3" placeholder="Type your question..." aria-label="Type your question" style="box-shadow: none;">
+                            <button class="btn text-white px-4 border-0" id="chatbot-send-btn" type="button" style="background-color: var(--meesho-pink);">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const chatMessages = $('#chatbot-messages');
+            const chatInput = $('#chatbot-input');
+            const chatSendBtn = $('#chatbot-send-btn');
+
+            function appendMessage(sender, text) {
+                let html = '';
+                if (sender === 'user') {
+                    html = `
+                    <div class="d-flex mb-3 justify-content-end">
+                        <div class="p-3 text-white shadow-sm" style="font-size: 0.9rem; max-width: 85%; background-color: var(--meesho-pink); border-radius: 16px 0px 16px 16px;">
+                            ${text}
+                        </div>
+                    </div>`;
+                } else {
+                    html = `
+                    <div class="d-flex mb-3">
+                        <div class="me-2 mt-auto mb-1">
+                            <div class="d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--premium-gold), #8B5A2B);">
+                                <i class="fa-solid fa-robot text-white" style="font-size: 0.8rem;"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 shadow-sm border" style="font-size: 0.9rem; max-width: 80%; border-radius: 16px 16px 16px 0px; border-color: #E2E8F0 !important;">
+                            ${text}
+                        </div>
+                    </div>`;
+                }
+                chatMessages.append(html);
+                chatMessages.scrollTop(chatMessages[0].scrollHeight);
+            }
+
+            function handleSend() {
+                const text = chatInput.val().trim();
+                if (!text) return;
+                
+                // Add user message
+                appendMessage('user', text);
+                chatInput.val('');
+                
+                // Add typing indicator
+                const typingId = 'typing-' + Date.now();
+                const typingHtml = `
+                <div id="${typingId}" class="d-flex mb-3">
+                    <div class="me-2 mt-auto mb-1">
+                        <div class="d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--premium-gold), #8B5A2B);">
+                            <i class="fa-solid fa-robot text-white" style="font-size: 0.8rem;"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-2 shadow-sm border text-muted d-flex align-items-center gap-1" style="font-size: 0.8rem; border-radius: 16px 16px 16px 0px; height: 36px; margin-top: auto;">
+                        <i class="fa-solid fa-circle text-muted" style="font-size: 6px; animation: blink 1.4s infinite;"></i>
+                        <i class="fa-solid fa-circle text-muted" style="font-size: 6px; animation: blink 1.4s infinite 0.2s;"></i>
+                        <i class="fa-solid fa-circle text-muted" style="font-size: 6px; animation: blink 1.4s infinite 0.4s;"></i>
+                    </div>
+                </div>`;
+                chatMessages.append(typingHtml);
+                chatMessages.scrollTop(chatMessages[0].scrollHeight);
+
+                // Simulate AI response delay
+                setTimeout(() => {
+                    $('#' + typingId).remove();
+                    
+                    let response = `I'd be happy to guide you! Here is a step-by-step guide on how to use Pavitra Designer for your wholesale business:<br><br>
+                    <b>Step 1: Browse & Filter</b><br>
+                    Tap the 'Filters' button in the side menu to find exactly what you need (Silk, Banarasi, etc.).<br><br>
+                    <b>Step 2: Add to Cart</b><br>
+                    Click '+ Quick Add' on the sarees you want. Remember, our wholesale MOQ is 4 pieces.<br><br>
+                    <b>Step 3: Complete KYC</b><br>
+                    Before your first checkout, go to your <b>Profile</b> to upload your GST/Shop License for B2B verification.<br><br>
+                    <b>Step 4: Place Order</b><br>
+                    Go to your cart to securely checkout. We offer Free Shipping on orders over ₹10,000!<br><br>
+                    <i>Need a custom weave? Tap 'Custom' in the side menu!</i><br><br>
+                    Which step would you like more details about?`;
+                    
+                    if (text.toLowerCase().includes('price') || text.toLowerCase().includes('cost') || text.toLowerCase().includes('rate')) {
+                        response = "Wholesale pricing requires a minimum order quantity (MOQ) of 4 pieces. Would you like me to filter the catalog for the best bulk deals?";
+                    } else if (text.toLowerCase().includes('shipping') || text.toLowerCase().includes('delivery') || text.toLowerCase().includes('track')) {
+                        response = "We offer Free Shipping on all wholesale orders above ₹10,000 via our verified delivery partners. You can track orders from your Profile.";
+                    } else if (text.toLowerCase().includes('custom') || text.toLowerCase().includes('weave')) {
+                        response = "Our Customization Studio allows you to submit custom loom requests directly to our Banarasi weavers. Head over to the Custom tab in the menu!";
+                    } else if (text.toLowerCase().includes('hello') || text.toLowerCase().includes('hi') || text.toLowerCase().includes('hey')) {
+                        response = "Namaste! I'm here to guide you. Would you like a step-by-step explanation of how to place a bulk order, or do you have a specific question about our sarees?";
+                    }
+                    
+                    appendMessage('bot', response);
+                }, 1500);
+            }
+
+            chatSendBtn.on('click', handleSend);
+            chatInput.on('keypress', function(e) {
+                if (e.which === 13) handleSend();
+            });
+            
+            // Add typing animation style
+            if (!$('style#chatbot-styles').length) {
+                $('head').append(`
+                <style id="chatbot-styles">
+                    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+                </style>
+                `);
+            }
+        });
+    </script>
 
 </body>
 </html>
