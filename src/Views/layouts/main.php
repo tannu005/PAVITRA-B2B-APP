@@ -3,7 +3,7 @@ use Core\Application;
 $user = Application::$app->getSessionUser();
 $config = Application::$app->config;
 $csrfToken = Application::$app->getCsrfToken();
-$pageTitle = htmlspecialchars($params['title'] ?? $config['company_name'] ?? 'Pavitra B2B');
+$pageTitle = htmlspecialchars($params['title'] ?? $config['company_name'] ?? 'Pavitra Designer');
 $pageDescription = htmlspecialchars($params['description'] ?? 'Enterprise-grade B2B wholesale marketplace for sellers, retailers, and delivery partners.');
 $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 $canonicalPath = strtok($_SERVER['REQUEST_URI'] ?? '/', '?') ?: '/';
@@ -22,7 +22,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <meta property="og:title" content="<?= $pageTitle ?>">
     <meta property="og:description" content="<?= $pageDescription ?>">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="<?= htmlspecialchars($config['brand_name'] ?? 'Pavitra B2B') ?>">
+    <meta property="og:site_name" content="<?= htmlspecialchars($config['brand_name'] ?? 'Pavitra Designer') ?>">
     <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>">
     <title><?= $pageTitle ?></title>
     <!-- Bootstrap 5.3+ CSS -->
@@ -32,9 +32,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Cinzel:wght@400;600;700&family=Rozha+One&display=swap" rel="stylesheet">
     <!-- Custom Meesho CSS -->
-    <link rel="stylesheet" href="/assets/css/meesho.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= Application::assetUrl('/assets/css/meesho.css?v=' . time()) ?>">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
@@ -67,31 +67,31 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <?php else: ?>
                     <a href="/" class="nisho-logo" style="margin-right: 10px;">
                         <svg viewBox="0 0 180 45" width="110" height="32" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <defs>
-                                <linearGradient id="logo-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#e3b865" />
-                                    <stop offset="100%" stop-color="#d5a249" />
-                                </linearGradient>
-                                <linearGradient id="logo-peacock-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#ff3f6c" />
-                                    <stop offset="50%" stop-color="#d5a249" />
-                                    <stop offset="100%" stop-color="#03a685" />
-                                </linearGradient>
-                            </defs>
-                            <!-- Stylized Flute (Gold) -->
-                            <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad)" stroke-width="2" stroke-linecap="round" />
-                            <circle cx="16" cy="28" r="0.8" fill="#482922" />
-                            <circle cx="22" cy="28" r="0.8" fill="#482922" />
-                            <circle cx="28" cy="28" r="0.8" fill="#482922" />
-                            <circle cx="34" cy="28" r="0.8" fill="#482922" />
-                            <circle cx="40" cy="28" r="0.8" fill="#482922" />
-                            <!-- Stylized Peacock Feather Sweep (Gradient) -->
-                            <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad)" opacity="0.85" />
-                            <!-- Gold Spine of Feather -->
-                            <path d="M 20 28 C 22 20, 32 12, 44 8" stroke="url(#logo-gold-grad)" stroke-width="1" fill="none" />
+                            <!-- Horizontal Flute (Brown) -->
+                            <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
+                            <!-- Flute holes (gold accents) -->
+                            <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
+                            
+                            <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
+                            <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
+                            <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
+                            <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
+                            
+                            <!-- Heart-shaped Peacock Feather on the right -->
+                            <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
+                            <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
+                            <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
+                            <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
+                            <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
+                            <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
+                            
                             <!-- Brand Typography -->
-                            <text x="60" y="24" font-family="'Italiana', serif" font-size="20" font-weight="700" fill="#282c3f" letter-spacing="0.5">pavitra</text>
-                            <text x="60" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#d5a249" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                            <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
+                            <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">Designer Saree</text>
                         </svg>
                     </a>
                 <?php endif; ?>
@@ -128,62 +128,62 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         <div class="container-xl d-flex align-items-center justify-content-between">
             <a href="/" class="nisho-logo">
                 <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                    <defs>
-                        <linearGradient id="logo-gold-grad-desktop" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#e3b865" />
-                            <stop offset="100%" stop-color="#d5a249" />
-                        </linearGradient>
-                        <linearGradient id="logo-peacock-grad-desktop" x1="0%" y1="100%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#ff3f6c" />
-                            <stop offset="50%" stop-color="#d5a249" />
-                            <stop offset="100%" stop-color="#03a685" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Stylized Flute (Gold) -->
-                    <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad-desktop)" stroke-width="2" stroke-linecap="round" />
-                    <circle cx="16" cy="28" r="0.8" fill="#482922" />
-                    <circle cx="22" cy="28" r="0.8" fill="#482922" />
-                    <circle cx="28" cy="28" r="0.8" fill="#482922" />
-                    <circle cx="34" cy="28" r="0.8" fill="#482922" />
-                    <circle cx="40" cy="28" r="0.8" fill="#482922" />
-                    <!-- Stylized Peacock Feather Sweep (Gradient) -->
-                    <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad-desktop)" opacity="0.85" />
-                    <!-- Gold Spine of Feather -->
-                    <path d="M 20 28 C 22 20, 32 12, 44 8" stroke="url(#logo-gold-grad-desktop)" stroke-width="1" fill="none" />
+                    <!-- Horizontal Flute (Brown) -->
+                    <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
+                    <!-- Flute holes (gold accents) -->
+                    <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
+                    <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
+                    <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
+                    <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
+                    <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
+                    
+                    <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
+                    <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
+                    <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
+                    <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
+                    
+                    <!-- Heart-shaped Peacock Feather on the right -->
+                    <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
+                    <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
+                    <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
+                    <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
+                    <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
+                    <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
+                    
                     <!-- Brand Typography -->
-                    <text x="60" y="24" font-family="'Italiana', serif" font-size="20" font-weight="700" fill="#282c3f" letter-spacing="0.5">pavitra</text>
-                    <text x="60" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#d5a249" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                    <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
+                    <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">Designer Saree</text>
                 </svg>
             </a>
 
             <!-- Center Menu Links (Nisho Muse Two-Row style) -->
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
-                    <a href="/?category=Organza+Silk" class="nisho-menu-link">PAVITRA MUSE</a>
-                    <a href="/?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
-                    <a href="/?sort=newest" class="nisho-menu-link">NEW ARRIVALS</a>
-                    <a href="/?all_sarees=true" class="nisho-menu-link">ALL SAREES</a>
-                    <a href="/?category=Banarasi+Brocade" class="nisho-menu-link">BANARASI</a>
-                    <a href="/?category=Kanjeevaram+Silk" class="nisho-menu-link">KANJEEVARAM</a>
-                    <a href="/?category=Patola+Silk" class="nisho-menu-link">PATOLA</a>
+                    <a href="/catalog?category=Organza+Silk" class="nisho-menu-link">Pavitra MUSE</a>
+                    <a href="/catalog?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
+                    <a href="/catalog?sort=newest" class="nisho-menu-link">NEW ARRIVALS</a>
+                    <a href="/catalog?all_sarees=true" class="nisho-menu-link">ALL SAREES</a>
+                    <a href="/catalog?category=Banarasi+Brocade" class="nisho-menu-link">BANARASI</a>
+                    <a href="/catalog?category=Kanjeevaram+Silk" class="nisho-menu-link">KANJEEVARAM</a>
+                    <a href="/catalog?category=Patola+Silk" class="nisho-menu-link">PATOLA</a>
                 </div>
                 <div class="menu-row-2 d-flex gap-4">
-                    <a href="/?category=Organza+Silk" class="nisho-menu-link">ORGANZA</a>
-                    <a href="/?category=Chanderi+Weave" class="nisho-menu-link">CHANDERI</a>
-                    <a href="/?category=Mysore+Crepe+Silk" class="nisho-menu-link">MYSORE SILK</a>
-                    <a href="/?category=Jamdani+Muslin" class="nisho-menu-link">JAMDANI</a>
+                    <a href="/catalog?category=Organza+Silk" class="nisho-menu-link">ORGANZA</a>
+                    <a href="/catalog?category=Chanderi+Weave" class="nisho-menu-link">CHANDERI</a>
+                    <a href="/catalog?category=Mysore+Crepe+Silk" class="nisho-menu-link">MYSORE SILK</a>
+                    <a href="/catalog?category=Jamdani+Muslin" class="nisho-menu-link">JAMDANI</a>
                     <div class="dropdown d-inline-block collections-dropdown">
                         <a href="#" class="dropdown-toggle text-decoration-none text-dark nisho-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
                         <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraOffice-SS2</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PAVITRA OFFICE-SS1</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PAVITRAHAVELI - SS2</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Mysore+Crepe+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">DESI ROMANCE</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Chanderi+Weave" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">SHAADI KA GHAR</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraOffice-SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">Pavitra OFFICE-SS1</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraHAVELI - SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Mysore+Crepe+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">DESI ROMANCE</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Chanderi+Weave" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">SHAADI KA GHAR</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
                         </ul>
                     </div>
-                    <a href="/?sort=price_low" class="text-danger fw-bold nisho-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
+                    <a href="/catalog?sort=price_low" class="text-danger fw-bold nisho-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
                     <a href="/customization" class="fw-bold nisho-menu-link text-uppercase" style="color: var(--premium-gold-dark) !important; border-bottom: 1.5px dashed var(--premium-gold-dark);">Custom Studio</a>
                 </div>
             </div>
@@ -627,31 +627,31 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <div class="col-lg-3 col-md-6">
                     <a href="/" class="nisho-logo d-inline-block mb-3">
                         <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <defs>
-                                <linearGradient id="logo-gold-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#e3b865" />
-                                    <stop offset="100%" stop-color="#d5a249" />
-                                </linearGradient>
-                                <linearGradient id="logo-peacock-grad-footer" x1="0%" y1="100%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#ff3f6c" />
-                                    <stop offset="50%" stop-color="#d5a249" />
-                                    <stop offset="100%" stop-color="#03a685" />
-                                </linearGradient>
-                            </defs>
-                            <!-- Stylized Flute (Gold) -->
-                            <path d="M 8 28 L 52 28" stroke="url(#logo-gold-grad-footer)" stroke-width="2" stroke-linecap="round" />
-                            <circle cx="16" cy="28" r="0.8" fill="#ffffff" />
-                            <circle cx="22" cy="28" r="0.8" fill="#ffffff" />
-                            <circle cx="28" cy="28" r="0.8" fill="#ffffff" />
-                            <circle cx="34" cy="28" r="0.8" fill="#ffffff" />
-                            <circle cx="40" cy="28" r="0.8" fill="#ffffff" />
-                            <!-- Stylized Peacock Feather Sweep (Gradient) -->
-                            <path d="M 20 28 C 15 15, 30 6, 44 8 C 36 16, 32 22, 48 28 Z" fill="url(#logo-peacock-grad-footer)" opacity="0.85" />
-                            <!-- Gold Spine of Feather -->
-                            <path d="M 20 28 C 22 20, 32 12, 44 8" stroke="url(#logo-gold-grad-footer)" stroke-width="1" fill="none" />
+                            <!-- Horizontal Flute (Brown) -->
+                            <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
+                            <!-- Flute holes (gold accents) -->
+                            <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
+                            <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
+                            
+                            <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
+                            <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
+                            <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
+                            <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
+                            
+                            <!-- Heart-shaped Peacock Feather on the right -->
+                            <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
+                            <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
+                            <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
+                            <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
+                            <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
+                            <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
+                            
                             <!-- Brand Typography (White text for footer) -->
-                            <text x="60" y="24" font-family="'Italiana', serif" font-size="20" font-weight="700" fill="#ffffff" letter-spacing="0.5">pavitra</text>
-                            <text x="60" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#d5a249" letter-spacing="2.5" text-transform="uppercase">B2B Store</text>
+                            <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#ffffff">पवित्रा</text>
+                            <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">Designer Saree</text>
                         </svg>
                     </a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
@@ -665,14 +665,14 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <!-- Quick Links -->
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>Quick Links</h5>
-                    <a href="/?sort=newest">New Arrivals</a>
-                    <a href="/?category=Banarasi+Brocade">Banarasi</a>
-                    <a href="/?category=Kanjeevaram+Silk">Kanjeevaram</a>
-                    <a href="/?category=Patola+Silk">Patola</a>
-                    <a href="/?category=Organza+Silk">Organza</a>
+                    <a href="/catalog?sort=newest">New Arrivals</a>
+                    <a href="/catalog?category=Banarasi+Brocade">Banarasi</a>
+                    <a href="/catalog?category=Kanjeevaram+Silk">Kanjeevaram</a>
+                    <a href="/catalog?category=Patola+Silk">Patola</a>
+                    <a href="/catalog?category=Organza+Silk">Organza</a>
                 </div>
                 <!-- Help -->
-                <div class="col-lg-2 col-md-6 col-6">
+                <div class="col-lg-2 col-md-6 col-6 d-none d-lg-block">
                     <h5>Help & Support</h5>
                     <a href="/support">Contact Us</a>
                     <a href="/orders">Track Order</a>
@@ -681,7 +681,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/about-us">Size Guide</a>
                 </div>
                 <!-- Policies -->
-                <div class="col-lg-2 col-md-6 col-6">
+                <div class="col-lg-2 col-md-6 col-6 d-none d-lg-block">
                     <h5>Policies</h5>
                     <a href="/about-us">Shipping Info</a>
                     <a href="/about-us">Returns & Refunds</a>
@@ -702,7 +702,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
             <!-- Footer Bottom -->
             <div class="nisho-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <span>© 2026 Pavitra Wholesale Sarees. All Rights Reserved.</span>
+                <span>© 2026 Pavitra Designer. All Rights Reserved.</span>
                 <span class="mt-2 mt-md-0">Crafted with ❤️ for Indian Handloom Heritage</span>
             </div>
         </div>
@@ -914,7 +914,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <?php 
             $requestUri = $_SERVER['REQUEST_URI'] ?? '';
             $requestPath = parse_url($requestUri, PHP_URL_PATH);
-            if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath) && $requestPath !== '/catalog'): 
+            if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath)): 
             ?>
             // Toggle sidebar panel on trigger button click
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
@@ -953,7 +953,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         $('#filtersModal').modal('show');
                     }
                 } else {
-                    window.location.href = '/?show_filters=true';
+                    window.location.href = '/catalog?show_filters=true';
                 }
             });
             <?php endif; ?>
@@ -965,9 +965,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <?php 
     $requestUri = $_SERVER['REQUEST_URI'] ?? '';
     $requestPath = parse_url($requestUri, PHP_URL_PATH);
-    if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath) && $requestPath !== '/catalog'): 
+    if ($requestPath !== '/' && $requestPath !== '/index.php' && !empty($requestPath)): 
     ?>
-    <!-- ═══════════ PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
+    <!-- ═══════════ Pavitra Designer FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
     <!-- Handle / Trigger Trigger Button -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
         <i class="fa-solid fa-chevron-left"></i>

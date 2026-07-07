@@ -1513,10 +1513,14 @@ h6 {
     background-color: #1a1a1a !important;
 }
 
-/* Hide Quick Add overlay on touch devices so tap-to-open works */
+/* Always display Quick Add button on touch devices since hover is not possible */
 @media (hover: none) and (pointer: coarse) {
     .nisho-quick-add-btn {
-        display: none !important;
+        transform: translateY(0) !important;
+        opacity: 0.95 !important;
+        display: block !important;
+        font-size: 0.65rem !important;
+        padding: 6px 0 !important;
     }
 }
 
@@ -1877,6 +1881,12 @@ html {
     color: rgba(255, 255, 255, 0.55);
     font-family: 'Plus Jakarta Sans', sans-serif;
     padding: 60px 0 0;
+}
+
+@media (max-width: 768px) {
+    .nisho-footer {
+        display: none !important;
+    }
 }
 
 .nisho-footer h5 {

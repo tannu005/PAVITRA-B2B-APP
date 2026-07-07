@@ -1,6 +1,6 @@
 <?php
 // =============================================
-// PAVITRA WHOLESALE SAREE MARKETPLACE
+// Pavitra Designer SAREE MARKETPLACE
 // NISHORAMA-STYLE 10-SECTION LANDING PAGE
 // =============================================
 
@@ -42,7 +42,7 @@ function renderProductCard($p) {
                 <span class="badge position-absolute border-0 text-white" style="top: 8px; left: 8px; font-size: 0.6rem; border-radius: 2px; font-weight: 700; padding: 4px 8px; letter-spacing: 0.05em; text-transform: uppercase; background-color: <?= $badgeColors[$badgeIdx] ?>;"><?= $badges[$badgeIdx] ?></span>
             <?php endif; ?>
             <!-- Quick Add -->
-            <button class="nisho-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold nisho-section-link" style="bottom: 0; left: 0; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
+            <button class="nisho-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold" data-variant-id="<?= $p['variant_id'] ?>" style="bottom: 0; left: 0; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
                 + Quick Add
             </button>
         </div>
@@ -184,7 +184,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     </div>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 2: CAROUSEL #1 — PAVITRA MUSE      -->
+    <!-- SECTION 2: CAROUSEL #1 — Pavitra MUSE      -->
     <!-- ═══════════════════════════════════════════ -->
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
@@ -439,22 +439,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <?php endif; ?>
 </div>
 
-<!-- Product Details Modal -->
-<div class="modal fade" id="productDetailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content meesho-modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Saree Specification</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="modal-content-body">
-                <div class="text-center py-5">
-                    <div class="spinner-border" style="color: #482922;" role="status"><span class="visually-hidden">Loading...</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Page JS -->
 <script>
@@ -477,332 +462,41 @@ $(document).ready(function() {
         window.location.search = u.toString();
     });
 
-    // Product detail modal - rendered instantly from pre-loaded JSON properties
+    // Redirect to dedicated Product Details Page on click
     $(document).on('click', '.product-card-trigger', function(e) {
-        if ($(e.target).closest('.wishlist-heart-btn').length > 0) return;
-        let p = $(this).data('json');
-        if (!p) {
-            const raw = $(this).attr('data-json');
-            if (raw) {
-                try { p = JSON.parse(raw); } catch(err) { console.error("JSON parse error:", err); }
-            }
+        if ($(e.target).closest('.wishlist-heart-btn, .nisho-quick-add-btn').length > 0) return;
+        const productId = $(this).attr('data-id');
+        if (productId) {
+            window.location.href = '/product/' + productId;
         }
-        if (!p) return;
-
-        const modalEl = document.getElementById('productDetailModal');
-        if (modalEl) {
-            if (window.bootstrap) {
-                bootstrap.Modal.getOrCreateInstance(modalEl).show();
-            } else {
-                $(modalEl).modal('show');
-            }
-        }
-
-        const wf = parseFloat(p.wholesale_price).toLocaleString('en-IN');
-        const mrp = (parseFloat(p.wholesale_price) + 8500).toLocaleString('en-IN');
-        const bankOfferPrice = (parseFloat(p.wholesale_price) - 149).toLocaleString('en-IN');
-
-        $('#modal-content-body').html(`
-            <div style="font-family: 'Plus Jakarta Sans', sans-serif; color: #282c3f;">
-                <!-- Full-bleed Image with Video Overlays -->
-                <div class="position-relative overflow-hidden bg-light text-center mb-3" style="margin: -15px -15px 15px -15px;">
-                    <img src="${p.image_url || '/assets/images/placeholder.png'}" class="img-fluid w-100 zoomable-saree-img" style="max-height: 520px; object-fit: cover;" title="Zoom Saree Pattern">
-                    
-                    <!-- Rating Badge (Screenshot styled) -->
-                    <span class="position-absolute bg-white px-2 py-1 shadow-sm rounded-3 d-flex align-items-center gap-1 fw-bold" style="bottom: 15px; right: 15px; font-size: 0.72rem; border: 1px solid #eaeaec;">
-                        <span>4.1</span>
-                        <span class="text-success"><i class="fa-solid fa-star"></i></span>
-                        <span class="text-muted border-start ps-1" style="font-weight: 500;">7.3k</span>
-                    </span>
-
-                    <!-- Video Preview Circle -->
-                    <div class="position-absolute d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="bottom: 15px; left: 15px; width: 44px; height: 44px; border: 2px solid var(--meesho-pink); cursor: pointer;" title="Play drape walkthrough">
-                        <i class="fa-solid fa-play" style="color: var(--meesho-pink); font-size: 0.95rem; margin-left: 2px;"></i>
-                    </div>
-                </div>
-
-                <!-- Three Action Pills Below Image -->
-                <div class="d-flex justify-content-between gap-2 mb-3">
-                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted modal-size-guide-btn" style="font-size: 0.75rem; border-radius: 4px;">
-                        <i class="fa-solid fa-ruler-horizontal"></i> Size Guide
-                    </button>
-                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted modal-wishlist-btn" style="font-size: 0.75rem; border-radius: 4px;">
-                        <i class="fa-regular fa-heart text-danger"></i> Wishlist
-                    </button>
-                    <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted modal-share-btn" style="font-size: 0.75rem; border-radius: 4px;">
-                        <i class="fa-solid fa-share-nodes"></i> Share
-                    </button>
-                </div>
-
-                <!-- Brand & Title Block -->
-                <div class="mb-3 px-1">
-                    <h5 class="fw-bold text-dark mb-1" style="font-size: 1.1rem; letter-spacing: -0.2px;">Anouk</h5>
-                    <p class="text-muted mb-2" style="font-size: 0.85rem; line-height: 1.4;">${p.title}</p>
-                    
-                    <!-- Price block (Screenshot exact) -->
-                    <div class="d-flex align-items-baseline gap-2 mb-1">
-                        <span class="fs-4 fw-bold text-dark">₹${wf}</span>
-                        <span class="text-decoration-line-through text-muted small">MRP ₹${mrp}</span>
-                        <span class="fw-bold text-warning small">(₹8,500 OFF)</span>
-                    </div>
-                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold" style="font-size: 0.65rem; padding: 3px 6px;">Thunder Deal</span>
-                </div>
-
-                <!-- Offers Card (Screenshot exact) -->
-                <div class="p-3 mb-3 bg-white border rounded-3 d-flex justify-content-between align-items-center" style="border-color: #eaeaec !important; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge bg-success text-white text-uppercase" style="font-size: 0.58rem; padding: 3px 6px;">MEGA DEAL</span>
-                            <span class="fw-bold text-dark" style="font-size: 0.82rem;">Get at ₹${bankOfferPrice}</span>
-                        </div>
-                        <p class="text-muted mb-0" style="font-size: 0.72rem;"><span style="color: #3498db;"><i class="fa-solid fa-building-columns me-1"></i></span>Extra ₹149 Off with select B2B partner cards</p>
-                    </div>
-                    <span style="color: var(--meesho-pink); font-size: 0.78rem; font-weight: 700; cursor: pointer;">Details <i class="fa-solid fa-chevron-right ms-1"></i></span>
-                </div>
-
-                <!-- Color selector scrolling circles -->
-                <div class="mb-3 px-1">
-                    <h6 class="fw-bold text-muted text-uppercase mb-2" style="font-size: 0.65rem; letter-spacing: 0.05em;">Colour: Multi</h6>
-                    <div class="d-flex gap-2 overflow-auto pb-1" style="scrollbar-width: none;">
-                        <div class="rounded-circle p-0.5 border border-dark" style="width: 48px; height: 48px; overflow: hidden; cursor: pointer;">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
-                        </div>
-                        <div class="rounded-circle p-0.5 border" style="width: 48px; height: 48px; overflow: hidden; opacity: 0.7; filter: hue-rotate(60deg); cursor: pointer;">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
-                        </div>
-                        <div class="rounded-circle p-0.5 border" style="width: 48px; height: 48px; overflow: hidden; opacity: 0.7; filter: hue-rotate(150deg); cursor: pointer;">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
-                        </div>
-                        <div class="rounded-circle p-0.5 border" style="width: 48px; height: 48px; overflow: hidden; opacity: 0.7; filter: hue-rotate(240deg); cursor: pointer;">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover; border-radius: 50%;">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Size selector -->
-                <div class="mb-4 px-1">
-                    <h6 class="fw-bold text-muted text-uppercase mb-2" style="font-size: 0.65rem; letter-spacing: 0.05em;">Size: Onesize</h6>
-                    <button class="btn btn-outline-dark fw-bold rounded-2 px-4 py-2" style="font-size: 0.8rem; border-color: #282c3f;">Onesize</button>
-                </div>
-
-                <!-- Delivery & Services block -->
-                <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
-                    <h6 class="fw-bold text-dark mb-3" style="font-size: 0.82rem;"><i class="fa-solid fa-truck me-2" style="color: #7f8c8d;"></i>Delivery & Services</h6>
-                    
-                    <!-- Pincode Checker -->
-                    <div class="d-flex align-items-center justify-content-between mb-2 border p-2.5 rounded-2 bg-light-subtle">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="text-muted" style="font-size: 0.85rem;"><i class="fa-solid fa-location-dot"></i></span>
-                            <span class="fw-bold text-dark" style="font-size: 0.78rem;" id="modal-delivery-address-label">Check Delivery Availability</span>
-                        </div>
-                        <span class="fw-bold text-uppercase pincode-change-trigger" style="font-size: 0.72rem; color: var(--meesho-pink); cursor: pointer;">Check</span>
-                    </div>
-
-                    <!-- Collapsible pincode check input -->
-                    <div id="pincode-input-wrapper" style="display: none;" class="mb-3 border p-3 rounded-2 bg-light">
-                        <label class="form-label small fw-bold text-muted text-uppercase mb-1" style="font-size: 0.65rem;">Enter Pincode</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control rounded-0" id="delivery-pincode-input" placeholder="e.g. 110001" maxlength="6" style="font-size: 0.85rem;">
-                            <button class="btn btn-dark rounded-0 px-3 fw-bold text-uppercase" id="btn-apply-pincode" style="font-size: 0.75rem;">Apply</button>
-                        </div>
-                        <span class="text-danger small" id="pincode-error" style="display: none; font-size: 0.7rem;">Please enter a valid 6-digit pincode.</span>
-                    </div>
-
-                    <!-- Delivery Date (Screenshot exact) -->
-                    <div class="p-2.5 rounded-2 border mb-3" style="background-color: #fff9fa; border-color: #ffe6e8 !important;">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="text-danger" style="font-size: 0.82rem;"><i class="fa-solid fa-circle-check"></i></span>
-                                <span class="fw-bold text-dark" style="font-size: 0.78rem;">Delivery in 2 days</span>
-                            </div>
-                            <span class="text-muted small">MRP ₹${mrp}</span>
-                        </div>
-                    </div>
-
-                    <div class="text-muted" style="font-size: 0.78rem;">
-                        <div class="mb-2"><i class="fa-solid fa-ban text-danger me-2"></i>Pay on Delivery is not available for bulk trial orders</div>
-                        <div><i class="fa-solid fa-rotate-left text-success me-2"></i>Hassle free 7 days Return & Exchange</div>
-                    </div>
-                </div>
-
-                <!-- Product Specifications Grid (Screenshot exact) -->
-                <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
-                    <h6 class="fw-bold text-dark mb-3" style="font-size: 0.82rem;">Product Specifications</h6>
-                    <div class="row g-3 text-muted mb-3" style="font-size: 0.82rem;">
-                        <div class="col-6">
-                            <div class="small text-muted">Border</div>
-                            <div class="fw-bold text-dark">Embroidered Zari</div>
-                        </div>
-                        <div class="col-6">
-                            <div class="small text-muted">Saree Fabric</div>
-                            <div class="fw-bold text-dark">${p.category_name}</div>
-                        </div>
-                        <div class="col-6">
-                            <div class="small text-muted">Ornamentation</div>
-                            <div class="fw-bold text-dark">Sequinned Weaves</div>
-                        </div>
-                        <div class="col-6">
-                            <div class="col-6">
-                                <div class="small text-muted">Print or Pattern Types</div>
-                                <div class="fw-bold text-dark">Embellished Motifs</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <hr>
-
-                    <!-- Product Details Description -->
-                    <h6 class="fw-bold text-dark mb-2" style="font-size: 0.82rem;">Product Details</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.78rem; line-height: 1.6;">${p.description}</p>
-                </div>
-
-                <!-- Ratings & Reviews Section (Screenshot exact) -->
-                <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
-                    <h6 class="fw-bold text-dark mb-3" style="font-size: 0.85rem;">Ratings & Reviews</h6>
-                    
-                    <!-- Star count and pill details -->
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <span class="bg-success text-white px-2 py-1 fw-bold rounded-2 d-inline-flex align-items-center gap-1" style="font-size: 1.1rem; background-color: #03a685 !important;">
-                            4 <i class="fa-solid fa-star" style="font-size: 0.75rem;"></i>
-                        </span>
-                        <span class="bg-light border px-3 py-1.5 rounded-pill text-muted fw-semibold d-inline-flex align-items-center justify-content-between" style="font-size: 0.78rem; width: 220px; cursor: pointer;">
-                            <span>7293 ratings | 1354 reviews</span>
-                            <span class="ms-1" style="font-size: 0.65rem;"><i class="fa-solid fa-chevron-right"></i></span>
-                        </span>
-                    </div>
-
-                    <!-- Scrollable Customer review pictures row -->
-                    <div class="d-flex gap-2 overflow-auto pb-2 mb-3" style="scrollbar-width: none;">
-                        <!-- Photo 1: Saree Video Walkthrough -->
-                        <div class="position-relative bg-light rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec;">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover;">
-                            <span class="position-absolute bg-black bg-opacity-50 text-white px-1.5 py-0.5 rounded-pill d-flex align-items-center gap-1" style="bottom: 8px; right: 8px; font-size: 0.58rem; font-weight: 700;">
-                                <i class="fa-solid fa-play"></i> 0:42
-                            </span>
-                        </div>
-                        <!-- Photo 2: User Drape sitting -->
-                        <div class="bg-light rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec; filter: hue-rotate(40deg);">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover;">
-                        </div>
-                        <!-- Photo 3: User Drape standing -->
-                        <div class="bg-light rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec; filter: hue-rotate(180deg);">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100" style="object-fit: cover;">
-                        </div>
-                        <!-- Photo 4: +1168 count -->
-                        <div class="position-relative bg-dark rounded-3" style="min-width: 90px; width: 90px; height: 110px; overflow: hidden; border: 1px solid #eaeaec;">
-                            <img src="${p.image_url || '/assets/images/placeholder.png'}" class="w-100 h-100 opacity-50" style="object-fit: cover;">
-                            <span class="position-absolute translate-middle start-50 top-50 text-white fw-bold" style="font-size: 0.95rem;">+1168</span>
-                        </div>
-                    </div>
-
-                    <!-- Customer Reviews List -->
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="fw-bold text-dark" style="font-size: 0.85rem;">Customer Reviews (1354)</span>
-                        <span class="fw-bold text-decoration-underline" style="font-size: 0.78rem; color: var(--meesho-pink); cursor: pointer;">View All</span>
-                    </div>
-
-                    <!-- Example top comment -->
-                    <div class="pt-2 border-top">
-                        <div class="d-flex align-items-center gap-1 mb-1" style="font-size: 0.72rem;">
-                            <span class="text-success"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                            <span class="text-muted border-start ps-1 ms-1">Anil S. (Verified Wholesaler)</span>
-                        </div>
-                        <p class="text-muted mb-0" style="font-size: 0.75rem; line-height: 1.4;">"Fabric and border quality exceeded our expectations. The zari thread work has a brilliant shine. Ordering 12 sets next."</p>
-                    </div>
-                </div>
-
-                <!-- Sticky bottom floating action buttons (Screenshot styled) -->
-                <div class="row g-2 pt-3 border-top mt-3" style="position: sticky; bottom: 0; background: #fff; padding-bottom: 10px; z-index: 10;">
-                    <div class="col-4">
-                        <select class="form-select border-dark rounded-2 py-2.5 fw-bold text-center" id="modal-qty-select" style="font-size: 0.85rem; border-color: #282c3f !important;">
-                            ${[...Array(15).keys()].map(i => `<option value="${i+1}">${i+1} Pcs</option>`).join('')}
-                        </select>
-                    </div>
-                    <div class="col-8 d-flex gap-2">
-                        <button class="btn btn-outline-dark w-50 py-2.5 fw-bold text-uppercase" id="modal-buy-now-btn" style="border-radius: 4px; font-size: 0.8rem; letter-spacing: 0.05em; border-color: var(--meesho-pink); color: var(--meesho-pink);">
-                            Buy Now
-                        </button>
-                        <button class="btn w-50 py-2.5 fw-bold text-uppercase text-white" id="modal-add-cart-btn" data-variant-id="${p.variant_id}" style="background: var(--meesho-pink); border-radius: 4px; font-size: 0.8rem; letter-spacing: 0.05em; border: none;">
-                            <i class="fa-solid fa-bag-shopping me-1"></i> Add to Bag
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `);
     });
 
-    // Add to Cart
-    $(document).on('click', '#modal-add-cart-btn', function() {
+    // Quick Add to Cart Handler
+    $(document).on('click', '.nisho-quick-add-btn', function(e) {
+        e.stopPropagation();
         const btn = $(this);
         const variantId = btn.attr('data-variant-id');
-        const qty = parseInt($('#modal-qty-select').val() || 1);
-        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Adding...');
-        $.ajax({
-            url: '/cart/add', method: 'POST', contentType: 'application/json',
-            data: JSON.stringify({ variant_id: variantId, quantity: qty }), dataType: 'json',
-            success: function() {
-                const modalEl = document.getElementById('productDetailModal');
-                if (modalEl && window.bootstrap) {
-                    bootstrap.Modal.getOrCreateInstance(modalEl).hide();
-                } else {
-                    $('#productDetailModal').modal('hide');
-                }
-                $('#cart-trigger-btn').click();
-            },
-            error: function(xhr) {
-                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add to cart');
-                btn.prop('disabled', false).html('<i class="fa fa-shopping-bag me-2"></i> Add to Bag');
-            }
-        });
-    });
-
-    // Buy Now Handler
-    $(document).on('click', '#modal-buy-now-btn', function() {
-        const btn = $(this);
-        const modalBtn = $('#modal-add-cart-btn');
-        const variantId = modalBtn.attr('data-variant-id');
-        const qty = parseInt($('#modal-qty-select').val() || 1);
-        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
-        
+        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i>');
         $.ajax({
             url: '/cart/add',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ variant_id: variantId, quantity: qty }),
+            data: JSON.stringify({ variant_id: variantId, quantity: 1 }),
             dataType: 'json',
             success: function() {
-                const modalEl = document.getElementById('productDetailModal');
-                if (modalEl && window.bootstrap) {
-                    bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                btn.prop('disabled', false).html('+ Quick Add');
+                showToast('Product added to bag successfully! 🛍️');
+                if (typeof window.updateCartCount === 'function') {
+                    window.updateCartCount();
                 } else {
-                    $('#productDetailModal').modal('hide');
+                    location.reload();
                 }
-                window.location.href = '/cart'; // Redirect directly to checkout/cart
             },
             error: function(xhr) {
-                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to buy now');
-                btn.prop('disabled', false).html('Buy Now');
+                btn.prop('disabled', false).html('+ Quick Add');
+                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add to bag');
             }
         });
-    });
-
-    // Size Guide Handler
-    $(document).on('click', '.modal-size-guide-btn', function() {
-        alert('Saree Size Guide:\nStandard Length: 5.5 meters\nBlouse Piece: 0.8 meters (unstitched)\nTotal Width: 1.1 meters');
-    });
-
-    // Wishlist Handler inside Modal
-    $(document).on('click', '.modal-wishlist-btn', function() {
-        $(this).toggleClass('active');
-        const isActive = $(this).hasClass('active');
-        $(this).find('i').toggleClass('fa-regular fa-solid').css('color', isActive ? '#e74c3c' : '');
-        showToast(isActive ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');
-    });
-
-    // Share Handler inside Modal
-    $(document).on('click', '.modal-share-btn', function() {
-        navigator.clipboard.writeText(window.location.origin + '/?show_product=' + $('#modal-add-cart-btn').attr('data-variant-id'));
-        showToast('Product link copied to clipboard! 🔗');
     });
     
     // Filter modal trigger
@@ -892,20 +586,6 @@ $(document).ready(function() {
             const x = e.pageX - container.offsetLeft;
             container.scrollLeft = scrollLeft - (x - startX) * 1.5;
         });
-    // Pincode collapsible checking form handlers
-    $(document).on('click', '.pincode-change-trigger', function() {
-        $('#pincode-input-wrapper').slideToggle(200);
-    });
-
-    $(document).on('click', '#btn-apply-pincode', function() {
-        const pin = $('#delivery-pincode-input').val().trim();
-        if (/^\d{6}$/.test(pin)) {
-            $('#pincode-error').hide();
-            $('#modal-delivery-address-label').text(`Deliver to Store - Pincode ${pin}`);
-            $('#pincode-input-wrapper').slideUp(200);
-        } else {
-            $('#pincode-error').show();
-        }
     });
 });
 </script>

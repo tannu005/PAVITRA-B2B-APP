@@ -49,7 +49,7 @@ class SellerController extends Controller {
         $recentOrders = $stmtRecent->fetchAll() ?: [];
 
         return $this->render('seller/dashboard', [
-            'title' => 'Weaver Hub Dashboard - Pavitra B2B',
+            'title' => 'Weaver Hub Dashboard - Pavitra Designer',
             'balance' => $balance,
             'totalProducts' => $totalProducts,
             'totalOrders' => $totalOrders,
@@ -405,6 +405,137 @@ class SellerController extends Controller {
         return $this->render('seller/settlements', [
             'title' => 'Settlements & GST - Weaver Hub',
             'settlements' => $settlements
+        ]);
+    }
+
+    public function bulkUploadView(Request $request, Response $response) {
+        $user = $this->checkAuth(['SELLER']);
+        if (!$user) return;
+
+        return $this->render('seller/bulk_upload', [
+            'title' => 'Bulk Product Upload - Weaver Hub'
+        ]);
+    }
+
+    public function bulkUpload(Request $request, Response $response) {
+        $user = $this->checkAuth(['SELLER']);
+        if (!$user) return;
+
+        $errors = [];
+        $successCount = 0;
+        $rowErrors = [];
+
+        if (empty($_FILES['csv_file']['tmp_name'])) {
+            $errors[] = 'Please choose a CSV file to upload.';
+        } else {
+            $file = $_FILES['csv_file']['tmp_name'];
+            $handle = fopen($file, 'r');
+            if ($handle === false) {
+                $errors[] = 'Failed to open the uploaded file.';
+            } else {
+                $db = Application::$app->db;
+                
+                // Read header row
+                $headers = fgetcsv($handle);
+                if (!$headers) {
+                    $errors[] = 'The uploaded file is empty or invalid.';
+                } else {
+                    // Normalize headers
+                    $headers = array_map(function($h) {
+                        return strtolower(trim(str_replace(' ', '_', $h)));
+                    }, $headers);
+
+                    $rowNum = 1;
+                    while (($row = fgetcsv($handle)) !== false) {
+                        $rowNum++;
+                        // Map row to headers
+                        $data = @array_combine($headers, $row);
+                        if (!$data) {
+                            $rowErrors[] = "Row {$rowNum}: Column count mismatch.";
+                            continue;
+                        }
+
+                        // Validate fields
+                        $title = trim($data['title'] ?? '');
+                        $description = trim($data['description'] ?? '');
+                        $categoryId = intval($data['category_id'] ?? 0);
+                        $sku = trim($data['sku'] ?? '');
+                        $color = trim($data['color'] ?? '');
+                        $size = trim($data['size'] ?? '');
+                        $price = floatval($data['price'] ?? 0);
+                        $wholesalePrice = floatval($data['wholesale_price'] ?? 0);
+                        $bulkThreshold = intval($data['bulk_threshold'] ?? 5);
+                        $stock = intval($data['stock'] ?? 0);
+                        $imageUrl = trim($data['image_url'] ?? '');
+
+                        if (empty($title)) {
+                            $rowErrors[] = "Row {$rowNum}: Product Title is required.";
+                            continue;
+                        }
+                        if ($categoryId <= 0) {
+                            $rowErrors[] = "Row {$rowNum}: Category ID is required and must be valid.";
+                            continue;
+                        }
+                        if (empty($sku)) {
+                            $rowErrors[] = "Row {$rowNum}: SKU is required.";
+                            continue;
+                        }
+                        if ($price <= 0) {
+                            $rowErrors[] = "Row {$rowNum}: Retail price must be greater than zero.";
+                            continue;
+                        }
+                        if ($wholesalePrice <= 0 || $wholesalePrice >= $price) {
+                            $rowErrors[] = "Row {$rowNum}: Wholesale price must be greater than zero and less than retail price.";
+                            continue;
+                        }
+                        if ($stock < 0) {
+                            $rowErrors[] = "Row {$rowNum}: Stock cannot be negative.";
+                            continue;
+                        }
+
+                        // Check SKU uniqueness
+                        $stmtCheck = $db->prepare("SELECT id FROM product_variants WHERE sku = ?");
+                        $stmtCheck->execute([$sku]);
+                        if ($stmtCheck->fetch()) {
+                            $rowErrors[] = "Row {$rowNum}: A product variant with SKU '{$sku}' already exists.";
+                            continue;
+                        }
+
+                        // Insert
+                        try {
+                            $db->beginTransaction();
+
+                            $stmtProd = $db->prepare("
+                                INSERT INTO products (title, description, category_id, seller_id, status, is_approved)
+                                VALUES (?, ?, ?, ?, 'ACTIVE', 0)
+                            ");
+                            $stmtProd->execute([$title, $description, $categoryId, $user['id']]);
+                            $productId = $db->lastInsertId();
+
+                            $stmtVariant = $db->prepare("
+                                INSERT INTO product_variants (product_id, sku, color, size, price, wholesale_price, bulk_threshold, stock, image_url)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            ");
+                            $stmtVariant->execute([$productId, $sku, $color, $size, $price, $wholesalePrice, $bulkThreshold, $stock, $imageUrl]);
+
+                            $db->commit();
+                            $successCount++;
+                        } catch (\Throwable $e) {
+                            $db->rollBack();
+                            $rowErrors[] = "Row {$rowNum}: Database insertion failed: " . $e->getMessage();
+                        }
+                    }
+                }
+                fclose($handle);
+            }
+        }
+
+        return $this->render('seller/bulk_upload', [
+            'title' => 'Bulk Product Upload - Weaver Hub',
+            'errors' => $errors,
+            'rowErrors' => $rowErrors,
+            'successCount' => $successCount,
+            'submitted' => true
         ]);
     }
 }

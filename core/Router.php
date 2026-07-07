@@ -29,6 +29,20 @@ class Router {
         $path = $this->normalizePath($this->request->getPath());
         $method = $this->request->getMethod();
 
+        // Rate limit check for API requests
+        if (str_starts_with($path, '/api/')) {
+            if (!$this->checkRateLimit()) {
+                $this->response->setStatusCode(429);
+                header('Content-Type: application/json');
+                header('Retry-After: 60');
+                echo json_encode([
+                    'error' => 'Too Many Requests',
+                    'message' => 'API rate limit exceeded. Max 100 requests per minute.'
+                ]);
+                exit;
+            }
+        }
+
         if ($method === 'POST' && !str_starts_with($path, '/api/')) {
             $this->enforceCsrf();
         }
@@ -127,5 +141,57 @@ class Router {
         ob_start();
         include_once $viewFile;
         return ob_get_clean();
+    }
+
+    protected function checkRateLimit(): bool {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        $currentTime = time();
+        $rateLimitKey = 'rate_limit_' . md5($ip);
+        
+        $cache = Application::$app->cache;
+        $bucket = $cache->get($rateLimitKey);
+        
+        if (!$bucket || !is_array($bucket) || !isset($bucket['tokens']) || !isset($bucket['last_updated'])) {
+            $bucket = [
+                'tokens' => 100.0,
+                'last_updated' => $currentTime
+            ];
+        } else {
+            $elapsedTime = max(0, $currentTime - $bucket['last_updated']);
+            $tokensToAdd = $elapsedTime * (100.0 / 60.0);
+            $bucket['tokens'] = min(100.0, floatval($bucket['tokens']) + $tokensToAdd);
+            $bucket['last_updated'] = $currentTime;
+        }
+
+        header('X-RateLimit-Limit: 100');
+
+        if ($bucket['tokens'] >= 1.0) {
+            $bucket['tokens'] -= 1.0;
+            $cache->set($rateLimitKey, $bucket, 60);
+            header('X-RateLimit-Remaining: ' . floor($bucket['tokens']));
+            return true;
+        }
+
+        $cache->set($rateLimitKey, $bucket, 60);
+        header('X-RateLimit-Remaining: 0');
+
+        // Audit Log violation
+        try {
+            $db = Application::$app->db;
+            $stmt = $db->prepare("
+                INSERT INTO error_logs (message, url, ip_address, browser) 
+                VALUES (?, ?, ?, ?)
+            ");
+            $stmt->execute([
+                "API Rate Limit Exceeded: Throttled request from IP {$ip}",
+                $this->normalizePath($this->request->getPath()),
+                $ip,
+                $_SERVER['HTTP_USER_AGENT'] ?? ''
+            ]);
+        } catch (\Throwable $e) {
+            // Silently ignore DB errors on logging
+        }
+
+        return false;
     }
 }

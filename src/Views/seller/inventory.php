@@ -63,7 +63,7 @@
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-dark">Multi-Warehouse Strategy</h5>
-                <p class="text-muted small">Pavitra coordinates warehouse nodes at:</p>
+                <p class="text-muted small">Pavitra Designer coordinates warehouse nodes at:</p>
                 <ul class="small text-secondary ps-3 mb-0">
                     <li>Varanasi Handloom Cluster Hub (Primary)</li>
                     <li>Kanchipuram Woven Registry Center</li>

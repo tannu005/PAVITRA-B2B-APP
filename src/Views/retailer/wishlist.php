@@ -1,6 +1,6 @@
 <?php
 /**
- * Wishlist Page — Pavitra B2B
+ * Wishlist Page — Pavitra Designer
  * Products are saved in browser localStorage (key: pavitra_wishlist = JSON array of variant IDs)
  */
 ?>

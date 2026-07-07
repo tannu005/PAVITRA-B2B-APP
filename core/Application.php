@@ -103,9 +103,9 @@ class Application {
         } catch (\PDOException $e) {
             // DB not yet installed/migrated, load defaults
             $this->config = [
-                'company_name' => 'Pavitra Wholesale',
-                'brand_name' => 'Pavitra',
-                'support_email' => 'support@pavitra.com',
+                'company_name' => 'Pavitra Designer',
+                'brand_name' => 'Pavitra Designer',
+                'support_email' => 'support@Pavitradesigner.com',
                 'support_mobile' => '+91 9999999999',
             ];
         }
@@ -147,6 +147,14 @@ class Application {
         } else {
             echo "<h1>500 Internal Server Error</h1><p>An unexpected error occurred. The administrator has been notified.</p>";
         }
+    }
+
+    public static function assetUrl(string $path): string {
+        $prefix = self::$app->config['cdn_prefix'] ?? '';
+        if (!empty($prefix)) {
+            return rtrim($prefix, '/') . '/' . ltrim($path, '/');
+        }
+        return $path;
     }
 }
 

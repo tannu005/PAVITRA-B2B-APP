@@ -12,7 +12,7 @@
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-clock-rotate-left text-pink me-2"></i>Settlement Policy</h5>
-                <p class="text-muted small mb-3">Pavitra operates on a standard <strong>T+3 settlement cycle</strong> for handloom weavers. Payouts are computed as follows:</p>
+                <p class="text-muted small mb-3">Pavitra Designer operates on a standard <strong>T+3 settlement cycle</strong> for handloom weavers. Payouts are computed as follows:</p>
                 <div class="p-3 bg-light rounded text-secondary small mb-3" style="font-size: 0.8rem;">
                     <div class="mb-1"><strong>Commission:</strong> 8.5% platform service charge.</div>
                     <div><strong>Tax (GST):</strong> 5% HSN fabric tax rate deducted at source.</div>
@@ -23,7 +23,7 @@
             <div class="card shadow-sm border border-light bg-light p-3 text-muted" style="font-size: 0.75rem;">
                 <div class="fw-bold text-dark mb-1"><i class="fa-solid fa-building-columns me-1"></i>Linked Bank Details</div>
                 • Bank: State Bank of India<br>
-                • Holder: Pavitra Weavers Ltd.<br>
+                • Holder: Pavitra Designer Weavers Ltd.<br>
                 • Account: ••••4567<br>
                 • IFSC Code: SBIN0001234
             </div>

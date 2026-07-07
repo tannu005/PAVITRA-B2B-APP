@@ -75,7 +75,7 @@ class RetailerController extends Controller {
         });
 
         return $this->render('retailer/catalog', [
-            'title' => 'Pavitra B2B Wholesale - Meesho Style Shop',
+            'title' => 'Pavitra Designer Wholesale - Meesho Style Shop',
             'products' => $products,
             'categoriesList' => $categoriesList,
             'selectedCategory' => $category,
@@ -102,10 +102,13 @@ class RetailerController extends Controller {
         $product = $stmt->fetch();
         
         if (!$product) {
-            return $response->json(['error' => 'Product not found'], 404);
+            $response->redirect('/');
+            return;
         }
         
-        return $response->json($product);
+        return $this->render('retailer/product_detail', [
+            'product' => $product
+        ]);
     }
 
     // Cart Helper: get or create cart
@@ -414,7 +417,7 @@ class RetailerController extends Controller {
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'DEBIT', ?, ?, 'ORDER_PURCHASE', ?)
             ");
-            $stmtTx->execute([$walletId, $netSubtotal, "Bulk order payment for Pavitra catalog sarees", $newBalance]);
+            $stmtTx->execute([$walletId, $netSubtotal, "Bulk order payment for Pavitra Designer catalog sarees", $newBalance]);
 
             // Create shipping address entry if new
             $stmtAddr = $db->prepare("INSERT INTO user_addresses (user_id, address_line1, city, state, pin_code) VALUES (?, ?, 'Varanasi', 'Uttar Pradesh', '221001')");
@@ -514,7 +517,7 @@ class RetailerController extends Controller {
         }
 
         return $this->render('retailer/orders', [
-            'title' => 'My Bulk Orders - Pavitra B2B',
+            'title' => 'My Bulk Orders - Pavitra Designer',
             'orders' => $ordersList
         ]);
     }
@@ -539,7 +542,7 @@ class RetailerController extends Controller {
         }
 
         return $this->render('retailer/wallet', [
-            'title' => 'Wallet Ledger - Pavitra B2B',
+            'title' => 'Wallet Ledger - Pavitra Designer',
             'wallet' => $wallet,
             'transactions' => $transactions
         ]);
@@ -551,7 +554,7 @@ class RetailerController extends Controller {
         if (!$user) return;
 
         return $this->render('retailer/wishlist', [
-            'title' => 'My Wishlist — Pavitra B2B',
+            'title' => 'My Wishlist — Pavitra Designer',
         ]);
     }
 
@@ -561,7 +564,7 @@ class RetailerController extends Controller {
         if (!$user) return;
 
         return $this->render('retailer/customization', [
-            'title' => 'Saree Customization Request — Pavitra B2B',
+            'title' => 'Saree Customization Request — Pavitra Designer',
             'user' => $user
         ]);
     }
@@ -570,10 +573,31 @@ class RetailerController extends Controller {
     public function profileView(Request $request, Response $response) {
         $user = $this->checkAuth();
         if (!$user) return;
+
+        $db = Application::$app->db;
+        $stmtSessions = $db->prepare("SELECT * FROM user_sessions WHERE user_id = ? ORDER BY last_active DESC");
+        $stmtSessions->execute([$user['id']]);
+        $activeSessions = $stmtSessions->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
         return $this->render('retailer/profile', [
-            'title' => 'Account Settings - Pavitra B2B',
-            'user' => $user
+            'title' => 'Account Settings - Pavitra Designer',
+            'user' => $user,
+            'activeSessions' => $activeSessions
         ]);
+    }
+
+    public function revokeOtherSessions(Request $request, Response $response) {
+        $user = $this->checkAuth();
+        if (!$user) return;
+
+        $db = Application::$app->db;
+        $currentToken = $_SESSION['session_token'] ?? '';
+
+        $stmt = $db->prepare("DELETE FROM user_sessions WHERE user_id = ? AND token != ?");
+        $stmt->execute([$user['id'], $currentToken]);
+
+        $_SESSION['settings_success'] = 'Signed out of all other devices successfully.';
+        $response->redirect('/profile');
     }
 
     public function updateProfile(Request $request, Response $response) {
@@ -600,7 +624,7 @@ class RetailerController extends Controller {
         }
 
         return $this->render('retailer/profile', [
-            'title' => 'Account Settings - Pavitra B2B',
+            'title' => 'Account Settings - Pavitra Designer',
             'errors' => $errors,
             'user' => $user
         ]);
@@ -652,7 +676,7 @@ class RetailerController extends Controller {
         } catch (\Throwable $e) {
             $db->rollBack();
             return $this->render('retailer/profile', [
-                'title' => 'Account Settings - Pavitra B2B',
+                'title' => 'Account Settings - Pavitra Designer',
                 'errors' => ['Failed to delete account: ' . $e->getMessage()],
                 'user' => $user
             ]);
@@ -808,7 +832,7 @@ class RetailerController extends Controller {
         ];
         
         return $this->render('retailer/categories', [
-            'title' => 'Master Weaver Stores Directory - Pavitra B2B',
+            'title' => 'Master Weaver Stores Directory - Pavitra Designer',
             'stores' => $stores
         ]);
     }

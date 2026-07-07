@@ -35,7 +35,7 @@ class SuperAdminController extends Controller {
         $totalCommission = $db->query("SELECT SUM(commission_deducted) FROM seller_settlements WHERE status = 'SUCCESS'")->fetchColumn() ?: 0.00;
 
         return $this->render('admin/dashboard', [
-            'title' => 'Super Admin Console - Pavitra B2B',
+            'title' => 'Super Admin Console - Pavitra Designer',
             'stats' => [
                 'sellers' => $totalSellers,
                 'retailers' => $totalRetailers,
@@ -385,7 +385,7 @@ class SuperAdminController extends Controller {
         $settings = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR) ?: [];
 
         return $this->render('admin/settings', [
-            'title' => 'System Settings Configuration - Pavitra B2B',
+            'title' => 'System Settings Configuration - Pavitra Designer',
             'settings' => $settings
         ]);
     }
@@ -409,7 +409,9 @@ class SuperAdminController extends Controller {
                 'sms_gateway_key', 'sms_gateway_secret',
                 'whatsapp_api_key', 'whatsapp_api_secret',
                 'payment_gateway_key', 'payment_gateway_secret',
-                'cloudflare_account_id', 'cloudflare_api_token', 'google_maps_api_key'
+                'cloudflare_account_id', 'cloudflare_api_token', 'google_maps_api_key',
+                'cdn_prefix', 'twilio_sid', 'twilio_auth_token', 'twilio_phone_number',
+                'sendgrid_api_key', 'sendgrid_from_email'
             ];
 
             $stmt = $db->prepare("INSERT INTO system_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
@@ -430,7 +432,7 @@ class SuperAdminController extends Controller {
         } catch (\Throwable $e) {
             $db->rollBack();
             return $this->render('admin/settings', [
-                'title' => 'System Settings Configuration - Pavitra B2B',
+                'title' => 'System Settings Configuration - Pavitra Designer',
                 'settings' => $body,
                 'error' => 'Settings save failed: ' . $e->getMessage()
             ]);
@@ -506,6 +508,75 @@ class SuperAdminController extends Controller {
             'title' => 'Application Trace logs & Exceptions',
             'errorsList' => $errorsList
         ]);
+    }
+
+    // List CMS pages
+    public function cms(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+
+        $db = Application::$app->db;
+        $pages = $db->query("SELECT * FROM cms_pages ORDER BY title ASC")->fetchAll() ?: [];
+
+        return $this->render('admin/cms_list', [
+            'title' => 'Page Manager - Pavitra Designer',
+            'pages' => $pages
+        ]);
+    }
+
+    // Edit CMS page
+    public function cmsEdit(Request $request, Response $response, array $params) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+
+        $id = intval($params['id'] ?? 0);
+        $db = Application::$app->db;
+
+        $stmt = $db->prepare("SELECT * FROM cms_pages WHERE id = ?");
+        $stmt->execute([$id]);
+        $page = $stmt->fetch();
+
+        if (!$page) {
+            $response->redirect('/admin/cms');
+            return;
+        }
+
+        return $this->render('admin/cms_edit', [
+            'title' => 'Edit ' . $page['title'] . ' - Pavitra Designer',
+            'page' => $page
+        ]);
+    }
+
+    // Save CMS page content
+    public function cmsSave(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+
+        $body = $request->getBody();
+        $id = intval($body['id'] ?? 0);
+        $title = trim($body['title'] ?? '');
+        $slug = trim($body['slug'] ?? '');
+        $metaTitle = trim($body['meta_title'] ?? '');
+        $metaDescription = trim($body['meta_description'] ?? '');
+        $active = isset($body['active']) ? intval($body['active']) : 1;
+        $content = $body['content'] ?? ''; // This is the JSON string of blocks
+
+        $errors = [];
+        if (empty($title)) $errors[] = 'Title is required.';
+        if (empty($slug)) $errors[] = 'Slug is required.';
+        if (empty($content)) $errors[] = 'Content is required.';
+
+        $db = Application::$app->db;
+
+        if (empty($errors)) {
+            $stmt = $db->prepare("UPDATE cms_pages SET title = ?, slug = ?, content = ?, meta_title = ?, meta_description = ?, active = ? WHERE id = ?");
+            $stmt->execute([$title, $slug, $content, $metaTitle, $metaDescription, $active, $id]);
+
+            $_SESSION['settings_success'] = 'CMS Page updated successfully!';
+            return $response->json(['success' => true]);
+        }
+
+        return $response->json(['error' => implode(' ', $errors)], 400);
     }
 }
 

@@ -22,13 +22,48 @@
                 </div>
 
                 <div class="cms-content-body text-secondary" style="line-height: 1.8; font-size: 1rem;">
-                    <?= $page['content'] ?>
+                    <?php
+                    $content = $page['content'];
+                    $blocks = json_decode($content, true);
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($blocks)):
+                        foreach ($blocks as $block):
+                            if ($block['type'] === 'text'): ?>
+                                <div class="mb-4 text-block"><?= $block['content'] ?></div>
+                            <?php elseif ($block['type'] === 'heading'): 
+                                $tag = in_array($block['level'] ?? 'h2', ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']) ? $block['level'] : 'h2'; ?>
+                                <<?= $tag ?> class="fw-bold mb-3 mt-4 text-dark"><?= htmlspecialchars($block['text']) ?></<?= $tag ?>>
+                            <?php elseif ($block['type'] === 'accordion'): 
+                                $accId = 'accordion-' . substr(md5(serialize($block)), 0, 8); ?>
+                                <div class="accordion mb-4" id="<?= $accId ?>">
+                                    <?php foreach ($block['items'] as $index => $item): 
+                                        $itemId = $accId . '-item-' . $index; ?>
+                                        <div class="accordion-item border border-light shadow-sm mb-2 rounded-2 overflow-hidden">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#<?= $itemId ?>">
+                                                    <?= htmlspecialchars($item['title']) ?>
+                                                </button>
+                                            </h2>
+                                            <div id="<?= $itemId ?>" class="accordion-collapse collapse" data-bs-parent="#<?= $accId ?>">
+                                                <div class="accordion-body bg-light text-secondary" style="font-size: 0.95rem; line-height: 1.7;">
+                                                    <?= $item['content'] ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif;
+                        endforeach;
+                    else:
+                        // Fallback to raw html
+                        echo $content;
+                    endif;
+                    ?>
                 </div>
             </div>
             
             <!-- Guarantee Badge in Footer -->
             <div class="mt-4 p-4 text-center rounded border bg-light text-muted" style="font-size: 0.85rem;">
-                🛡️ Verified compliance and handloom GI protection document of <strong><?= htmlspecialchars($config['company_name'] ?? 'Pavitra B2B') ?></strong>.
+                🛡️ Verified compliance and handloom GI protection document of <strong><?= htmlspecialchars($config['company_name'] ?? 'Pavitra Designer') ?></strong>.
             </div>
         </div>
     </div>

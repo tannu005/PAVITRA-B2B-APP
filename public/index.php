@@ -1,5 +1,13 @@
 <?php
 
+// Serve static files directly if using the PHP built-in web server
+if (php_sapi_name() === 'cli-server') {
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if (file_exists(__DIR__ . $path) && is_file(__DIR__ . $path)) {
+        return false;
+    }
+}
+
 // 1. Fallback Autoloader (PSR-4 compliant)
 spl_autoload_register(function ($class) {
     // Project root directory
@@ -42,6 +50,8 @@ $app = new Application();
 // Centralized Auth Routes
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
+$app->router->get('/login/mfa', [App\Controllers\AuthController::class, 'mfaView']);
+$app->router->post('/login/mfa', [App\Controllers\AuthController::class, 'mfaVerify']);
 $app->router->get('/register', [App\Controllers\AuthController::class, 'registerView']);
 $app->router->post('/register', [App\Controllers\AuthController::class, 'register']);
 $app->router->get('/logout', [App\Controllers\AuthController::class, 'logout']);
@@ -66,6 +76,8 @@ $app->router->get('/wishlist', [App\Controllers\RetailerController::class, 'wish
 $app->router->get('/customization', [App\Controllers\RetailerController::class, 'customizationView']);
 $app->router->get('/profile', [App\Controllers\RetailerController::class, 'profileView']);
 $app->router->post('/profile', [App\Controllers\RetailerController::class, 'updateProfile']);
+$app->router->post('/profile/2fa/toggle', [App\Controllers\AuthController::class, 'toggle2fa']);
+$app->router->post('/profile/sessions/revoke-others', [App\Controllers\RetailerController::class, 'revokeOtherSessions']);
 $app->router->post('/profile/delete-account', [App\Controllers\RetailerController::class, 'deleteAccount']);
 
 // Dynamic CMS Routes
@@ -112,6 +124,9 @@ $app->router->get('/admin/commissions', [App\Controllers\SuperAdminController::c
 $app->router->post('/admin/commissions/rule', [App\Controllers\SuperAdminController::class, 'saveCommissionRule']);
 $app->router->get('/admin/settings', [App\Controllers\SuperAdminController::class, 'settings']);
 $app->router->post('/admin/settings', [App\Controllers\SuperAdminController::class, 'saveSettings']);
+$app->router->get('/admin/cms', [App\Controllers\SuperAdminController::class, 'cms']);
+$app->router->get('/admin/cms/edit/{id}', [App\Controllers\SuperAdminController::class, 'cmsEdit']);
+$app->router->post('/admin/cms/save', [App\Controllers\SuperAdminController::class, 'cmsSave']);
 $app->router->get('/admin/errors', [App\Controllers\SuperAdminController::class, 'errors']);
 $app->router->get('/admin/sessions', [App\Controllers\SuperAdminController::class, 'sessions']);
 $app->router->post('/admin/sessions/revoke', [App\Controllers\SuperAdminController::class, 'revokeSession']);
@@ -122,6 +137,8 @@ $app->router->get('/seller', [App\Controllers\SellerController::class, 'dashboar
 $app->router->get('/seller/products', [App\Controllers\SellerController::class, 'products']);
 $app->router->get('/seller/products/create', [App\Controllers\SellerController::class, 'createProductView']);
 $app->router->post('/seller/products/create', [App\Controllers\SellerController::class, 'storeProduct']);
+$app->router->get('/seller/products/bulk', [App\Controllers\SellerController::class, 'bulkUploadView']);
+$app->router->post('/seller/products/bulk', [App\Controllers\SellerController::class, 'bulkUpload']);
 $app->router->get('/seller/inventory', [App\Controllers\SellerController::class, 'inventory']);
 $app->router->post('/seller/inventory/update', [App\Controllers\SellerController::class, 'updateInventory']);
 $app->router->get('/seller/orders', [App\Controllers\SellerController::class, 'orders']);

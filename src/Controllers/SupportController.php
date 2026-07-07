@@ -24,7 +24,7 @@ class SupportController extends Controller {
         $tickets = $stmt->fetchAll() ?: [];
 
         return $this->render('retailer/support/list', [
-            'title' => 'My Support Tickets - Pavitra B2B',
+            'title' => 'My Support Tickets - Pavitra Designer',
             'tickets' => $tickets
         ]);
     }
@@ -35,7 +35,7 @@ class SupportController extends Controller {
         if (!$user) return;
 
         return $this->render('retailer/support/create', [
-            'title' => 'Open New Ticket - Pavitra B2B'
+            'title' => 'Open New Ticket - Pavitra Designer'
         ]);
     }
 
@@ -87,7 +87,7 @@ class SupportController extends Controller {
         }
 
         return $this->render('retailer/support/create', [
-            'title' => 'Open New Ticket - Pavitra B2B',
+            'title' => 'Open New Ticket - Pavitra Designer',
             'errors' => $errors,
             'subject' => $subject,
             'message' => $message,
@@ -184,7 +184,7 @@ class SupportController extends Controller {
         $tickets = $stmt->fetchAll() ?: [];
 
         return $this->render('admin/support/list', [
-            'title' => 'Helpdesk Support Queue - Pavitra B2B',
+            'title' => 'Helpdesk Support Queue - Pavitra Designer',
             'tickets' => $tickets
         ]);
     }

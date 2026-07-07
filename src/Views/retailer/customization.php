@@ -1,6 +1,6 @@
 <?php
 /**
- * Saree Customization Request View — Pavitra B2B
+ * Saree Customization Request View — Pavitra Designer
  * Evokes premium custom handloom artisan design workflow
  */
 ?>
@@ -203,7 +203,7 @@ function sendCustomizationToWhatsapp(event) {
     const size = document.getElementById('custom-size').value;
     const motif = document.getElementById('custom-motif').value;
 
-    const message = `*PAVITRA B2B CUSTOM SAREE ORDER SPECIFICATIONS*
+    const message = `*Pavitra Designer CUSTOM SAREE ORDER SPECIFICATIONS*
 ----------------------------------------
 - *Fabric:* ${fabric}
 - *Color HEX:* ${color}

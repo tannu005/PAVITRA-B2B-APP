@@ -7,6 +7,7 @@
         </div>
         <div>
             <a href="/seller" class="btn btn-outline-secondary btn-sm me-2"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
+            <a href="/seller/products/bulk" class="btn btn-outline-pink btn-sm me-2"><i class="fa-solid fa-file-csv me-1"></i> Bulk Upload</a>
             <a href="/seller/products/create" class="btn btn-meesho-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload Saree</a>
         </div>
     </div>

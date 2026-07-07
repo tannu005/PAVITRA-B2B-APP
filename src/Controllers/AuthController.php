@@ -33,7 +33,7 @@ class AuthController extends Controller {
         if (Application::$app->getSessionUser()) {
             $response->redirect('/');
         }
-        return $this->render('auth/login', ['title' => 'Sign In - Pavitra B2B']);
+        return $this->render('auth/login', ['title' => 'Sign In - Pavitra Designer']);
     }
 
     public function login(Request $request, Response $response) {
@@ -55,6 +55,12 @@ class AuthController extends Controller {
                 if ($user['status'] !== 'ACTIVE') {
                     $errors[] = 'Your account has been blocked or is pending approval.';
                 } else {
+                    if (!empty($user['two_factor_secret'])) {
+                        $_SESSION['mfa_pending_user_id'] = $user['id'];
+                        $response->redirect('/login/mfa');
+                        return;
+                    }
+
                     // Success log-in
                     $_SESSION['user_id'] = $user['id'];
 
@@ -78,7 +84,7 @@ class AuthController extends Controller {
         }
 
         return $this->render('auth/login', [
-            'title' => 'Sign In - Pavitra B2B',
+            'title' => 'Sign In - Pavitra Designer',
             'errors' => $errors,
             'email' => $email
         ]);
@@ -94,7 +100,7 @@ class AuthController extends Controller {
         $roles = $stmt->fetchAll();
 
         return $this->render('auth/register', [
-            'title' => 'Create B2B Account - Pavitra B2B',
+            'title' => 'Create B2B Account - Pavitra Designer',
             'roles' => $roles
         ]);
     }
@@ -196,7 +202,7 @@ class AuthController extends Controller {
         $roles = $stmtRoles->fetchAll();
 
         return $this->render('auth/register', [
-            'title' => 'Create B2B Account - Pavitra B2B',
+            'title' => 'Create B2B Account - Pavitra Designer',
             'errors' => $errors,
             'roles' => $roles,
             'name' => $name,
@@ -238,7 +244,7 @@ class AuthController extends Controller {
         if (Application::$app->getSessionUser()) {
             $response->redirect('/');
         }
-        return $this->render('auth/forgot_password', ['title' => 'Reset Password - Pavitra B2B']);
+        return $this->render('auth/forgot_password', ['title' => 'Reset Password - Pavitra Designer']);
     }
 
     public function forgotPassword(Request $request, Response $response) {
@@ -273,7 +279,7 @@ class AuthController extends Controller {
         }
 
         return $this->render('auth/forgot_password', [
-            'title' => 'Reset Password - Pavitra B2B',
+            'title' => 'Reset Password - Pavitra Designer',
             'errors' => $errors,
             'success' => $success,
             'email' => $email
@@ -296,13 +302,13 @@ class AuthController extends Controller {
 
         if (!$user) {
             return $this->render('auth/forgot_password', [
-                'title' => 'Reset Password - Pavitra B2B',
+                'title' => 'Reset Password - Pavitra Designer',
                 'errors' => ['The password reset link is invalid or has expired. Please request a new one.']
             ]);
         }
 
         return $this->render('auth/forgot_password', [
-            'title' => 'Update Password - Pavitra B2B',
+            'title' => 'Update Password - Pavitra Designer',
             'token' => $token
         ]);
     }
@@ -353,7 +359,7 @@ class AuthController extends Controller {
 
                 // Redirect to login page with a successful alert message
                 return $this->render('auth/login', [
-                    'title' => 'Sign In - Pavitra B2B',
+                    'title' => 'Sign In - Pavitra Designer',
                     'errors' => [],
                     'email' => '',
                     'success' => 'Your password has been successfully reset! You can now log in using your new credentials.'
@@ -366,10 +372,101 @@ class AuthController extends Controller {
         }
 
         return $this->render('auth/forgot_password', [
-            'title' => 'Update Password - Pavitra B2B',
+            'title' => 'Update Password - Pavitra Designer',
             'token' => $token,
             'errors' => $errors
         ]);
+    }
+
+    public function mfaView(Request $request, Response $response) {
+        if (!isset($_SESSION['mfa_pending_user_id'])) {
+            $response->redirect('/login');
+            return;
+        }
+        return $this->render('auth/mfa', ['title' => '2FA Verification - Pavitra Designer']);
+    }
+
+    public function mfaVerify(Request $request, Response $response) {
+        if (!isset($_SESSION['mfa_pending_user_id'])) {
+            $response->redirect('/login');
+            return;
+        }
+
+        $body = $request->getBody();
+        $code = trim($body['code'] ?? '');
+        $userId = $_SESSION['mfa_pending_user_id'];
+
+        $db = Application::$app->db;
+        $stmt = $db->prepare("SELECT u.*, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = ?");
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch();
+
+        $errors = [];
+        if (empty($code)) {
+            $errors[] = 'Please enter the 6-digit verification code.';
+        } else if (!$user) {
+            $errors[] = 'Invalid user session. Please log in again.';
+        } else {
+            // Verify code using Totp helper
+            if (\Core\Totp::verify($user['two_factor_secret'], $code)) {
+                // Successful verification! Log the user in
+                $_SESSION['user_id'] = $user['id'];
+                unset($_SESSION['mfa_pending_user_id']);
+
+                $this->createWebSession($user, 'LOGIN_MFA');
+
+                // Redirect based on role
+                if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])) {
+                    $response->redirect('/admin');
+                } else if ($user['role'] === 'SELLER') {
+                    $response->redirect('/seller');
+                } else if ($user['role'] === 'DELIVERY') {
+                    $response->redirect('/delivery');
+                } else {
+                    $response->redirect('/');
+                }
+                return;
+            } else {
+                $errors[] = 'Invalid verification code. Please try again.';
+            }
+        }
+
+        return $this->render('auth/mfa', [
+            'title' => '2FA Verification - Pavitra Designer',
+            'errors' => $errors
+        ]);
+    }
+
+    public function toggle2fa(Request $request, Response $response) {
+        $user = Application::$app->getSessionUser();
+        if (!$user) {
+            return $response->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $body = $request->getBody();
+        $enable = isset($body['enable']) ? (bool)$body['enable'] : false;
+
+        $db = Application::$app->db;
+
+        if ($enable) {
+            // Generate a new TOTP secret key
+            $secret = \Core\Totp::generateSecret();
+            $stmt = $db->prepare("UPDATE users SET two_factor_secret = ? WHERE id = ?");
+            $stmt->execute([$secret, $user['id']]);
+
+            $qrCodeUrl = \Core\Totp::getQrCodeUrl($user['email'], $secret);
+
+            return $response->json([
+                'success' => true,
+                'secret' => $secret,
+                'qr_code_url' => $qrCodeUrl
+            ]);
+        } else {
+            // Disable 2FA
+            $stmt = $db->prepare("UPDATE users SET two_factor_secret = NULL WHERE id = ?");
+            $stmt->execute([$user['id']]);
+            return $response->json(['success' => true]);
+        }
     }
 }
 

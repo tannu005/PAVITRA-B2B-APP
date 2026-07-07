@@ -47,6 +47,10 @@
                             <input type="text" class="form-control" id="favicon_url" name="favicon_url" value="<?= htmlspecialchars($settings['favicon_url'] ?? '') ?>">
                         </div>
                         <div class="col-12">
+                            <label for="cdn_prefix" class="form-label small fw-semibold text-muted text-uppercase">Cloudflare CDN Prefix URL</label>
+                            <input type="text" class="form-control" id="cdn_prefix" name="cdn_prefix" value="<?= htmlspecialchars($settings['cdn_prefix'] ?? '') ?>" placeholder="e.g. https://cdn.Pavitra Designer.com">
+                        </div>
+                        <div class="col-12">
                             <label for="registered_office_address" class="form-label small fw-semibold text-muted text-uppercase">Registered Office Address</label>
                             <textarea class="form-control" id="registered_office_address" name="registered_office_address" rows="2" required><?= htmlspecialchars($settings['registered_office_address'] ?? ($settings['office_address'] ?? '')) ?></textarea>
                         </div>
@@ -190,6 +194,26 @@
                         <div class="col-md-6">
                             <label for="whatsapp_api_secret" class="form-label small fw-semibold text-muted text-uppercase">WhatsApp API Secret</label>
                             <input type="password" class="form-control" id="whatsapp_api_secret" name="whatsapp_api_secret" value="<?= htmlspecialchars($settings['whatsapp_api_secret'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="twilio_sid" class="form-label small fw-semibold text-muted text-uppercase">Twilio SID</label>
+                            <input type="text" class="form-control" id="twilio_sid" name="twilio_sid" value="<?= htmlspecialchars($settings['twilio_sid'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="twilio_auth_token" class="form-label small fw-semibold text-muted text-uppercase">Twilio Auth Token</label>
+                            <input type="password" class="form-control" id="twilio_auth_token" name="twilio_auth_token" value="<?= htmlspecialchars($settings['twilio_auth_token'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="twilio_phone_number" class="form-label small fw-semibold text-muted text-uppercase">Twilio Phone Number</label>
+                            <input type="text" class="form-control" id="twilio_phone_number" name="twilio_phone_number" value="<?= htmlspecialchars($settings['twilio_phone_number'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sendgrid_api_key" class="form-label small fw-semibold text-muted text-uppercase">SendGrid API Key</label>
+                            <input type="password" class="form-control" id="sendgrid_api_key" name="sendgrid_api_key" value="<?= htmlspecialchars($settings['sendgrid_api_key'] ?? '') ?>">
+                        </div>
+                        <div class="col-12">
+                            <label for="sendgrid_from_email" class="form-label small fw-semibold text-muted text-uppercase">SendGrid From Email</label>
+                            <input type="email" class="form-control" id="sendgrid_from_email" name="sendgrid_from_email" value="<?= htmlspecialchars($settings['sendgrid_from_email'] ?? '') ?>">
                         </div>
                     </div>
                 </div>

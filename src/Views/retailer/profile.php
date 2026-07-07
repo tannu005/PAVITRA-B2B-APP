@@ -226,7 +226,7 @@
         </a>
 
         <!-- Item 8: General Notification Settings -->
-        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3" style="text-decoration: none;">
+        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-gears" style="color: #7f8c8d;"></i></span>
                 <div>
@@ -235,6 +235,127 @@
                 </div>
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
+        </div>
+
+        <!-- Item 8.5: Two-Factor Authentication (2FA) -->
+        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-2fa">
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-shield-halved" style="color: #e74c3c;"></i></span>
+                <div>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Two-Factor Authentication (2FA)</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Protect your wholesale account with TOTP authenticator</p>
+                </div>
+            </div>
+            <span id="twofa-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+
+        <div id="twofa-block" class="p-4 bg-light border-bottom" style="display: none; font-size: 0.82rem;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <strong>Status:</strong> 
+                    <span id="twofa-status-badge" class="badge <?= !empty($user['two_factor_secret']) ? 'bg-success' : 'bg-secondary' ?>">
+                        <?= !empty($user['two_factor_secret']) ? 'Enabled' : 'Disabled' ?>
+                    </span>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="twofa-switch" <?= !empty($user['two_factor_secret']) ? 'checked' : '' ?> style="cursor: pointer; width: 2.5em; height: 1.25em;">
+                </div>
+            </div>
+
+            <!-- QR code container (hidden by default unless just enabled) -->
+            <div id="twofa-setup-container" class="text-center p-3 border rounded bg-white mt-3" style="display: none;">
+                <p class="mb-3 text-muted" style="font-size: 0.75rem;">Scan this QR code using Google Authenticator or Microsoft Authenticator, then copy the 2FA secret.</p>
+                <div class="mb-3">
+                    <img id="twofa-qr-image" src="" alt="2FA QR Code" class="img-fluid border p-2 bg-light" style="max-width: 180px;">
+                </div>
+                <div class="mb-2">
+                    <span class="text-muted d-block small mb-1">Secret Key (Manual Entry):</span>
+                    <code id="twofa-secret-key" class="text-dark fw-bold px-2 py-1 bg-light border rounded" style="font-size: 1rem; letter-spacing: 1px;"></code>
+                </div>
+                <p class="mb-0 text-success fw-semibold small"><i class="fa-solid fa-circle-check"></i> 2FA is now active! It will be required on your next login.</p>
+            </div>
+        </div>
+
+        <!-- Item 8.6: Device Management -->
+        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-devices">
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-display" style="color: #2980b9;"></i></span>
+                <div>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Device & Sessions Management</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">View logged-in devices and sign out of other sessions</p>
+                </div>
+            </div>
+            <span id="devices-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+
+        <div id="devices-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem;">
+            <div class="mb-3">
+                <span class="fw-bold text-dark d-block mb-2">Active Devices:</span>
+                <div class="list-group rounded-0">
+                    <?php if (!empty($activeSessions)): ?>
+                        <?php foreach ($activeSessions as $sess): ?>
+                            <?php $isCurrent = ($sess['token'] === ($_SESSION['session_token'] ?? '')); ?>
+                            <div class="list-group-item bg-white border p-2 mb-2 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-bold text-dark small">
+                                        <?= htmlspecialchars(substr($sess['user_agent'], 0, 55)) ?><?= strlen($sess['user_agent']) > 55 ? '...' : '' ?>
+                                        <?php if ($isCurrent): ?>
+                                            <span class="badge bg-primary ms-1">Current Session</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="text-muted small" style="font-size: 0.7rem;">
+                                        IP Address: <?= htmlspecialchars($sess['ip_address']) ?> • Active: <?= htmlspecialchars($sess['last_active']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="text-center py-2 text-muted">No active sessions found.</div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <?php if (count($activeSessions) > 1): ?>
+                <form action="/profile/sessions/revoke-others" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
+                    <button type="submit" class="btn btn-outline-danger btn-sm w-100 rounded-0 py-2 fw-bold text-uppercase" style="font-size: 0.75rem;"><i class="fa-solid fa-right-from-bracket me-1"></i> Sign out of other devices</button>
+                </form>
+            <?php else: ?>
+                <button class="btn btn-outline-secondary btn-sm w-100 rounded-0 py-2 fw-bold text-uppercase" disabled style="font-size: 0.75rem;"><i class="fa-solid fa-circle-check me-1"></i> Secure: No other active devices</button>
+            <?php endif; ?>
+        </div>
+
+        <!-- Item 9: Help & Policies (Combined Section) -->
+        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 cursor-pointer" id="toggle-help-policies" style="text-decoration: none;">
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-circle-info" style="color: #482922;"></i></span>
+                <div>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Help & Policies</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.7rem;">Contact support, track orders, size guide, & legal policies</p>
+                </div>
+            </div>
+            <span id="help-policies-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+
+        <!-- Collapsible Help & Policies Block -->
+        <div id="help-policies-block" class="p-3 bg-light" style="display: none; font-size: 0.8rem;">
+            <div class="row">
+                <div class="col-6 mb-2">
+                    <div class="fw-bold text-uppercase mb-1 small text-dark" style="letter-spacing: 0.05em; font-size: 0.68rem;">Help & Support</div>
+                    <a href="/support" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-headset me-1.5"></i> Contact Us</a>
+                    <a href="/orders" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-truck me-1.5"></i> Track Order</a>
+                    <a href="/about-us" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-circle-user me-1.5"></i> About Us</a>
+                    <a href="/support" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-circle-question me-1.5"></i> FAQs</a>
+                    <a href="/about-us" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-ruler-horizontal me-1.5"></i> Size Guide</a>
+                </div>
+                <div class="col-6 mb-2">
+                    <div class="fw-bold text-uppercase mb-1 small text-dark" style="letter-spacing: 0.05em; font-size: 0.68rem;">Policies</div>
+                    <a href="/about-us" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-file-invoice-dollar me-1.5"></i> Shipping Info</a>
+                    <a href="/about-us" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-rotate-left me-1.5"></i> Returns & Refunds</a>
+                    <a href="/about-us" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-shield-halved me-1.5"></i> Privacy Policy</a>
+                    <a href="/about-us" class="d-block text-muted text-decoration-none py-1"><i class="fa-solid fa-file-contract me-1.5"></i> Terms of Service</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -305,6 +426,44 @@ $(document).ready(function() {
     setupCollapse('#toggle-b2b-terms', '#b2b-terms-block', '#b2b-terms-chevron');
     setupCollapse('#toggle-weaver-dir', '#weaver-dir-block', '#weaver-dir-chevron');
     setupCollapse('#toggle-logistics', '#logistics-block', '#logistics-chevron');
+    setupCollapse('#toggle-2fa', '#twofa-block', '#twofa-chevron');
+    setupCollapse('#toggle-devices', '#devices-block', '#devices-chevron');
+    setupCollapse('#toggle-help-policies', '#help-policies-block', '#help-policies-chevron');
+
+    // 2FA Switch Event
+    $('#twofa-switch').on('change', function() {
+        var isChecked = $(this).is(':checked');
+        var badge = $('#twofa-status-badge');
+        var setupContainer = $('#twofa-setup-container');
+
+        $.ajax({
+            url: '/profile/2fa/toggle',
+            method: 'POST',
+            data: { enable: isChecked ? 1 : 0 },
+            success: function(response) {
+                if (response.success) {
+                    if (isChecked) {
+                        badge.removeClass('bg-secondary').addClass('bg-success').text('Enabled');
+                        $('#twofa-qr-image').attr('src', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(response.qr_code_url));
+                        $('#twofa-secret-key').text(response.secret);
+                        setupContainer.slideDown(300);
+                    } else {
+                        badge.removeClass('bg-success').addClass('bg-secondary').text('Disabled');
+                        setupContainer.slideUp(200);
+                    }
+                } else {
+                    alert('Error toggling 2FA: ' + (response.error || 'Unknown error'));
+                    // Revert switch state
+                    $('#twofa-switch').prop('checked', !isChecked);
+                }
+            },
+            error: function(xhr) {
+                alert('Connection error toggling 2FA.');
+                // Revert switch state
+                $('#twofa-switch').prop('checked', !isChecked);
+            }
+        });
+    });
 
     // Trigger delete account confirmation modal
     $('#btn-delete-account').on('click', function() {
