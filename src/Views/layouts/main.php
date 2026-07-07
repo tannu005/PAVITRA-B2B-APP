@@ -60,9 +60,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <header class="meesho-mobile-header">
         <div class="mobile-header-top-row">
             <div class="d-flex align-items-center">
-                <!-- Hamburger Side Menu Toggle -->
-                <a class="text-dark me-3" data-bs-toggle="offcanvas" href="#mobileSidebarMenu" role="button" aria-controls="mobileSidebarMenu" title="Open Menu">
-                    <i class="fa-solid fa-bars fs-5"></i>
+                <!-- QR Scanner Toggle -->
+                <a class="text-dark me-3" data-bs-toggle="modal" href="#qrScannerModal" role="button" title="Scan Saree QR">
+                    <i class="fa-solid fa-qrcode fs-5"></i>
                 </a>
                 <?php if ($_SERVER['REQUEST_URI'] !== '/' && $_SERVER['REQUEST_URI'] !== '' && !str_contains($_SERVER['REQUEST_URI'], '?category') && !str_contains($_SERVER['REQUEST_URI'], 'catalog')): ?>
                     <a href="javascript:history.back()" class="mobile-header-back-arrow" style="margin-right:10px;">
@@ -1015,6 +1015,60 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     </div>
     <?php endif; ?>
 
+    <!-- QR Scanner Modal -->
+    <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.9);">
+        <div class="modal-dialog modal-fullscreen m-0">
+            <div class="modal-content bg-transparent border-0 h-100">
+                <div class="modal-header border-0 pt-4 px-4">
+                    <a href="javascript:void(0)" class="text-white fs-4" data-bs-dismiss="modal" style="text-decoration:none;"><i class="fa-solid fa-arrow-left"></i></a>
+                    <h6 class="modal-title text-white mx-auto fw-semibold" style="letter-spacing: 0.5px; opacity: 0; transition: opacity 0.3s;" id="qr-scan-title">Scan Saree QR</h6>
+                    <a href="javascript:void(0)" class="text-white fs-4" style="text-decoration:none;"><i class="fa-regular fa-circle-question"></i></a>
+                </div>
+                <div class="modal-body d-flex flex-column align-items-center justify-content-center position-relative p-0 overflow-hidden">
+                    
+                    <!-- Scanner Viewfinder UI -->
+                    <div id="qr-scanner-viewfinder" class="position-relative" style="width: 280px; height: 280px; border-radius: 16px; overflow: hidden; display: none; margin-bottom: 20vh;">
+                        <video id="qr-video" class="w-100 h-100 object-fit-cover" autoplay playsinline style="background-color: #222;"></video>
+                        <!-- Viewfinder corners -->
+                        <div class="position-absolute top-0 start-0 border-top border-start" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-top-left-radius: 16px;"></div>
+                        <div class="position-absolute top-0 end-0 border-top border-end" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-top-right-radius: 16px;"></div>
+                        <div class="position-absolute bottom-0 start-0 border-bottom border-start" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-bottom-left-radius: 16px;"></div>
+                        <div class="position-absolute bottom-0 end-0 border-bottom border-end" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-bottom-right-radius: 16px;"></div>
+                        <!-- Scanning line animation -->
+                        <div class="position-absolute w-100 shadow-sm" style="background-color: #FFD814; height: 2px; top: 0; left: 0; animation: scanline 2s linear infinite; box-shadow: 0 0 10px rgba(255,216,20,0.8);"></div>
+                    </div>
+
+                    <!-- Permissions Overlay Prompt (Mimicking 2nd Screenshot) -->
+                    <div id="qr-permission-prompt" class="bg-white p-4 shadow position-absolute w-100" style="bottom: 0; left: 0; right: 0; border-top-left-radius: 16px; border-top-right-radius: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold m-0" style="color: #111; font-size: 1.1rem;">Allow camera access to scan Saree QR code</h6>
+                            <i class="fa-solid fa-xmark fs-5 text-muted" data-bs-dismiss="modal" style="cursor:pointer;"></i>
+                        </div>
+                        <p class="text-muted small mb-2" style="font-size: 0.9rem;">We use your camera so that you can:</p>
+                        <ul class="text-muted small ps-3 mb-4" style="line-height: 1.8; font-size: 0.9rem;">
+                            <li>Scan QR codes on physical saree tags to view details instantly</li>
+                            <li>Quick-add scanned products directly to your wholesale cart</li>
+                        </ul>
+                        <div class="form-check mb-4 d-flex align-items-start gap-2">
+                            <input class="form-check-input mt-1" type="checkbox" id="rememberCameraChoice" style="width: 1.2rem; height: 1.2rem;">
+                            <label class="form-check-label text-muted small" for="rememberCameraChoice" style="font-size: 0.85rem; padding-top: 2px;">
+                                Allow this Pavitra app to access your camera and skip this step in the future.
+                            </label>
+                        </div>
+                        <p class="text-muted mb-4" style="font-size: 0.8rem;">
+                            You can manage this access at any time in <a href="#" class="text-info text-decoration-none">permissions settings</a>.
+                        </p>
+                        <div class="d-flex gap-3">
+                            <button type="button" class="btn btn-outline-secondary flex-fill py-2" data-bs-dismiss="modal" style="border-color: #ddd; color: #333;">Not now</button>
+                            <button type="button" class="btn flex-fill fw-semibold py-2" id="qr-allow-access-btn" style="background-color: #FFD814; color: #111; border: 1px solid #FCD200;">Allow access</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Notifications Modal -->
     <div class="modal fade" id="notificationsModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(5px); background-color: rgba(0, 0, 0, 0.4);">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
@@ -1218,9 +1272,42 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('head').append(`
                 <style id="chatbot-styles">
                     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+                    @keyframes scanline { 0% { top: 0; } 50% { top: 100%; } 100% { top: 0; } }
                 </style>
                 `);
             }
+
+            // QR Scanner Logic
+            $('#qrScannerModal').on('show.bs.modal', function () {
+                $('#qr-scanner-viewfinder').hide();
+                $('#qr-scan-title').css('opacity', '0');
+                $('#qr-permission-prompt').show();
+            });
+
+            $('#qrScannerModal').on('hidden.bs.modal', function () {
+                const video = document.getElementById('qr-video');
+                if (video && video.srcObject) {
+                    video.srcObject.getTracks().forEach(track => track.stop());
+                }
+            });
+
+            $('#qr-allow-access-btn').on('click', function() {
+                $('#qr-permission-prompt').slideUp(300);
+                $('#qr-scan-title').css('opacity', '1');
+                $('#qr-scanner-viewfinder').fadeIn(500);
+                
+                // Request camera stream
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                        .then(function(stream) {
+                            const video = document.getElementById('qr-video');
+                            video.srcObject = stream;
+                        })
+                        .catch(function(err) {
+                            console.error("Camera access denied or error:", err);
+                        });
+                }
+            });
         });
     </script>
 
