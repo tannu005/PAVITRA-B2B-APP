@@ -163,31 +163,31 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <!-- Center Menu Links (Nisho Muse Two-Row style) -->
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
-                    <a href="/catalog?category=Organza+Silk" class="nisho-menu-link">Pavitra MUSE</a>
-                    <a href="/catalog?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
-                    <a href="/catalog?sort=newest" class="nisho-menu-link">NEW ARRIVALS</a>
-                    <a href="/catalog?all_sarees=true" class="nisho-menu-link">ALL SAREES</a>
-                    <a href="/catalog?category=Banarasi+Brocade" class="nisho-menu-link">BANARASI</a>
-                    <a href="/catalog?category=Kanjeevaram+Silk" class="nisho-menu-link">KANJEEVARAM</a>
-                    <a href="/catalog?category=Patola+Silk" class="nisho-menu-link">PATOLA</a>
+                    <a href="/?category=Organza+Silk" class="nisho-menu-link">Pavitra MUSE</a>
+                    <a href="/?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
+                    <a href="/?sort=newest" class="nisho-menu-link">NEW ARRIVALS</a>
+                    <a href="/?all_sarees=true" class="nisho-menu-link">ALL SAREES</a>
+                    <a href="/?category=Banarasi+Brocade" class="nisho-menu-link">BANARASI</a>
+                    <a href="/?category=Kanjeevaram+Silk" class="nisho-menu-link">KANJEEVARAM</a>
+                    <a href="/?category=Patola+Silk" class="nisho-menu-link">PATOLA</a>
                 </div>
                 <div class="menu-row-2 d-flex gap-4">
-                    <a href="/catalog?category=Organza+Silk" class="nisho-menu-link">ORGANZA</a>
-                    <a href="/catalog?category=Chanderi+Weave" class="nisho-menu-link">CHANDERI</a>
-                    <a href="/catalog?category=Mysore+Crepe+Silk" class="nisho-menu-link">MYSORE SILK</a>
-                    <a href="/catalog?category=Jamdani+Muslin" class="nisho-menu-link">JAMDANI</a>
+                    <a href="/?category=Organza+Silk" class="nisho-menu-link">ORGANZA</a>
+                    <a href="/?category=Chanderi+Weave" class="nisho-menu-link">CHANDERI</a>
+                    <a href="/?category=Mysore+Crepe+Silk" class="nisho-menu-link">MYSORE SILK</a>
+                    <a href="/?category=Jamdani+Muslin" class="nisho-menu-link">JAMDANI</a>
                     <div class="dropdown d-inline-block collections-dropdown">
                         <a href="#" class="dropdown-toggle text-decoration-none text-dark nisho-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
                         <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraOffice-SS2</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">Pavitra OFFICE-SS1</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraHAVELI - SS2</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Mysore+Crepe+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">DESI ROMANCE</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Chanderi+Weave" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">SHAADI KA GHAR</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/catalog?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraOffice-SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">Pavitra OFFICE-SS1</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraHAVELI - SS2</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Mysore+Crepe+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">DESI ROMANCE</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Chanderi+Weave" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">SHAADI KA GHAR</a></li>
+                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
                         </ul>
                     </div>
-                    <a href="/catalog?sort=price_low" class="text-danger fw-bold nisho-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
+                    <a href="/?sort=price_low" class="text-danger fw-bold nisho-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
                     <a href="/customization" class="fw-bold nisho-menu-link text-uppercase" style="color: var(--premium-gold-dark) !important; border-bottom: 1.5px dashed var(--premium-gold-dark);">Custom Studio</a>
                 </div>
             </div>
@@ -962,6 +962,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     </script>
 
 
+    <?php
+        // Hide Edge Panel on the main landing page (root path with no query params)
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+        $isLandingPage = ($requestUri === '/' || $requestUri === '' || $requestUri === '/index.php');
+        if (!$isLandingPage): 
+    ?>
     <!-- ═══════════ Pavitra Designer FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
     <!-- Handle / Trigger Trigger Button -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
@@ -1007,6 +1013,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
+    <?php endif; ?>
 
     <!-- Notifications Modal -->
     <div class="modal fade" id="notificationsModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(5px); background-color: rgba(0, 0, 0, 0.4);">
