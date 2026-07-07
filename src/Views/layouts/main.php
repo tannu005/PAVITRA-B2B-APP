@@ -578,7 +578,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
             <div class="nisho-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <span>© 2026 Pavitra Designer. All Rights Reserved.</span>
-                <span class="mt-2 mt-md-0">Crafted with ❤️ for Indian Handloom Heritage</span>
+                <span class="mt-2 mt-md-0"></span>
             </div>
         </div>
     </footer>

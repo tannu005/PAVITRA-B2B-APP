@@ -148,7 +148,7 @@
         page-break-inside: avoid;
         margin-bottom: 20px;
     }
-    /* Hide scrollbars during print */
+    
     ::-webkit-scrollbar {
         display: none;
     }

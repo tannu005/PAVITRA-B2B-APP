@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #9d1c5d; /* Meesho Pink theme color */
+            --primary-color: #9d1c5d; 
             --dark-color: #212529;
             --light-color: #f8f9fa;
             --border-color: #dee2e6;
@@ -23,7 +23,6 @@
             background-color: #e9ecef;
         }
 
-        /* Invoice Container */
         .invoice-wrapper {
             max-width: 850px;
             margin: 30px auto;
@@ -34,7 +33,6 @@
             position: relative;
         }
 
-        /* Top Action Bar (hidden during printing) */
         .action-bar {
             display: flex;
             justify-content: space-between;
@@ -83,7 +81,6 @@
             margin-right: 6px;
         }
 
-        /* Invoice Sheet Layout */
         .invoice-header {
             display: flex;
             justify-content: space-between;
@@ -121,7 +118,6 @@
             font-size: 12px;
         }
 
-        /* Info Grid (Seller / Buyer details) */
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -159,7 +155,6 @@
             width: 110px;
         }
 
-        /* Items Table */
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
@@ -196,7 +191,6 @@
             text-align: center !important;
         }
 
-        /* Summary Calculations Layout */
         .summary-container {
             display: flex;
             justify-content: space-between;
@@ -249,7 +243,6 @@
             border-top: 1px solid var(--primary-color);
         }
 
-        /* Footer Declaration & Sign */
         .invoice-footer {
             border-top: 1px solid var(--border-color);
             padding-top: 25px;
@@ -283,7 +276,6 @@
             text-transform: uppercase;
         }
 
-        /* Print Media Styles Override */
         @media print {
             body {
                 background-color: #fff;
@@ -377,7 +369,7 @@
             <h3>Sold By (Weaver)</h3>
             <p><strong><?= htmlspecialchars($order['seller_company'] ?: $order['seller_name']) ?></strong></p>
             <p><span class="meta-label">GSTIN:</span> <?= htmlspecialchars($order['seller_gst'] ?: 'N/A') ?></p>
-            <p><span class="meta-label">Email:</span> <?= htmlspecialchars($order['buyer_email']) /* Using user details dynamically */ ?></p>
+            <p><span class="meta-label">Email:</span> <?= htmlspecialchars($order['buyer_email'])  ?></p>
             <p><span class="meta-label">Dispatched From:</span> Varanasi Weaver Cluster, UP</p>
         </div>
 

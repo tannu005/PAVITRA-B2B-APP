@@ -1,35 +1,25 @@
-/* ==========================================================================
-   Pavitra B2B Premium Design System - Luxurious Meesho-Format Edition
-   ========================================================================== */
+
 
 :root {
-    /* ═══════════════════════════════════════════════════════════
-       PAVITRA HERITAGE PALETTE — Terracotta Brown × Charcoal × Gold
-       ═══════════════════════════════════════════════════════════ */
 
-    /* Primary — Heritage Terracotta Brown */
     --meesho-pink: #482922;
     --meesho-pink-hover: #2f1612;
     --meesho-pink-gradient: linear-gradient(135deg, #5d352e 0%, #3d201b 100%);
     --meesho-pink-light: rgba(72, 41, 34, 0.05);
 
-    /* Gold Accent — Insider Gold Metallic */
     --premium-gold: #d5a249;
     --premium-gold-dark: #b5832d;
     --premium-gold-gradient: linear-gradient(135deg, #e3b865 0%, #d5a249 100%);
     --premium-gold-light: rgba(213, 162, 73, 0.08);
 
-    /* Neutral Tones — Myntra Cool Charcoal & Slate Gray */
     --premium-dark: #282c3f;
     --premium-dark-muted: #7e818c;
     --premium-light-bg: #f5f5f6;
     --premium-border: #eaeaec;
 
-    /* Surface / Card backgrounds */
     --surface-white: #ffffff;
     --surface-warm: #f9f9fa;
 
-    /* Typography */
     --font-headings: 'Italiana', 'Playfair Display', Georgia, serif;
     --font-body: 'Plus Jakarta Sans', 'Nunito', sans-serif;
     --nisho-body-size: 14px;
@@ -42,7 +32,6 @@
     --nisho-product-title-size: 11.2px;
     --nisho-product-letter-spacing: 2.016px;
 
-    /* Shadows & Transitions */
     --card-shadow: 0 4px 24px rgba(107, 29, 29, 0.07);
     --hover-shadow: 0 16px 48px rgba(107, 29, 29, 0.13);
     --btn-shadow: 0 4px 18px rgba(107, 29, 29, 0.22);
@@ -51,7 +40,6 @@
     --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Global Reset & Typography */
 body {
     font-family: var(--font-body);
     font-size: var(--nisho-body-size);
@@ -105,7 +93,6 @@ h6 {
     color: #FFFFFF !important;
 }
 
-/* Premium Buttons */
 .btn-meesho-pink {
     background: var(--meesho-pink-gradient);
     color: white;
@@ -148,7 +135,6 @@ h6 {
     transform: translateY(-2px);
 }
 
-/* Header Layout — Luxury Ivory Style */
 .meesho-header {
     background: rgba(253, 246, 236, 0.97);
     backdrop-filter: blur(18px);
@@ -326,7 +312,6 @@ h6 {
     text-transform: uppercase !important;
 }
 
-/* Category navigation */
 .meesho-subcategory-bar {
     background-color: white;
     border-bottom: 1px solid var(--premium-border);
@@ -360,7 +345,6 @@ h6 {
     border-bottom-color: var(--meesho-pink);
 }
 
-/* Borderless Luxury Saree Card */
 .meesho-product-card {
     background: white;
     border: none;
@@ -382,7 +366,7 @@ h6 {
 .meesho-card-img-wrapper {
     position: relative;
     padding-top: 125%;
-    /* vertical layout */
+    
     background-color: var(--premium-light-bg);
     overflow: hidden;
 }
@@ -490,7 +474,6 @@ h6 {
     letter-spacing: 0.1px;
 }
 
-/* Sidebar filter */
 .meesho-filter-panel {
     background-color: white;
     border: none;
@@ -537,7 +520,6 @@ h6 {
     height: 17px;
 }
 
-/* Promo Banner Slider (Luxury Hero Look) */
 .meesho-promo-banner {
     background: linear-gradient(135deg, #1A0505 0%, #4A1010 35%, #7D2020 70%, #C9972E 100%);
     border-radius: 20px;
@@ -602,7 +584,6 @@ h6 {
     font-weight: 800;
 }
 
-/* Cart Drawer */
 .cart-drawer {
     position: fixed;
     top: 0;
@@ -636,7 +617,6 @@ h6 {
     display: block;
 }
 
-/* SaaS Dashboard Styling */
 .card-stat {
     background: white;
     border: none;
@@ -723,7 +703,6 @@ h6 {
     border-bottom-right-radius: 12px;
 }
 
-/* Badge status codes */
 .badge-status {
     font-family: var(--font-body);
     font-weight: 700;
@@ -765,7 +744,6 @@ h6 {
     color: #721C24;
 }
 
-/* Helpdesk ticket chat bubbles */
 .chat-bubble {
     max-width: 75%;
     padding: 1.1rem;
@@ -791,7 +769,6 @@ h6 {
     border: 1px solid var(--premium-border);
 }
 
-/* Footer links style */
 .footer-link {
     color: rgba(255, 255, 255, 0.5) !important;
     transition: var(--transition-smooth);
@@ -804,7 +781,6 @@ h6 {
     padding-left: 5px;
 }
 
-/* Mobile bottom navigation bar (Meesho APK Style) */
 .meesho-mobile-nav {
     position: fixed;
     bottom: 0;
@@ -844,7 +820,6 @@ h6 {
     color: var(--meesho-pink);
 }
 
-/* Responsive visibility rules */
 @media (max-width: 768px) {
     .meesho-mobile-nav {
         display: flex;
@@ -852,10 +827,9 @@ h6 {
 
     body {
         padding-bottom: 75px;
-        /* Offset for the bottom nav bar */
+        
     }
 
-    /* Hide top header descriptors to resemble APK header */
     .meesho-nav-item span {
         display: none;
     }
@@ -887,25 +861,21 @@ h6 {
 
 @media (max-width: 768px) {
 
-    /* Hide desktop-specific header structure on mobile */
     .meesho-header {
         display: none !important;
     }
 
-    /* Layout offsets for sticky top and bottom controls */
     body {
         padding-top: 108px !important;
-        /* Offset for mobile top header to prevent overlapping categories */
+        
         padding-bottom: 75px;
-        /* Offset for bottom nav bar */
+        
     }
 
-    /* Responsive overrides for catalog container */
     .meesho-subcategory-bar {
         display: none !important;
     }
 
-    /* Product Card Mobile Sizing */
     .meesho-card-body {
         padding: 0.65rem;
     }
@@ -950,7 +920,6 @@ h6 {
     }
 }
 
-/* Ditto Meesho Mobile App Header (Sticky) */
 .meesho-mobile-header {
     display: none;
 }
@@ -1012,7 +981,6 @@ h6 {
     position: relative;
 }
 
-/* Mobile Search Box */
 .meesho-mobile-search {
     position: relative;
     width: 100%;
@@ -1052,13 +1020,12 @@ h6 {
     pointer-events: auto !important;
 }
 
-/* Categories Horizontal Scroll Rail */
 .meesho-category-scroll {
     display: flex;
     gap: 1.2rem;
     overflow-x: auto;
     scrollbar-width: none;
-    /* Firefox */
+    
     padding: 0.8rem 0.8rem;
     margin: 0 -0.8rem;
     background: linear-gradient(to bottom, #FFFDF0 0%, rgba(255,255,255,0) 100%) !important;
@@ -1066,7 +1033,7 @@ h6 {
 
 .meesho-category-scroll::-webkit-scrollbar {
     display: none;
-    /* Safari / Chrome */
+    
 }
 
 .category-circle-item {
@@ -1106,7 +1073,6 @@ h6 {
     overflow: hidden;
 }
 
-/* Refinement Sticky Tab Bar */
 .meesho-refinement-bar {
     display: flex;
     align-items: center;
@@ -1142,7 +1108,6 @@ h6 {
     color: var(--meesho-pink);
 }
 
-/* Card Overlays (Wishlist Heart & Trusted badge) */
 .wishlist-heart-btn {
     position: absolute;
     top: 8px;
@@ -1186,7 +1151,6 @@ h6 {
     margin-left: 0.15rem;
 }
 
-/* Back Arrow trigger inside mobile header context */
 .mobile-header-back-arrow {
     color: var(--premium-dark);
     font-size: 1.15rem;
@@ -1194,7 +1158,6 @@ h6 {
     text-decoration: none;
 }
 
-/* Nisho Muse Rebranding Styles */
 .nisho-logo {
     font-family: var(--font-body) !important;
     font-size: var(--nisho-logo-size) !important;
@@ -1268,7 +1231,6 @@ h6 {
     background-color: #1a1a1a;
 }
 
-/* Minimalist Centered Card overrides for Nisho Muse look */
 .meesho-product-card.minimal {
     border: none !important;
     box-shadow: none !important;
@@ -1365,7 +1327,6 @@ h6 {
         height: 240px;
     }
 
-    /* Mobile Category Scroll Viewport Styling (Nishorama Ditto) */
     .meesho-header {
         position: sticky;
         top: 0;
@@ -1433,7 +1394,6 @@ h6 {
     }
 }
 
-/* Scroll Animation Classes */
 .meesho-product-card.minimal {
     opacity: 0;
     transform: translateY(20px);
@@ -1445,7 +1405,6 @@ h6 {
     transform: translateY(0);
 }
 
-/* Luxury Saree Hover Image-Swap (Nishorama Ditto) */
 .nisho-card-img-wrapper {
     position: relative;
     overflow: hidden;
@@ -1480,7 +1439,6 @@ h6 {
     transform: scale(1.05);
 }
 
-/* Categories Grid Block Overlay & Zoom (Nishorama Ditto) */
 .nisho-cat-block {
     border-radius: 0px;
     border: 1px solid #eee;
@@ -1498,7 +1456,6 @@ h6 {
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.72)) !important;
 }
 
-/* Quick Add button slide animation */
 .nisho-quick-add-btn {
     z-index: 5;
     opacity: 0;
@@ -1513,7 +1470,6 @@ h6 {
     background-color: #1a1a1a !important;
 }
 
-/* Always display Quick Add button on touch devices since hover is not possible */
 @media (hover: none) and (pointer: coarse) {
     .nisho-quick-add-btn {
         transform: translateY(0) !important;
@@ -1524,7 +1480,6 @@ h6 {
     }
 }
 
-/* Card sizes list */
 .nisho-card-sizes {
     font-size: 0.65rem;
     color: #888;
@@ -1536,7 +1491,6 @@ h6 {
     color: #482922;
 }
 
-/* Horizontal scroll collections carousel styling */
 .nisho-carousel-container {
     display: flex;
     flex-wrap: nowrap;
@@ -1562,20 +1516,20 @@ h6 {
 
 .nisho-carousel-item {
     flex: 0 0 calc(25% - 15px);
-    /* 4 columns on desktop */
+    
 }
 
 @media (max-width: 991px) {
     .nisho-carousel-item {
         flex: 0 0 calc(33.333% - 14px);
-        /* 3 columns on tablet */
+        
     }
 }
 
 @media (max-width: 576px) {
     .nisho-carousel-item {
         flex: 0 0 calc(50% - 10px);
-        /* 2 columns on mobile */
+        
         scroll-snap-align: start;
     }
 
@@ -1585,11 +1539,6 @@ h6 {
     }
 }
 
-/* ══════════════════════════════════════════════════════
-   NISHORAMA-STYLE ANIMATIONS & TRANSITIONS
-   ══════════════════════════════════════════════════════ */
-
-/* Section Fade-In on Scroll */
 @keyframes nishoFadeInUp {
     from {
         opacity: 0;
@@ -1702,7 +1651,6 @@ h6 {
     }
 }
 
-/* Scroll-triggered section animation classes */
 .nisho-anim-section {
     opacity: 0;
     transform: translateY(40px);
@@ -1714,7 +1662,6 @@ h6 {
     transform: translateY(0);
 }
 
-/* Staggered card reveal */
 .nisho-carousel-item:nth-child(1) {
     transition-delay: 0s;
 }
@@ -1747,7 +1694,6 @@ h6 {
     transition-delay: 0.56s;
 }
 
-/* Hero Carousel Enhanced */
 .carousel-fade .carousel-item {
     transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -1787,7 +1733,6 @@ h6 {
     opacity: 1;
 }
 
-/* Hero Text Animations */
 .carousel-item.active h1 {
     animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
@@ -1800,26 +1745,22 @@ h6 {
     animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
 }
 
-/* Parallax Banner Shimmer */
 @media (max-width: 768px) {
     [style*='background-attachment: fixed'] {
         background-attachment: scroll !important;
     }
 }
 
-/* Product Card Hover Lift */
 .meesho-product-card.minimal:hover {
     transform: translateY(-6px) !important;
     box-shadow: 0 20px 50px rgba(72, 41, 34, 0.08) !important;
 }
 
-/* Wishlist Heart Bounce */
 .wishlist-heart-btn.active {
     animation: nishoHeartBeat 0.6s ease-in-out;
     color: #E91E63 !important;
 }
 
-/* Section Title Decorative Line */
 .carousel-section-wrapper h3::after {
     content: '';
     display: block;
@@ -1829,13 +1770,11 @@ h6 {
     margin-top: 8px;
 }
 
-/* Value Proposition Icons Animation */
 .col-4:hover .fa-solid {
     animation: nishoFloat 1.5s ease-in-out infinite;
     color: #C5A059 !important;
 }
 
-/* Category Grid Enhanced Hover */
 .nisho-cat-block::after {
     content: '';
     position: absolute;
@@ -1853,12 +1792,10 @@ h6 {
     transform: scaleX(1);
 }
 
-/* Smooth Scroll Behavior */
 html {
     scroll-behavior: smooth;
 }
 
-/* Newsletter Input Glow */
 .form-control:focus {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15) !important;
     outline: none !important;
@@ -1868,14 +1805,12 @@ html {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
-/* Sticky Header Animation - Compact on scroll */
 .meesho-header.scrolled {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
     backdrop-filter: blur(20px) !important;
     background: rgba(255, 255, 255, 0.97) !important;
 }
 
-/* Premium Footer Styles */
 .nisho-footer {
     background-color: #1a1a1a;
     color: rgba(255, 255, 255, 0.55);
@@ -1942,7 +1877,6 @@ html {
     padding-left: 0 !important;
 }
 
-/* Loading Skeleton Shimmer */
 .skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
@@ -1950,7 +1884,6 @@ html {
     border-radius: 4px;
 }
 
-/* Mobile Improvements */
 @media (max-width: 576px) {
     .carousel-section-wrapper h3 {
         font-size: 1.3rem !important;
@@ -1981,7 +1914,6 @@ html {
     }
 }
 
-/* Hide on mobile helper */
 .hide-on-mobile {
     display: block;
 }
@@ -1992,7 +1924,6 @@ html {
     }
 }
 
-/* Modal Premium Styling */
 .meesho-modal-content {
     border: none;
     border-radius: 12px;
@@ -2008,7 +1939,6 @@ html {
     padding: 1.5rem;
 }
 
-/* Scrollbar Global Styles */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -2026,11 +1956,6 @@ html {
     background: rgba(72, 41, 34, 0.4);
 }
 
-/* ══════════════════════════════════════════════════════
-   PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL)
-   ══════════════════════════════════════════════════════ */
-
-/* Hidden / Floating Handle Trigger */
 .pavitra-edge-trigger {
     position: fixed;
     right: 16px;
@@ -2062,7 +1987,6 @@ html {
     transform: rotate(180deg);
 }
 
-/* Floating Vertical Panel (Matches Android Edge Panel) */
 .pavitra-edge-panel {
     position: fixed;
     right: -105px;
@@ -2084,10 +2008,9 @@ html {
     transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .pavitra-edge-panel.open {
-    right: 16px; /* Visible */
+    right: 16px; 
 }
 
-/* Sidebar Menu Items */
 .pavitra-edge-item {
     display: flex;
     flex-direction: column;
@@ -2130,7 +2053,6 @@ html {
     color: var(--premium-gold);
 }
 
-/* Custom styled Close arrow button at the bottom of sidebar */
 .pavitra-edge-close {
     width: 32px;
     height: 32px;
@@ -2149,7 +2071,6 @@ html {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Hide edge trigger on extremely small screens if it overlaps bottom bar icons */
 @media (max-width: 360px) {
     .pavitra-edge-trigger {
         right: 8px;
@@ -2157,7 +2078,6 @@ html {
     }
 }
 
-/* Center Filter Modal with Background Blur */
 #filtersModal.modal {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -2173,7 +2093,6 @@ html {
     }
 }
 
-/* Android WebView specific fixes for Edge-to-Edge Navigation Overlap */
 .android-apk .meesho-mobile-nav {
     height: 76px !important;
     padding-bottom: 16px !important;
@@ -2194,7 +2113,6 @@ html {
     }
 }
 
-/* Viewport-Fixed Clip-Path Parallax (100% Smooth on Desktop & Mobile) */
 .nisho-parallax-container {
     position: relative;
     overflow: hidden;
@@ -2202,7 +2120,7 @@ html {
     z-index: 1;
 }
 .nisho-parallax-bg {
-    position: fixed; /* Pinned relative to the viewport window */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100vw;
@@ -2210,10 +2128,9 @@ html {
     background-size: cover;
     background-position: center;
     z-index: 1;
-    pointer-events: none; /* Allows user to click items inside the container */
+    pointer-events: none; 
 }
 
-/* Split-Screen Tabbed Filters Layout */
 .filter-split-container {
     display: flex;
     height: 380px;
@@ -2263,9 +2180,6 @@ html {
     display: block;
 }
 
-/* ══════════════════════════════════════════════════════
-   PAVITRA SAREE IMAGE ZOOM LIGHTBOX STYLING
-   ══════════════════════════════════════════════════════ */
 .pavitra-zoom-lightbox {
     position: fixed;
     top: 0;
