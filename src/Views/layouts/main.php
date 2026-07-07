@@ -330,6 +330,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     url: '/cart',
                     method: 'GET',
                     dataType: 'json',
+                    cache: false,
                     success: function(res) {
                         renderCart(res);
                     },
@@ -482,6 +483,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 url: '/cart',
                 method: 'GET',
                 dataType: 'json',
+                cache: false,
                 success: function(res) {
                     if (res.items && res.items.length > 0) {
                         const count = res.items.reduce((sum, item) => sum + parseInt(item.quantity), 0);

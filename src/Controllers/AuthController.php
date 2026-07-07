@@ -62,6 +62,7 @@ class AuthController extends Controller {
                     }
 
                     // Success log-in
+                    session_regenerate_id(true);
                     $_SESSION['user_id'] = $user['id'];
 
                     $this->createWebSession($user, 'LOGIN');
@@ -237,6 +238,8 @@ class AuthController extends Controller {
         unset($_SESSION['session_token']);
         unset($_SESSION['session_device']);
         session_destroy();
+        session_start();
+        session_regenerate_id(true);
         $response->redirect('/login');
     }
 
