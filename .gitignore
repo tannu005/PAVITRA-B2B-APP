@@ -1,6 +1,8 @@
 # Local binaries
 db-bin/
 php-bin/
+*.apk
+*.exe
 
 # IDE files
 .vscode/
