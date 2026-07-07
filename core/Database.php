@@ -12,21 +12,18 @@ class Database {
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
         
         try {
-            // Attempt to connect to the specific database
             $this->pdo = new \PDO($dsn, $config['username'], $config['password'], [
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
                 \PDO::ATTR_EMULATE_PREPARES => false,
             ]);
         } catch (\PDOException $e) {
-            // If connection fails because db doesn't exist, try connecting to MySQL without dbname to create it
             if ($e->getCode() == 1049 || str_contains($e->getMessage(), 'Unknown database')) {
                 try {
                     $tempDsn = "mysql:host={$config['host']};port={$config['port']};charset={$config['charset']}";
                     $tempPdo = new \PDO($tempDsn, $config['username'], $config['password']);
                     $tempPdo->exec("CREATE DATABASE IF NOT EXISTS `{$config['dbname']}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
                     
-                    // Re-connect
                     $this->pdo = new \PDO($dsn, $config['username'], $config['password'], [
                         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
                         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,

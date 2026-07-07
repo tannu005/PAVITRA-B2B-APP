@@ -18,7 +18,6 @@ class Application {
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         
-        // Start session if not started
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -26,13 +25,10 @@ class Application {
         $this->ensureCsrfToken();
         $this->applySecurityHeaders();
 
-        // Initialize Database
         $this->db = new Database();
         
-        // Initialize Cache
         $this->cache = new Cache();
         
-        // Load Company Configuration
         $this->loadConfig();
     }
 
@@ -79,7 +75,6 @@ class Application {
         }
         
         if (isset($_SESSION['user_id'])) {
-            // Fetch user from DB
             $stmt = $this->db->prepare("SELECT u.*, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = ? AND u.status = 'ACTIVE'");
             $stmt->execute([$_SESSION['user_id']]);
             $user = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -88,7 +83,6 @@ class Application {
                 $this->sessionUser = $user;
                 return $user;
             } else {
-                // Invalid session
                 unset($_SESSION['user_id']);
             }
         }
@@ -101,7 +95,6 @@ class Application {
             $settings = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR) ?: [];
             $this->config = $settings;
         } catch (\PDOException $e) {
-            // DB not yet installed/migrated, load defaults
             $this->config = [
                 'company_name' => 'Pavitra Designer',
                 'brand_name' => 'Pavitra Designer',
@@ -112,7 +105,6 @@ class Application {
     }
 
     public function handleException(\Throwable $e): void {
-        // Log error to database/file
         $userId = $_SESSION['user_id'] ?? null;
         $url = $_SERVER['REQUEST_URI'] ?? '';
         $message = $e->getMessage();
@@ -128,19 +120,16 @@ class Application {
             ");
             $stmt->execute([$message, $url, $file, $line, $userId, $ip, $browser]);
         } catch (\Throwable $dbEx) {
-            // Fallback to error_log
             error_log("Error log insertion failed: " . $dbEx->getMessage());
         }
 
         error_log($e);
 
-        // Redirect to /install.php if it is a database connection error and install.php exists
         if (($e instanceof \PDOException || str_contains($message, 'Database connection')) && file_exists(dirname(__DIR__) . '/public/install.php')) {
             $this->response->redirect('/install.php');
             return;
         }
 
-        // Redirect to /php-error.php in production
         $this->response->setStatusCode(500);
         if (file_exists(dirname(__DIR__) . '/public/php-error.php')) {
             $this->response->redirect('/php-error.php');

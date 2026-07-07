@@ -29,7 +29,6 @@ class Router {
         $path = $this->normalizePath($this->request->getPath());
         $method = $this->request->getMethod();
 
-        // Rate limit check for API requests
         if (str_starts_with($path, '/api/')) {
             if (!$this->checkRateLimit()) {
                 $this->response->setStatusCode(429);
@@ -47,20 +46,16 @@ class Router {
             $this->enforceCsrf();
         }
         
-        // Find matching route
         $callback = $this->routes[$method][$path] ?? null;
         $params = [];
 
         if (!$callback) {
-            // Dynamic parameter matching: e.g., /product/{id}
             foreach ($this->routes[$method] ?? [] as $routePath => $routeCallback) {
-                // Convert route path to regex: /product/{id} -> ^/product/(?P<id>[^/]+)$
                 $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $routePath);
                 $pattern = '#^' . $pattern . '$#';
                 
                 if (preg_match($pattern, $path, $matches)) {
                     $callback = $routeCallback;
-                    // Extract named parameters
                     foreach ($matches as $key => $value) {
                         if (is_string($key)) {
                             $params[$key] = $value;
@@ -81,7 +76,6 @@ class Router {
         }
 
         if (is_array($callback)) {
-            // Controller instantiation: [$class, $method]
             $controllerClass = $callback[0];
             $controllerMethod = $callback[1];
             
@@ -175,7 +169,6 @@ class Router {
         $cache->set($rateLimitKey, $bucket, 60);
         header('X-RateLimit-Remaining: 0');
 
-        // Audit Log violation
         try {
             $db = Application::$app->db;
             $stmt = $db->prepare("
@@ -189,7 +182,6 @@ class Router {
                 $_SERVER['HTTP_USER_AGENT'] ?? ''
             ]);
         } catch (\Throwable $e) {
-            // Silently ignore DB errors on logging
         }
 
         return false;

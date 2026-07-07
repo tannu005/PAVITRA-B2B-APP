@@ -25,17 +25,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <meta property="og:site_name" content="<?= htmlspecialchars($config['brand_name'] ?? 'Pavitra Designer') ?>">
     <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>">
     <title><?= $pageTitle ?></title>
-    <!-- Bootstrap 5.3+ CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Cinzel:wght@400;600;700&family=Rozha+One&display=swap" rel="stylesheet">
-    <!-- Custom Meesho CSS -->
     <link rel="stylesheet" href="<?= Application::assetUrl('/assets/css/meesho.css?v=' . time()) ?>">
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         window.__CSRF_TOKEN__ = <?= json_encode($csrfToken) ?>;
@@ -52,16 +47,13 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 </head>
 <body>
 
-    <!-- Promotion Nav -->
     <div class="py-2 hide-on-mobile text-center" style="background-color: #F8F9FA; border-bottom: 1px solid #ECEFF1; color: #555;">
         ⚡ Lowest Prices • Free Shipping on Bulk Orders • Weaver-Direct Verified Quality
     </div>
 
-    <!-- Meesho-Style Mobile Top Header -->
     <header class="meesho-mobile-header">
         <div class="mobile-header-top-row">
             <div class="d-flex align-items-center">
-                <!-- QR Scanner Toggle -->
                 <a class="text-dark me-3" data-bs-toggle="modal" href="#qrScannerModal" role="button" title="Scan Saree QR">
                     <i class="fa-solid fa-qrcode fs-5"></i>
                 </a>
@@ -72,21 +64,17 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <?php else: ?>
                     <a href="/" class="nisho-logo" style="margin-right: 10px; text-decoration: none;">
                         <svg viewBox="0 0 180 45" width="110" height="32" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <!-- Horizontal Flute (Brown) -->
                             <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                            <!-- Flute holes (gold accents) -->
                             <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
                             
-                            <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
                             <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
                             <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
                             <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
                             
-                            <!-- Heart-shaped Peacock Feather on the right -->
                             <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
                             <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
                             <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
@@ -94,7 +82,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
                             <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
                             
-                            <!-- Brand Typography -->
                             <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
                             <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">DESIGNER</text>
                         </svg>
@@ -128,26 +115,21 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </header>
 
-    <!-- Header Navigation (Desktop/Tablet) -->
     <header class="meesho-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
             <a href="/" class="nisho-logo" style="text-decoration: none;">
                 <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                    <!-- Horizontal Flute (Brown) -->
                     <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                    <!-- Flute holes (gold accents) -->
                     <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
                     <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
                     <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
                     <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
                     <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
                     
-                    <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
                     <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
                     <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
                     <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
                     
-                    <!-- Heart-shaped Peacock Feather on the right -->
                     <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
                     <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
                     <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
@@ -155,13 +137,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
                     <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
                     
-                    <!-- Brand Typography -->
                     <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
                     <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">DESIGNER</text>
                 </svg>
             </a>
 
-            <!-- Center Menu Links (Nisho Muse Two-Row style) -->
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
                     <a href="/?category=Organza+Silk" class="nisho-menu-link">Pavitra MUSE</a>
@@ -193,13 +173,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>
             </div>
 
-            <!-- Right Navigation Controls -->
             <div class="meesho-nav-items gap-3 align-items-center">
-                <!-- Search Trigger Toggle -->
                 <a href="javascript:void(0)" class="text-dark me-2" onclick="$('#search-dropdown').toggle()"><i class="fa-solid fa-magnifying-glass fs-5"></i></a>
                 
                 <?php if ($user): ?>
-                    <!-- Profile dropdown -->
                     <div class="dropdown d-inline-block">
                         <button class="bg-transparent border-0 p-0 text-dark dropdown-toggle no-caret" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-regular fa-user fs-5"></i>
@@ -230,7 +207,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
         
-        <!-- Dropdown Search input -->
         <div class="container-xl py-2" id="search-dropdown" style="display: none; border-top: 1px solid #eee;">
             <form class="meesho-search-form w-100 max-width-none position-relative" id="search-form" method="GET" action="/">
                 <i class="fa fa-search meesho-search-icon"></i>
@@ -243,30 +219,24 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </header>
 
-    <!-- Main Content Rendering -->
     <main>
         {{content}}
     </main>
 
-    <!-- Cart Sliding Drawer -->
     <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
     <div class="cart-drawer" id="cart-drawer-box">
         <div class="p-4 d-flex justify-between align-items-center border-bottom">
             <h5 class="m-0 fw-bold">Wholesale Cart</h5>
             <button class="btn btn-close p-0" id="cart-close-btn"></button>
         </div>
-        <!-- Scrollable items area -->
         <div class="flex-grow-1 overflow-auto p-4" id="cart-drawer-items">
-            <!-- Loaded dynamically via AJAX -->
         </div>
-        <!-- Totals & Checkout -->
         <div class="p-4 border-top" id="cart-drawer-footer" style="display: none;">
             <div class="d-flex justify-content-between align-items-center mb-2" style="font-size: 0.85rem;">
                 <span class="fw-semibold text-muted">Subtotal</span>
                 <span class="fw-bold text-dark" id="cart-subtotal-display">₹0.00</span>
             </div>
 
-            <!-- Coupon Apply Form -->
             <div class="mb-3 border-bottom pb-3">
                 <label class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.65rem; letter-spacing: 0.5px;">B2B Coupon Code</label>
                 <div class="input-group input-group-sm">
@@ -297,13 +267,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
 
-    <!-- Bootstrap 5.3+ Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Global Cart & Core AJAX Script -->
     <script>
         $(document).ready(function() {
-            // Notifications & Cart Handlers
             $('#cart-trigger-btn, #cart-trigger-btn-mobile').on('click', function() {
                 openCart();
             });
@@ -323,9 +290,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#cart-drawer-box').removeClass('open');
             }
 
-            // Load Cart Items AJAX
             function loadCartItems() {
-                // We'll write the JS interface that communicates with /cart endpoint
                 $.ajax({
                     url: '/cart',
                     method: 'GET',
@@ -341,7 +306,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             }
 
             function renderCart(res) {
-                // If cart is empty
                 if (!res.items || res.items.length === 0) {
                     $('#cart-drawer-items').html(`
                         <div class="text-center py-5 text-muted">
@@ -355,7 +319,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     return;
                 }
 
-                // Render cart items
                 let html = '<div class="d-flex flex-column gap-3">';
                 res.items.forEach(function(item) {
                     const priceFormatted = parseFloat(item.price).toLocaleString('en-IN');
@@ -372,7 +335,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                 <span class="badge text-secondary bg-light border mt-1" style="font-size: 0.65rem;">Min Wholesale MOQ: ${item.bulk_threshold}</span>
                                 
                                 <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <!-- Qty Selector -->
                                     <div class="d-flex align-items-center border rounded">
                                         <button class="btn btn-sm btn-light py-0 px-2 qty-btn minus" data-id="${item.variant_id}">-</button>
                                         <span class="px-2 fw-bold text-center" style="font-size: 0.85rem; min-width: 25px;">${item.quantity}</span>
@@ -410,12 +372,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#cart-total-display').text('₹' + parseFloat(res.total).toLocaleString('en-IN', {minimumFractionDigits: 2}));
                 $('#cart-drawer-footer').show();
                 
-                // Set Badge count
                 const count = res.items.reduce((sum, item) => sum + parseInt(item.quantity), 0);
                 $('#cart-count-badge, #cart-count-badge-mobile').text(count).show();
             }
 
-            // Apply Coupon click event
             $('#apply-coupon-btn').on('click', function() {
                 const code = $('#coupon-code-input').val().trim();
                 const subtotalDisplay = $('#cart-subtotal-display').text().replace(/[^\d.]/g, '');
@@ -446,7 +406,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 });
             });
 
-            // Handle Qty Add/Subtract & Delete
             $(document).on('click', '.qty-btn', function() {
                 const variantId = $(this).data('id');
                 const isPlus = $(this).hasClass('plus');
@@ -478,7 +437,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 });
             });
 
-            // Initial Cart Sync
             $.ajax({
                 url: '/cart',
                 method: 'GET',
@@ -492,7 +450,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
             });
 
-            // Checkout Order Placing AJAX
             $('#checkout-order-btn').on('click', function() {
                 const address = $('#shipping-address-box').val().trim();
                 if (address === '') {
@@ -525,7 +482,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 });
             });
 
-            // Scrolled sticky header animation
             $(window).on('scroll', function() {
                 if ($(window).scrollTop() > 30) {
                     $('.meesho-header').addClass('scrolled');
@@ -534,7 +490,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
             });
 
-            // Scroll Intersection Observer for fading-in product cards
             if ('IntersectionObserver' in window) {
                 const cardObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -544,13 +499,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     });
                 }, { threshold: 0.05 });
 
-                // Bind observer to existing and future minimal cards
                 $(document).find('.meesho-product-card.minimal').each(function() {
                     cardObserver.observe(this);
                 });
             }
 
-            // Global Toast Notification Helper
             window.showToast = function(msg) {
                 $('#toast-message').text(msg);
                 const toastEl = document.getElementById('app-toast');
@@ -564,7 +517,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         });
     </script>
     
-    <!-- Toast Notification Container -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
         <div id="app-toast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -578,25 +530,18 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <div class="modal fade" id="cameraSearchModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.65);">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; background-color: #FFFDF8; overflow: hidden;">
-                <!-- Header -->
                 <div class="modal-header border-0 pb-2" style="background-color: var(--premium-light-bg); padding: 1.25rem;">
                     <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--meesho-pink);"><i class="fa-solid fa-camera me-2" style="color: var(--premium-gold);"></i>Saree Image Matcher</h5>
                     <button type="button" class="btn-close" id="btn-close-scanner-modal" data-bs-dismiss="modal"></button>
                 </div>
-                <!-- Body -->
                 <div class="modal-body p-4 text-center">
                     <p class="small text-muted mb-3">Snap a photo of a saree pattern or color to scan and search our weaver looms.</p>
                     
-                    <!-- Scanner Container -->
                     <div class="scanner-container position-relative overflow-hidden mb-3 bg-dark d-flex align-items-center justify-content-center" style="height: 280px; border-radius: 12px; border: 2px solid var(--premium-gold);">
-                        <!-- Live Camera Stream -->
                         <video id="scanner-video" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
-                        <!-- Scanner Overlay / Laser Line -->
                         <div class="scanner-laser" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; z-index: 10; animation: scanAnimation 2s linear infinite;"></div>
-                        <!-- Scanning Reticle/Box -->
                         <div class="scanner-reticle" style="position: absolute; width: 180px; height: 180px; border: 2px dashed rgba(201, 151, 46, 0.5); border-radius: 8px; z-index: 5;"></div>
                         
-                        <!-- Initial Upload/Capture CTA -->
                         <div id="scanner-cta" class="text-white p-3 z-3">
                             <i class="fa-solid fa-camera fa-3x mb-3 text-warning" style="color: var(--premium-gold) !important;"></i>
                             <h6 class="fw-bold">Camera Access Required</h6>
@@ -610,7 +555,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             </div>
                         </div>
                         
-                        <!-- Loading/Analyzing Overlay -->
                         <div id="scanner-loading" class="position-absolute w-100 h-100 top-0 left-0 bg-dark bg-opacity-75 d-flex flex-column align-items-center justify-content-center text-white" style="display: none; z-index: 15;">
                             <div class="spinner-border text-warning mb-3" style="color: var(--premium-gold) !important;" role="status"></div>
                             <h6 class="fw-bold mb-1" id="scanner-loading-text">Analyzing weaves...</h6>
@@ -630,25 +574,20 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <footer class="nisho-footer">
         <div class="container">
             <div class="row g-4">
-                <!-- About Column -->
                 <div class="col-lg-3 col-md-6">
                     <a href="/" class="nisho-logo d-inline-block mb-3">
                         <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <!-- Horizontal Flute (Brown) -->
                             <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                            <!-- Flute holes (gold accents) -->
                             <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
                             <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
                             
-                            <!-- Stylized Feathers (Red, Green, Blue) rising from flute -->
                             <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
                             <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
                             <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
                             
-                            <!-- Heart-shaped Peacock Feather on the right -->
                             <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
                             <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
                             <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
@@ -656,7 +595,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
                             <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
                             
-                            <!-- Brand Typography (White text for footer) -->
                             <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#ffffff">पवित्रा</text>
                             <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">Designer Saree</text>
                         </svg>
@@ -669,7 +607,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <a href="#"><i class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
-                <!-- Quick Links -->
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>Quick Links</h5>
                     <a href="/catalog?sort=newest">New Arrivals</a>
@@ -678,7 +615,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/catalog?category=Patola+Silk">Patola</a>
                     <a href="/catalog?category=Organza+Silk">Organza</a>
                 </div>
-                <!-- Help -->
                 <div class="col-lg-2 col-md-6 col-6 d-none d-lg-block">
                     <h5>Help & Support</h5>
                     <a href="/support">Contact Us</a>
@@ -687,7 +623,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/support">FAQs</a>
                     <a href="/about-us">Size Guide</a>
                 </div>
-                <!-- Policies -->
                 <div class="col-lg-2 col-md-6 col-6 d-none d-lg-block">
                     <h5>Policies</h5>
                     <a href="/about-us">Shipping Info</a>
@@ -695,7 +630,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/about-us">Privacy Policy</a>
                     <a href="/about-us">Terms of Service</a>
                 </div>
-                <!-- Wholesale Info -->
                 <div class="col-lg-3 col-md-6">
                     <h5>Wholesale Enquiry</h5>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">Minimum order: 5 pieces per design. Bulk discounts available for orders of 50+ pieces.</p>
@@ -707,7 +641,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </div>
                 </div>
             </div>
-            <!-- Footer Bottom -->
             <div class="nisho-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <span>© 2026 Pavitra Designer. All Rights Reserved.</span>
                 <span class="mt-2 mt-md-0">Crafted with ❤️ for Indian Handloom Heritage</span>
@@ -715,7 +648,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </footer>
 
-    <!-- Nishorama-Style Mobile Bottom Navigation Bar -->
     <div class="meesho-mobile-nav">
         <a href="/" class="mobile-nav-item <?= $_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '' ? 'active' : '' ?>">
             <i class="fa-solid fa-house"></i>
@@ -738,7 +670,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
     <script>
         $(document).ready(function() {
-            // 🎙️ VOICE SEARCH FUNCTIONALITY (SpeechRecognition)
             var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (SpeechRecognition) {
                 var recognition = new SpeechRecognition();
@@ -781,10 +712,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 });
             }
 
-            // 📷 CAMERA SEARCH FUNCTIONALITY (Saree Image Matcher)
             var stream = null;
             
-            // Start Camera Stream Function
             function startScannerCamera() {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
@@ -799,7 +728,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         $('#scanner-camera-controls').show();
                     })
                     .catch(function(err) {
-                        // If camera fails, show file CTA fallback
                         $('#scanner-video').hide();
                         $('.scanner-laser').hide();
                         $('.scanner-reticle').hide();
@@ -816,7 +744,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
             }
 
-            // Open Modal
             $('.camera-search-btn').on('click', function(e) {
                 e.preventDefault();
                 if (window.bootstrap) {
@@ -826,21 +753,17 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
             });
 
-            // Automatically start camera on modal open
             $('#cameraSearchModal').on('shown.bs.modal', function () {
                 startScannerCamera();
             });
 
-            // Re-trigger from CTA
             $('#btn-start-camera').on('click', function() {
                 startScannerCamera();
             });
 
-            // Handle file upload fallback
             $('#scanner-file-input').on('change', function() {
                 var file = this.files[0];
                 if (file) {
-                    // Read file as base64 and store it
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         localStorage.setItem('captured_saree_pattern', e.target.result);
@@ -851,7 +774,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
             });
 
-            // Capture Saree and Simulate matching
             $('#btn-capture-match').on('click', function() {
                 var video = document.getElementById('scanner-video');
                 if (video && stream) {
@@ -871,7 +793,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             });
 
             function startScanSimulation(text) {
-                // Hide video, CTA, and controls to prevent overlap
                 $('#scanner-video').hide();
                 $('#scanner-cta').hide();
                 $('#scanner-camera-controls').hide();
@@ -881,13 +802,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#scanner-loading-text').text(text);
                 $('#scanner-loading').css('display', 'flex'); // Show analyzing overlay cleanly
                 
-                // Stop camera stream after capture
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                     stream = null;
                 }
                 
-                // Simulate deep-learning saree search (takes 2.5 seconds)
                 setTimeout(function() {
                     var categories = ["Banarasi Brocade", "Kanjeevaram Silk", "Patola Silk", "Organza Silk", "Mysore Crepe Silk", "Jamdani Muslin"];
                     var matchedCategory = categories[Math.floor(Math.random() * categories.length)];
@@ -895,19 +814,16 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     window.showToast("Loom match: " + matchedCategory + " found!");
                     
                     setTimeout(function() {
-                        // Redirect to catalog page filtered by the matched saree type
                         window.location.href = "/?category=" + encodeURIComponent(matchedCategory);
                     }, 1000);
                 }, 2500);
             }
 
-            // Stop camera if modal is closed
             $('#cameraSearchModal').on('hidden.bs.modal', function () {
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                     stream = null;
                 }
-                // Reset scanner modal state
                 var video = document.getElementById('scanner-video');
                 video.srcObject = null;
                 video.style.display = 'none';
@@ -919,20 +835,17 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             });
 
 
-            // Toggle sidebar panel on trigger button click
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
                 e.stopPropagation();
                 $(this).fadeOut(150);
                 $('#pavitra-edge-sidebar').addClass('open');
             });
 
-            // Close sidebar when close button is clicked
             $('#pavitra-edge-close-btn').on('click', function(e) {
                 e.stopPropagation();
                 closeEdgePanel();
             });
 
-            // Close sidebar when clicking outside the panel
             $(document).on('click', function(event) {
                 if (!$(event.target).closest('#pavitra-edge-sidebar, #pavitra-edge-trigger-btn').length) {
                     closeEdgePanel();
@@ -944,7 +857,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#pavitra-edge-trigger-btn').fadeIn(150);
             }
 
-            // Quick Access Filter action
             $('#pavitra-edge-filter-btn').on('click', function(e) {
                 e.stopPropagation();
                 closeEdgePanel();
@@ -966,22 +878,18 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
 
     <?php
-        // Hide Edge Panel on the main landing page (root path with no query params)
         $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
         $isLandingPage = ($requestUri === '/' || $requestUri === '' || $requestUri === '/index.php');
         $isSellerPage = strpos($requestUri, '/seller') !== false;
         if (!$isLandingPage): 
     ?>
     <!-- ═══════════ Pavitra Designer FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
-    <!-- Handle / Trigger Trigger Button -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
         <i class="fa-solid fa-chevron-left"></i>
     </button>
 
-    <!-- Slide-out vertical menu bar -->
     <div class="pavitra-edge-panel" id="pavitra-edge-sidebar">
         <?php if ($isSellerPage): ?>
-            <!-- SELLER DASHBOARD MENU -->
             <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-robot"></i>
@@ -1010,8 +918,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span>Orders</span>
             </a>
         <?php else: ?>
-            <!-- NORMAL USER MENU -->
-            <!-- Custom Studio -->
             <a href="/customization" class="pavitra-edge-item" title="Saree Customization Studio">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -1019,7 +925,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span>Custom</span>
             </a>
 
-            <!-- WhatsApp Chat -->
             <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
                 <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
                     <i class="fa-brands fa-whatsapp"></i>
@@ -1027,7 +932,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span>WhatsApp</span>
             </a>
 
-            <!-- Filters (Triggers filter drawer modal) -->
             <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-sliders"></i>
@@ -1035,7 +939,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span>Filters</span>
             </div>
             
-            <!-- Chatbot -->
             <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-robot"></i>
@@ -1044,14 +947,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         <?php endif; ?>
 
-        <!-- Close Chevron -->
         <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
     <?php endif; ?>
 
-    <!-- QR Scanner Modal -->
     <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.9);">
         <div class="modal-dialog modal-fullscreen m-0">
             <div class="modal-content bg-transparent border-0 h-100">
@@ -1062,19 +963,15 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>
                 <div class="modal-body d-flex flex-column align-items-center justify-content-center position-relative p-0 overflow-hidden">
                     
-                    <!-- Scanner Viewfinder UI -->
                     <div id="qr-scanner-viewfinder" class="position-relative" style="width: 280px; height: 280px; border-radius: 16px; overflow: hidden; display: none; margin-bottom: 20vh;">
                         <video id="qr-video" class="w-100 h-100 object-fit-cover" autoplay playsinline muted style="background-color: #222;"></video>
-                        <!-- Viewfinder corners -->
                         <div class="position-absolute top-0 start-0 border-top border-start" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-top-left-radius: 16px;"></div>
                         <div class="position-absolute top-0 end-0 border-top border-end" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-top-right-radius: 16px;"></div>
                         <div class="position-absolute bottom-0 start-0 border-bottom border-start" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-bottom-left-radius: 16px;"></div>
                         <div class="position-absolute bottom-0 end-0 border-bottom border-end" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-bottom-right-radius: 16px;"></div>
-                        <!-- Scanning line animation -->
                         <div class="position-absolute w-100 shadow-sm" style="background-color: #FFD814; height: 2px; top: 0; left: 0; animation: scanline 2s linear infinite; box-shadow: 0 0 10px rgba(255,216,20,0.8);"></div>
                     </div>
 
-                    <!-- Permissions Overlay Prompt (Mimicking 2nd Screenshot) -->
                     <div id="qr-permission-prompt" class="bg-white p-4 shadow position-absolute w-100" style="bottom: 0; left: 0; right: 0; border-top-left-radius: 16px; border-top-right-radius: 16px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold m-0" style="color: #111; font-size: 1.1rem;">Allow camera access to scan Saree QR code</h6>
@@ -1105,7 +1002,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
 
-    <!-- Notifications Modal -->
     <div class="modal fade" id="notificationsModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(5px); background-color: rgba(0, 0, 0, 0.4);">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
@@ -1135,7 +1031,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
 
-    <!-- Mobile Sidebar Menu (Offcanvas) -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebarMenu" aria-labelledby="mobileSidebarMenuLabel" style="width: 280px; border-right: none;">
         <div class="offcanvas-header" style="background-color: #FDFBF7; border-bottom: 1px solid #ECEFF1;">
             <h5 class="offcanvas-title" id="mobileSidebarMenuLabel" style="font-family: 'Rozha One', serif; font-size: 1.3rem; color: #482922;">पवित्रा</h5>
@@ -1143,24 +1038,20 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
         <div class="offcanvas-body p-0">
             <div class="list-group list-group-flush rounded-0">
-                <!-- Custom -->
                 <a href="/customization" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-solid fa-wand-magic-sparkles me-3" style="color: var(--meesho-pink);"></i> Custom
                 </a>
                 
-                <!-- Filters (Fixed 404) -->
                 <a href="/?show_filters=true" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-solid fa-sliders me-3" style="color: var(--meesho-pink);"></i> Filters
                 </a>
                 
-                <!-- Chatbot -->
                 <a href="#" data-bs-toggle="modal" data-bs-target="#chatbotModal" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-solid fa-robot me-3 text-primary"></i> Ask Pavitra AI (Chatbot)
                 </a>
 
                 <div class="border-top my-2"></div>
                 
-                <!-- WhatsApp -->
                 <a href="https://wa.me/919876543210" class="list-group-item list-group-item-action py-3 border-0 text-success" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-brands fa-whatsapp me-3 fs-5"></i> WhatsApp Support
                 </a>
@@ -1168,7 +1059,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
 
-    <!-- Chatbot Modal -->
     <div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
@@ -1179,9 +1069,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-0 d-flex flex-column" style="height: 400px; max-height: 70vh;">
-                    <!-- Chat Area -->
                     <div id="chatbot-messages" class="flex-grow-1 p-3" style="overflow-y: auto; background-color: #F8F9FA;">
-                        <!-- Initial Bot Message -->
                         <div class="d-flex mb-3">
                             <div class="me-2 mt-auto mb-1">
                                 <div class="d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--premium-gold), #8B5A2B);">
@@ -1196,7 +1084,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         </div>
                     </div>
                     
-                    <!-- Input Area -->
                     <div class="p-3 bg-white border-top">
                         <div class="input-group shadow-sm" style="border-radius: 20px; overflow: hidden;">
                             <input type="text" id="chatbot-input" class="form-control border-0 bg-light px-3" placeholder="Type your question..." aria-label="Type your question" style="box-shadow: none;">
@@ -1246,11 +1133,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 const text = chatInput.val().trim();
                 if (!text) return;
                 
-                // Add user message
                 appendMessage('user', text);
                 chatInput.val('');
                 
-                // Add typing indicator
                 const typingId = 'typing-' + Date.now();
                 const typingHtml = `
                 <div id="${typingId}" class="d-flex mb-3">
@@ -1268,7 +1153,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 chatMessages.append(typingHtml);
                 chatMessages.scrollTop(chatMessages[0].scrollHeight);
 
-                // Simulate AI response delay
                 setTimeout(() => {
                     $('#' + typingId).remove();
                     
@@ -1303,7 +1187,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 if (e.which === 13) handleSend();
             });
             
-            // Add typing animation style
             if (!$('style#chatbot-styles').length) {
                 $('head').append(`
                 <style id="chatbot-styles">
@@ -1313,7 +1196,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 `);
             }
 
-            // QR Scanner Logic
             $('#qrScannerModal').on('show.bs.modal', function () {
                 $('#qr-scanner-viewfinder').hide();
                 $('#qr-scan-title').css('opacity', '0');
@@ -1332,7 +1214,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#qr-scan-title').css('opacity', '1');
                 $('#qr-scanner-viewfinder').fadeIn(500);
                 
-                // Request camera stream
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     
                     function startCamera(constraints) {
@@ -1360,12 +1241,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                                 inversionAttempts: "dontInvert",
                                             });
                                             if (code && code.data) {
-                                                // Stop scanning
                                                 video.srcObject.getTracks().forEach(track => track.stop());
                                                 alert("Scanned Saree QR: " + code.data);
                                                 $('#qrScannerModal').modal('hide');
                                                 
-                                                // If it's a valid URL, redirect
                                                 if (code.data.startsWith('http') || code.data.startsWith('/')) {
                                                     window.location.href = code.data;
                                                 }
@@ -1380,18 +1259,15 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             });
                     }
 
-                    // Try back camera first
                     startCamera({ video: { facingMode: "environment" } })
                         .catch(function(err) {
                             console.warn("Environment camera failed, trying default:", err);
-                            // Fallback to default camera if environment camera is not available
                             return startCamera({ video: true });
                         })
                         .catch(function(err) {
                             console.error("Camera access denied or error:", err);
                             alert("Direct camera access failed (often happens in WebViews). We will now open your device's native camera.");
                             
-                            // FALLBACK: Use a file input to open native camera
                             let fileInput = document.getElementById('qr-fallback-input');
                             if (!fileInput) {
                                 fileInput = document.createElement('input');

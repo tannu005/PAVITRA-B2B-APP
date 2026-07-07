@@ -61,13 +61,11 @@ class AuthController extends Controller {
                         return;
                     }
 
-                    // Success log-in
                     session_regenerate_id(true);
                     $_SESSION['user_id'] = $user['id'];
 
                     $this->createWebSession($user, 'LOGIN');
 
-                    // Redirect based on role
                     if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])) {
                         $response->redirect('/admin');
                     } else if ($user['role'] === 'SELLER') {
@@ -126,7 +124,6 @@ class AuthController extends Controller {
         $db = Application::$app->db;
 
         if (empty($errors)) {
-            // Check duplicates
             $stmt = $db->prepare("SELECT id FROM users WHERE email = ? OR mobile = ?");
             $stmt->execute([$email, $mobile]);
             if ($stmt->fetch()) {
@@ -139,7 +136,6 @@ class AuthController extends Controller {
                 $db->beginTransaction();
 
                 $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-                // Fetch the role name
                 $stmtRole = $db->prepare("SELECT name FROM roles WHERE id = ?");
                 $stmtRole->execute([$roleId]);
                 $role = $stmtRole->fetch();
@@ -148,7 +144,6 @@ class AuthController extends Controller {
                     throw new \Exception("Invalid registration role selected.");
                 }
 
-                // If registering as seller/delivery, we default to ACTIVE or PENDING based on flow. Let's make all active for demo
                 $status = 'ACTIVE';
 
                 $stmtInsert = $db->prepare("
@@ -158,7 +153,6 @@ class AuthController extends Controller {
                 $stmtInsert->execute([$name, $email, $mobile, $passwordHash, $roleId, $status]);
                 $userId = $db->lastInsertId();
 
-                // Create profile entries
                 if ($role['name'] === 'SELLER') {
                     $stmtProfile = $db->prepare("INSERT INTO seller_profiles (user_id, company_name, commission_rate) VALUES (?, ?, 8.50)");
                     $stmtProfile->execute([$userId, $shopCompanyName]);
@@ -170,7 +164,6 @@ class AuthController extends Controller {
                     $stmtProfile->execute([$userId]);
                 }
 
-                // Create wallet entry
                 $stmtWallet = $db->prepare("INSERT INTO wallets (user_id, balance) VALUES (?, 0.00)");
                 $stmtWallet->execute([$userId]);
 
@@ -179,11 +172,9 @@ class AuthController extends Controller {
 
                 $db->commit();
 
-                // Auto login
                 $_SESSION['user_id'] = $userId;
                 $this->createWebSession(['id' => $userId], 'REGISTER');
                 
-                // Redirect
                 if ($role['name'] === 'SELLER') {
                     $response->redirect('/seller');
                 } else if ($role['name'] === 'DELIVERY') {
@@ -221,7 +212,6 @@ class AuthController extends Controller {
                 $stmt = $db->prepare("DELETE FROM user_sessions WHERE token = ?");
                 $stmt->execute([$_SESSION['session_token']]);
             } catch (\Throwable $e) {
-                // Ignore logout cleanup failures.
             }
         }
 
@@ -230,7 +220,6 @@ class AuthController extends Controller {
                 $stmt = $db->prepare("INSERT INTO activity_logs (user_id, activity, details, ip_address) VALUES (?, 'LOGOUT', 'User logged out', ?)");
                 $stmt->execute([$_SESSION['user_id'], $_SERVER['REMOTE_ADDR'] ?? '']);
             } catch (\Throwable $e) {
-                // Ignore logging failures during logout.
             }
         }
 
@@ -266,13 +255,10 @@ class AuthController extends Controller {
             $user = $stmt->fetch();
 
             if ($user) {
-                // Generate token
                 $token = bin2hex(random_bytes(32));
-                // Set expiry to 1 hour from now
                 $stmtUpdate = $db->prepare("UPDATE users SET reset_token = ?, reset_token_expires = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE email = ?");
                 $stmtUpdate->execute([$token, $email]);
 
-                // Create a simulated reset link
                 $resetLink = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/reset-password?token=" . $token;
                 
                 $success = "A password reset link has been generated: <a href='" . $resetLink . "' class='alert-link fw-bold text-decoration-underline'>" . $resetLink . "</a>. Please click it to reset your password.";
@@ -338,7 +324,6 @@ class AuthController extends Controller {
 
         $db = Application::$app->db;
         
-        // Validate token again
         $stmt = $db->prepare("SELECT id FROM users WHERE reset_token = ? AND reset_token_expires > NOW()");
         $stmt->execute([$token]);
         $user = $stmt->fetch();
@@ -360,7 +345,6 @@ class AuthController extends Controller {
 
                 $db->commit();
 
-                // Redirect to login page with a successful alert message
                 return $this->render('auth/login', [
                     'title' => 'Sign In - Pavitra Designer',
                     'errors' => [],
@@ -410,15 +394,12 @@ class AuthController extends Controller {
         } else if (!$user) {
             $errors[] = 'Invalid user session. Please log in again.';
         } else {
-            // Verify code using Totp helper
             if (\Core\Totp::verify($user['two_factor_secret'], $code)) {
-                // Successful verification! Log the user in
                 $_SESSION['user_id'] = $user['id'];
                 unset($_SESSION['mfa_pending_user_id']);
 
                 $this->createWebSession($user, 'LOGIN_MFA');
 
-                // Redirect based on role
                 if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])) {
                     $response->redirect('/admin');
                 } else if ($user['role'] === 'SELLER') {
@@ -452,7 +433,6 @@ class AuthController extends Controller {
         $db = Application::$app->db;
 
         if ($enable) {
-            // Generate a new TOTP secret key
             $secret = \Core\Totp::generateSecret();
             $stmt = $db->prepare("UPDATE users SET two_factor_secret = ? WHERE id = ?");
             $stmt->execute([$secret, $user['id']]);
@@ -465,7 +445,6 @@ class AuthController extends Controller {
                 'qr_code_url' => $qrCodeUrl
             ]);
         } else {
-            // Disable 2FA
             $stmt = $db->prepare("UPDATE users SET two_factor_secret = NULL WHERE id = ?");
             $stmt->execute([$user['id']]);
             return $response->json(['success' => true]);

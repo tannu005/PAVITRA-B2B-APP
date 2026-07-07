@@ -9,7 +9,6 @@ use Core\Application;
 
 class RetailerController extends Controller {
     
-    // Storefront homepage (Meesho-style Catalog)
     public function index(Request $request, Response $response) {
         $body = $request->getBody();
         $category = $body['category'] ?? '';
@@ -20,7 +19,6 @@ class RetailerController extends Controller {
         
         $db = Application::$app->db;
         
-        // Build query
         $sql = "
             SELECT p.*, pv.id as variant_id, pv.wholesale_price, pv.price, pv.image_url, pv.bulk_threshold, pv.stock, pv.sku, pv.color, pv.weight, pv.dimensions, c.name as category_name 
             FROM products p 
@@ -51,7 +49,6 @@ class RetailerController extends Controller {
             $params[] = $maxPrice;
         }
 
-        // Sorting
         if ($sort === 'price_low') {
             $sql .= " ORDER BY pv.wholesale_price ASC";
         } else if ($sort === 'price_high') {
@@ -60,7 +57,6 @@ class RetailerController extends Controller {
             $sql .= " ORDER BY p.id DESC";
         }
 
-        // Cache products query for 60 seconds to support 25K concurrent users
         $cacheKey = "catalog_products_" . md5(serialize([$category, $search, $sort, $minPrice, $maxPrice]));
         $products = Application::$app->cache->remember($cacheKey, 60, function() use ($db, $sql, $params) {
             $stmt = $db->prepare($sql);
@@ -68,7 +64,6 @@ class RetailerController extends Controller {
             return $stmt->fetchAll() ?: [];
         });
 
-        // Cache categories list for 1 hour
         $categoriesList = Application::$app->cache->remember('categories_list', 3600, function() use ($db) {
             $stmtCat = $db->query("SELECT id, name FROM categories");
             return $stmtCat->fetchAll() ?: [];
@@ -86,7 +81,6 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Detail JSON/Modal data
     public function detail(Request $request, Response $response, array $params) {
         $id = intval($params['id'] ?? 0);
         $db = Application::$app->db;
@@ -111,40 +105,34 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Cart Helper: get or create cart
     protected function getOrCreateCartId(): int {
         $db = Application::$app->db;
         $user = Application::$app->getSessionUser();
         $sessionId = session_id();
 
         if ($user) {
-            // Find user cart
             $stmt = $db->prepare("SELECT id FROM carts WHERE user_id = ?");
             $stmt->execute([$user['id']]);
             $cart = $stmt->fetch();
             if ($cart) {
                 return $cart['id'];
             }
-            // Create user cart
             $stmtInsert = $db->prepare("INSERT INTO carts (user_id, session_id) VALUES (?, ?)");
             $stmtInsert->execute([$user['id'], $sessionId]);
             return $db->lastInsertId();
         } else {
-            // Find guest session cart
             $stmt = $db->prepare("SELECT id FROM carts WHERE session_id = ? AND user_id IS NULL");
             $stmt->execute([$sessionId]);
             $cart = $stmt->fetch();
             if ($cart) {
                 return $cart['id'];
             }
-            // Create guest cart
             $stmtInsert = $db->prepare("INSERT INTO carts (user_id, session_id) VALUES (NULL, ?)");
             $stmtInsert->execute([$sessionId]);
             return $db->lastInsertId();
         }
     }
 
-    // View Cart JSON payload (Ajax handler)
     public function cartView(Request $request, Response $response) {
         $cartId = $this->getOrCreateCartId();
         $db = Application::$app->db;
@@ -199,7 +187,6 @@ class RetailerController extends Controller {
                 if ($discount > $subtotal) $discount = $subtotal;
                 $_SESSION['applied_coupon']['discount'] = $discount;
             } else {
-                // Remove coupon if cart subtotal dropped below threshold
                 unset($_SESSION['applied_coupon']);
             }
         }
@@ -213,7 +200,6 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Add To Cart
     public function addToCart(Request $request, Response $response) {
         $body = $request->getBody();
         $variantId = intval($body['variant_id'] ?? 0);
@@ -224,7 +210,6 @@ class RetailerController extends Controller {
         }
 
         $db = Application::$app->db;
-        // Verify stock
         $stmt = $db->prepare("SELECT stock, sku FROM product_variants WHERE id = ?");
         $stmt->execute([$variantId]);
         $variant = $stmt->fetch();
@@ -239,7 +224,6 @@ class RetailerController extends Controller {
 
         $cartId = $this->getOrCreateCartId();
         
-        // Check if item already exists in cart
         $stmtCheck = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_variant_id = ?");
         $stmtCheck->execute([$cartId, $variantId]);
         $existing = $stmtCheck->fetch();
@@ -259,7 +243,6 @@ class RetailerController extends Controller {
         return $this->cartView($request, $response);
     }
 
-    // Update Cart Qty
     public function updateCart(Request $request, Response $response) {
         $body = $request->getBody();
         $variantId = intval($body['variant_id'] ?? 0);
@@ -293,7 +276,6 @@ class RetailerController extends Controller {
         return $this->cartView($request, $response);
     }
 
-    // Remove From Cart
     public function removeFromCart(Request $request, Response $response) {
         $body = $request->getBody();
         $variantId = intval($body['variant_id'] ?? 0);
@@ -306,7 +288,6 @@ class RetailerController extends Controller {
         return $this->cartView($request, $response);
     }
 
-    // Checkout Flow: Places order and deducts balance
     public function checkout(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -321,7 +302,6 @@ class RetailerController extends Controller {
         $db = Application::$app->db;
         $cartId = $this->getOrCreateCartId();
 
-        // Get cart items
         $stmt = $db->prepare("
             SELECT ci.quantity, pv.id as variant_id, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.stock, p.seller_id, p.id as product_id
             FROM cart_items ci
@@ -336,7 +316,6 @@ class RetailerController extends Controller {
             return $response->json(['error' => 'Your wholesale cart is empty.'], 400);
         }
 
-        // Calculate Totals & Group by Seller
         $subtotal = 0;
         $groupedItems = [];
         
@@ -361,7 +340,6 @@ class RetailerController extends Controller {
             ];
         }
 
-        // Coupon discount validation
         $discountAmount = 0.00;
         $couponId = null;
         if (isset($_SESSION['applied_coupon'])) {
@@ -381,7 +359,6 @@ class RetailerController extends Controller {
         }
         $netSubtotal = $subtotal - $discountAmount;
 
-        // Check Retailer Profile Balance & Credit Limit
         $stmtProfile = $db->prepare("SELECT * FROM retailer_profiles WHERE user_id = ?");
         $stmtProfile->execute([$user['id']]);
         $profile = $stmtProfile->fetch();
@@ -398,33 +375,27 @@ class RetailerController extends Controller {
         try {
             $db->beginTransaction();
 
-            // 1. Deduct from retailer wallet
             $newBalance = $availableBalance - $netSubtotal;
             $stmtUpdateProfile = $db->prepare("UPDATE retailer_profiles SET balance = ? WHERE user_id = ?");
             $stmtUpdateProfile->execute([$newBalance, $user['id']]);
 
-            // Deduct user wallet table too
             $stmtWallet = $db->prepare("UPDATE wallets SET balance = ? WHERE user_id = ?");
             $stmtWallet->execute([$newBalance, $user['id']]);
 
-            // Get user wallet id
             $stmtWalletId = $db->prepare("SELECT id FROM wallets WHERE user_id = ?");
             $stmtWalletId->execute([$user['id']]);
             $walletId = $stmtWalletId->fetchColumn();
 
-            // Insert transaction entry
             $stmtTx = $db->prepare("
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'DEBIT', ?, ?, 'ORDER_PURCHASE', ?)
             ");
             $stmtTx->execute([$walletId, $netSubtotal, "Bulk order payment for Pavitra Designer catalog sarees", $newBalance]);
 
-            // Create shipping address entry if new
             $stmtAddr = $db->prepare("INSERT INTO user_addresses (user_id, address_line1, city, state, pin_code) VALUES (?, ?, 'Varanasi', 'Uttar Pradesh', '221001')");
             $stmtAddr->execute([$user['id'], $address]);
             $addressId = $db->lastInsertId();
 
-            // 2. Place Split Orders (one order per weaver/seller)
             foreach ($groupedItems as $sellerId => $items) {
                 $orderNumber = 'ORD-' . strtoupper(bin2hex(random_bytes(4))) . '-' . time();
                 
@@ -432,7 +403,6 @@ class RetailerController extends Controller {
                 $orderDiscount = ($subtotal > 0) ? ($orderTotal / $subtotal) * $discountAmount : 0;
                 $orderNet = $orderTotal - $orderDiscount;
                 
-                // Create order
                 $stmtOrder = $db->prepare("
                     INSERT INTO orders (order_number, user_id, seller_id, status, total_amount, discount_amount, net_amount, payment_status, payment_method, address_id)
                     VALUES (?, ?, ?, 'PLACED', ?, ?, ?, 'PAID', 'WALLET', ?)
@@ -445,14 +415,12 @@ class RetailerController extends Controller {
                     $stmtCouponUsage->execute([$couponId, $user['id'], $orderId]);
                 }
 
-                // Create status log
                 $stmtHistory = $db->prepare("
                     INSERT INTO order_status_history (order_id, status, comments, created_by)
                     VALUES (?, 'PLACED', 'Order placed successfully by retailer', ?)
                 ");
                 $stmtHistory->execute([$orderId, $user['id']]);
 
-                // Create items
                 foreach ($items as $item) {
                     $stmtItem = $db->prepare("
                         INSERT INTO order_items (order_id, product_variant_id, quantity, price, wholesale_price)
@@ -460,11 +428,9 @@ class RetailerController extends Controller {
                     ");
                     $stmtItem->execute([$orderId, $item['variant_id'], $item['quantity'], $item['price'], $item['wholesale_price']]);
 
-                    // Deduct inventory stock
                     $stmtStock = $db->prepare("UPDATE product_variants SET stock = stock - ? WHERE id = ?");
                     $stmtStock->execute([$item['quantity'], $item['variant_id']]);
 
-                    // Log inventory reduction
                     $stmtInvLog = $db->prepare("
                         INSERT INTO inventory_logs (product_variant_id, type, quantity, reason)
                         VALUES (?, 'OUT', ?, ?)
@@ -473,7 +439,6 @@ class RetailerController extends Controller {
                 }
             }
 
-            // 3. Clear cart and session coupon
             $stmtClear = $db->prepare("DELETE FROM cart_items WHERE cart_id = ?");
             $stmtClear->execute([$cartId]);
             unset($_SESSION['applied_coupon']);
@@ -487,7 +452,6 @@ class RetailerController extends Controller {
         }
     }
 
-    // View past orders list
     public function orders(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -503,7 +467,6 @@ class RetailerController extends Controller {
         $stmt->execute([$user['id']]);
         $ordersList = $stmt->fetchAll() ?: [];
 
-        // Gather items for each order
         foreach ($ordersList as &$order) {
             $stmtItems = $db->prepare("
                 SELECT oi.quantity, oi.price, oi.wholesale_price, pv.image_url, p.title
@@ -522,14 +485,12 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Wallet transaction ledger history
     public function wallet(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER', 'SELLER', 'DELIVERY']);
         if (!$user) return;
 
         $db = Application::$app->db;
         
-        // Get wallet details
         $stmtWallet = $db->prepare("SELECT * FROM wallets WHERE user_id = ?");
         $stmtWallet->execute([$user['id']]);
         $wallet = $stmtWallet->fetch();
@@ -548,7 +509,6 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Wishlist page — renders saved product IDs from client localStorage via PHP shell
     public function wishlist(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER', 'SELLER']);
         if (!$user) return;
@@ -558,7 +518,6 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Saree Customization Request View
     public function customizationView(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER', 'SELLER']);
         if (!$user) return;
@@ -569,7 +528,6 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Profile detail manager view
     public function profileView(Request $request, Response $response) {
         $user = $this->checkAuth();
         if (!$user) return;
@@ -614,11 +572,9 @@ class RetailerController extends Controller {
 
         $db = Application::$app->db;
         if (empty($errors)) {
-            // Update
             $stmt = $db->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
             $stmt->execute([$name, $email, $user['id']]);
             
-            // Redirect
             $response->redirect('/profile');
             return;
         }
@@ -640,7 +596,6 @@ class RetailerController extends Controller {
 
             $userId = $user['id'];
 
-            // 1. Delete associated data
             $stmtSessions = $db->prepare("DELETE FROM user_sessions WHERE user_id = ?");
             $stmtSessions->execute([$userId]);
 
@@ -659,19 +614,16 @@ class RetailerController extends Controller {
             $stmtWallet = $db->prepare("DELETE FROM wallets WHERE user_id = ?");
             $stmtWallet->execute([$userId]);
 
-            // 2. Delete the user
             $stmtUser = $db->prepare("DELETE FROM users WHERE id = ?");
             $stmtUser->execute([$userId]);
 
             $db->commit();
 
-            // 3. Destroy session and redirect to login
             unset($_SESSION['user_id']);
             unset($_SESSION['session_token']);
             unset($_SESSION['session_device']);
             session_destroy();
 
-            // Redirect to login
             $response->redirect('/login');
         } catch (\Throwable $e) {
             $db->rollBack();
@@ -683,7 +635,6 @@ class RetailerController extends Controller {
         }
     }
 
-    // Apply coupon code via POST JSON
     public function applyCoupon(Request $request, Response $response) {
         $body = $request->getBody();
         $code = strtoupper(trim($body['code'] ?? ''));
@@ -711,7 +662,6 @@ class RetailerController extends Controller {
             ], 400);
         }
 
-        // Calculate discount
         $discount = 0.00;
         if ($coupon['type'] === 'FLAT') {
             $discount = floatval($coupon['value']);
@@ -719,12 +669,10 @@ class RetailerController extends Controller {
             $discount = ($cartSubtotal * floatval($coupon['value'])) / 100.00;
         }
 
-        // Clip discount to subtotal
         if ($discount > $cartSubtotal) {
             $discount = $cartSubtotal;
         }
 
-        // Store coupon details in session for checkout
         $_SESSION['applied_coupon'] = [
             'id' => $coupon['id'],
             'code' => $coupon['code'],
@@ -741,7 +689,6 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Dynamic CMS Page Handler
     public function cmsPage(Request $request, Response $response, array $params) {
         $slug = $params['slug'] ?? '';
         
@@ -766,7 +713,6 @@ class RetailerController extends Controller {
         ]);
     }
 
-    // Virtual B2B Artisan Stores Directory listing view
     public function categoriesView(Request $request, Response $response) {
         $stores = [
             [

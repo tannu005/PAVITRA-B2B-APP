@@ -13,14 +13,12 @@ class SellerController extends Controller {
         $this->setLayout('main');
     }
 
-    // Dashboard overview
     public function dashboard(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
 
         $db = Application::$app->db;
 
-        // 1. Get seller stats
         $stmtBalance = $db->prepare("SELECT balance FROM seller_profiles WHERE user_id = ?");
         $stmtBalance->execute([$user['id']]);
         $balance = $stmtBalance->fetchColumn() ?: 0.00;
@@ -37,7 +35,6 @@ class SellerController extends Controller {
         $stmtEarnings->execute([$user['id']]);
         $totalEarnings = $stmtEarnings->fetchColumn() ?: 0.00;
 
-        // Recent orders
         $stmtRecent = $db->prepare("
             SELECT o.*, u.name as buyer_name 
             FROM orders o
@@ -59,7 +56,6 @@ class SellerController extends Controller {
         ]);
     }
 
-    // List products
     public function products(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -82,7 +78,6 @@ class SellerController extends Controller {
         ]);
     }
 
-    // Create Saree Form View
     public function createProductView(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -96,7 +91,6 @@ class SellerController extends Controller {
         ]);
     }
 
-    // Store Saree
     public function storeProduct(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -125,7 +119,6 @@ class SellerController extends Controller {
         $db = Application::$app->db;
 
         if (empty($errors)) {
-            // Check SKU uniqueness
             $stmtCheck = $db->prepare("SELECT id FROM product_variants WHERE sku = ?");
             $stmtCheck->execute([$sku]);
             if ($stmtCheck->fetch()) {
@@ -137,7 +130,6 @@ class SellerController extends Controller {
             try {
                 $db->beginTransaction();
 
-                // 1. Insert product
                 $stmtProd = $db->prepare("
                     INSERT INTO products (title, description, category_id, seller_id, status, is_approved)
                     VALUES (?, ?, ?, ?, 'ACTIVE', 0)
@@ -145,7 +137,6 @@ class SellerController extends Controller {
                 $stmtProd->execute([$title, $description, $categoryId, $user['id']]);
                 $productId = $db->lastInsertId();
 
-                // 2. Insert variant
                 $stmtVariant = $db->prepare("
                     INSERT INTO product_variants (product_id, sku, color, size, price, wholesale_price, bulk_threshold, stock, image_url)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -153,7 +144,6 @@ class SellerController extends Controller {
                 $stmtVariant->execute([$productId, $sku, $color, $size, $price, $wholesalePrice, $bulkThreshold, $stock, $imageUrl]);
                 $variantId = $db->lastInsertId();
 
-                // 3. Insert into inventory log
                 $stmtInv = $db->prepare("INSERT INTO inventory (product_variant_id, stock, min_alert_stock) VALUES (?, ?, 5)");
                 $stmtInv->execute([$variantId, $stock]);
 
@@ -188,7 +178,6 @@ class SellerController extends Controller {
         ]);
     }
 
-    // Inventory manager
     public function inventory(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -210,7 +199,6 @@ class SellerController extends Controller {
         ]);
     }
 
-    // Update inventory stock count
     public function updateInventory(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -225,7 +213,6 @@ class SellerController extends Controller {
 
         $db = Application::$app->db;
         
-        // Check ownership
         $stmt = $db->prepare("
             SELECT pv.id FROM product_variants pv 
             JOIN products p ON pv.product_id = p.id 
@@ -254,7 +241,6 @@ class SellerController extends Controller {
         }
     }
 
-    // Order dispatch panel
     public function orders(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -288,7 +274,6 @@ class SellerController extends Controller {
         ]);
     }
 
-    // Change order status
     public function updateOrderStatus(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -304,7 +289,6 @@ class SellerController extends Controller {
 
         $db = Application::$app->db;
 
-        // Verify order ownership
         $stmt = $db->prepare("SELECT id, status, total_amount, user_id, order_number FROM orders WHERE id = ? AND seller_id = ?");
         $stmt->execute([$orderId, $user['id']]);
         $order = $stmt->fetch();
@@ -319,21 +303,18 @@ class SellerController extends Controller {
             $stmtUpdate = $db->prepare("UPDATE orders SET status = ? WHERE id = ?");
             $stmtUpdate->execute([$newStatus, $orderId]);
 
-            // Insert status history
             $stmtHistory = $db->prepare("
                 INSERT INTO order_status_history (order_id, status, comments, created_by)
                 VALUES (?, ?, ?, ?)
             ");
             $stmtHistory->execute([$orderId, $newStatus, "Order status advanced to {$newStatus} by seller", $user['id']]);
 
-            // If status is SHIPPED, generate shipments record to assign a driver
             if ($newStatus === 'SHIPPED') {
                 $shipNum = 'SHIP-' . strtoupper(bin2hex(random_bytes(4))) . '-' . time();
                 $stmtShip = $db->prepare("INSERT INTO shipments (order_id, shipment_number, status) VALUES (?, ?, 'SHIPPED')");
                 $stmtShip->execute([$orderId, $shipNum]);
                 $shipId = $db->lastInsertId();
 
-                // Select delivery rider (for demo, choose delivery driver from user table role=5)
                 $stmtRider = $db->query("SELECT id FROM users WHERE role_id = 5 LIMIT 1");
                 $riderId = $stmtRider->fetchColumn();
 
@@ -342,16 +323,13 @@ class SellerController extends Controller {
                     $stmtAssign->execute([$shipId, $riderId]);
                     $assignId = $db->lastInsertId();
 
-                    // Generate OTP proof code
                     $otp = rand(1000, 9999);
                     $stmtProof = $db->prepare("INSERT INTO delivery_proofs (delivery_assignment_id, otp_code) VALUES (?, ?)");
                     $stmtProof->execute([$assignId, $otp]);
                 }
             }
 
-            // If status is CANCELLED, refund the retailer's wallet
             if ($newStatus === 'CANCELLED') {
-                // Return money to retailer wallet
                 $stmtRetailer = $db->prepare("SELECT balance FROM retailer_profiles WHERE user_id = ?");
                 $stmtRetailer->execute([$order['user_id']]);
                 $retBalance = floatval($stmtRetailer->fetchColumn() ?: 0);
@@ -360,11 +338,9 @@ class SellerController extends Controller {
                 $stmtUpdateRet = $db->prepare("UPDATE retailer_profiles SET balance = ? WHERE user_id = ?");
                 $stmtUpdateRet->execute([$newRetBalance, $order['user_id']]);
 
-                // Also update wallets table
                 $stmtUpdateWallet = $db->prepare("UPDATE wallets SET balance = ? WHERE user_id = ?");
                 $stmtUpdateWallet->execute([$newRetBalance, $order['user_id']]);
 
-                // Insert wallet transaction
                 $stmtRetWalletId = $db->prepare("SELECT id FROM wallets WHERE user_id = ?");
                 $stmtRetWalletId->execute([$order['user_id']]);
                 $retWalletId = $stmtRetWalletId->fetchColumn();
@@ -385,7 +361,6 @@ class SellerController extends Controller {
         }
     }
 
-    // Settlements list
     public function settlements(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
@@ -435,12 +410,10 @@ class SellerController extends Controller {
             } else {
                 $db = Application::$app->db;
                 
-                // Read header row
                 $headers = fgetcsv($handle);
                 if (!$headers) {
                     $errors[] = 'The uploaded file is empty or invalid.';
                 } else {
-                    // Normalize headers
                     $headers = array_map(function($h) {
                         return strtolower(trim(str_replace(' ', '_', $h)));
                     }, $headers);
@@ -448,14 +421,12 @@ class SellerController extends Controller {
                     $rowNum = 1;
                     while (($row = fgetcsv($handle)) !== false) {
                         $rowNum++;
-                        // Map row to headers
                         $data = @array_combine($headers, $row);
                         if (!$data) {
                             $rowErrors[] = "Row {$rowNum}: Column count mismatch.";
                             continue;
                         }
 
-                        // Validate fields
                         $title = trim($data['title'] ?? '');
                         $description = trim($data['description'] ?? '');
                         $categoryId = intval($data['category_id'] ?? 0);
@@ -493,7 +464,6 @@ class SellerController extends Controller {
                             continue;
                         }
 
-                        // Check SKU uniqueness
                         $stmtCheck = $db->prepare("SELECT id FROM product_variants WHERE sku = ?");
                         $stmtCheck->execute([$sku]);
                         if ($stmtCheck->fetch()) {
@@ -501,7 +471,6 @@ class SellerController extends Controller {
                             continue;
                         }
 
-                        // Insert
                         try {
                             $db->beginTransaction();
 
