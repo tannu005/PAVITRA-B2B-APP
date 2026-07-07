@@ -977,37 +977,69 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
     <!-- Slide-out vertical menu bar -->
     <div class="pavitra-edge-panel" id="pavitra-edge-sidebar">
-        <!-- Custom Studio -->
-        <a href="/customization" class="pavitra-edge-item" title="Saree Customization Studio">
-            <div class="pavitra-edge-icon-circle">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <?php if ($isSellerPage): ?>
+            <!-- SELLER DASHBOARD MENU -->
+            <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
+                <div class="pavitra-edge-icon-circle">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <span>Chatbot</span>
             </div>
-            <span>Custom</span>
-        </a>
+            
+            <a href="/seller/products/bulk" class="pavitra-edge-item" title="Bulk Upload">
+                <div class="pavitra-edge-icon-circle">
+                    <i class="fa-solid fa-file-csv"></i>
+                </div>
+                <span>Upload</span>
+            </a>
+            
+            <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
+                <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <span>WhatsApp</span>
+            </a>
+            
+            <a href="/seller/orders" class="pavitra-edge-item" title="Order Management">
+                <div class="pavitra-edge-icon-circle">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+                <span>Orders</span>
+            </a>
+        <?php else: ?>
+            <!-- NORMAL USER MENU -->
+            <!-- Custom Studio -->
+            <a href="/customization" class="pavitra-edge-item" title="Saree Customization Studio">
+                <div class="pavitra-edge-icon-circle">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <span>Custom</span>
+            </a>
 
-        <!-- WhatsApp Chat -->
-        <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
-            <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
-                <i class="fa-brands fa-whatsapp"></i>
-            </div>
-            <span>WhatsApp</span>
-        </a>
+            <!-- WhatsApp Chat -->
+            <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
+                <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <span>WhatsApp</span>
+            </a>
 
-        <!-- Filters (Triggers filter drawer modal) -->
-        <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
-            <div class="pavitra-edge-icon-circle">
-                <i class="fa-solid fa-sliders"></i>
+            <!-- Filters (Triggers filter drawer modal) -->
+            <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
+                <div class="pavitra-edge-icon-circle">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+                <span>Filters</span>
             </div>
-            <span>Filters</span>
-        </div>
-        
-        <!-- Chatbot -->
-        <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
-            <div class="pavitra-edge-icon-circle">
-                <i class="fa-solid fa-robot"></i>
+            
+            <!-- Chatbot -->
+            <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
+                <div class="pavitra-edge-icon-circle">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <span>Chatbot</span>
             </div>
-            <span>Chatbot</span>
-        </div>
+        <?php endif; ?>
 
         <!-- Close Chevron -->
         <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">
@@ -1299,51 +1331,62 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 
                 // Request camera stream
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-                        .then(function(stream) {
-                            const video = document.getElementById('qr-video');
-                            video.srcObject = stream;
-                            video.setAttribute("playsinline", true);
-                            video.muted = true;
-                            video.play();
-                            
-                            requestAnimationFrame(tick);
-                            
-                            function tick() {
-                                if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                                    const canvasElement = document.createElement("canvas");
-                                    canvasElement.width = video.videoWidth;
-                                    canvasElement.height = video.videoHeight;
-                                    const canvas = canvasElement.getContext("2d");
-                                    canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-                                    var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-                                    
-                                    if (typeof jsQR !== 'undefined') {
-                                        var code = jsQR(imageData.data, imageData.width, imageData.height, {
-                                            inversionAttempts: "dontInvert",
-                                        });
-                                        if (code && code.data) {
-                                            // Stop scanning
-                                            video.srcObject.getTracks().forEach(track => track.stop());
-                                            alert("Scanned Saree QR: " + code.data);
-                                            $('#qrScannerModal').modal('hide');
-                                            
-                                            // If it's a valid URL, redirect
-                                            if (code.data.startsWith('http') || code.data.startsWith('/')) {
-                                                window.location.href = code.data;
+                    
+                    function startCamera(constraints) {
+                        return navigator.mediaDevices.getUserMedia(constraints)
+                            .then(function(stream) {
+                                const video = document.getElementById('qr-video');
+                                video.srcObject = stream;
+                                video.setAttribute("playsinline", true);
+                                video.muted = true;
+                                video.play();
+                                
+                                requestAnimationFrame(tick);
+                                
+                                function tick() {
+                                    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                                        const canvasElement = document.createElement("canvas");
+                                        canvasElement.width = video.videoWidth;
+                                        canvasElement.height = video.videoHeight;
+                                        const canvas = canvasElement.getContext("2d");
+                                        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                                        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+                                        
+                                        if (typeof jsQR !== 'undefined') {
+                                            var code = jsQR(imageData.data, imageData.width, imageData.height, {
+                                                inversionAttempts: "dontInvert",
+                                            });
+                                            if (code && code.data) {
+                                                // Stop scanning
+                                                video.srcObject.getTracks().forEach(track => track.stop());
+                                                alert("Scanned Saree QR: " + code.data);
+                                                $('#qrScannerModal').modal('hide');
+                                                
+                                                // If it's a valid URL, redirect
+                                                if (code.data.startsWith('http') || code.data.startsWith('/')) {
+                                                    window.location.href = code.data;
+                                                }
+                                                return;
                                             }
-                                            return;
                                         }
                                     }
+                                    if ($('#qrScannerModal').is(':visible')) {
+                                        requestAnimationFrame(tick);
+                                    }
                                 }
-                                if ($('#qrScannerModal').is(':visible')) {
-                                    requestAnimationFrame(tick);
-                                }
-                            }
+                            });
+                    }
+
+                    // Try back camera first
+                    startCamera({ video: { facingMode: "environment" } })
+                        .catch(function(err) {
+                            console.warn("Environment camera failed, trying default:", err);
+                            // Fallback to default camera if environment camera is not available
+                            return startCamera({ video: true });
                         })
                         .catch(function(err) {
                             console.error("Camera access denied or error:", err);
-                            alert("Camera access was denied or is unavailable. Please check browser permissions.");
+                            alert("Camera error: " + err.message + ". Please ensure permissions are granted in site settings.");
                         });
                 } else {
                     alert("Your browser does not support camera access.");
