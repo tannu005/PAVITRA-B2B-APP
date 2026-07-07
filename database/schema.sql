@@ -1,5 +1,3 @@
--- MySQL 8+ Database Schema for Meesho-style B2B Wholesale Marketplace
--- Set SQL Mode and Charset
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
