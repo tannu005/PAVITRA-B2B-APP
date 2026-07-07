@@ -1,4 +1,3 @@
-<!-- Seller Create Product Form -->
 <div class="container-xl py-5">
     <div class="row g-4 justify-content-center">
         <div class="col-lg-9">
@@ -23,7 +22,6 @@
 
                 <form action="/seller/products/create" method="POST">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
-                    <!-- Core Specs -->
                     <h5 class="fw-bold mb-3 text-pink">1. Saree Information</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-8">
@@ -45,7 +43,6 @@
                         </div>
                     </div>
 
-                    <!-- Variant & Inventory Specs -->
                     <h5 class="fw-bold mb-3 text-pink">2. Attributes & Stock</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-3">
@@ -66,7 +63,6 @@
                         </div>
                     </div>
 
-                    <!-- Pricing & Tiers -->
                     <h5 class="fw-bold mb-3 text-pink">3. Pricing Tiers (B2B Wholesale)</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-4">
@@ -83,7 +79,6 @@
                         </div>
                     </div>
 
-                    <!-- Image Attachment -->
                     <h5 class="fw-bold mb-3 text-pink">4. Media URL</h5>
                     <div class="mb-4">
                         <label for="image_url" class="form-label small fw-semibold text-muted text-uppercase">Product Image URL</label>

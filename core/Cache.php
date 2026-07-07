@@ -10,11 +10,9 @@ class Cache {
     public function __construct() {
         $this->cachePath = dirname(__DIR__) . '/storage/cache/';
         
-        // Attempt to initialize Redis if class exists
         if (class_exists('Redis')) {
             try {
                 $this->redis = new \Redis();
-                // Connect with 1s timeout to prevent hanging on connection failure
                 if ($this->redis->connect('127.0.0.1', 6379, 1.0)) {
                     $this->useRedis = true;
                 }
@@ -39,11 +37,9 @@ class Cache {
                 $data = $this->redis->get($cacheKey);
                 return $data !== false ? unserialize($data) : null;
             } catch (\Throwable $e) {
-                // Fallback silently if Redis errors out in production
             }
         }
 
-        // File-based Cache Fallback
         $filePath = $this->cachePath . $cacheKey . '.cache';
         if (!file_exists($filePath)) {
             return null;
@@ -77,11 +73,9 @@ class Cache {
             try {
                 return $this->redis->setex($cacheKey, $ttl, serialize($value));
             } catch (\Throwable $e) {
-                // Fallback silently
             }
         }
 
-        // File-based Cache Fallback
         $filePath = $this->cachePath . $cacheKey . '.cache';
         $data = [
             'expires' => time() + $ttl,
@@ -101,7 +95,6 @@ class Cache {
             try {
                 return (bool) $this->redis->del($cacheKey);
             } catch (\Throwable $e) {
-                // Fallback silently
             }
         }
 
@@ -138,7 +131,6 @@ class Cache {
                 }
                 return;
             } catch (\Throwable $e) {
-                // Fallback silently
             }
         }
 

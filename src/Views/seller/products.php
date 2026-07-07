@@ -1,4 +1,3 @@
-<!-- Seller Catalog List -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -80,7 +79,6 @@
     <?php endif; ?>
 </div>
 
-<!-- Print QR Modal -->
 <div class="modal fade" id="printQrModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">

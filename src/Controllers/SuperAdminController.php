@@ -13,14 +13,12 @@ class SuperAdminController extends Controller {
         $this->setLayout('main');
     }
 
-    // Admin Dashboard stats
     public function dashboard(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
 
         $db = Application::$app->db;
 
-        // Fetch counts
         $totalSellers = $db->query("SELECT COUNT(*) FROM users WHERE role_id = 3")->fetchColumn() ?: 0;
         $totalRetailers = $db->query("SELECT COUNT(*) FROM users WHERE role_id = 4")->fetchColumn() ?: 0;
         $totalProducts = $db->query("SELECT COUNT(*) FROM products")->fetchColumn() ?: 0;
@@ -28,10 +26,8 @@ class SuperAdminController extends Controller {
         $totalOrders = $db->query("SELECT COUNT(*) FROM orders")->fetchColumn() ?: 0;
         $totalSales = $db->query("SELECT SUM(net_amount) FROM orders WHERE payment_status = 'PAID'")->fetchColumn() ?: 0.00;
         
-        // Count errors
         $totalErrors = $db->query("SELECT COUNT(*) FROM error_logs")->fetchColumn() ?: 0;
         
-        // Sum commission earned
         $totalCommission = $db->query("SELECT SUM(commission_deducted) FROM seller_settlements WHERE status = 'SUCCESS'")->fetchColumn() ?: 0.00;
 
         return $this->render('admin/dashboard', [
@@ -49,7 +45,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Sellers approval lists
     public function sellers(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -72,7 +67,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Approve seller
     public function approveSeller(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -92,7 +86,6 @@ class SuperAdminController extends Controller {
         return $response->json(['success' => true]);
     }
 
-    // Products approval lists
     public function products(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -114,7 +107,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Toggle product approval
     public function approveProduct(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -134,14 +126,11 @@ class SuperAdminController extends Controller {
         return $response->json(['success' => true]);
     }
 
-    // KYC Verification Deck
     public function kyc(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
 
         $db = Application::$app->db;
-        // Fetch all KYC documents or select seeded kyc documents
-        // Since we don't have many seeded document records, let's select from kyc_documents table
         $stmt = $db->query("
             SELECT kd.*, u.name as user_name, u.email as user_email
             FROM kyc_documents kd
@@ -156,7 +145,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Verify KYC
     public function verifyKyc(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -174,11 +162,9 @@ class SuperAdminController extends Controller {
         try {
             $db->beginTransaction();
 
-            // Update kyc document
             $stmt = $db->prepare("UPDATE kyc_documents SET status = ? WHERE id = ?");
             $stmt->execute([$status, $kycDocId]);
 
-            // Add kyc verification record
             $stmtVer = $db->prepare("
                 INSERT INTO kyc_verifications (kyc_document_id, verified_by, status, comments)
                 VALUES (?, ?, ?, 'Verified by system admin console')
@@ -193,14 +179,12 @@ class SuperAdminController extends Controller {
         }
     }
 
-    // Settlements lists and payout trigger room
     public function settlements(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
 
         $db = Application::$app->db;
         
-        // Fetch delivered orders that haven't been settled yet
         $stmt = $db->query("
             SELECT o.*, u.name as buyer_name, s.name as seller_name, sp.commission_rate
             FROM orders o
@@ -213,7 +197,6 @@ class SuperAdminController extends Controller {
         ");
         $unsettledOrders = $stmt->fetchAll() ?: [];
 
-        // Fetch processed settlements
         $stmtProcessed = $db->query("
             SELECT ss.*, o.order_number, s.name as seller_name, setl.settlement_number
             FROM seller_settlements ss
@@ -231,7 +214,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Trigger process settlements
     public function processSettlements(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -248,7 +230,6 @@ class SuperAdminController extends Controller {
         try {
             $db->beginTransaction();
 
-            // Create Master Settlement Payout ID
             $settleNum = 'SET-' . strtoupper(bin2hex(random_bytes(4))) . '-' . time();
             $stmtMaster = $db->prepare("INSERT INTO settlements (settlement_number, status, total_amount) VALUES (?, 'SETTLED', 0)");
             $stmtMaster->execute([$settleNum]);
@@ -258,7 +239,6 @@ class SuperAdminController extends Controller {
 
             foreach ($orderIds as $orderId) {
                 $orderId = intval($orderId);
-                // Fetch order and seller rate
                 $stmt = $db->prepare("
                     SELECT o.*, sp.commission_rate
                     FROM orders o
@@ -274,29 +254,23 @@ class SuperAdminController extends Controller {
                 }
 
                 $salesAmount = floatval($order['total_amount']);
-                // Deduct commission rate
                 $commRate = floatval($order['commission_rate']);
                 $commission = ($salesAmount * $commRate) / 100.00;
-                // Deduct GST rate (5% HSN code for saree fabrics)
                 $tax = ($salesAmount * 5.00) / 100.00;
                 $netPayout = $salesAmount - $commission - $tax;
 
-                // Create seller settlement entry
                 $stmtSellerSettle = $db->prepare("
                     INSERT INTO seller_settlements (settlement_id, seller_id, order_id, sales_amount, commission_deducted, tax_deducted, net_payout, status)
                     VALUES (?, ?, ?, ?, ?, ?, ?, 'SUCCESS')
                 ");
                 $stmtSellerSettle->execute([$masterSettleId, $order['seller_id'], $orderId, $salesAmount, $commission, $tax, $netPayout]);
 
-                // Credit seller profile balance
                 $stmtUpProfile = $db->prepare("UPDATE seller_profiles SET balance = balance + ? WHERE user_id = ?");
                 $stmtUpProfile->execute([$netPayout, $order['seller_id']]);
 
-                // Credit seller wallets balance table too
                 $stmtUpWallet = $db->prepare("UPDATE wallets SET balance = balance + ? WHERE user_id = ?");
                 $stmtUpWallet->execute([$netPayout, $order['seller_id']]);
 
-                // Insert wallet transaction
                 $stmtSellerWalletId = $db->prepare("SELECT id FROM wallets WHERE user_id = ?");
                 $stmtSellerWalletId->execute([$order['seller_id']]);
                 $sellerWalletId = $stmtSellerWalletId->fetchColumn();
@@ -310,7 +284,6 @@ class SuperAdminController extends Controller {
                 $totalSettleAmount += $netPayout;
             }
 
-            // Update master settlement total amount
             $stmtUpMaster = $db->prepare("UPDATE settlements SET total_amount = ? WHERE id = ?");
             $stmtUpMaster->execute([$totalSettleAmount, $masterSettleId]);
 
@@ -323,7 +296,6 @@ class SuperAdminController extends Controller {
         }
     }
 
-    // Dynamic commissions manager
     public function commissions(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -348,7 +320,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Save commission rule
     public function saveCommissionRule(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -366,7 +337,6 @@ class SuperAdminController extends Controller {
         $stmt = $db->prepare("INSERT INTO commission_rules (category_id, seller_id, rate) VALUES (?, ?, ?)");
         $stmt->execute([$categoryId, $sellerId, $rate]);
 
-        // If it's a seller-specific rule, let's update their profile commission_rate directly too
         if ($sellerId) {
             $stmtUp = $db->prepare("UPDATE seller_profiles SET commission_rate = ? WHERE user_id = ?");
             $stmtUp->execute([$rate, $sellerId]);
@@ -375,7 +345,6 @@ class SuperAdminController extends Controller {
         return $response->json(['success' => true]);
     }
 
-    // Settings configuration view
     public function settings(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN']);
         if (!$user) return;
@@ -390,7 +359,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Save settings configurations
     public function saveSettings(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN']);
         if (!$user) return;
@@ -423,7 +391,6 @@ class SuperAdminController extends Controller {
             }
 
             $db->commit();
-            // Reload configuration in app instance
             Application::$app->loadConfig();
 
             $_SESSION['settings_success'] = 'System settings updated successfully!';
@@ -495,7 +462,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // View error logs
     public function errors(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;
@@ -510,7 +476,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // List CMS pages
     public function cms(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN']);
         if (!$user) return;
@@ -524,7 +489,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Edit CMS page
     public function cmsEdit(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['SUPER_ADMIN']);
         if (!$user) return;
@@ -547,7 +511,6 @@ class SuperAdminController extends Controller {
         ]);
     }
 
-    // Save CMS page content
     public function cmsSave(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN']);
         if (!$user) return;

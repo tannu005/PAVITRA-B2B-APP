@@ -29,7 +29,6 @@ class Totp {
             return '';
         }
 
-        // Base32 Decode to binary string
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
         $map = array_flip(str_split($chars));
         $binaryPattern = '';
@@ -48,16 +47,12 @@ class Totp {
             $binarySecret .= chr((int) bindec($byte));
         }
 
-        // Pack the time slice to 8-byte binary
         $time = pack('N*', 0) . pack('N*', $timeSlice);
 
-        // HMAC-SHA1
         $hmac = hash_hmac('sha1', $time, $binarySecret, true);
 
-        // Get offset from dynamic truncation
         $offset = ord($hmac[strlen($hmac) - 1]) & 0xf;
 
-        // Get 4 bytes from offset
         $value = (ord($hmac[$offset]) & 0x7f) << 24 |
             (ord($hmac[$offset + 1]) & 0xff) << 16 |
             (ord($hmac[$offset + 2]) & 0xff) << 8 |

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tax Invoice - <?= htmlspecialchars($order['order_number']) ?></title>
-    <!-- Modern typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -333,7 +332,6 @@
 <body>
 
 <div class="invoice-wrapper">
-    <!-- Top Action Bar -->
     <div class="action-bar">
         <a href="/orders" class="btn btn-secondary">
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -350,7 +348,6 @@
         </button>
     </div>
 
-    <!-- Invoice Header -->
     <div class="invoice-header">
         <div>
             <div class="company-logo">
@@ -375,9 +372,7 @@
         </div>
     </div>
 
-    <!-- Details Grid -->
     <div class="details-grid">
-        <!-- Weaver (Seller) Information -->
         <div class="details-card">
             <h3>Sold By (Weaver)</h3>
             <p><strong><?= htmlspecialchars($order['seller_company'] ?: $order['seller_name']) ?></strong></p>
@@ -386,7 +381,6 @@
             <p><span class="meta-label">Dispatched From:</span> Varanasi Weaver Cluster, UP</p>
         </div>
 
-        <!-- Buyer (Retailer) Billing & Shipping -->
         <div class="details-card">
             <h3>Billed & Shipped To</h3>
             <p><strong><?= htmlspecialchars($order['buyer_name']) ?></strong></p>
@@ -396,7 +390,6 @@
         </div>
     </div>
 
-    <!-- Items Table -->
     <table class="invoice-table">
         <thead>
             <tr>
@@ -418,16 +411,13 @@
             
             foreach ($items as $item):
                 $qty = intval($item['quantity']);
-                // Determine actual price paid per unit
                 $unitPrice = ($qty >= intval($item['bulk_threshold'])) ? floatval($item['wholesale_price']) : floatval($item['price']);
                 $itemTotal = $unitPrice * $qty;
                 $calculatedSubtotal += $itemTotal;
 
-                // Calculate pro-rated discount for this item
                 $itemDiscount = ($order['total_amount'] > 0) ? ($itemTotal / floatval($order['total_amount'])) * floatval($order['discount_amount']) : 0;
                 $netItemTotal = $itemTotal - $itemDiscount;
 
-                // Compute GST backward since prices are inclusive
                 $gstRate = floatval($item['gst_percentage'] ?? 5.00);
                 $taxableValue = $netItemTotal / (1 + ($gstRate / 100.00));
                 $gstAmount = $netItemTotal - $taxableValue;
@@ -451,9 +441,7 @@
         </tbody>
     </table>
 
-    <!-- Summary Section -->
     <div class="summary-container">
-        <!-- Notes / Payment Info -->
         <div class="payment-notes">
             <h4>Terms & Conditions:</h4>
             <ul style="margin: 0; padding-left: 15px; font-size: 11px; line-height: 1.4;">
@@ -464,7 +452,6 @@
             </ul>
         </div>
 
-        <!-- Totals Calculations -->
         <div class="totals-box">
             <div class="totals-row">
                 <span>Gross Subtotal:</span>
@@ -497,7 +484,6 @@
         </div>
     </div>
 
-    <!-- Signatures -->
     <div class="invoice-footer">
         <div class="declaration">
             <p><strong>Declaration:</strong> We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct. Taxes have been computed under GST guidelines for handicraft handlooms.</p>
@@ -511,9 +497,7 @@
 </div>
 
 <script>
-    // Auto-invoke print dialog on page load
     window.onload = function() {
-        // Wait a small moment to ensure CSS/Fonts render
         setTimeout(function() {
             window.print();
         }, 500);

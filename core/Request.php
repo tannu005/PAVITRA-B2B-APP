@@ -33,7 +33,6 @@ class Request {
             }
         }
         if ($this->isPost()) {
-            // Check if application/json
             $contentType = $_SERVER["CONTENT_TYPE"] ?? '';
             if (str_contains($contentType, 'application/json')) {
                 $json = file_get_contents('php://input');

@@ -1,4 +1,3 @@
-<!-- Retailer Wallet & Ledger -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>
@@ -8,7 +7,6 @@
         <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
     </div>
     <div class="row g-4">
-        <!-- Balance widgets -->
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 bg-pink text-white p-4 mb-4" style="background-color: var(--meesho-pink) !important; border-radius: 12px;">
                 <div class="small text-uppercase fw-semibold mb-1 opacity-75">Available Wallet Balance</div>
@@ -23,7 +21,6 @@
                 </div>
             </div>
 
-            <!-- Fast Deposit / Money request simulator -->
             <div class="card shadow-sm border border-light p-4 mb-4">
                 <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-money-bill-transfer text-pink me-2"></i>Add Cash / Deposit Request</h5>
                 <p class="text-muted small">Simulate credit/deposit into your B2B wholesale wallet. Balance can be used instantly to buy sarees from weavers.</p>
@@ -40,14 +37,12 @@
                 </form>
             </div>
             
-            <!-- Quick UPI Details -->
             <div class="card shadow-sm border border-light bg-light p-3 rounded" style="font-size: 0.8rem;">
                 <div class="fw-bold text-dark mb-1"><i class="fa-solid fa-circle-info text-primary me-1"></i>B2B Payment Settlement</div>
                 Payment is protected by escrow. Invoices are automatically compiled with HSN and seller GST rates. Credit terms of T+3 are processed dynamically.
             </div>
         </div>
 
-        <!-- Transaction history ledger -->
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4">
                 <h5 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-receipt text-pink me-2"></i>Transaction Ledger & Statement</h5>
@@ -102,7 +97,6 @@
     </div>
 </div>
 
-<!-- Simulated Deposit Script -->
 <script>
     $('#deposit-form').on('submit', function(e) {
         e.preventDefault();
@@ -112,7 +106,6 @@
         const btn = $(this).find('button');
         btn.prop('disabled', true).text('Processing Deposit...');
 
-        // Custom API fetch to simulate deposit
         $.ajax({
             url: '/api/wallet/deposit',
             method: 'POST',

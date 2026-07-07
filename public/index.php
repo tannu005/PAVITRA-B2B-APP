@@ -1,6 +1,5 @@
 <?php
 
-// Serve static files directly if using the PHP built-in web server
 if (php_sapi_name() === 'cli-server') {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     if (file_exists(__DIR__ . $path) && is_file(__DIR__ . $path)) {
@@ -10,10 +9,8 @@ if (php_sapi_name() === 'cli-server') {
 
 // 1. Fallback Autoloader (PSR-4 compliant)
 spl_autoload_register(function ($class) {
-    // Project root directory
     $baseDir = dirname(__DIR__) . '/';
 
-    // Map namespaces to directories
     $prefixes = [
         'Core\\' => 'core/',
         'App\\' => 'src/'
@@ -35,7 +32,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-// Try to load Composer autoloader if it exists (for vendor dependencies)
 if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
     require_once dirname(__DIR__) . '/vendor/autoload.php';
 }
@@ -47,7 +43,6 @@ $app = new Application();
 
 // --- DEFINING WEB ROUTES ---
 
-// Centralized Auth Routes
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
 $app->router->get('/login/mfa', [App\Controllers\AuthController::class, 'mfaView']);
@@ -60,7 +55,6 @@ $app->router->post('/forgot-password', [App\Controllers\AuthController::class, '
 $app->router->get('/reset-password', [App\Controllers\AuthController::class, 'resetPasswordView']);
 $app->router->post('/reset-password', [App\Controllers\AuthController::class, 'resetPassword']);
 
-// Retailer (Buyer / Customer) Storefront Routes
 $app->router->get('/', [App\Controllers\RetailerController::class, 'index']);
 $app->router->get('/categories', [App\Controllers\RetailerController::class, 'categoriesView']);
 $app->router->get('/product/{id}', [App\Controllers\RetailerController::class, 'detail']);
@@ -80,7 +74,6 @@ $app->router->post('/profile/2fa/toggle', [App\Controllers\AuthController::class
 $app->router->post('/profile/sessions/revoke-others', [App\Controllers\RetailerController::class, 'revokeOtherSessions']);
 $app->router->post('/profile/delete-account', [App\Controllers\RetailerController::class, 'deleteAccount']);
 
-// Dynamic CMS Routes
 $app->router->get('/about-us', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/contact-us', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/privacy-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
@@ -88,10 +81,8 @@ $app->router->get('/terms-conditions', [App\Controllers\RetailerController::clas
 $app->router->get('/refund-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/shipping-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
 
-// HSN GST Invoices Routes
 $app->router->get('/order/invoice/{id}', [App\Controllers\InvoiceController::class, 'printInvoice']);
 
-// Support Helpdesk Routes
 $app->router->get('/support', [App\Controllers\SupportController::class, 'index']);
 $app->router->get('/support/create', [App\Controllers\SupportController::class, 'createView']);
 $app->router->post('/support/create', [App\Controllers\SupportController::class, 'create']);
@@ -102,7 +93,6 @@ $app->router->get('/admin/support/ticket/{id}', [App\Controllers\SupportControll
 $app->router->post('/admin/support/ticket/{id}/reply', [App\Controllers\SupportController::class, 'adminReply']);
 $app->router->post('/admin/support/ticket/{id}/status', [App\Controllers\SupportController::class, 'adminStatus']);
 
-// Returns & Refunds Routes
 $app->router->get('/orders/return/{id}', [App\Controllers\ReturnController::class, 'createView']);
 $app->router->post('/orders/return/{id}', [App\Controllers\ReturnController::class, 'create']);
 $app->router->get('/seller/returns', [App\Controllers\ReturnController::class, 'sellerIndex']);
@@ -110,7 +100,6 @@ $app->router->post('/seller/returns/{id}/approve', [App\Controllers\ReturnContro
 $app->router->post('/seller/returns/{id}/verify', [App\Controllers\ReturnController::class, 'sellerVerify']);
 $app->router->post('/admin/returns/{id}/refund', [App\Controllers\ReturnController::class, 'adminRefund']);
 
-// Super Admin Suite Routes
 $app->router->get('/admin', [App\Controllers\SuperAdminController::class, 'dashboard']);
 $app->router->get('/admin/sellers', [App\Controllers\SuperAdminController::class, 'sellers']);
 $app->router->post('/admin/sellers/approve', [App\Controllers\SuperAdminController::class, 'approveSeller']);
@@ -132,7 +121,6 @@ $app->router->get('/admin/sessions', [App\Controllers\SuperAdminController::clas
 $app->router->post('/admin/sessions/revoke', [App\Controllers\SuperAdminController::class, 'revokeSession']);
 $app->router->get('/admin/activity', [App\Controllers\SuperAdminController::class, 'activityLogs']);
 
-// Seller (Weaver) Dashboard Routes
 $app->router->get('/seller', [App\Controllers\SellerController::class, 'dashboard']);
 $app->router->get('/seller/products', [App\Controllers\SellerController::class, 'products']);
 $app->router->get('/seller/products/create', [App\Controllers\SellerController::class, 'createProductView']);
@@ -145,7 +133,6 @@ $app->router->get('/seller/orders', [App\Controllers\SellerController::class, 'o
 $app->router->post('/seller/orders/status', [App\Controllers\SellerController::class, 'updateOrderStatus']);
 $app->router->get('/seller/settlements', [App\Controllers\SellerController::class, 'settlements']);
 
-// Delivery Partner App Routes
 $app->router->get('/delivery', [App\Controllers\DeliveryController::class, 'dashboard']);
 $app->router->post('/delivery/status', [App\Controllers\DeliveryController::class, 'updateDeliveryStatus']);
 $app->router->post('/delivery/verify-otp', [App\Controllers\DeliveryController::class, 'verifyDeliveryOtp']);
@@ -167,13 +154,10 @@ $app->router->get('/api/notifications', [App\Controllers\ApiController::class, '
 $app->router->get('/api/reports/sales', [App\Controllers\ApiController::class, 'getSalesReport']);
 $app->router->post('/api/delivery/update', [App\Controllers\ApiController::class, 'updateDelivery']);
 
-// Mock triggers
 $app->router->post('/api/wallet/deposit', [App\Controllers\ApiController::class, 'depositSimulate']);
 $app->router->post('/api/kyc/simulate', [App\Controllers\ApiController::class, 'kycSimulate']);
 
-// Public product variant detail — used by wishlist page (no auth needed)
 $app->router->get('/api/product-variant/{id}', [App\Controllers\ApiController::class, 'getProductVariant']);
 
-// Run the application
 $app->run();
 

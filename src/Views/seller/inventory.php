@@ -1,4 +1,3 @@
-<!-- Seller Inventory Stock Audit Logs & Adjustments -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -9,7 +8,6 @@
     </div>
 
     <div class="row g-4">
-        <!-- Stock level adjust list -->
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-3 text-dark">Weaver Reserves</h5>
@@ -59,7 +57,6 @@
             </div>
         </div>
 
-        <!-- Info Card -->
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-dark">Multi-Warehouse Strategy</h5>
@@ -79,7 +76,6 @@
     </div>
 </div>
 
-<!-- Restock AJAX handlers -->
 <script>
     $('.restock-btn').on('click', function() {
         const variantId = $(this).data('id');

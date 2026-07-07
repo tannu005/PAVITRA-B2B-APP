@@ -1,4 +1,3 @@
-<!-- Super Admin Settings Configuration Panel -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>
@@ -24,7 +23,6 @@
     <form action="/admin/settings" method="POST">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
         <div class="row g-4">
-            <!-- Left Side: Company Identity & Compliance -->
             <div class="col-lg-7">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-building me-2"></i>Corporate Identity</h5>
@@ -81,7 +79,6 @@
                 </div>
             </div>
 
-            <!-- Right Side: API configurations, Gateways, Contact details -->
             <div class="col-lg-5">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-envelope me-2"></i>Customer Support Channels</h5>

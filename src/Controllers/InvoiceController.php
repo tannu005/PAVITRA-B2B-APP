@@ -10,13 +10,10 @@ use Core\Application;
 class InvoiceController extends Controller {
 
     public function __construct() {
-        // No layout, this is a print-only raw view
         $this->setLayout(null);
     }
 
-    // View print-optimized tax invoice sheet
     public function printInvoice(Request $request, Response $response, array $params) {
-        // Auth check: allow retailer (buyer), seller (weaver), or admin
         $user = Application::$app->getSessionUser();
         if (!$user) {
             $response->redirect('/login');
@@ -26,7 +23,6 @@ class InvoiceController extends Controller {
         $orderId = intval($params['id'] ?? 0);
         $db = Application::$app->db;
 
-        // Fetch order details
         $stmt = $db->prepare("
             SELECT o.*, u.name as buyer_name, u.email as buyer_email, u.mobile as buyer_mobile,
                    s.name as seller_name, sp.company_name as seller_company, sp.gst_number as seller_gst,
@@ -47,14 +43,12 @@ class InvoiceController extends Controller {
             return;
         }
 
-        // Verify authorization: buyer, seller, or admin
         if (!in_array($user['role'], ['SUPER_ADMIN', 'ADMIN']) && $order['user_id'] != $user['id'] && $order['seller_id'] != $user['id']) {
             $response->setStatusCode(403);
             echo "<h1>Access Denied</h1>";
             return;
         }
 
-        // Fetch order items
         $stmtItems = $db->prepare("
             SELECT oi.*, pv.sku, pv.bulk_threshold, p.title, p.description
             FROM order_items oi
@@ -65,7 +59,6 @@ class InvoiceController extends Controller {
         $stmtItems->execute([$orderId]);
         $items = $stmtItems->fetchAll() ?: [];
 
-        // Load company settings
         $companyName = Application::$app->config['company_name'] ?? 'Pavitra Designer';
         $companyGst = Application::$app->config['gst_number'] ?? '09AAAAA1111A1Z1';
         $companyAddress = Application::$app->config['office_address'] ?? 'Varanasi, UP';

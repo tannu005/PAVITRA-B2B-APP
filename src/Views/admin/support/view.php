@@ -1,6 +1,5 @@
 <div class="container-xl py-5">
     <div class="row g-4">
-        <!-- Main Workspace: Conversation History -->
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <div class="d-flex justify-content-between align-items-center pb-3 border-bottom mb-3">
@@ -11,7 +10,6 @@
                     <a href="/admin/support" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Queue</a>
                 </div>
 
-                <!-- Chat bubble timeline -->
                 <h6 class="fw-bold mb-3 border-bottom pb-2 text-pink">Operations Conversation Log</h6>
                 <div class="d-flex flex-column gap-3 mb-4" style="max-height: 450px; overflow-y: auto; padding-right: 5px;">
                     <?php foreach ($messages as $msg): ?>
@@ -19,7 +17,6 @@
                             $isInternal = ($msg['is_internal'] == 1);
                             $bubbleAlign = $isInternal ? 'align-self-center text-center w-100' : (($msg['sender_id'] == $_SESSION['user_id']) ? 'align-self-end text-end' : 'align-self-start');
                             
-                            // Style differences
                             if ($isInternal) {
                                 $bubbleBg = 'bg-warning-subtle text-warning-emphasis border border-warning';
                                 $senderLabel = 'INTERNAL NOTE • ' . htmlspecialchars($msg['sender_name']);
@@ -41,7 +38,6 @@
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Reply / Post message form -->
                 <form action="/admin/support/ticket/<?= $ticket['id'] ?>/reply" method="POST" class="border-top pt-3">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <div class="mb-3">
@@ -62,9 +58,7 @@
             </div>
         </div>
 
-        <!-- Sidebar Panel: Customer info & Ticket State Control -->
         <div class="col-lg-4">
-            <!-- Ticket State Controller -->
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2">Ticket State</h5>
                 
@@ -87,7 +81,6 @@
                 </div>
             </div>
 
-            <!-- Customer Card -->
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2">Buyer Boutique Profile</h5>
                 <h6 class="fw-bold text-dark mb-1"><?= htmlspecialchars($ticket['buyer_name']) ?></h6>

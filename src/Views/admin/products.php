@@ -1,4 +1,3 @@
-<!-- Admin Products Catalog Validation -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>

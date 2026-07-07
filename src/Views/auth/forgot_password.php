@@ -2,7 +2,6 @@
     <div class="p-4" style="width: 100%; max-width: 440px; background: transparent;">
         
         <?php if (!empty($token)): ?>
-            <!-- STATE 2: RESET PASSWORD FORM -->
             <div class="text-center mb-5 position-relative">
                 <a href="/login" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0 p-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Login</a>
                 <h2 class="mb-2" style="font-family: 'Rozha One', serif; font-size: 2.2rem; color: #1a1a1a; letter-spacing: -1px;">पवित्र</h2>
@@ -24,7 +23,6 @@
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                 <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
-                <!-- Password -->
                 <div class="mb-4 position-relative">
                     <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">New Password</label>
                     <div class="position-relative">
@@ -33,7 +31,6 @@
                     </div>
                 </div>
 
-                <!-- Confirm Password -->
                 <div class="mb-5 position-relative">
                     <label for="confirm_password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Confirm New Password</label>
                     <div class="position-relative">
@@ -48,7 +45,6 @@
             </form>
 
         <?php else: ?>
-            <!-- STATE 1: REQUEST PASSWORD RESET LINK -->
             <div class="text-center mb-5 position-relative">
                 <a href="/login" class="btn btn-sm btn-link text-decoration-none text-muted position-absolute start-0 top-0 p-0" style="font-size: 0.8rem;"><i class="fa fa-arrow-left"></i> Login</a>
                 <h2 class="mb-2" style="font-family: 'Rozha One', serif; font-size: 2.2rem; color: #1a1a1a; letter-spacing: -1px;">पवित्र</h2>
@@ -75,7 +71,6 @@
             <form action="/forgot-password" method="POST">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                 
-                <!-- Email -->
                 <div class="mb-5">
                     <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
                     <input type="email" class="form-control nisho-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">

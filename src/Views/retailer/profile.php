@@ -1,7 +1,5 @@
-<!-- B2B Wholesale Saree Profile Page -->
 <div class="container-xl py-4" style="max-width: 600px; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f5f5f6; min-height: 90vh; padding-bottom: 80px;">
     
-    <!-- Header Bar -->
     <div class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 border-bottom sticky-top" style="z-index: 100; margin: -24px -15px 24px -15px;">
         <div class="d-flex align-items-center gap-3">
             <a href="/" class="text-dark fs-5" style="text-decoration: none;"><i class="fa-solid fa-arrow-left"></i></a>
@@ -9,7 +7,6 @@
         </div>
     </div>
 
-    <!-- User Welcome Banner -->
     <div class="p-4 mb-4 rounded-3 border-0 position-relative overflow-hidden bg-white" style="border: 1px solid var(--premium-border) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
         <div class="d-flex align-items-center gap-3">
             <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; background-color: var(--meesho-pink-light); color: var(--meesho-pink); font-weight: 700; font-size: 1.6rem; border: 2px solid var(--meesho-pink);">
@@ -23,9 +20,7 @@
         </div>
     </div>
 
-    <!-- 2x2 Grid Cards -->
     <div class="row g-2 mb-4">
-        <!-- Card 1: Orders -->
         <div class="col-6">
             <a href="/orders" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
@@ -38,7 +33,6 @@
                 <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-right"></i></span>
             </a>
         </div>
-        <!-- Card 2: Custom Studio -->
         <div class="col-6">
             <a href="/customization" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
@@ -51,7 +45,6 @@
                 <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-right"></i></span>
             </a>
         </div>
-        <!-- Card 3: Help Center -->
         <div class="col-6">
             <a href="/support" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
@@ -64,7 +57,6 @@
                 <span style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-right"></i></span>
             </a>
         </div>
-        <!-- Card 4: Wallet -->
         <div class="col-6">
             <a href="/wallet" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
@@ -79,9 +71,7 @@
         </div>
     </div>
 
-    <!-- Vertical List Saree Wholesale Features -->
     <div class="bg-white rounded-3 border overflow-hidden mb-4">
-        <!-- Item 1: B2B Credit & Trade Terms -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-b2b-terms">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-building-circle-check" style="color: var(--meesho-pink);"></i></span>
@@ -93,7 +83,6 @@
             <span id="b2b-terms-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
 
-        <!-- Collapsible B2B Verification Credentials -->
         <div id="b2b-terms-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem; line-height: 1.6;">
             <div class="mb-2"><strong>GST Identification Number (GSTIN):</strong> <code class="text-dark">09AAAAA1111A1Z1</code> (Verified)</div>
             <div class="mb-2"><strong>Tax registration type:</strong> Wholesaler / Retailer Composition Scheme</div>
@@ -101,7 +90,6 @@
             <div><strong>Payment terms:</strong> Net-30 days billing terms on approved weaver loom invoices</div>
         </div>
 
-        <!-- Item 2: Loom Booking & Customization -->
         <a href="/customization" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-scissors" style="color: var(--premium-gold);"></i></span>
@@ -113,7 +101,6 @@
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
 
-        <!-- Item 3: Weaver Direct Directory -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-weaver-dir">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-map-location-dot" style="color: #16a085;"></i></span>
@@ -135,7 +122,6 @@
             </ul>
         </div>
 
-        <!-- Item 4: Bulk Shipping & Logistics -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-logistics">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-truck-moving" style="color: #34495e;"></i></span>
@@ -153,7 +139,6 @@
             <div><strong>Bulk Rates:</strong> Free transport logistics for orders exceeding 25 pieces</div>
         </div>
 
-        <!-- Item 5: Sample Swatch Requests -->
         <a href="/support/create" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-palette" style="color: #e74c3c;"></i></span>
@@ -165,7 +150,6 @@
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
 
-        <!-- Item 6: Manage Account Settings -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-account-settings" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-user-gear" style="color: #7f8c8d;"></i></span>
@@ -177,7 +161,6 @@
             <span id="settings-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
 
-        <!-- Collapsible Account Edit Form Block -->
         <div id="account-settings-form-block" class="p-4 bg-light border-bottom" style="display: none;">
             <?php if (!empty($errors)): ?>
                 <div class="alert alert-danger py-2 px-3 mb-3" style="font-size: 0.8rem;">
@@ -213,7 +196,6 @@
             </form>
         </div>
 
-        <!-- Item 7: Wishlist -->
         <a href="/wishlist" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-heart" style="color: var(--meesho-pink);"></i></span>
@@ -225,7 +207,6 @@
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
 
-        <!-- Item 8: General Notification Settings -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-gears" style="color: #7f8c8d;"></i></span>
@@ -237,7 +218,6 @@
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </div>
 
-        <!-- Item 8.5: Two-Factor Authentication (2FA) -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-2fa">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-shield-halved" style="color: #e74c3c;"></i></span>
@@ -262,7 +242,6 @@
                 </div>
             </div>
 
-            <!-- QR code container (hidden by default unless just enabled) -->
             <div id="twofa-setup-container" class="text-center p-3 border rounded bg-white mt-3" style="display: none;">
                 <p class="mb-3 text-muted" style="font-size: 0.75rem;">Scan this QR code using Google Authenticator or Microsoft Authenticator, then copy the 2FA secret.</p>
                 <div class="mb-3">
@@ -276,7 +255,6 @@
             </div>
         </div>
 
-        <!-- Item 8.6: Device Management -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-devices">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-display" style="color: #2980b9;"></i></span>
@@ -325,7 +303,6 @@
             <?php endif; ?>
         </div>
 
-        <!-- Item 9: Help & Policies (Combined Section) -->
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 cursor-pointer" id="toggle-help-policies" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-circle-info" style="color: #482922;"></i></span>
@@ -337,7 +314,6 @@
             <span id="help-policies-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
 
-        <!-- Collapsible Help & Policies Block -->
         <div id="help-policies-block" class="p-3 bg-light" style="display: none; font-size: 0.8rem;">
             <div class="row">
                 <div class="col-6 mb-2">
@@ -359,14 +335,11 @@
         </div>
     </div>
 
-    <!-- Sign Out & Delete Account Actions -->
     <div class="d-grid gap-2 px-1">
-        <!-- Log Out -->
         <a href="/logout" class="btn btn-outline-dark py-3 fw-bold text-uppercase" style="border-color: #282c3f; color: #282c3f; border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.1em; background-color: #ffffff; transition: all 0.2s ease;">
             Log Out
         </a>
         
-        <!-- Delete Account -->
         <button type="button" class="btn btn-outline-danger py-3 fw-bold text-uppercase border-danger mt-1" id="btn-delete-account" style="border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.1em; transition: all 0.2s ease;">
             Delete Account
         </button>
@@ -374,7 +347,6 @@
 
 </div>
 
-<!-- Delete Account Confirmation Modal -->
 <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
         <div class="modal-content border-0" style="border-radius: 8px;">
@@ -406,7 +378,6 @@
 
 <script>
 $(document).ready(function() {
-    // Collapsible sections
     function setupCollapse(triggerId, blockId, chevronId) {
         $(triggerId).on('click', function(e) {
             e.preventDefault();
@@ -453,19 +424,16 @@ $(document).ready(function() {
                     }
                 } else {
                     alert('Error toggling 2FA: ' + (response.error || 'Unknown error'));
-                    // Revert switch state
                     $('#twofa-switch').prop('checked', !isChecked);
                 }
             },
             error: function(xhr) {
                 alert('Connection error toggling 2FA.');
-                // Revert switch state
                 $('#twofa-switch').prop('checked', !isChecked);
             }
         });
     });
 
-    // Trigger delete account confirmation modal
     $('#btn-delete-account').on('click', function() {
         if (window.bootstrap) {
             var myModal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));

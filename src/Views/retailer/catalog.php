@@ -1,10 +1,7 @@
 <?php
 // =============================================
-// Pavitra Designer SAREE MARKETPLACE
-// NISHORAMA-STYLE 10-SECTION LANDING PAGE
 // =============================================
 
-// Reusable helper function to render a product card matching Nishorama specifications
 function renderProductCard($p) {
     $hoverImg = '/saree-banner1.png';
     if (strpos($p['image_url'], 'kanjeevaram') !== false) {
@@ -31,17 +28,14 @@ function renderProductCard($p) {
         <div class="nisho-card-img-wrapper position-relative">
             <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="nisho-card-img" loading="lazy">
             <img src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="nisho-card-img-hover" loading="lazy">
-            <!-- Wishlist Heart -->
             <button class="wishlist-heart-btn" onclick="event.stopPropagation(); $(this).toggleClass('active'); showToast($(this).hasClass('active') ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');">
                 <i class="fa-solid fa-heart"></i>
             </button>
-            <!-- Badge -->
             <?php if ($discVal > 0): ?>
                 <span class="badge position-absolute border-0 text-white" style="top: 8px; left: 8px; font-size: 0.6rem; border-radius: 2px; font-weight: 700; padding: 4px 8px; letter-spacing: 0.05em; text-transform: uppercase; background-color: <?= $badgeColors[$badgeIdx] ?>;"><?= $discVal ?>% OFF</span>
             <?php else: ?>
                 <span class="badge position-absolute border-0 text-white" style="top: 8px; left: 8px; font-size: 0.6rem; border-radius: 2px; font-weight: 700; padding: 4px 8px; letter-spacing: 0.05em; text-transform: uppercase; background-color: <?= $badgeColors[$badgeIdx] ?>;"><?= $badges[$badgeIdx] ?></span>
             <?php endif; ?>
-            <!-- Quick Add -->
             <button class="nisho-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold" data-variant-id="<?= $p['variant_id'] ?>" style="bottom: 0; left: 0; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
                 + Quick Add
             </button>
@@ -60,13 +54,10 @@ function renderProductCard($p) {
     return ob_get_clean();
 }
 
-// Detect if filters are active
 $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort) || ($minPrice > 0) || ($maxPrice > 0) || !empty($_GET['all_sarees']);
 ?>
 
-<!-- Meesho-Style Catalog Storefront -->
 <div class="container-xl py-2 py-md-4">
-    <!-- Mobile Category Pills (Horizontal Scroll) -->
     <div class="meesho-category-scroll d-flex d-md-none px-3 mb-2">
         <a href="/" class="category-circle-item <?= empty($selectedCategory) ? 'active' : '' ?>">
             <?php if (empty($selectedCategory)): ?>
@@ -107,13 +98,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     </div>
 
     <?php if (!$isFiltered): ?>
-    <!-- ========================================== -->
-    <!-- NISHORAMA 10-SECTION EDITORIAL HOMEPAGE    -->
-    <!-- ========================================== -->
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 1: HERO BANNER (Full Width, 65vh)  -->
-    <!-- ═══════════════════════════════════════════ -->
     <div id="heroCarousel" class="carousel slide carousel-fade mb-0" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -122,7 +107,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
         </div>
         <div class="carousel-inner">
-            <!-- Slide 1 -->
             <div class="carousel-item active">
                 <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner1.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
                     <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
@@ -135,7 +119,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     </div>
                 </div>
             </div>
-            <!-- Slide 2 -->
             <div class="carousel-item">
                 <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner2.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
                     <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
@@ -148,7 +131,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     </div>
                 </div>
             </div>
-            <!-- Slide 3 -->
             <div class="carousel-item">
                 <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner3.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
                     <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
@@ -161,7 +143,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     </div>
                 </div>
             </div>
-            <!-- Slide 4 -->
             <div class="carousel-item">
                 <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner4.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
                     <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
@@ -183,9 +164,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </button>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 2: CAROUSEL #1 — Pavitra MUSE      -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -210,10 +188,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 3: PROMOTIONAL BANNER — SHAADI     -->
-    <!-- Parallax full-width image + text overlay    -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="w-100 my-5 nisho-parallax-container" style="height: 45vh; min-height: 320px; max-height: 480px;">
         <div class="nisho-parallax-bg" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png');"></div>
         <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center text-white p-4" style="position: relative; z-index: 2;">
@@ -224,9 +198,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 4: CAROUSEL #2 — NEW ARRIVALS       -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -248,10 +219,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 5: CATEGORY SHOWCASE GRID           -->
-    <!-- 4 large tiles with hover zoom effects       -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="my-5 py-4" id="home-categories-grid">
         <div class="text-center mb-5">
             <h2 class="text-uppercase fw-normal nisho-section-title">Shop by Weaving Style</h2>
@@ -279,9 +246,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 6: CAROUSEL #3 — GOODBYE DEALS     -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -306,10 +270,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 7: VALUE PROPOSITION                -->
-    <!-- 3 columns with icons                        -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="my-5 py-5 border-top border-bottom" style="background-color: #FAF8F6; font-family: 'Nunito', sans-serif;">
         <div class="row g-4 text-center">
             <div class="col-4">
@@ -330,10 +290,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 8: EDITORIAL VIDEO BANNER           -->
-    <!-- Full-width looping video with overlay        -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="my-5">
         <section class="nisho-video-banner position-relative overflow-hidden w-100">
             <video class="nisho-video-media" autoplay loop muted playsinline poster="/saree-banner4.png" preload="metadata">
@@ -349,9 +305,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </section>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 9: CAROUSEL #4 — BESTSELLERS        -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -376,9 +329,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 10: NEWSLETTER / CTA                -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="w-100 py-5 mt-5" style="background-color: #482922; font-family: 'Nunito', sans-serif;">
         <div class="container text-center py-4">
             <h3 class="text-uppercase fw-bold mb-2 nisho-section-title" style="color: #FFF !important;">Join the Movement</h3>
@@ -391,11 +341,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     </div>
 
     <?php else: ?>
-    <!-- ========================================== -->
-    <!-- FILTERED PRODUCT CATALOG GRID VIEW         -->
-    <!-- ========================================== -->
 
-    <!-- Refinement Bar -->
     <div class="d-flex justify-content-between align-items-center py-2 px-3 border rounded-3 mb-4 refinement-toolbar" style="font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF8F5; border-color: #EFECE6 !important;">
         <div class="d-flex align-items-center gap-2">
             <button class="btn btn-outline-dark btn-sm rounded-pill border-0 text-uppercase fw-bold p-0 d-flex align-items-center" id="refinement-filters-btn" style="font-size: 0.65rem; letter-spacing: 0.08em; color: #482922; background: transparent;">
@@ -441,10 +387,8 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
 
 
 
-<!-- Page JS -->
 <script>
 $(document).ready(function() {
-    // Carousel arrow navigation
     $('.nisho-carousel-prev').on('click', function() {
         const c = $(this).closest('.carousel-section-wrapper').find('.nisho-carousel-container');
         c.animate({ scrollLeft: c.scrollLeft() - 320 }, 300);
@@ -454,7 +398,6 @@ $(document).ready(function() {
         c.animate({ scrollLeft: c.scrollLeft() + 320 }, 300);
     });
 
-    // Sort selector
     $('#sort-selector').on('change', function() {
         const val = $(this).val();
         const u = new URLSearchParams(window.location.search);
@@ -462,7 +405,6 @@ $(document).ready(function() {
         window.location.search = u.toString();
     });
 
-    // Redirect to dedicated Product Details Page on click
     $(document).on('click', '.product-card-trigger', function(e) {
         if ($(e.target).closest('.wishlist-heart-btn, .nisho-quick-add-btn').length > 0) return;
         const productId = $(this).attr('data-id');
@@ -471,7 +413,6 @@ $(document).ready(function() {
         }
     });
 
-    // Quick Add to Cart Handler
     $(document).on('click', '.nisho-quick-add-btn', function(e) {
         e.stopPropagation();
         const btn = $(this);
@@ -499,10 +440,8 @@ $(document).ready(function() {
         });
     });
     
-    // Filter modal trigger
     $('#refinement-filters-btn').on('click', function() { $('#filtersModal').modal('show'); });
 
-    // Auto-scroll to products when filtered
     const u = new URLSearchParams(window.location.search);
     if (u.has('category') || u.has('sort') || u.has('search') || u.has('min_price') || u.has('all_sarees')) {
         setTimeout(function() {
@@ -513,7 +452,6 @@ $(document).ready(function() {
 
     // ═══ NISHORAMA SCROLL-TRIGGERED ANIMATIONS ═══
     if ('IntersectionObserver' in window) {
-        // Animate carousel sections, banners, category grid, value props
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -528,7 +466,6 @@ $(document).ready(function() {
             sectionObserver.observe(el);
         });
 
-        // Animate individual product cards with stagger
         const cardObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -539,7 +476,6 @@ $(document).ready(function() {
         }, { threshold: 0.05 });
         document.querySelectorAll('.meesho-product-card.minimal').forEach(el => cardObserver.observe(el));
 
-        // Animate category tiles
         const tileObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
@@ -590,11 +526,9 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- Filters Modal (Luxury Split-Screen Tabbed Sidebar Format) -->
 <div class="modal fade" id="filtersModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 550px;">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
-            <!-- Header -->
             <div class="modal-header border-0 pb-2" style="background-color: var(--premium-light-bg); border-top-left-radius: 16px; border-top-right-radius: 16px; padding: 1.25rem;">
                 <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--meesho-pink);"><i class="fa-solid fa-sliders me-2" style="color: var(--premium-gold);"></i>Refine Sarees</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -607,7 +541,6 @@ $(document).ready(function() {
                     <?php endif; ?>
                     
                     <div class="filter-split-container">
-                        <!-- Left Sidebar Tabs -->
                         <div class="filter-sidebar-menu">
                             <button type="button" class="filter-tab-btn active" data-target="pane-fabric">Fabric</button>
                             <button type="button" class="filter-tab-btn" data-target="pane-color">Color</button>
@@ -625,10 +558,8 @@ $(document).ready(function() {
                             <button type="button" class="filter-tab-btn" data-target="pane-green">Green</button>
                         </div>
                         
-                        <!-- Right Content Panels -->
                         <div class="filter-content-panel">
                             
-                            <!-- 1. Fabric / Material -->
                             <div class="filter-pane-group active" id="pane-fabric">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Fabric / Material</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -640,7 +571,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 2. Color Palette & Spectrum -->
                             <div class="filter-pane-group" id="pane-color">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Color Palette</h6>
                                 <div class="d-flex flex-column gap-2 mb-3">
@@ -661,7 +591,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 3. Occasion / Usage -->
                             <div class="filter-pane-group" id="pane-occasion">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Occasion & Usage</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -673,7 +602,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 4. Wholesale Price Range -->
                             <div class="filter-pane-group" id="pane-price">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Wholesale Price (₹)</h6>
                                 <div class="row g-2 mb-3">
@@ -701,7 +629,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 5. Pattern / Design -->
                             <div class="filter-pane-group" id="pane-pattern">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Pattern / Design</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -713,7 +640,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 6. Saree Type / Regional Style -->
                             <div class="filter-pane-group" id="pane-style">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Weaving Styles</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -725,7 +651,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 7. Blouse Style / Options -->
                             <div class="filter-pane-group" id="pane-blouse">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Blouse Customization</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -737,7 +662,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 8. Length & Width -->
                             <div class="filter-pane-group" id="pane-dimensions">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Saree Size</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -749,7 +673,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 9. User Ratings -->
                             <div class="filter-pane-group" id="pane-ratings">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Ratings & Popularity</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -762,7 +685,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 10. Brand / Artisan Hub -->
                             <div class="filter-pane-group" id="pane-brand">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Brand & Artisan Hubs</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -774,7 +696,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 11. Care Instructions -->
                             <div class="filter-pane-group" id="pane-care">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Care Instructions</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -786,7 +707,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 12. Availability & Logistics -->
                             <div class="filter-pane-group" id="pane-delivery">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Availability</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -799,7 +719,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 13. New Arrivals & Discounts -->
                             <div class="filter-pane-group" id="pane-deals">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">New & Deals</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -812,7 +731,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             
-                            <!-- 14. Sustainability -->
                             <div class="filter-pane-group" id="pane-green">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Ethical Sourcing</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -828,7 +746,6 @@ $(document).ready(function() {
                         </div>
                     </div>
 
-                    <!-- Apply & Reset Buttons footer style -->
                     <div class="p-3 border-0 d-flex gap-2" style="background-color: var(--premium-light-bg); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; border-top: 1px solid var(--premium-border);">
                         <button type="button" class="btn btn-outline-secondary w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;" onclick="document.getElementById('saree-filters-form').reset()">Clear All</button>
                         <button type="submit" class="btn btn-meesho-pink w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;">Apply Filters</button>
@@ -842,24 +759,20 @@ $(document).ready(function() {
 // jQuery Script for Tab Toggles
 $(document).ready(function() {
     $('.filter-tab-btn').on('click', function() {
-        // Toggle active class on sidebar tabs
         $('.filter-tab-btn').removeClass('active');
         $(this).addClass('active');
         
-        // Show target panel and hide others
         var targetPane = $(this).data('target');
         $('.filter-pane-group').removeClass('active');
         $('#' + targetPane).addClass('active');
     });
 
     // ══════════════════════════════════════════════════════
-    // SAREE IMAGE ZOOM LIGHTBOX LOGIC
     // ══════════════════════════════════════════════════════
     $(document).on('click', '.zoomable-saree-img', function(e) {
         var src = $(this).attr('src');
         if (!src) return;
 
-        // Create lightbox structure dynamically
         var lightboxHtml = `
             <div class="pavitra-zoom-lightbox">
                 <button class="pavitra-zoom-close" title="Close"><i class="fa-solid fa-xmark"></i></button>
@@ -890,14 +803,12 @@ $(document).ready(function() {
             $img.css('transform', `translate3d(${posX}px, ${posY}px, 0) scale(${scale})`);
         }
 
-        // Zoom In
         $('.btn-zoom-in').on('click', function(e) {
             e.stopPropagation();
             scale = Math.min(scale + 0.5, 4);
             updateTransform();
         });
 
-        // Zoom Out
         $('.btn-zoom-out').on('click', function(e) {
             e.stopPropagation();
             scale = Math.max(scale - 0.5, 0.5);
@@ -908,7 +819,6 @@ $(document).ready(function() {
             updateTransform();
         });
 
-        // Reset Zoom
         $('.btn-zoom-reset').on('click', function(e) {
             e.stopPropagation();
             scale = 1;
@@ -917,7 +827,6 @@ $(document).ready(function() {
             updateTransform();
         });
 
-        // Close Lightbox
         $('.pavitra-zoom-close, .pavitra-zoom-lightbox').on('click', function(e) {
             if (e.target !== this && !$(e.target).closest('.pavitra-zoom-close').length) return;
             $('.pavitra-zoom-lightbox').removeClass('show');
@@ -926,7 +835,6 @@ $(document).ready(function() {
             }, 300);
         });
 
-        // Drag/Pan Functionality
         $wrapper.on('mousedown touchstart', function(e) {
             e.preventDefault();
             isDragging = true;
@@ -949,7 +857,6 @@ $(document).ready(function() {
             isDragging = false;
         });
 
-        // Mouse Wheel Zoom
         $wrapper.on('wheel', function(e) {
             e.preventDefault();
             var delta = e.originalEvent.deltaY;

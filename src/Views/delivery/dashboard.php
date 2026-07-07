@@ -1,4 +1,3 @@
-<!-- Delivery Partner Mobile Portal -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -9,7 +8,6 @@
     </div>
 
     <div class="row g-4">
-        <!-- Earnings Widget -->
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 bg-dark text-white p-4 mb-4" style="border-radius: 12px;">
                 <div class="small text-uppercase fw-semibold mb-1 opacity-75">My Payout Earnings</div>
@@ -28,7 +26,6 @@
             </div>
         </div>
 
-        <!-- Assignments list -->
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-list-check text-pink me-2"></i>My Delivery Assignments</h5>
@@ -57,7 +54,6 @@
                                             <div><strong>Delivery Route Location:</strong> Varanasi Handloom Cluster Point, UP</div>
                                         </div>
                                         
-                                        <!-- Demo notice to make testing OTP verification easy -->
                                         <?php if ($a['assignment_status'] === 'OUT_FOR_DELIVERY'): ?>
                                             <div class="mt-2 bg-warning-subtle text-warning border border-warning-subtle p-2 rounded small" style="font-size: 0.8rem;">
                                                 🔑 <strong>Demo Access Handover OTP:</strong> <code class="text-dark fw-bold"><?= $a['otp_code'] ?></code>
@@ -92,7 +88,6 @@
 </div>
 
 <script>
-    // Status change AJAX
     $('.change-assignment-status-btn').on('click', function() {
         const assignId = $(this).data('id');
         const nextStatus = $(this).data('status');
@@ -121,7 +116,6 @@
         });
     });
 
-    // Verify OTP Handover
     $('.verify-otp-btn').on('click', function() {
         const assignId = $(this).data('id');
         const otpVal = $('#otp-input-' + assignId).val().trim();

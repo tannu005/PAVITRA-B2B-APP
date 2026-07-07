@@ -1,4 +1,3 @@
-<!-- Seller Panel Dashboard -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -11,7 +10,6 @@
         </div>
     </div>
 
-    <!-- Stat cards -->
     <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="card shadow-sm border border-light p-3 bg-white">
@@ -43,9 +41,7 @@
         </div>
     </div>
 
-    <!-- Navigation Control Grid -->
     <div class="row g-4">
-        <!-- Quick Actions Panel -->
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white h-100">
                 <h5 class="fw-bold mb-3 text-dark">Quick Navigation</h5>
@@ -59,7 +55,6 @@
             </div>
         </div>
 
-        <!-- Recent Incoming Orders -->
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white h-100">
                 <h5 class="fw-bold mb-3 text-dark">Recent Bulk Orders</h5>

@@ -1,5 +1,4 @@
 <?php
-// Installation and Migration Wizard for Pavitra B2B Platform
 
 $config = require dirname(__DIR__) . '/config/db.php';
 $status = '';
@@ -26,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
 
-        // Disable foreign keys temporarily during schema builds
         $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
 
         // 4. Load schema.sql
@@ -36,8 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
         $schemaSql = file_get_contents($schemaPath);
         
-        // Split schema queries by semicolon, filtering out empty lines
-        // We'll execute them chunk-by-chunk or as a multi-query exec
         $pdo->exec($schemaSql);
         $logs[] = "Successfully imported all database tables (86 tables created).";
 
@@ -50,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $pdo->exec($seedsSql);
         $logs[] = "Successfully seeded platform roles, permissions, administrative settings, and demo products.";
 
-        // Re-enable foreign keys
         $pdo->exec("SET FOREIGN_KEY_CHECKS = 1;");
 
         $status = 'success';

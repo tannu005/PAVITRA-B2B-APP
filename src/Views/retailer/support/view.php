@@ -1,7 +1,6 @@
 <div class="container-xl py-5">
     <div class="row g-4 justify-content-center">
         <div class="col-lg-9">
-            <!-- Ticket Header Details -->
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <div class="d-flex justify-content-between align-items-center pb-3 border-bottom mb-3">
                     <div>
@@ -27,7 +26,6 @@
                 </div>
             </div>
 
-            <!-- Chat Message Bubbles -->
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h6 class="fw-bold mb-3 border-bottom pb-2 text-pink">Conversation Log</h6>
                 <div class="d-flex flex-column gap-3 mb-4" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
@@ -50,7 +48,6 @@
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Ticket Reply Form -->
                 <?php if ($ticket['status'] !== 'CLOSED'): ?>
                     <form action="/support/ticket/<?= $ticket['id'] ?>/reply" method="POST" class="border-top pt-3">
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">

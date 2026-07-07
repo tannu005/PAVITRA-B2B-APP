@@ -1,4 +1,3 @@
-<!-- Admin Settlements Room -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>
@@ -8,7 +7,6 @@
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
 
-    <!-- Active settlement triggers -->
     <div class="card shadow-sm border border-light p-4 bg-white mb-5">
         <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-hourglass-half text-warning me-2"></i>Pending Settlements Run</h5>
         <p class="text-muted small">Orders below are marked as <strong>DELIVERED</strong> but have not yet been settled. Check items to execute bank disbursements.</p>
@@ -60,7 +58,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- Settlement History -->
     <div class="card shadow-sm border border-light p-4 bg-white">
         <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-clock-rotate-left text-pink me-2"></i>Disbursement History Log</h5>
         
@@ -107,12 +104,10 @@
 </div>
 
 <script>
-    // Select all checkboxes
     $('#select-all-orders').on('change', function() {
         $('.order-select-chk').prop('checked', $(this).prop('checked'));
     });
 
-    // Run settlement submit
     $('#settlement-run-form').on('submit', function(e) {
         e.preventDefault();
         

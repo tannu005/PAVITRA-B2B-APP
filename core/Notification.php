@@ -24,7 +24,6 @@ class Notification {
 
         $allSuccess = true;
 
-        // Load configs
         $config = Application::$app->config;
         
         foreach ($channels as $channel) {
@@ -33,7 +32,6 @@ class Notification {
                 continue;
             }
 
-            // Insert pending log
             $stmtLog = $db->prepare("INSERT INTO notification_logs (notification_id, channel, status) VALUES (?, ?, 'PENDING')");
             $stmtLog->execute([$notificationId, $channel]);
             $logId = $db->lastInsertId();
@@ -48,7 +46,6 @@ class Notification {
                 $status = self::sendWhatsApp($user['mobile'], $message, $config) ? 'SENT' : 'FAILED';
             }
 
-            // Update status & sent_at
             $sentAt = $status === 'SENT' ? date('Y-m-d H:i:s') : null;
             $stmtUpdate = $db->prepare("UPDATE notification_logs SET status = ?, sent_at = ? WHERE id = ?");
             $stmtUpdate->execute([$status, $sentAt, $logId]);
@@ -70,7 +67,6 @@ class Notification {
         $brandName = $config['brand_name'] ?? 'Pavitra B2B';
 
         if (empty($apiKey) || empty($fromEmail)) {
-            // Fallback to standard PHP mail() in development/test
             $headers = "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
             $headers .= "From: {$brandName} <{$fromEmail}>\r\n";
@@ -126,7 +122,6 @@ class Notification {
         $fromPhone = $config['twilio_phone_number'] ?? '';
 
         if (empty($sid) || empty($token) || empty($fromPhone)) {
-            // Mock logger fallback
             $db = Application::$app->db;
             $stmt = $db->prepare("INSERT INTO sms_logs (phone_number, message, status) VALUES (?, ?, 'SENT')");
             return $stmt->execute([$toMobile, $messageText]);
@@ -165,12 +160,10 @@ class Notification {
         $fromPhone = $config['twilio_phone_number'] ?? '';
 
         if (empty($sid) || empty($token) || empty($fromPhone)) {
-            // Mock whatsapp log
             error_log("Mock WhatsApp to {$toMobile}: {$messageText}");
             return true;
         }
 
-        // WhatsApp targets on Twilio must be prefixed with whatsapp:
         $to = str_starts_with($toMobile, 'whatsapp:') ? $toMobile : 'whatsapp:' . $toMobile;
         $from = str_starts_with($fromPhone, 'whatsapp:') ? $fromPhone : 'whatsapp:' . $fromPhone;
 

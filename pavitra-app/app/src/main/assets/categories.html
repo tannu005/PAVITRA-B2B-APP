@@ -14,17 +14,12 @@
     <meta property="og:site_name" content="Pavitra B2B">
     <meta property="og:url" content="http://localhost:8000/categories">
     <title>Shop by Category - Pavitra B2B</title>
-    <!-- Bootstrap 5.3+ CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <!-- Google Fonts -->
     
     
     
-    <!-- Custom Meesho CSS -->
     <link rel="stylesheet" href="assets/css/meesho.css">
-    <!-- jQuery -->
     <script src="assets/js/jquery.min.js"></script>
     <script>
         window.__CSRF_TOKEN__ = "9842635a623109e8eb333251ebcec5e7694c23a2f7522a8208d5beaa53ffdddb";
@@ -40,12 +35,10 @@
 </head>
 <body>
 
-    <!-- Promotion Nav -->
     <div class="py-2 hide-on-mobile text-center" style="background-color: #F8F9FA; border-bottom: 1px solid #ECEFF1; color: #555;">
         ⚡ Lowest Prices • Free Shipping on Bulk Orders • Weaver-Direct Verified Quality
     </div>
 
-    <!-- Meesho-Style Mobile Top Header -->
     <header class="meesho-mobile-header">
         <div class="mobile-header-top-row">
             <div class="d-flex align-items-center">
@@ -81,13 +74,10 @@
         </div>
     </header>
 
-    <!-- Header Navigation (Desktop/Tablet) -->
     <header class="meesho-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
-            <!-- Brand Logo (Hindi character) -->
             <a href="index.html" class="nisho-logo">प</a>
 
-            <!-- Center Menu Links (Nisho Muse Two-Row style) -->
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
                     <a href="/?category=Organza+Silk" class="nisho-menu-link">PAVITRA MUSE</a>
@@ -118,9 +108,7 @@
                 </div>
             </div>
 
-            <!-- Right Navigation Controls -->
             <div class="meesho-nav-items gap-3 align-items-center">
-                <!-- Search Trigger Toggle -->
                 <a href="javascript:void(0)" class="text-dark me-2" onclick="$('#search-dropdown').toggle()"><i class="fa-solid fa-magnifying-glass fs-5"></i></a>
                 
                                     <a href="/login" class="text-dark"><i class="fa-regular fa-user fs-5"></i></a>
@@ -134,7 +122,6 @@
             </div>
         </div>
         
-        <!-- Dropdown Search input -->
         <div class="container-xl py-2" id="search-dropdown" style="display: none; border-top: 1px solid #eee;">
             <form class="meesho-search-form w-100 max-width-none" id="search-form" method="GET" action="/">
                 <i class="fa fa-search meesho-search-icon"></i>
@@ -143,7 +130,6 @@
         </div>
     </header>
 
-    <!-- Main Content Rendering -->
     <main>
         <div class="container py-4 my-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="text-center mb-5">
@@ -152,7 +138,6 @@
         <div style="width: 40px; height: 1.5px; background-color: #482922; margin: 12px auto 0;"></div>
     </div>
 
-    <!-- Category Grid -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     <div class="col">
                 <a href="/?category=Banarasi+Brocade" class="text-decoration-none text-dark">
@@ -271,25 +256,20 @@
 
     </main>
 
-    <!-- Cart Sliding Drawer -->
     <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
     <div class="cart-drawer" id="cart-drawer-box">
         <div class="p-4 d-flex justify-between align-items-center border-bottom">
             <h5 class="m-0 fw-bold">Wholesale Cart</h5>
             <button class="btn btn-close p-0" id="cart-close-btn"></button>
         </div>
-        <!-- Scrollable items area -->
         <div class="flex-grow-1 overflow-auto p-4" id="cart-drawer-items">
-            <!-- Loaded dynamically via AJAX -->
         </div>
-        <!-- Totals & Checkout -->
         <div class="p-4 border-top" id="cart-drawer-footer" style="display: none;">
             <div class="d-flex justify-content-between align-items-center mb-2" style="font-size: 0.85rem;">
                 <span class="fw-semibold text-muted">Subtotal</span>
                 <span class="fw-bold text-dark" id="cart-subtotal-display">₹0.00</span>
             </div>
 
-            <!-- Coupon Apply Form -->
             <div class="mb-3 border-bottom pb-3">
                 <label class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.65rem; letter-spacing: 0.5px;">B2B Coupon Code</label>
                 <div class="input-group input-group-sm">
@@ -320,13 +300,10 @@
         </div>
     </div>
 
-    <!-- Bootstrap 5.3+ Bundle JS -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Global Cart & Core AJAX Script -->
     <script>
         $(document).ready(function() {
-            // Notifications & Cart Handlers
             $('#cart-trigger-btn, #cart-trigger-btn-mobile').on('click', function() {
                 openCart();
             });
@@ -346,9 +323,7 @@
                 $('#cart-drawer-box').removeClass('open');
             }
 
-            // Load Cart Items AJAX
             function loadCartItems() {
-                // We'll write the JS interface that communicates with /cart endpoint
                 $.ajax({
                     url: '/cart',
                     method: 'GET',
@@ -363,7 +338,6 @@
             }
 
             function renderCart(res) {
-                // If cart is empty
                 if (!res.items || res.items.length === 0) {
                     $('#cart-drawer-items').html(`
                         <div class="text-center py-5 text-muted">
@@ -377,7 +351,6 @@
                     return;
                 }
 
-                // Render cart items
                 let html = '<div class="d-flex flex-column gap-3">';
                 res.items.forEach(function(item) {
                     const priceFormatted = parseFloat(item.price).toLocaleString('en-IN');
@@ -394,7 +367,6 @@
                                 <span class="badge text-secondary bg-light border mt-1" style="font-size: 0.65rem;">Min Wholesale MOQ: ${item.bulk_threshold}</span>
                                 
                                 <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <!-- Qty Selector -->
                                     <div class="d-flex align-items-center border rounded">
                                         <button class="btn btn-sm btn-light py-0 px-2 qty-btn minus" data-id="${item.variant_id}">-</button>
                                         <span class="px-2 fw-bold text-center" style="font-size: 0.85rem; min-width: 25px;">${item.quantity}</span>
@@ -432,12 +404,10 @@
                 $('#cart-total-display').text('₹' + parseFloat(res.total).toLocaleString('en-IN', {minimumFractionDigits: 2}));
                 $('#cart-drawer-footer').show();
                 
-                // Set Badge count
                 const count = res.items.reduce((sum, item) => sum + parseInt(item.quantity), 0);
                 $('#cart-count-badge, #cart-count-badge-mobile').text(count).show();
             }
 
-            // Apply Coupon click event
             $('#apply-coupon-btn').on('click', function() {
                 const code = $('#coupon-code-input').val().trim();
                 const subtotalDisplay = $('#cart-subtotal-display').text().replace(/[^\d.]/g, '');
@@ -468,7 +438,6 @@
                 });
             });
 
-            // Handle Qty Add/Subtract & Delete
             $(document).on('click', '.qty-btn', function() {
                 const variantId = $(this).data('id');
                 const isPlus = $(this).hasClass('plus');
@@ -500,7 +469,6 @@
                 });
             });
 
-            // Initial Cart Sync
             $.ajax({
                 url: '/cart',
                 method: 'GET',
@@ -513,7 +481,6 @@
                 }
             });
 
-            // Checkout Order Placing AJAX
             $('#checkout-order-btn').on('click', function() {
                 const address = $('#shipping-address-box').val().trim();
                 if (address === '') {
@@ -546,7 +513,6 @@
                 });
             });
 
-            // Scrolled sticky header animation
             $(window).on('scroll', function() {
                 if ($(window).scrollTop() > 30) {
                     $('.meesho-header').addClass('scrolled');
@@ -555,7 +521,6 @@
                 }
             });
 
-            // Scroll Intersection Observer for fading-in product cards
             if ('IntersectionObserver' in window) {
                 const cardObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -565,13 +530,11 @@
                     });
                 }, { threshold: 0.05 });
 
-                // Bind observer to existing and future minimal cards
                 $(document).find('.meesho-product-card.minimal').each(function() {
                     cardObserver.observe(this);
                 });
             }
 
-            // Global Toast Notification Helper
             window.showToast = function(msg) {
                 $('#toast-message').text(msg);
                 const toastEl = document.getElementById('app-toast');
@@ -585,7 +548,6 @@
         });
     </script>
     
-    <!-- Toast Notification Container -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
         <div id="app-toast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -595,11 +557,9 @@
         </div>
     </div>
     
-    <!-- ═══════════ NISHORAMA PREMIUM FOOTER ═══════════ -->
     <footer class="nisho-footer">
         <div class="container">
             <div class="row g-4">
-                <!-- About Column -->
                 <div class="col-lg-3 col-md-6">
                     <a href="index.html" class="nisho-logo d-inline-block mb-3" style="font-size: 2rem; color: #FFF !important;">प</a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
@@ -610,7 +570,6 @@
                         <a href="#"><i class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
-                <!-- Quick Links -->
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>Quick Links</h5>
                     <a href="/?sort=newest">New Arrivals</a>
@@ -619,7 +578,6 @@
                     <a href="/?category=Patola+Silk">Patola</a>
                     <a href="/?category=Organza+Silk">Organza</a>
                 </div>
-                <!-- Help -->
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>Help & Support</h5>
                     <a href="/support">Contact Us</a>
@@ -628,7 +586,6 @@
                     <a href="/support">FAQs</a>
                     <a href="/about-us">Size Guide</a>
                 </div>
-                <!-- Policies -->
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>Policies</h5>
                     <a href="/about-us">Shipping Info</a>
@@ -636,7 +593,6 @@
                     <a href="/about-us">Privacy Policy</a>
                     <a href="/about-us">Terms of Service</a>
                 </div>
-                <!-- Wholesale Info -->
                 <div class="col-lg-3 col-md-6">
                     <h5>Wholesale Enquiry</h5>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">Minimum order: 5 pieces per design. Bulk discounts available for orders of 50+ pieces.</p>
@@ -648,7 +604,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Footer Bottom -->
             <div class="nisho-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <span>© 2026 Pavitra Wholesale Sarees. All Rights Reserved.</span>
                 <span class="mt-2 mt-md-0">Crafted with ❤️ for Indian Handloom Heritage</span>
@@ -656,7 +611,6 @@
         </div>
     </footer>
 
-    <!-- Nishorama-Style Mobile Bottom Navigation Bar -->
     <div class="meesho-mobile-nav">
         <a href="index.html" class="mobile-nav-item ">
             <i class="fa-solid fa-house"></i>
@@ -676,15 +630,11 @@
         </a>
     </div>
     
-    <!-- ═══════════ PAVITRA FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
-    <!-- Handle / Trigger Trigger Button -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
         <i class="fa-solid fa-chevron-left"></i>
     </button>
 
-    <!-- Slide-out vertical menu bar -->
     <div class="pavitra-edge-panel" id="pavitra-edge-sidebar">
-        <!-- Home -->
         <a href="index.html" class="pavitra-edge-item" title="Go to Home">
             <div class="pavitra-edge-icon-circle">
                 <i class="fa-solid fa-house"></i>
@@ -692,7 +642,6 @@
             <span>Home</span>
         </a>
 
-        <!-- Profile / Account -->
         <a href="/profile" class="pavitra-edge-item" title="Go to Profile">
             <div class="pavitra-edge-icon-circle">
                 <i class="fa-solid fa-user"></i>
@@ -700,7 +649,6 @@
             <span>Profile</span>
         </a>
 
-        <!-- Filters (Triggers filter drawer modal) -->
         <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
             <div class="pavitra-edge-icon-circle">
                 <i class="fa-solid fa-sliders"></i>
@@ -708,7 +656,6 @@
             <span>Filters</span>
         </div>
 
-        <!-- Wishlist (Support tickets) -->
         <a href="/support" class="pavitra-edge-item" title="Go to Wishlist & Support">
             <div class="pavitra-edge-icon-circle">
                 <i class="fa-solid fa-heart"></i>
@@ -716,7 +663,6 @@
             <span>Wishlist</span>
         </a>
 
-        <!-- Cart (Triggers cart drawer) -->
         <div class="pavitra-edge-item" id="pavitra-edge-cart-btn" title="View Cart">
             <div class="pavitra-edge-icon-circle">
                 <i class="fa-solid fa-bag-shopping"></i>
@@ -724,7 +670,6 @@
             <span>Cart</span>
         </div>
 
-        <!-- Close Chevron -->
         <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">
             <i class="fa-solid fa-chevron-right"></i>
         </div>
@@ -732,7 +677,6 @@
 
     <script>
         $(document).ready(function() {
-            // Function to check if we are on the landing page (home page without active filters/search)
             function updateEdgeTriggerVisibility() {
                 const isLandingPage = (window.location.pathname === '/' || window.location.pathname === '') && 
                                        (!window.location.search || window.location.search === '?' || window.location.search === '');
@@ -744,16 +688,13 @@
                 }
             }
 
-            // Run initial visibility check
             updateEdgeTriggerVisibility();
 
-            // Toggle sidebar panel on trigger button click
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
                 e.stopPropagation();
                 $(this).toggleClass('active');
                 $('#pavitra-edge-sidebar').toggleClass('open');
                 
-                // Toggle chevron icon direction
                 const icon = $(this).find('i');
                 if ($(this).hasClass('active')) {
                     icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
@@ -762,13 +703,11 @@
                 }
             });
 
-            // Close sidebar when close button is clicked
             $('#pavitra-edge-close-btn').on('click', function(e) {
                 e.stopPropagation();
                 closeEdgePanel();
             });
 
-            // Close sidebar when clicking outside the panel
             $(document).on('click', function(event) {
                 if (!$(event.target).closest('#pavitra-edge-sidebar, #pavitra-edge-trigger-btn').length) {
                     closeEdgePanel();
@@ -781,23 +720,18 @@
                 $('#pavitra-edge-trigger-btn').find("i").removeClass('fa-chevron-right').addClass('fa-chevron-left');
             }
 
-            // Quick Access Cart action
             $('#pavitra-edge-cart-btn').on('click', function(e) {
                 e.stopPropagation();
                 closeEdgePanel();
-                // Trigger standard header cart button click
                 $('#cart-trigger-btn').click();
             });
 
-            // Quick Access Filter action
             $('#pavitra-edge-filter-btn').on('click', function(e) {
                 e.stopPropagation();
                 closeEdgePanel();
                 
-                // Check if filters modal is available on this page (present in catalog.php)
                 const filterModalEl = document.getElementById('filtersModal');
                 if (filterModalEl) {
-                    // Open modal directly if on Catalog page
                     if (window.bootstrap) {
                         const filterModal = bootstrap.Modal.getOrCreateInstance(filterModalEl);
                         filterModal.show();
@@ -805,12 +739,10 @@
                         $('#filtersModal').modal('show');
                     }
                 } else {
-                    // If on other pages, redirect to catalog page with query parameter to trigger filters automatically
                     window.location.href = '/?show_filters=true';
                 }
             });
 
-            // Automatically trigger filters modal if redirected with parameter
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('show_filters') && urlParams.get('show_filters') === 'true') {
                 const filterModalEl = document.getElementById('filtersModal');
@@ -829,7 +761,6 @@
     </script>
 
 <script>
-// Offline mode: intercept AJAX calls and show friendly message
 (function() {
     var origAjax = $.ajax;
     $.ajax = function(opts) {

@@ -1,4 +1,3 @@
-<!-- Retailer Orders Dashboard -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -21,7 +20,6 @@
         <div class="d-flex flex-column gap-4">
             <?php foreach ($orders as $order): ?>
                 <div class="card shadow-sm border border-light overflow-hidden">
-                    <!-- Order Header -->
                     <div class="card-header bg-light py-3 border-bottom px-4">
                         <div class="row align-items-center g-3">
                             <div class="col-md-3">
@@ -50,10 +48,8 @@
                         </div>
                     </div>
 
-                    <!-- Order Body -->
                     <div class="card-body p-4">
                         <div class="row g-4">
-                            <!-- Items list -->
                             <div class="col-lg-7">
                                 <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem;">Wholesale Items</h6>
                                 <div class="d-flex flex-column gap-3">
@@ -72,7 +68,6 @@
                                 </div>
                             </div>
 
-                            <!-- Shipping info -->
                             <div class="col-lg-5 border-start-lg">
                                 <h6 class="fw-bold text-uppercase text-muted mb-2" style="font-size: 0.75rem;">Weaver & Shipping Details</h6>
                                 <div class="mb-3 small">
@@ -87,7 +82,6 @@
                                     </div>
                                 <?php endif; ?>
 
-                                <!-- Status Timeline Indicator -->
                                 <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem;">Delivery Roadmap</h6>
                                 <?php
                                     $statuses = ['PLACED', 'ACCEPTED', 'PACKED', 'SHIPPED', 'OUT_FOR_DELIVERY', 'DELIVERED'];
@@ -101,7 +95,6 @@
                                     </div>
                                 <?php else: ?>
                                     <div class="d-flex justify-content-between text-center mt-2 position-relative" style="font-size: 0.65rem;">
-                                        <!-- Visual Progress Line -->
                                         <div class="progress position-absolute start-0 end-0 top-50 translate-y-middle bg-secondary-subtle" style="height: 3px; z-index: 1;">
                                             <div class="progress-bar bg-pink" role="progressbar" style="width: <?= $currentIndex * 20 ?>%; background-color: var(--meesho-pink);"></div>
                                         </div>

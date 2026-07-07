@@ -1,4 +1,3 @@
-<!-- Super Admin Dashboard Console -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -8,7 +7,6 @@
         <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
     </div>
 
-    <!-- Stat Grid -->
     <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="card shadow-sm border border-light p-3 bg-white">
@@ -40,7 +38,6 @@
         </div>
     </div>
 
-    <!-- Quick Navigation Hub -->
     <h5 class="fw-bold mb-3 text-dark">Administrative Sections</h5>
     <div class="row g-3">
         <div class="col-6 col-md-4 col-lg-2">

@@ -13,7 +13,6 @@ class SupportController extends Controller {
         $this->setLayout('main');
     }
 
-    // Retailer: list tickets
     public function index(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -29,7 +28,6 @@ class SupportController extends Controller {
         ]);
     }
 
-    // Retailer: show create ticket page
     public function createView(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -39,7 +37,6 @@ class SupportController extends Controller {
         ]);
     }
 
-    // Retailer: save new ticket
     public function create(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -62,7 +59,6 @@ class SupportController extends Controller {
 
                 $ticketNum = 'TCK-' . strtoupper(bin2hex(random_bytes(4))) . '-' . time();
                 
-                // Insert ticket
                 $stmt = $db->prepare("
                     INSERT INTO support_tickets (ticket_number, user_id, subject, status, priority)
                     VALUES (?, ?, ?, 'OPEN', ?)
@@ -70,7 +66,6 @@ class SupportController extends Controller {
                 $stmt->execute([$ticketNum, $user['id'], $subject, $priority]);
                 $ticketId = $db->lastInsertId();
 
-                // Insert message
                 $stmtMsg = $db->prepare("
                     INSERT INTO ticket_messages (ticket_id, sender_id, message, is_internal)
                     VALUES (?, ?, ?, 0)
@@ -95,7 +90,6 @@ class SupportController extends Controller {
         ]);
     }
 
-    // Retailer: view single ticket chat
     public function viewTicket(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -103,7 +97,6 @@ class SupportController extends Controller {
         $ticketId = intval($params['id'] ?? 0);
         $db = Application::$app->db;
 
-        // Fetch ticket
         $stmt = $db->prepare("SELECT * FROM support_tickets WHERE id = ? AND user_id = ?");
         $stmt->execute([$ticketId, $user['id']]);
         $ticket = $stmt->fetch();
@@ -113,7 +106,6 @@ class SupportController extends Controller {
             return $this->render('_404', ['title' => 'Ticket Not Found']);
         }
 
-        // Fetch messages (exclude internal notes for retailer)
         $stmtMsg = $db->prepare("
             SELECT tm.*, u.name as sender_name, r.name as sender_role
             FROM ticket_messages tm
@@ -132,7 +124,6 @@ class SupportController extends Controller {
         ]);
     }
 
-    // Retailer: reply to ticket
     public function reply(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -148,7 +139,6 @@ class SupportController extends Controller {
 
         $db = Application::$app->db;
         
-        // Verify ownership
         $stmtCheck = $db->prepare("SELECT id FROM support_tickets WHERE id = ? AND user_id = ? AND status != 'CLOSED'");
         $stmtCheck->execute([$ticketId, $user['id']]);
         if (!$stmtCheck->fetch()) {
@@ -156,7 +146,6 @@ class SupportController extends Controller {
             return;
         }
 
-        // Insert message & update ticket updated_at / open status
         $stmtMsg = $db->prepare("
             INSERT INTO ticket_messages (ticket_id, sender_id, message, is_internal)
             VALUES (?, ?, ?, 0)
@@ -169,7 +158,6 @@ class SupportController extends Controller {
         $response->redirect("/support/ticket/{$ticketId}");
     }
 
-    // Admin: list all tickets
     public function adminIndex(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN', 'SUPPORT_MANAGER']);
         if (!$user) return;
@@ -189,7 +177,6 @@ class SupportController extends Controller {
         ]);
     }
 
-    // Admin: view ticket details workspace
     public function adminViewTicket(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN', 'SUPPORT_MANAGER']);
         if (!$user) return;
@@ -197,7 +184,6 @@ class SupportController extends Controller {
         $ticketId = intval($params['id'] ?? 0);
         $db = Application::$app->db;
 
-        // Fetch ticket details
         $stmt = $db->prepare("
             SELECT st.*, u.name as buyer_name, u.email as buyer_email, u.mobile as buyer_mobile
             FROM support_tickets st
@@ -212,7 +198,6 @@ class SupportController extends Controller {
             return $this->render('_404', ['title' => 'Ticket Not Found']);
         }
 
-        // Fetch messages (include internal notes)
         $stmtMsg = $db->prepare("
             SELECT tm.*, u.name as sender_name, r.name as sender_role
             FROM ticket_messages tm
@@ -231,7 +216,6 @@ class SupportController extends Controller {
         ]);
     }
 
-    // Admin: reply or insert internal note
     public function adminReply(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN', 'SUPPORT_MANAGER']);
         if (!$user) return;
@@ -248,14 +232,12 @@ class SupportController extends Controller {
 
         $db = Application::$app->db;
 
-        // Insert reply
         $stmtMsg = $db->prepare("
             INSERT INTO ticket_messages (ticket_id, sender_id, message, is_internal)
             VALUES (?, ?, ?, ?)
         ");
         $stmtMsg->execute([$ticketId, $user['id'], $message, $isInternal]);
 
-        // Auto transition status if customer reply
         if (!$isInternal) {
             $stmtUp = $db->prepare("UPDATE support_tickets SET status = 'IN_PROGRESS' WHERE id = ?");
             $stmtUp->execute([$ticketId]);
@@ -264,7 +246,6 @@ class SupportController extends Controller {
         $response->redirect("/admin/support/ticket/{$ticketId}");
     }
 
-    // Admin: update ticket status manually
     public function adminStatus(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN', 'SUPPORT_MANAGER']);
         if (!$user) return;

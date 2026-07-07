@@ -9,12 +9,10 @@ use Core\Application;
 
 class ApiController extends Controller {
 
-    // Automatically check rate limits for all API requests
     public function __construct() {
         $this->checkRateLimit(Application::$app->request, Application::$app->response);
     }
 
-    // Rate Limiter: Maximum 60 requests per minute per IP address
     protected function checkRateLimit(Request $request, Response $response): void {
         $ip = $_SERVER['REMOTE_ADDR'] ?? '';
         if (empty($ip)) return;
@@ -23,11 +21,9 @@ class ApiController extends Controller {
         $url = $_SERVER['REQUEST_URI'] ?? '';
         
         try {
-            // Log the hit in activity_logs
             $stmt = $db->prepare("INSERT INTO activity_logs (activity, details, ip_address) VALUES ('API_HIT', ?, ?)");
             $stmt->execute([$url, $ip]);
             
-            // Check count in last 60 seconds
             $stmtCount = $db->prepare("SELECT COUNT(*) FROM activity_logs WHERE ip_address = ? AND created_at >= NOW() - INTERVAL 1 MINUTE");
             $stmtCount->execute([$ip]);
             $count = intval($stmtCount->fetchColumn());
@@ -41,11 +37,9 @@ class ApiController extends Controller {
                 exit;
             }
         } catch (\Throwable $e) {
-            // Silence DB logging failures during local installation or database setups
         }
     }
 
-    // Helper: Authenticates API request using Authorization Bearer token
     protected function authenticateApi(Request $request, Response $response, array $allowedRoles = []): ?array {
         $headers = getallheaders();
         $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
@@ -59,7 +53,6 @@ class ApiController extends Controller {
         $token = substr($authHeader, 7);
         $db = Application::$app->db;
 
-        // Look up token in active user_sessions
         $stmt = $db->prepare("
             SELECT u.*, r.name as role 
             FROM user_sessions us
@@ -108,7 +101,6 @@ class ApiController extends Controller {
         try {
             $db->beginTransaction();
 
-            // Check duplicates
             $stmt = $db->prepare("SELECT id FROM users WHERE email = ? OR mobile = ?");
             $stmt->execute([$email, $mobile]);
             if ($stmt->fetch()) {
@@ -116,7 +108,6 @@ class ApiController extends Controller {
                 return $response->json(['error' => 'An account with this email or mobile number already exists.'], 400);
             }
 
-            // Get role ID
             $stmtRole = $db->prepare("SELECT id FROM roles WHERE name = ?");
             $stmtRole->execute([$roleName]);
             $roleId = $stmtRole->fetchColumn();
@@ -126,7 +117,6 @@ class ApiController extends Controller {
                 return $response->json(['error' => 'Role database record not found.'], 500);
             }
 
-            // Insert User
             $passwordHash = password_hash($password, PASSWORD_BCRYPT);
             $stmtInsert = $db->prepare("
                 INSERT INTO users (name, email, mobile, password_hash, role_id, status, is_verified_email, is_verified_mobile) 
@@ -135,7 +125,6 @@ class ApiController extends Controller {
             $stmtInsert->execute([$name, $email, $mobile, $passwordHash, $roleId]);
             $userId = $db->lastInsertId();
 
-            // Insert Profile and Wallet
             if ($roleName === 'SELLER') {
                 $stmtProfile = $db->prepare("INSERT INTO seller_profiles (user_id, company_name, commission_rate, balance) VALUES (?, ?, 8.50, 0.00)");
                 $stmtProfile->execute([$userId, $shopCompanyName]);
@@ -147,11 +136,9 @@ class ApiController extends Controller {
                 $stmtProfile->execute([$userId]);
             }
 
-            // Create Wallet record
             $stmtWallet = $db->prepare("INSERT INTO wallets (user_id, balance) VALUES (?, 0.00)");
             $stmtWallet->execute([$userId]);
 
-            // Generate Session Bearer Token
             $token = bin2hex(random_bytes(32));
             $ip = $_SERVER['REMOTE_ADDR'] ?? '';
             $agent = $_SERVER['HTTP_USER_AGENT'] ?? 'Mobile-App';
@@ -197,10 +184,8 @@ class ApiController extends Controller {
                 return $response->json(['error' => 'Your merchant account status is pending or blocked.'], 403);
             }
 
-            // Generate token
             $token = bin2hex(random_bytes(32));
             
-            // Insert session
             $ip = $_SERVER['REMOTE_ADDR'] ?? '';
             $agent = $_SERVER['HTTP_USER_AGENT'] ?? 'Mobile-App';
             $stmtSession = $db->prepare("INSERT INTO user_sessions (user_id, token, ip_address, user_agent) VALUES (?, ?, ?, ?)");
@@ -278,7 +263,6 @@ class ApiController extends Controller {
 
         $db = Application::$app->db;
         
-        // Verify owner
         $stmt = $db->prepare("
             SELECT pv.id, pv.stock FROM product_variants pv 
             JOIN products p ON pv.product_id = p.id 
@@ -300,7 +284,6 @@ class ApiController extends Controller {
             $stmtUpdate = $db->prepare("UPDATE product_variants SET stock = ? WHERE id = ?");
             $stmtUpdate->execute([$absoluteQty, $variantId]);
 
-            // Log adjustment
             $stmtLog = $db->prepare("
                 INSERT INTO inventory_logs (product_variant_id, type, quantity, reason) 
                 VALUES (?, ?, ?, 'Mobile App API Stock Adjustment')
@@ -364,7 +347,6 @@ class ApiController extends Controller {
 
         $db = Application::$app->db;
 
-        // Verify variant and fetch seller
         $stmtVar = $db->prepare("
             SELECT pv.*, p.seller_id, p.id as product_id 
             FROM product_variants pv 
@@ -382,12 +364,10 @@ class ApiController extends Controller {
             return $response->json(['error' => "Stock limit exceeded. Only {$variant['stock']} units available."], 400);
         }
 
-        // Calculate amount
         $isWholesale = ($qty >= intval($variant['bulk_threshold']));
         $price = $isWholesale ? floatval($variant['wholesale_price']) : floatval($variant['price']);
         $total = $price * $qty;
 
-        // Check Retailer balance
         $stmtProfile = $db->prepare("SELECT balance FROM retailer_profiles WHERE user_id = ?");
         $stmtProfile->execute([$user['id']]);
         $balance = floatval($stmtProfile->fetchColumn() ?: 0);
@@ -399,12 +379,10 @@ class ApiController extends Controller {
         try {
             $db->beginTransaction();
 
-            // Deduct balance from profiles
             $newBalance = $balance - $total;
             $stmtUpRet = $db->prepare("UPDATE retailer_profiles SET balance = ? WHERE user_id = ?");
             $stmtUpRet->execute([$newBalance, $user['id']]);
 
-            // Deduct wallets table
             $stmtUpWallet = $db->prepare("UPDATE wallets SET balance = ? WHERE user_id = ?");
             $stmtUpWallet->execute([$newBalance, $user['id']]);
 
@@ -412,19 +390,16 @@ class ApiController extends Controller {
             $stmtRetWalletId->execute([$user['id']]);
             $retWalletId = $stmtRetWalletId->fetchColumn();
 
-            // Insert transaction log
             $stmtTx = $db->prepare("
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'DEBIT', ?, ?, 'ORDER_PURCHASE', ?)
             ");
             $stmtTx->execute([$retWalletId, $total, "API order purchase for variant SKU: #{$variant['sku']}", $newBalance]);
 
-            // Address insertion
             $stmtAddr = $db->prepare("INSERT INTO user_addresses (user_id, address_line1, city, state, pin_code) VALUES (?, ?, 'Varanasi', 'UP', '221001')");
             $stmtAddr->execute([$user['id'], $address]);
             $addressId = $db->lastInsertId();
 
-            // Create Order
             $orderNumber = 'ORD-' . strtoupper(bin2hex(random_bytes(4))) . '-' . time();
             $stmtOrder = $db->prepare("
                 INSERT INTO orders (order_number, user_id, seller_id, status, total_amount, net_amount, payment_status, payment_method, address_id)
@@ -433,22 +408,18 @@ class ApiController extends Controller {
             $stmtOrder->execute([$orderNumber, $user['id'], $variant['seller_id'], $total, $total, $addressId]);
             $orderId = $db->lastInsertId();
 
-            // History
             $stmtHist = $db->prepare("INSERT INTO order_status_history (order_id, status, comments, created_by) VALUES (?, 'PLACED', 'Order placed via API Layer', ?)");
             $stmtHist->execute([$orderId, $user['id']]);
 
-            // Order items
             $stmtItem = $db->prepare("
                 INSERT INTO order_items (order_id, product_variant_id, quantity, price, wholesale_price)
                 VALUES (?, ?, ?, ?, ?)
             ");
             $stmtItem->execute([$orderId, $variantId, $qty, $variant['price'], $variant['wholesale_price']]);
 
-            // Deduct stock
             $stmtStock = $db->prepare("UPDATE product_variants SET stock = stock - ? WHERE id = ?");
             $stmtStock->execute([$qty, $variantId]);
 
-            // Log stock reduction
             $stmtInvLog = $db->prepare("
                 INSERT INTO inventory_logs (product_variant_id, type, quantity, reason)
                 VALUES (?, 'OUT', ?, ?)
@@ -503,7 +474,6 @@ class ApiController extends Controller {
             $stmtUpWallet = $db->prepare("UPDATE wallets SET balance = balance + ? WHERE user_id = ?");
             $stmtUpWallet->execute([$amount, $user['id']]);
 
-            // Fetch wallet details
             $stmtWallet = $db->prepare("SELECT id, balance FROM wallets WHERE user_id = ?");
             $stmtWallet->execute([$user['id']]);
             $wallet = $stmtWallet->fetch();
@@ -585,7 +555,6 @@ class ApiController extends Controller {
 
         try {
             if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])) {
-                // Admin platform metrics
                 $totalSales = $db->query("SELECT SUM(net_amount) FROM orders WHERE payment_status = 'PAID'")->fetchColumn() ?: 0.00;
                 $totalCommissions = $db->query("SELECT SUM(commission_deducted) FROM seller_settlements WHERE status = 'SUCCESS'")->fetchColumn() ?: 0.00;
                 $totalOrders = $db->query("SELECT COUNT(*) FROM orders")->fetchColumn() ?: 0;
@@ -597,7 +566,6 @@ class ApiController extends Controller {
                     'orders_count' => intval($totalOrders)
                 ]);
             } else {
-                // Seller hub metrics
                 $stmtSales = $db->prepare("SELECT SUM(total_amount) FROM orders WHERE seller_id = ? AND payment_status = 'PAID'");
                 $stmtSales->execute([$user['id']]);
                 $sales = $stmtSales->fetchColumn() ?: 0.00;
@@ -637,7 +605,6 @@ class ApiController extends Controller {
 
         $db = Application::$app->db;
 
-        // Check ownership
         $stmt = $db->prepare("SELECT id, status, shipment_id FROM delivery_assignments WHERE id = ? AND delivery_partner_id = ?");
         $stmt->execute([$assignId, $user['id']]);
         $assign = $stmt->fetch();
@@ -651,7 +618,6 @@ class ApiController extends Controller {
             if (empty($otp)) {
                 return $response->json(['error' => 'Handover OTP is required to mark as delivered.'], 400);
             }
-            // Check OTP
             $stmtProof = $db->prepare("SELECT otp_code FROM delivery_proofs WHERE delivery_assignment_id = ?");
             $stmtProof->execute([$assignId]);
             $proofOtp = $stmtProof->fetchColumn();
@@ -672,7 +638,6 @@ class ApiController extends Controller {
                 $stmtProofUp = $db->prepare("UPDATE delivery_proofs SET verified_at = ? WHERE delivery_assignment_id = ?");
                 $stmtProofUp->execute([$now, $assignId]);
 
-                // Update order to DELIVERED
                 $stmtShip = $db->prepare("SELECT order_id FROM shipments WHERE id = ?");
                 $stmtShip->execute([$assign['shipment_id']]);
                 $orderId = $stmtShip->fetchColumn();
@@ -685,7 +650,6 @@ class ApiController extends Controller {
                     $stmtHistory->execute([$orderId, $user['id']]);
                 }
 
-                // Credit delivery fee
                 $payout = 150.00;
                 $stmtDriver = $db->prepare("UPDATE delivery_partner_profiles SET balance = balance + ? WHERE user_id = ?");
                 $stmtDriver->execute([$payout, $user['id']]);
@@ -718,7 +682,6 @@ class ApiController extends Controller {
     }
 
     // --- MOCK SIMULATORS FOR UI TRIGGERS ---
-    // POST /api/wallet/deposit
     public function depositSimulate(Request $request, Response $response) {
         $user = Application::$app->getSessionUser();
         if (!$user) {
@@ -737,20 +700,16 @@ class ApiController extends Controller {
         try {
             $db->beginTransaction();
 
-            // Credit retailer balance
             $stmtUpRet = $db->prepare("UPDATE retailer_profiles SET balance = balance + ? WHERE user_id = ?");
             $stmtUpRet->execute([$amount, $user['id']]);
 
-            // Credit wallets table
             $stmtUpWallet = $db->prepare("UPDATE wallets SET balance = balance + ? WHERE user_id = ?");
             $stmtUpWallet->execute([$amount, $user['id']]);
 
-            // Fetch wallet id
             $stmtWalletId = $db->prepare("SELECT id FROM wallets WHERE user_id = ?");
             $stmtWalletId->execute([$user['id']]);
             $walletId = $stmtWalletId->fetchColumn();
 
-            // Log transaction
             $stmtTx = $db->prepare("
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'CREDIT', ?, 'Simulated demo deposit credit', 'DEPOSIT_CREDIT', (SELECT balance FROM wallets WHERE id = ?))
@@ -766,7 +725,6 @@ class ApiController extends Controller {
         }
     }
 
-    // POST /api/kyc/simulate
     public function kycSimulate(Request $request, Response $response) {
         $user = Application::$app->getSessionUser();
         if (!$user) {
@@ -778,7 +736,6 @@ class ApiController extends Controller {
         try {
             $db->beginTransaction();
 
-            // Insert simulated Aadhaar KYC doc
             $stmt = $db->prepare("
                 INSERT INTO kyc_documents (user_id, document_type, document_number, file_path, status)
                 VALUES (?, 'GST', '09AAAAA1111A1Z1', '/uploads/kyc/gst_mock.pdf', 'PENDING')
@@ -794,7 +751,6 @@ class ApiController extends Controller {
         }
     }
 
-    // Public: Single product variant detail for wishlist page
     public function getProductVariant(Request $request, Response $response) {
         $db = Application::$app->db;
         $params = $request->getRouteParams();

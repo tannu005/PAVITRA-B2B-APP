@@ -19,13 +19,11 @@
 
         <form action="/register" method="POST" id="register-form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
-            <!-- Full Name -->
             <div class="mb-4">
                 <label for="name" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Full Name</label>
                 <input type="text" class="form-control nisho-input" id="name" name="name" required placeholder="e.g. Ramesh Kumar" value="<?= htmlspecialchars($name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
-            <!-- Email & Mobile row -->
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
@@ -37,7 +35,6 @@
                 </div>
             </div>
 
-            <!-- Password -->
             <div class="mb-4 position-relative">
                 <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
                 <div class="position-relative">
@@ -46,7 +43,6 @@
                 </div>
             </div>
 
-            <!-- Role Dropdown ("Join As") -->
             <div class="mb-4">
                 <label for="role_id" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Join Platform As</label>
                 <select class="form-select nisho-input" id="role_id" name="role_id" required style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
@@ -64,13 +60,11 @@
                 </select>
             </div>
 
-            <!-- Shop / Company Name -->
             <div class="mb-5">
                 <label id="shop-label" for="shop_company_name" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Shop / Company Name</label>
                 <input type="text" class="form-control nisho-input" id="shop_company_name" name="shop_company_name" required placeholder="e.g. Sri Lakshmi Saree Loom" value="<?= htmlspecialchars($shop_company_name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
-            <!-- Submit Button -->
             <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
                 Create Account
             </button>
@@ -95,7 +89,6 @@
 
 <script>
     $(document).ready(function() {
-        // Dynamic label text based on selected role
         $('#role_id').on('change', function() {
             const roleText = $(this).find('option:selected').text();
             if (roleText.includes('Weaver')) {
@@ -110,7 +103,6 @@
             }
         });
 
-        // Show/Hide password toggle
         $('#toggle-password').on('click', function() {
             var input = $('#password');
             var icon = $(this).find('i');

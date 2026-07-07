@@ -1,4 +1,3 @@
-<!-- Admin KYC Document Verification Queue -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>
@@ -10,11 +9,9 @@
 
     <div class="card shadow-sm border border-light p-4 bg-white">
         <?php if (empty($kycList)): ?>
-            <!-- Fallback if empty, let's create a simulated record so admin can interact with it -->
             <div class="text-center py-5 text-muted">
                 <i class="fa-solid fa-file-shield fs-1 opacity-25 mb-2"></i>
                 <p class="mb-3">No compliance documents submitted for verification.</p>
-                <!-- Simulation trigger button -->
                 <button class="btn btn-meesho-pink btn-sm" id="simulate-kyc-btn">Simulate Demo KYC Submission</button>
             </div>
         <?php else: ?>
@@ -79,7 +76,6 @@
 </div>
 
 <script>
-    // KYC verify actions
     $(document).on('click', '.kyc-verify-btn', function() {
         const kycId = $(this).data('id');
         const targetStatus = $(this).data('status');
@@ -108,10 +104,8 @@
         });
     });
 
-    // Simulate submission for demonstration
     $('#simulate-kyc-btn').on('click', function() {
         $(this).prop('disabled', true).text('Simulating...');
-        // We will call a fast API injection
         $.ajax({
             url: '/api/kyc/simulate',
             method: 'POST',

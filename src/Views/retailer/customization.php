@@ -6,7 +6,6 @@
 ?>
 <div class="container py-5 my-2" style="max-width: 900px; font-family: 'Plus Jakarta Sans', sans-serif;">
     
-    <!-- Header -->
     <div class="text-center mb-5">
         <span class="badge bg-gold text-white text-uppercase px-3 py-2 mb-2" style="font-size:0.68rem; letter-spacing:0.1em; background-color: var(--premium-gold);">Artisan Custom Studio</span>
         <h2 class="text-uppercase fw-normal mb-1" style="font-family: var(--font-headings); letter-spacing: 0.12em; color: var(--meesho-pink);">Request Custom Saree Design</h2>
@@ -16,17 +15,14 @@
 
     <div class="row g-4">
         
-        <!-- Preview Panel -->
         <div class="col-md-5 col-12">
             <div class="card border-0 shadow-sm p-4 text-center sticky-md-top" style="border-radius: 16px; background-color: #FFFDF8; border: 1px solid var(--premium-border) !important; top: 120px; z-index: 5;">
                 <h5 class="fw-bold mb-3 text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.05em; color: var(--premium-dark);">Live Spec Visualizer</h5>
                 
-                <!-- Mock Saree Preview Box -->
                 <div id="saree-preview-box" style="height: 280px; border-radius: 12px; background: linear-gradient(135deg, #6B1D1D 0%, #3D0A0A 100%); transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.2);">
                     <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, var(--premium-gold) 0%, #E6C280 50%, var(--premium-gold) 100%); display: flex; align-items: center; justify-content: center; border-top: 1px solid #FFFDF8; box-shadow: 0 -4px 10px rgba(0,0,0,0.15);">
                         <span id="saree-zari-text" style="font-size: 0.58rem; font-weight: 800; color: #3D0A0A; letter-spacing: 0.12em; text-transform: uppercase;">Standard Zari Border</span>
                     </div>
-                    <!-- Body Motif Pattern Overlay -->
                     <div id="saree-motif-overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; opacity:0.12; background-image: radial-gradient(var(--premium-gold) 2px, transparent 2px); background-size: 24px 24px;"></div>
                 </div>
 
@@ -40,12 +36,10 @@
             </div>
         </div>
 
-        <!-- Customization Form -->
         <div class="col-md-7 col-12">
             <div class="card border-0 shadow-sm p-4" style="border-radius: 16px; background-color: #FFFDF8; border: 1px solid var(--premium-border) !important;">
                 <form id="customization-form" onsubmit="sendCustomizationToWhatsapp(event)">
                     
-                    <!-- 1. Fabric Selection -->
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">1. Select Fabric / Material</label>
                         <select class="form-select rounded-0" id="custom-fabric" onchange="updateVisualizer()">
@@ -59,7 +53,6 @@
                         </select>
                     </div>
 
-                    <!-- 2. Precise Hex Color Selection -->
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">2. Choose Body Color Spectrum</label>
                         <div class="d-flex align-items-center gap-3">
@@ -71,7 +64,6 @@
                         </div>
                     </div>
 
-                    <!-- 3. Border & Zari Options -->
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">3. Border & Zari Width</label>
                         <div class="d-flex flex-wrap gap-2">
@@ -89,7 +81,6 @@
                         </div>
                     </div>
 
-                    <!-- 4. Blouse Sleeve Style -->
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">4. Blouse Style Preference</label>
                         <select class="form-select rounded-0" id="custom-blouse" onchange="updateVisualizer()">
@@ -101,7 +92,6 @@
                         </select>
                     </div>
 
-                    <!-- 5. Drape Size / Length -->
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">5. Saree Length (Drape Size)</label>
                         <select class="form-select rounded-0" id="custom-size" onchange="updateVisualizer()">
@@ -111,7 +101,6 @@
                         </select>
                     </div>
 
-                    <!-- 6. Pattern Motifs -->
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">6. Body Pattern Motif</label>
                         <select class="form-select rounded-0" id="custom-motif" onchange="updateVisualizer()">
@@ -122,7 +111,6 @@
                         </select>
                     </div>
 
-                    <!-- 7. Artisan Upload Reference -->
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.05em;">7. Reference Pattern / Embroidery Photo</label>
                         <div class="p-4 text-center border border-dashed rounded" style="border-style: dashed !important; border-width: 2px !important; border-color: var(--premium-gold) !important; background-color: var(--premium-pink-light);">
@@ -134,7 +122,6 @@
                         </div>
                     </div>
 
-                    <!-- Submit -->
                     <button type="submit" class="btn btn-meesho-pink w-100 py-3 rounded-0 text-uppercase fw-bold" style="letter-spacing: 0.1em;">
                         <i class="fa-brands fa-whatsapp me-2 fs-5"></i>Send Specs to Master Weaver
                     </button>
@@ -151,22 +138,18 @@ function updateVisualizer() {
     const color = document.getElementById('custom-color-spectrum').value;
     document.getElementById('custom-color-hex').value = color.toUpperCase();
     
-    // Update live panel colors
     const previewBox = document.getElementById('saree-preview-box');
     previewBox.style.background = `linear-gradient(135deg, ${color} 0%, #1A0505 100%)`;
     
-    // Update border text
     const borderVal = document.querySelector('input[name="border_zari"]:checked').value;
     document.getElementById('saree-zari-text').textContent = borderVal;
     
-    // Update metadata descriptions
     document.getElementById('visual-material').textContent = document.getElementById('custom-fabric').value;
     document.getElementById('visual-color').textContent = color.toUpperCase();
     document.getElementById('visual-border').textContent = borderVal;
     document.getElementById('visual-blouse').textContent = document.getElementById('custom-blouse').value;
     document.getElementById('visual-size').textContent = document.getElementById('custom-size').value;
 
-    // Update patterns visualizer opacity
     const motif = document.getElementById('custom-motif').value;
     const motifOverlay = document.getElementById('saree-motif-overlay');
     if (motif === 'none') {
@@ -219,7 +202,6 @@ Please assign this custom design request to a master weaver. Thank you!`;
     window.open(whatsappUrl, '_blank');
 }
 
-// Trigger initial preview setup
 document.addEventListener('DOMContentLoaded', () => {
     updateVisualizer();
 });

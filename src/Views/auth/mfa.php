@@ -19,13 +19,11 @@
 
         <form action="/login/mfa" method="POST" id="mfa-form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
-            <!-- 6-digit Code -->
             <div class="mb-5 text-center">
                 <label for="code" class="form-label fw-bold text-muted mb-3 d-block" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Verification Code</label>
                 <input type="text" class="form-control text-center code-input" id="code" name="code" required maxlength="6" autofocus placeholder="000000" autocomplete="one-time-code" style="border: none; border-bottom: 2px solid #ccc; border-radius: 0; padding: 10px 0; outline: none; background: transparent; font-size: 2rem; font-weight: bold; letter-spacing: 12px; width: 200px; margin: 0 auto; text-indent: 6px;">
             </div>
 
-            <!-- Verify Button -->
             <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
                 Verify & Sign In
             </button>

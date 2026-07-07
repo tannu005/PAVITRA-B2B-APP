@@ -1,9 +1,7 @@
 <?php
-// Decode blocks or initialize empty
 $content = $page['content'];
 $blocks = json_decode($content, true);
 if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
-    // If not json, convert existing raw HTML content to a single text block
     $blocks = [
         [
             'type' => 'text',
@@ -25,7 +23,6 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
         <input type="hidden" name="id" value="<?= $page['id'] ?>">
         
         <div class="row g-4">
-            <!-- Left Panel: Content Blocks Builder -->
             <div class="col-lg-8">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
@@ -42,9 +39,7 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
                         </div>
                     </div>
 
-                    <!-- Blocks List Container -->
                     <div id="blocks-container" class="d-flex flex-column gap-3">
-                        <!-- Loaded dynamically via JavaScript -->
                     </div>
 
                     <div class="text-center py-4 bg-light rounded border border-dashed mt-3 d-none" id="empty-blocks-alert">
@@ -55,7 +50,6 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
                 </div>
             </div>
 
-            <!-- Right Panel: Page Configuration & SEO -->
             <div class="col-lg-4">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-gear me-2"></i>Page Configuration</h5>
@@ -116,7 +110,6 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
 </style>
 
 <script>
-// Seed initial blocks array from PHP
 var blocks = <?= json_encode($blocks) ?>;
 
 $(document).ready(function() {
@@ -219,7 +212,6 @@ $(document).ready(function() {
         });
     }
 
-    // Add Block
     $('.btn-add-block').on('click', function(e) {
         e.preventDefault();
         var type = $(this).data('type');
@@ -238,14 +230,12 @@ $(document).ready(function() {
         renderBlocks();
     });
 
-    // Delete Block
     $(document).on('click', '.btn-delete-block', function() {
         var index = $(this).data('index');
         blocks.splice(index, 1);
         renderBlocks();
     });
 
-    // Add Accordion Item
     $(document).on('click', '.btn-add-accordion-item', function() {
         var index = $(this).data('index');
         saveCurrentInputs();
@@ -253,7 +243,6 @@ $(document).ready(function() {
         renderBlocks();
     });
 
-    // Delete Accordion Item
     $(document).on('click', '.btn-delete-accordion-item', function() {
         var blockIdx = $(this).closest('.cms-block-card').data('index');
         var itemIdx = $(this).data('item-index');
@@ -262,7 +251,6 @@ $(document).ready(function() {
         renderBlocks();
     });
 
-    // Save inputs back to blocks array before rendering or submitting
     function saveCurrentInputs() {
         $('.cms-block-card').each(function() {
             var index = $(this).data('index');
@@ -286,7 +274,6 @@ $(document).ready(function() {
         });
     }
 
-    // Submit form via AJAX
     $('#cms-builder-form').on('submit', function(e) {
         e.preventDefault();
         saveCurrentInputs();
@@ -319,7 +306,6 @@ $(document).ready(function() {
         });
     });
 
-    // Initialize first render
     renderBlocks();
 });
 </script>

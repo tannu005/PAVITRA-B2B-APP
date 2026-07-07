@@ -1,4 +1,3 @@
-<!-- Seller Orders List -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -18,7 +17,6 @@
         <div class="d-flex flex-column gap-4">
             <?php foreach ($orders as $order): ?>
                 <div class="card shadow-sm border border-light overflow-hidden bg-white">
-                    <!-- Order Header -->
                     <div class="card-header bg-light py-3 border-bottom px-4">
                         <div class="row align-items-center">
                             <div class="col-sm-4">
@@ -41,10 +39,8 @@
                         </div>
                     </div>
 
-                    <!-- Order Body -->
                     <div class="card-body p-4">
                         <div class="row g-4">
-                            <!-- Items -->
                             <div class="col-md-7">
                                 <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem;">Items Woven</h6>
                                 <div class="d-flex flex-column gap-3">
@@ -63,7 +59,6 @@
                                 </div>
                             </div>
 
-                            <!-- Actions & Dispatch Progress -->
                             <div class="col-md-5 border-start-md">
                                 <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem;">Packaging & Dispatch Actions</h6>
                                 
@@ -117,7 +112,6 @@
     <?php endif; ?>
 </div>
 
-<!-- AJAX Status Update Script -->
 <script>
     $('.change-status-btn').on('click', function() {
         const orderId = $(this).data('id');

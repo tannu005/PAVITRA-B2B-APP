@@ -8,7 +8,6 @@
     </div>
 
     <div class="row g-4">
-        <!-- Import Form -->
         <div class="col-lg-7">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-upload me-2"></i>Select CSV Document</h5>
@@ -76,7 +75,6 @@
             </div>
         </div>
 
-        <!-- Instructions & Format Sample -->
         <div class="col-lg-5">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-circle-info me-2"></i>CSV File Guidelines</h5>

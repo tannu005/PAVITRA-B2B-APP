@@ -55,15 +55,12 @@ fun MainScreen(
   val context = LocalContext.current
   val prefs = remember { context.getSharedPreferences("pavitra_prefs", Context.MODE_PRIVATE) }
   
-  // Offline mode: load from bundled assets, no server needed
   val isOfflineMode = BuildConfig.OFFLINE_MODE
   val offlineUrl = "file:///android_asset/index.html"
   
-  // Try to load previously configured URL. Default to Cloudflare tunnel URL.
   val storedUrl = prefs.getString("server_url", null)
   val defaultUrl = "https://arts-diffs-prepare-mall.trycloudflare.com/"
   
-  // Migrate all old localtunnel/loca.lt URLs to the new stable Cloudflare tunnel
   val activeUrl = if (isOfflineMode) {
     offlineUrl
   } else if (storedUrl != null && storedUrl.contains(".loca.lt")) {
@@ -81,10 +78,8 @@ fun MainScreen(
   var showSettings by remember { mutableStateOf(if (isOfflineMode) false else false) }
   var inputUrl by remember { mutableStateOf(activeUrl) }
 
-  // Custom header to bypass Localtunnel landing reminder page
   val bypassHeaders = remember { if (isOfflineMode) emptyMap() else mapOf("Bypass-Tunnel-Reminder" to "true") }
 
-  // Intercept back gestures
   BackHandler(enabled = (webViewInstance?.canGoBack() == true) && !loadError && !showSettings) {
     webViewInstance?.goBack()
   }
@@ -171,10 +166,8 @@ fun MainScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
       ) {
-        // Top Bar spacing
         Spacer(modifier = Modifier.height(40.dp))
 
-        // Center Branding
         Column(
           horizontalAlignment = Alignment.CenterHorizontally,
           verticalArrangement = Arrangement.Center
@@ -224,7 +217,6 @@ fun MainScreen(
           )
         }
 
-        // Footer status info
         Column(
           horizontalAlignment = Alignment.CenterHorizontally,
           modifier = Modifier.padding(bottom = 40.dp)

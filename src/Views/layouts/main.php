@@ -526,7 +526,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
     
-    <!-- ═══════════ LUXURY CAMERA / IMAGE SEARCH SCANNER MODAL ═══════════ -->
     <div class="modal fade" id="cameraSearchModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.65);">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; background-color: #FFFDF8; overflow: hidden;">
@@ -570,7 +569,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
 
-    <!-- ═══════════ NISHORAMA PREMIUM FOOTER ═══════════ -->
     <footer class="nisho-footer">
         <div class="container">
             <div class="row g-4">
@@ -883,7 +881,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         $isSellerPage = strpos($requestUri, '/seller') !== false;
         if (!$isLandingPage): 
     ?>
-    <!-- ═══════════ Pavitra Designer FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
         <i class="fa-solid fa-chevron-left"></i>
     </button>

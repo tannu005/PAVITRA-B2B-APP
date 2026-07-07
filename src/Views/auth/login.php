@@ -25,13 +25,11 @@
 
         <form action="/login" method="POST" id="login-form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
-            <!-- Email -->
             <div class="mb-4">
                 <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
                 <input type="email" class="form-control nisho-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
-            <!-- Password -->
             <div class="mb-5">
                 <div class="d-flex justify-content-between align-items-center mb-1">
                     <label for="password" class="form-label fw-bold text-muted mb-0" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
@@ -43,7 +41,6 @@
                 </div>
             </div>
 
-            <!-- Sign In Button -->
             <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
                 Sign In
             </button>

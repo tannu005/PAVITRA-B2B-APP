@@ -11,8 +11,6 @@ class Controller {
 
     public function render(string $view, array $params = []) {
         $params['layout'] = $this->layout;
-        // Access router through a helper or singleton, or pass response
-        // For a simpler MVC: we can access the global Application router
         return Application::$app->router->renderView($view, $params);
     }
 
@@ -24,7 +22,6 @@ class Controller {
         }
 
         if (!empty($allowedRoles) && !in_array($user['role'], $allowedRoles)) {
-            // Unauthorised redirect based on role
             if ($user['role'] === 'SELLER') {
                 Application::$app->response->redirect('/seller');
             } else if ($user['role'] === 'DELIVERY') {

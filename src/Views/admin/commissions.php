@@ -1,4 +1,3 @@
-<!-- Admin Commissions Configuration -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>
@@ -9,12 +8,10 @@
     </div>
 
     <div class="row g-4">
-        <!-- Configuration Form -->
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-3 text-dark">Add Commission Rule</h5>
                 <form id="comm-rule-form">
-                    <!-- Scope Category -->
                     <div class="mb-3">
                         <label for="category_id" class="form-label small fw-semibold text-muted text-uppercase">Weaving Category Scope</label>
                         <select class="form-select" id="category_id" name="category_id">
@@ -26,7 +23,6 @@
                         <span class="text-muted" style="font-size: 0.7rem;">Leave empty if applying to a specific weaver.</span>
                     </div>
 
-                    <!-- Scope Seller -->
                     <div class="mb-3">
                         <label for="seller_id" class="form-label small fw-semibold text-muted text-uppercase">Specific Weaver/Seller Scope</label>
                         <select class="form-select" id="seller_id" name="seller_id">
@@ -38,7 +34,6 @@
                         <span class="text-muted" style="font-size: 0.7rem;">Select a merchant to overwrite default rates.</span>
                     </div>
 
-                    <!-- Commission Rate -->
                     <div class="mb-4">
                         <label for="rate" class="form-label small fw-semibold text-muted text-uppercase">Commission Percentage (%)</label>
                         <div class="input-group">
@@ -52,7 +47,6 @@
             </div>
         </div>
 
-        <!-- Rules list -->
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-3 text-dark">Active B2B Commission Rules</h5>

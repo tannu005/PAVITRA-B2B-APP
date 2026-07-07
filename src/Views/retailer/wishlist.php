@@ -6,7 +6,6 @@
 ?>
 <div class="container-xl py-4" style="min-height: 60vh;">
     
-    <!-- Page Header -->
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div>
             <h2 class="mb-1" style="font-family: var(--font-headings); color: var(--meesho-pink);">
@@ -19,13 +18,11 @@
         </button>
     </div>
 
-    <!-- Loading State -->
     <div id="wishlist-loading" class="text-center py-5">
         <div class="spinner-border text-muted" style="width:2rem;height:2rem;"></div>
         <p class="mt-3 text-muted">Fetching your saved items…</p>
     </div>
 
-    <!-- Empty State -->
     <div id="wishlist-empty" class="text-center py-5" style="display:none;">
         <div style="font-size:4rem; margin-bottom:1rem;">🛍️</div>
         <h4 style="color: var(--premium-dark); font-family: var(--font-headings);">Your wishlist is empty</h4>
@@ -35,7 +32,6 @@
         </a>
     </div>
 
-    <!-- Wishlist Grid -->
     <div id="wishlist-grid" class="row g-3" style="display:none;"></div>
 
 </div>
@@ -165,7 +161,6 @@ async function loadWishlist() {
     updateCountText(ids.length);
     document.getElementById('wishlist-grid').style.display = '';
 
-    // Fetch product data for each variant ID from the API
     const grid = document.getElementById('wishlist-grid');
     grid.innerHTML = '';
 

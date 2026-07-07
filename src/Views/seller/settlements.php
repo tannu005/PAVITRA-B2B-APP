@@ -1,4 +1,3 @@
-<!-- Seller Payouts & Settlements -->
 <div class="container-xl py-5">
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>
@@ -8,7 +7,6 @@
         <a href="/seller" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
     <div class="row g-4">
-        <!-- Payout Policies -->
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-clock-rotate-left text-pink me-2"></i>Settlement Policy</h5>
@@ -29,7 +27,6 @@
             </div>
         </div>
 
-        <!-- Payout History -->
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-file-invoice-dollar text-pink me-2"></i>Payout Settlement Ledger</h5>
