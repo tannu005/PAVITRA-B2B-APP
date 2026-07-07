@@ -1387,10 +1387,58 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         })
                         .catch(function(err) {
                             console.error("Camera access denied or error:", err);
-                            alert("Camera error: " + err.message + ". Please ensure permissions are granted in site settings.");
+                            alert("Direct camera access failed (often happens in WebViews). We will now open your device's native camera.");
+                            
+                            // FALLBACK: Use a file input to open native camera
+                            let fileInput = document.getElementById('qr-fallback-input');
+                            if (!fileInput) {
+                                fileInput = document.createElement('input');
+                                fileInput.type = 'file';
+                                fileInput.accept = 'image/*';
+                                fileInput.capture = 'environment';
+                                fileInput.id = 'qr-fallback-input';
+                                fileInput.style.display = 'none';
+                                document.body.appendChild(fileInput);
+                                
+                                fileInput.addEventListener('change', function(e) {
+                                    if (e.target.files && e.target.files.length > 0) {
+                                        const file = e.target.files[0];
+                                        const reader = new FileReader();
+                                        reader.onload = function(event) {
+                                            const img = new Image();
+                                            img.onload = function() {
+                                                const canvas = document.createElement('canvas');
+                                                canvas.width = img.width;
+                                                canvas.height = img.height;
+                                                const ctx = canvas.getContext('2d');
+                                                ctx.drawImage(img, 0, 0, img.width, img.height);
+                                                const imageData = ctx.getImageData(0, 0, img.width, img.height);
+                                                
+                                                if (typeof jsQR !== 'undefined') {
+                                                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                                                        inversionAttempts: "dontInvert",
+                                                    });
+                                                    if (code && code.data) {
+                                                        alert("Scanned Saree QR: " + code.data);
+                                                        $('#qrScannerModal').modal('hide');
+                                                        if (code.data.startsWith('http') || code.data.startsWith('/')) {
+                                                            window.location.href = code.data;
+                                                        }
+                                                    } else {
+                                                        alert("Could not detect a QR code in the image. Please try again.");
+                                                    }
+                                                }
+                                            };
+                                            img.src = event.target.result;
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }
+                                });
+                            }
+                            fileInput.click();
                         });
                 } else {
-                    alert("Your browser does not support camera access.");
+                    alert("Your browser does not support direct camera access.");
                 }
             });
         });
