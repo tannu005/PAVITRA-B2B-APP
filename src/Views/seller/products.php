@@ -8,6 +8,7 @@
         <div>
             <a href="/seller" class="btn btn-outline-secondary btn-sm me-2"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
             <a href="/seller/products/bulk" class="btn btn-outline-pink btn-sm me-2"><i class="fa-solid fa-file-csv me-1"></i> Bulk Upload</a>
+            <button class="btn btn-outline-secondary btn-sm me-2" onclick="openPrintQRModal()"><i class="fa-solid fa-qrcode me-1"></i> Print QR Labels</button>
             <a href="/seller/products/create" class="btn btn-meesho-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload Saree</a>
         </div>
     </div>
@@ -78,3 +79,105 @@
         </div>
     <?php endif; ?>
 </div>
+
+<!-- Print QR Modal -->
+<div class="modal fade" id="printQrModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header d-print-none border-0 pt-4 px-4">
+                <h5 class="modal-title fw-bold" style="color: #482922;"><i class="fa-solid fa-print me-2 text-pink"></i>Printable QR Labels</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 bg-light" id="printable-qr-area">
+                <div class="row g-4">
+                    <?php $hasActiveProducts = false; foreach ($products as $p): ?>
+                        <?php if ($p['status'] === 'ACTIVE' && $p['is_approved'] == 1): $hasActiveProducts = true; ?>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-2 text-center p-3 qr-label-card bg-white" style="border-color: #333 !important; border-style: dashed !important; border-radius: 12px;">
+                                <div class="mb-2 text-truncate fw-bold text-dark" style="font-size: 0.85rem;"><?= htmlspecialchars($p['title']) ?></div>
+                                <div class="text-muted small mb-2 text-truncate">SKU: <?= htmlspecialchars($p['sku']) ?></div>
+                                <div class="mx-auto bg-white p-2 border rounded qr-code-container d-flex justify-content-center align-items-center" data-url="/product/<?= $p['id'] ?>" style="width: 130px; height: 130px;">
+                                </div>
+                                <div class="mt-3 fw-bold text-pink" style="font-size: 1.1rem;">₹<?= number_format($p['wholesale_price']) ?></div>
+                                <div style="font-size: 0.7rem;" class="text-muted mt-1"><i class="fa-solid fa-camera me-1"></i>Scan to buy via Pavitra</div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <?php if (!$hasActiveProducts): ?>
+                        <div class="col-12 text-center py-5">
+                            <p class="text-muted">You have no active, approved products to generate labels for.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="modal-footer d-print-none bg-white border-top-0 pb-4 pe-4">
+                <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-meesho-pink px-5" onclick="window.print()" <?= !$hasActiveProducts ? 'disabled' : '' ?>><i class="fa-solid fa-print me-2"></i> Print Labels</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printQrModal, #printable-qr-area, #printable-qr-area * {
+        visibility: visible;
+    }
+    #printable-qr-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background-color: white !important;
+        padding: 0 !important;
+    }
+    .modal-dialog {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .modal-content, .modal-body {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .qr-label-card {
+        border-style: solid !important;
+        border-color: #000 !important;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    /* Hide scrollbars during print */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    let qrsGenerated = false;
+    function openPrintQRModal() {
+        var myModal = new bootstrap.Modal(document.getElementById('printQrModal'));
+        myModal.show();
+        
+        if (!qrsGenerated) {
+            $('.qr-code-container').each(function() {
+                var url = $(this).data('url');
+                var fullUrl = window.location.origin + url;
+                new QRCode(this, {
+                    text: fullUrl,
+                    width: 110,
+                    height: 110,
+                    colorDark : "#482922",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.L
+                });
+            });
+            qrsGenerated = true;
+        }
+    }
+</script>
