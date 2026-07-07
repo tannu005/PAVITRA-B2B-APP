@@ -63,28 +63,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </a>
                 <?php else: ?>
                     <a href="/" class="nisho-logo" style="margin-right: 10px; text-decoration: none;">
-                        <svg viewBox="0 0 180 45" width="110" height="32" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                            <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
-                            
-                            <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
-                            <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
-                            <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
-                            
-                            <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                            <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                            <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
-                            <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
-                            <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
-                            <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
-                            
-                            <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
-                            <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">DESIGNER</text>
-                        </svg>
+                        <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 38px; width: auto; display: block;" class="pavitra-logo-img">
                     </a>
                 <?php endif; ?>
             </div>
@@ -118,28 +97,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <header class="meesho-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
             <a href="/" class="nisho-logo" style="text-decoration: none;">
-                <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                    <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                    <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
-                    <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
-                    
-                    <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
-                    <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
-                    <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
-                    
-                    <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                    <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                    <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
-                    <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
-                    <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
-                    <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
-                    
-                    <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#282c3f">पवित्रा</text>
-                    <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">DESIGNER</text>
-                </svg>
+                <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
             </a>
 
             <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
@@ -574,28 +532,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
                     <a href="/" class="nisho-logo d-inline-block mb-3">
-                        <svg viewBox="0 0 180 45" width="130" height="38" xmlns="http://www.w3.org/2000/svg" class="pavitra-logo-svg" style="display: block;">
-                            <path d="M 6 30 L 52 30" stroke="#7A4B30" stroke-width="3" stroke-linecap="round" />
-                            <circle cx="14" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="20" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="26" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="32" cy="30" r="0.8" fill="#FFEAA7" />
-                            <circle cx="38" cy="30" r="0.8" fill="#FFEAA7" />
-                            
-                            <path d="M 12 30 C 8 16, 18 4, 36 4 C 22 10, 16 18, 18 30 Z" fill="#E84118" />
-                            <path d="M 20 30 C 16 18, 24 8, 40 8 C 28 13, 24 20, 26 30 Z" fill="#4CD137" />
-                            <path d="M 28 30 C 24 20, 30 12, 44 12 C 34 16, 32 22, 34 30 Z" fill="#0097E6" />
-                            
-                            <path d="M 50 30 C 40 18, 38 10, 45 6 C 47 8, 49 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                            <path d="M 50 30 C 60 18, 62 10, 55 6 C 53 8, 51 14, 50 30" fill="none" stroke="#C5A059" stroke-width="0.8" />
-                            <path d="M 50 29 C 44 18, 44 12, 50 8 C 56 12, 56 18, 50 29 Z" fill="#C5A059" />
-                            <path d="M 50 28 C 46 19, 46 14, 50 11 C 54 14, 54 19, 50 28 Z" fill="#009432" />
-                            <circle cx="50" cy="18" r="2.5" fill="#0652DD" />
-                            <circle cx="50" cy="18" r="1.2" fill="#12CBC4" />
-                            
-                            <text x="62" y="23" font-family="'Rozha One', serif" font-size="20" font-weight="700" fill="#ffffff">पवित्रा</text>
-                            <text x="62" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#d5a249" letter-spacing="0.5">Designer Saree</text>
-                        </svg>
+                        <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
                     </a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
                     <div class="nisho-footer-social mt-3">
