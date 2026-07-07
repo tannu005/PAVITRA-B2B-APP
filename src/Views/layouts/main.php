@@ -967,7 +967,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         // Hide Edge Panel on the main landing page (root path with no query params)
         $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
         $isLandingPage = ($requestUri === '/' || $requestUri === '' || $requestUri === '/index.php');
-        $isSellerPage = strpos($requestUri, '/seller') === 0;
+        $isSellerPage = strpos($requestUri, '/seller') !== false;
         if (!$isLandingPage): 
     ?>
     <!-- ═══════════ Pavitra Designer FLOATING QUICK-ACCESS SIDEBAR (EDGE PANEL) ═══════════ -->
