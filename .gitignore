@@ -15,15 +15,6 @@ vendor/
 error_log
 *.log
 *.tmp
-scratch/
-storage/cache/
-
-# Agent / Editor configurations
-.agents/
-.cursor/
-.github/
-.jetro/
-.mcp.json
 
 
 
