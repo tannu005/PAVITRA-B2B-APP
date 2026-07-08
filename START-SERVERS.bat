@@ -6,7 +6,7 @@ echo  ║     PAVITRA B2B — Starting All Services     ║
 echo  ╚══════════════════════════════════════════════╝
 echo.
 
-set "BASEDIR=C:\xampp\htdocs\pavitra-b2b"
+set "BASEDIR=%~dp0"
 set "MYSQLD=%BASEDIR%\db-bin\mariadb-10.11.8-winx64\bin\mysqld.exe"
 set "DATADIR=%BASEDIR%\db-bin\mariadb-10.11.8-winx64\data"
 set "PHP=%BASEDIR%\php-bin\php.exe"
