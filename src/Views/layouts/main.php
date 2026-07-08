@@ -998,7 +998,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
                 <div class="modal-header border-0 pb-0" style="padding: 1.25rem 1.25rem 0.5rem 1.25rem; background-color: var(--premium-gold); color: white; border-top-left-radius: 16px; border-top-right-radius: 16px;">
                     <h5 class="modal-title fw-bold d-flex align-items-center gap-2" style="font-family: 'Rozha One', serif; color: #482922;">
-                        <i class="fa-solid fa-robot"></i> Pavitra AI Assistant
+                        <i class="fa-solid fa-robot"></i> Pavitra Support Agent
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -1012,7 +1012,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             </div>
                             <div class="bg-white p-3 shadow-sm border" style="font-size: 0.9rem; max-width: 80%; border-radius: 16px 16px 16px 0px !important; border-color: #E2E8F0 !important;">
                                 <h6 class="fw-bold mb-2" style="color: #482922;"><i class="fa-solid fa-sparkles text-warning"></i> Namaste!</h6>
-                                I am the Pavitra AI Assistant. I can help you navigate our wholesale catalog and answer questions about bulk orders.<br><br>
+                                I am the Pavitra Support Agent. I can help you navigate our wholesale catalog and answer questions about bulk orders.<br><br>
                                 <span style="font-size: 0.8rem;" class="text-success"><i class="fa-solid fa-shield-halved"></i> Your privacy is fully protected and encrypted.</span>
                             </div>
                         </div>
