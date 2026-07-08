@@ -22,15 +22,15 @@
 
     --font-headings: 'Italiana', 'Playfair Display', Georgia, serif;
     --font-body: 'Plus Jakarta Sans', 'Nunito', sans-serif;
-    --nisho-body-size: 14px;
-    --nisho-body-line-height: 1.65;
-    --nisho-logo-size: 28px;
-    --nisho-nav-size: 9.6px;
-    --nisho-nav-letter-spacing: 1.728px;
-    --nisho-section-title-size: 17.586px;
-    --nisho-section-title-line-height: 1.5;
-    --nisho-product-title-size: 11.2px;
-    --nisho-product-letter-spacing: 2.016px;
+    --pavitra-body-size: 14px;
+    --pavitra-body-line-height: 1.65;
+    --pavitra-logo-size: 28px;
+    --pavitra-nav-size: 9.6px;
+    --pavitra-nav-letter-spacing: 1.728px;
+    --pavitra-section-title-size: 17.586px;
+    --pavitra-section-title-line-height: 1.5;
+    --pavitra-product-title-size: 11.2px;
+    --pavitra-product-letter-spacing: 2.016px;
 
     --card-shadow: 0 4px 24px rgba(107, 29, 29, 0.07);
     --hover-shadow: 0 16px 48px rgba(107, 29, 29, 0.13);
@@ -42,8 +42,8 @@
 
 body {
     font-family: var(--font-body);
-    font-size: var(--nisho-body-size);
-    line-height: var(--nisho-body-line-height);
+    font-size: var(--pavitra-body-size);
+    line-height: var(--pavitra-body-line-height);
     color: var(--premium-dark);
     background-color: var(--premium-light-bg);
     -webkit-font-smoothing: antialiased;
@@ -58,7 +58,7 @@ body {
 .pavitra-logo-img {
     mix-blend-mode: multiply;
 }
-.nisho-footer .pavitra-logo-img {
+.pavitra-footer .pavitra-logo-img {
     mix-blend-mode: normal;
     border-radius: 8px;
     background-color: #fff;
@@ -244,18 +244,18 @@ h6 {
     transform: translateY(-3px) scale(1.05);
 }
 
-.nisho-logo {
+.pavitra-logo {
     font-family: var(--font-body) !important;
-    font-size: var(--nisho-logo-size) !important;
+    font-size: var(--pavitra-logo-size) !important;
     font-weight: 700 !important;
     line-height: 1.65 !important;
     letter-spacing: normal !important;
     text-transform: uppercase;
 }
 
-.nisho-menu-link {
+.pavitra-menu-link {
     font-family: var(--font-headings) !important;
-    font-size: var(--nisho-nav-size) !important;
+    font-size: var(--pavitra-nav-size) !important;
     font-weight: 600 !important;
     line-height: 1.7 !important;
     letter-spacing: 0.18em !important;
@@ -263,7 +263,7 @@ h6 {
     color: var(--pavitra-pink) !important;
 }
 
-.nisho-hero-title {
+.pavitra-hero-title {
     font-family: var(--font-headings) !important;
     font-size: clamp(2.2rem, 5vw, 4.5rem) !important;
     font-weight: 400 !important;
@@ -272,53 +272,53 @@ h6 {
     text-transform: uppercase !important;
 }
 
-.nisho-hero-subtitle,
-.nisho-section-subtitle {
+.pavitra-hero-subtitle,
+.pavitra-section-subtitle {
     font-family: var(--font-headings) !important;
-    font-size: var(--nisho-nav-size) !important;
+    font-size: var(--pavitra-nav-size) !important;
     font-weight: 600 !important;
     line-height: 1.7 !important;
     letter-spacing: 0.18em !important;
     text-transform: uppercase !important;
 }
 
-.nisho-section-title {
+.pavitra-section-title {
     font-family: var(--font-headings) !important;
-    font-size: var(--nisho-section-title-size) !important;
+    font-size: var(--pavitra-section-title-size) !important;
     font-weight: 400 !important;
-    line-height: var(--nisho-section-title-line-height) !important;
+    line-height: var(--pavitra-section-title-line-height) !important;
     letter-spacing: 0.18em !important;
     text-transform: uppercase !important;
     color: var(--pavitra-pink) !important;
 }
 
-.nisho-section-link,
-.nisho-hero-cta {
+.pavitra-section-link,
+.pavitra-hero-cta {
     font-family: var(--font-headings) !important;
-    font-size: var(--nisho-nav-size) !important;
+    font-size: var(--pavitra-nav-size) !important;
     font-weight: 600 !important;
     line-height: 1.7 !important;
     letter-spacing: 0.18em !important;
     text-transform: uppercase !important;
 }
 
-.nisho-product-title {
+.pavitra-product-title {
     font-family: var(--font-headings) !important;
-    font-size: var(--nisho-product-title-size) !important;
+    font-size: var(--pavitra-product-title-size) !important;
     font-weight: 400 !important;
     line-height: 1.7 !important;
-    letter-spacing: var(--nisho-product-letter-spacing) !important;
+    letter-spacing: var(--pavitra-product-letter-spacing) !important;
     text-transform: uppercase !important;
     color: var(--pavitra-pink) !important;
 }
 
-.nisho-product-price,
-.nisho-product-price-compare {
+.pavitra-product-price,
+.pavitra-product-price-compare {
     font-family: var(--font-headings) !important;
-    font-size: var(--nisho-product-title-size) !important;
+    font-size: var(--pavitra-product-title-size) !important;
     font-weight: 700 !important;
     line-height: 1.7 !important;
-    letter-spacing: var(--nisho-product-letter-spacing) !important;
+    letter-spacing: var(--pavitra-product-letter-spacing) !important;
     text-transform: uppercase !important;
 }
 
@@ -1168,9 +1168,9 @@ h6 {
     text-decoration: none;
 }
 
-.nisho-logo {
+.pavitra-logo {
     font-family: var(--font-body) !important;
-    font-size: var(--nisho-logo-size) !important;
+    font-size: var(--pavitra-logo-size) !important;
     font-weight: 700 !important;
     color: #1a1a1a !important;
     text-decoration: none;
@@ -1178,11 +1178,11 @@ h6 {
     transition: transform 0.2s ease;
 }
 
-.nisho-logo:hover {
+.pavitra-logo:hover {
     transform: scale(1.05);
 }
 
-.nisho-logo-sm {
+.pavitra-logo-sm {
     font-family: var(--font-body) !important;
     font-size: 1.1rem;
     font-weight: 900;
@@ -1198,12 +1198,12 @@ h6 {
     line-height: 1;
 }
 
-.nisho-desktop-menu {
+.pavitra-desktop-menu {
     font-family: var(--font-headings);
 }
 
-.nisho-desktop-menu a {
-    font-size: var(--nisho-nav-size) !important;
+.pavitra-desktop-menu a {
+    font-size: var(--pavitra-nav-size) !important;
     font-weight: 600 !important;
     letter-spacing: 0.18em !important;
     line-height: 1.7 !important;
@@ -1213,11 +1213,11 @@ h6 {
     transition: color 0.2s ease;
 }
 
-.nisho-desktop-menu a:hover {
+.pavitra-desktop-menu a:hover {
     color: var(--pavitra-pink);
 }
 
-.nisho-download-btn {
+.pavitra-download-btn {
     position: fixed;
     bottom: 24px;
     left: 24px;
@@ -1235,7 +1235,7 @@ h6 {
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.nisho-download-btn:hover {
+.pavitra-download-btn:hover {
     transform: translateY(-4px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
     background-color: #1a1a1a;
@@ -1285,8 +1285,8 @@ h6 {
     font-size: 0.65rem;
 }
 
-.nisho-hero-banner {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)), url('/nisho-hero.png');
+.pavitra-hero-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)), url('/pavitra-hero.png');
     background-size: cover;
     background-position: center;
     height: 480px;
@@ -1298,7 +1298,7 @@ h6 {
     position: relative;
 }
 
-.nisho-video-banner {
+.pavitra-video-banner {
     min-height: 320px;
     height: min(48vw, 480px);
     max-height: 480px;
@@ -1306,7 +1306,7 @@ h6 {
     isolation: isolate;
 }
 
-.nisho-video-media {
+.pavitra-video-media {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -1315,25 +1315,25 @@ h6 {
     object-position: center;
 }
 
-.nisho-video-overlay {
+.pavitra-video-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42));
 }
 
-.nisho-video-content {
+.pavitra-video-content {
     inset: 0;
     z-index: 1;
 }
 
-.nisho-video-copy {
+.pavitra-video-copy {
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.95) !important;
     max-width: 450px;
 }
 
 @media (max-width: 768px) {
-    .nisho-hero-banner {
+    .pavitra-hero-banner {
         height: 240px;
     }
 
@@ -1352,15 +1352,15 @@ h6 {
         gap: 8px !important;
     }
 
-    .pavitra-header .nisho-logo {
-        font-size: var(--nisho-logo-size) !important;
+    .pavitra-header .pavitra-logo {
+        font-size: var(--pavitra-logo-size) !important;
     }
 
     .pavitra-header .pavitra-nav-items {
         display: none !important;
     }
 
-    .nisho-desktop-menu {
+    .pavitra-desktop-menu {
         width: 100% !important;
         overflow-x: auto !important;
         white-space: nowrap !important;
@@ -1370,12 +1370,12 @@ h6 {
         -webkit-overflow-scrolling: touch;
     }
 
-    .nisho-desktop-menu::-webkit-scrollbar {
+    .pavitra-desktop-menu::-webkit-scrollbar {
         display: none !important;
     }
 
-    .nisho-desktop-menu .menu-row-1,
-    .nisho-desktop-menu .menu-row-2 {
+    .pavitra-desktop-menu .menu-row-1,
+    .pavitra-desktop-menu .menu-row-2 {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: nowrap !important;
@@ -1383,23 +1383,23 @@ h6 {
         padding: 2px 4px !important;
     }
 
-    .nisho-desktop-menu a {
-        font-size: var(--nisho-nav-size) !important;
+    .pavitra-desktop-menu a {
+        font-size: var(--pavitra-nav-size) !important;
         display: inline-block !important;
     }
 
-    .nisho-video-banner {
+    .pavitra-video-banner {
         height: 240px;
         min-height: 240px;
         max-height: 240px;
     }
 
-    .nisho-video-copy {
+    .pavitra-video-copy {
         font-size: 0.78rem;
         max-width: 320px;
     }
 
-    .nisho-video-content {
+    .pavitra-video-content {
         padding: 1rem !important;
     }
 }
@@ -1415,20 +1415,20 @@ h6 {
     transform: translateY(0);
 }
 
-.nisho-card-img-wrapper {
+.pavitra-card-img-wrapper {
     position: relative;
     overflow: hidden;
     aspect-ratio: 3 / 4;
 }
 
-.nisho-card-img {
+.pavitra-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nisho-card-img-hover {
+.pavitra-card-img-hover {
     position: absolute;
     top: 0;
     left: 0;
@@ -1439,49 +1439,49 @@ h6 {
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.pavitra-product-card:hover .nisho-card-img {
+.pavitra-product-card:hover .pavitra-card-img {
     opacity: 0;
     transform: scale(1.05);
 }
 
-.pavitra-product-card:hover .nisho-card-img-hover {
+.pavitra-product-card:hover .pavitra-card-img-hover {
     opacity: 1;
     transform: scale(1.05);
 }
 
-.nisho-cat-block {
+.pavitra-cat-block {
     border-radius: 0px;
     border: 1px solid #eee;
 }
 
-.nisho-cat-block:hover .nisho-cat-img {
+.pavitra-cat-block:hover .pavitra-cat-img {
     transform: scale(1.06);
 }
 
-.nisho-cat-overlay {
+.pavitra-cat-overlay {
     transition: background 0.3s ease;
 }
 
-.nisho-cat-block:hover .nisho-cat-overlay {
+.pavitra-cat-block:hover .pavitra-cat-overlay {
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.72)) !important;
 }
 
-.nisho-quick-add-btn {
+.pavitra-quick-add-btn {
     z-index: 5;
     opacity: 0;
 }
 
-.pavitra-product-card:hover .nisho-quick-add-btn {
+.pavitra-product-card:hover .pavitra-quick-add-btn {
     transform: translateY(0) !important;
     opacity: 1;
 }
 
-.nisho-quick-add-btn:hover {
+.pavitra-quick-add-btn:hover {
     background-color: #1a1a1a !important;
 }
 
 @media (hover: none) and (pointer: coarse) {
-    .nisho-quick-add-btn {
+    .pavitra-quick-add-btn {
         transform: translateY(0) !important;
         opacity: 0.95 !important;
         display: block !important;
@@ -1490,18 +1490,18 @@ h6 {
     }
 }
 
-.nisho-card-sizes {
+.pavitra-card-sizes {
     font-size: 0.65rem;
     color: #888;
     letter-spacing: 0.05em;
     font-weight: 500;
 }
 
-.pavitra-product-card:hover .nisho-card-sizes {
+.pavitra-product-card:hover .pavitra-card-sizes {
     color: #482922;
 }
 
-.nisho-carousel-container {
+.pavitra-carousel-container {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -1511,45 +1511,45 @@ h6 {
     padding-bottom: 20px;
 }
 
-.nisho-carousel-container::-webkit-scrollbar {
+.pavitra-carousel-container::-webkit-scrollbar {
     height: 4px;
 }
 
-.nisho-carousel-container::-webkit-scrollbar-track {
+.pavitra-carousel-container::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-.nisho-carousel-container::-webkit-scrollbar-thumb {
+.pavitra-carousel-container::-webkit-scrollbar-thumb {
     background: #482922;
     border-radius: 2px;
 }
 
-.nisho-carousel-item {
+.pavitra-carousel-item {
     flex: 0 0 calc(25% - 15px);
     
 }
 
 @media (max-width: 991px) {
-    .nisho-carousel-item {
+    .pavitra-carousel-item {
         flex: 0 0 calc(33.333% - 14px);
         
     }
 }
 
 @media (max-width: 576px) {
-    .nisho-carousel-item {
+    .pavitra-carousel-item {
         flex: 0 0 calc(50% - 10px);
         
         scroll-snap-align: start;
     }
 
-    .nisho-carousel-container {
+    .pavitra-carousel-container {
         scroll-snap-type: x mandatory;
         padding-bottom: 10px;
     }
 }
 
-@keyframes nishoFadeInUp {
+@keyframes pavitraFadeInUp {
     from {
         opacity: 0;
         transform: translateY(40px);
@@ -1561,7 +1561,7 @@ h6 {
     }
 }
 
-@keyframes nishoFadeIn {
+@keyframes pavitraFadeIn {
     from {
         opacity: 0;
     }
@@ -1571,7 +1571,7 @@ h6 {
     }
 }
 
-@keyframes nishoSlideInLeft {
+@keyframes pavitraSlideInLeft {
     from {
         opacity: 0;
         transform: translateX(-30px);
@@ -1583,7 +1583,7 @@ h6 {
     }
 }
 
-@keyframes nishoSlideInRight {
+@keyframes pavitraSlideInRight {
     from {
         opacity: 0;
         transform: translateX(30px);
@@ -1595,7 +1595,7 @@ h6 {
     }
 }
 
-@keyframes nishoPulse {
+@keyframes pavitraPulse {
 
     0%,
     100% {
@@ -1607,7 +1607,7 @@ h6 {
     }
 }
 
-@keyframes nishoShimmer {
+@keyframes pavitraShimmer {
     0% {
         background-position: -200% 0;
     }
@@ -1617,7 +1617,7 @@ h6 {
     }
 }
 
-@keyframes nishoFloat {
+@keyframes pavitraFloat {
 
     0%,
     100% {
@@ -1629,7 +1629,7 @@ h6 {
     }
 }
 
-@keyframes nishoCounterSpin {
+@keyframes pavitraCounterSpin {
     from {
         transform: rotate(0deg);
     }
@@ -1639,7 +1639,7 @@ h6 {
     }
 }
 
-@keyframes nishoHeartBeat {
+@keyframes pavitraHeartBeat {
     0% {
         transform: scale(1);
     }
@@ -1661,46 +1661,46 @@ h6 {
     }
 }
 
-.nisho-anim-section {
+.pavitra-anim-section {
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nisho-anim-section.in-view {
+.pavitra-anim-section.in-view {
     opacity: 1;
     transform: translateY(0);
 }
 
-.nisho-carousel-item:nth-child(1) {
+.pavitra-carousel-item:nth-child(1) {
     transition-delay: 0s;
 }
 
-.nisho-carousel-item:nth-child(2) {
+.pavitra-carousel-item:nth-child(2) {
     transition-delay: 0.08s;
 }
 
-.nisho-carousel-item:nth-child(3) {
+.pavitra-carousel-item:nth-child(3) {
     transition-delay: 0.16s;
 }
 
-.nisho-carousel-item:nth-child(4) {
+.pavitra-carousel-item:nth-child(4) {
     transition-delay: 0.24s;
 }
 
-.nisho-carousel-item:nth-child(5) {
+.pavitra-carousel-item:nth-child(5) {
     transition-delay: 0.32s;
 }
 
-.nisho-carousel-item:nth-child(6) {
+.pavitra-carousel-item:nth-child(6) {
     transition-delay: 0.40s;
 }
 
-.nisho-carousel-item:nth-child(7) {
+.pavitra-carousel-item:nth-child(7) {
     transition-delay: 0.48s;
 }
 
-.nisho-carousel-item:nth-child(8) {
+.pavitra-carousel-item:nth-child(8) {
     transition-delay: 0.56s;
 }
 
@@ -1744,15 +1744,15 @@ h6 {
 }
 
 .carousel-item.active h1 {
-    animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    animation: pavitraFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
 
 .carousel-item.active p {
-    animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+    animation: pavitraFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
 }
 
 .carousel-item.active .btn {
-    animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+    animation: pavitraFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
 }
 
 @media (max-width: 768px) {
@@ -1767,7 +1767,7 @@ h6 {
 }
 
 .wishlist-heart-btn.active {
-    animation: nishoHeartBeat 0.6s ease-in-out;
+    animation: pavitraHeartBeat 0.6s ease-in-out;
     color: #E91E63 !important;
 }
 
@@ -1781,11 +1781,11 @@ h6 {
 }
 
 .col-4:hover .fa-solid {
-    animation: nishoFloat 1.5s ease-in-out infinite;
+    animation: pavitraFloat 1.5s ease-in-out infinite;
     color: #C5A059 !important;
 }
 
-.nisho-cat-block::after {
+.pavitra-cat-block::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -1798,7 +1798,7 @@ h6 {
     z-index: 10;
 }
 
-.nisho-cat-block:hover::after {
+.pavitra-cat-block:hover::after {
     transform: scaleX(1);
 }
 
@@ -1811,7 +1811,7 @@ html {
     outline: none !important;
 }
 
-.nisho-newsletter-input::placeholder {
+.pavitra-newsletter-input::placeholder {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
@@ -1821,7 +1821,7 @@ html {
     background: rgba(255, 255, 255, 0.97) !important;
 }
 
-.nisho-footer {
+.pavitra-footer {
     background-color: #1a1a1a;
     color: rgba(255, 255, 255, 0.55);
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1829,12 +1829,12 @@ html {
 }
 
 @media (max-width: 768px) {
-    .nisho-footer {
+    .pavitra-footer {
         display: none !important;
     }
 }
 
-.nisho-footer h5 {
+.pavitra-footer h5 {
     color: #FFF;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.82rem;
@@ -1844,7 +1844,7 @@ html {
     margin-bottom: 1.2rem;
 }
 
-.nisho-footer a {
+.pavitra-footer a {
     color: rgba(255, 255, 255, 0.45);
     text-decoration: none;
     font-size: 0.82rem;
@@ -1853,12 +1853,12 @@ html {
     margin-bottom: 0.6rem;
 }
 
-.nisho-footer a:hover {
+.pavitra-footer a:hover {
     color: #C5A059;
     padding-left: 4px;
 }
 
-.nisho-footer-bottom {
+.pavitra-footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding: 20px 0;
     margin-top: 40px;
@@ -1866,7 +1866,7 @@ html {
     color: rgba(255, 255, 255, 0.3);
 }
 
-.nisho-footer-social a {
+.pavitra-footer-social a {
     display: inline-flex !important;
     width: 36px;
     height: 36px;
@@ -1880,7 +1880,7 @@ html {
     transition: all 0.3s ease;
 }
 
-.nisho-footer-social a:hover {
+.pavitra-footer-social a:hover {
     background: #C5A059;
     color: #1a1a1a !important;
     transform: translateY(-3px);
@@ -1890,7 +1890,7 @@ html {
 .skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
-    animation: nishoShimmer 1.5s infinite;
+    animation: pavitraShimmer 1.5s infinite;
     border-radius: 4px;
 }
 
@@ -1911,15 +1911,15 @@ html {
         font-size: 0.6rem !important;
     }
 
-    .nisho-cat-block {
+    .pavitra-cat-block {
         height: 240px !important;
     }
 
-    .nisho-cat-overlay h4 {
+    .pavitra-cat-overlay h4 {
         font-size: 0.85rem !important;
     }
 
-    .nisho-cat-overlay span {
+    .pavitra-cat-overlay span {
         font-size: 0.55rem !important;
     }
 }
@@ -2123,13 +2123,13 @@ html {
     }
 }
 
-.nisho-parallax-container {
+.pavitra-parallax-container {
     position: relative;
     overflow: hidden;
     clip-path: inset(0 0 0 0);
     z-index: 1;
 }
-.nisho-parallax-bg {
+.pavitra-parallax-bg {
     position: fixed; 
     top: 0;
     left: 0;
