@@ -55,6 +55,16 @@ body {
     overflow-x: hidden;
 }
 
+.pavitra-logo-img {
+    mix-blend-mode: multiply;
+}
+.nisho-footer .pavitra-logo-img {
+    mix-blend-mode: normal;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 4px;
+}
+
 h1,
 h2,
 h3,
