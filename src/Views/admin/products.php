@@ -55,7 +55,7 @@
                                         Revoke Approval
                                     </button>
                                 <?php else: ?>
-                                    <button class="btn btn-meesho-pink btn-sm approve-prod-btn" data-id="<?= $p['id'] ?>" data-approve="1">
+                                    <button class="btn btn-pavitra-pink btn-sm approve-prod-btn" data-id="<?= $p['id'] ?>" data-approve="1">
                                         Approve Saree
                                     </button>
                                 <?php endif; ?>

@@ -42,7 +42,7 @@
                                 <div class="row align-items-center g-3">
                                     <div class="col-md-8">
                                         <div class="d-flex align-items-center gap-2 mb-2">
-                                            <span class="badge bg-pink text-white fw-bold" style="background-color: var(--meesho-pink) !important;">
+                                            <span class="badge bg-pink text-white fw-bold" style="background-color: var(--pavitra-pink) !important;">
                                                 <?= str_replace('_', ' ', $a['assignment_status']) ?>
                                             </span>
                                             <code class="text-secondary">#<?= htmlspecialchars($a['shipment_number']) ?></code>
@@ -63,7 +63,7 @@
                                     
                                     <div class="col-md-4 text-md-end">
                                         <?php if ($a['assignment_status'] === 'ASSIGNED'): ?>
-                                            <button class="btn btn-meesho-pink btn-sm w-100 py-2 change-assignment-status-btn" data-id="<?= $a['assignment_id'] ?>" data-status="PICKED_UP">
+                                            <button class="btn btn-pavitra-pink btn-sm w-100 py-2 change-assignment-status-btn" data-id="<?= $a['assignment_id'] ?>" data-status="PICKED_UP">
                                                 Collect / Picked Up
                                             </button>
                                         <?php elseif ($a['assignment_status'] === 'PICKED_UP'): ?>

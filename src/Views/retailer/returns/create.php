@@ -58,7 +58,7 @@
                         <textarea class="form-control" id="reason" name="reason" rows="3" required placeholder="State why these items are being returned (e.g. damaged brocades, shade mismatched, weave discrepancies)..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-meesho-pink w-100 py-3 fw-bold fs-6">Submit Return Request for Review</button>
+                    <button type="submit" class="btn btn-pavitra-pink w-100 py-3 fw-bold fs-6">Submit Return Request for Review</button>
                 </form>
             </div>
         </div>

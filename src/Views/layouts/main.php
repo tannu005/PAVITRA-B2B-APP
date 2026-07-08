@@ -30,7 +30,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Cinzel:wght@400;600;700&family=Rozha+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= Application::assetUrl('/assets/css/meesho.css?v=' . time()) ?>">
+    <link rel="stylesheet" href="<?= Application::assetUrl('/assets/css/pavitra.css?v=' . time()) ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         window.__CSRF_TOKEN__ = <?= json_encode($csrfToken) ?>;
@@ -51,7 +51,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         ⚡ Lowest Prices • Free Shipping on Bulk Orders • Weaver-Direct Verified Quality
     </div>
 
-    <header class="meesho-mobile-header">
+    <header class="pavitra-mobile-header">
         <div class="mobile-header-top-row">
             <div class="d-flex align-items-center">
                 <a class="text-dark me-3" data-bs-toggle="modal" href="#qrScannerModal" role="button" title="Scan Saree QR">
@@ -82,11 +82,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
 
-        <div class="meesho-mobile-search">
+        <div class="pavitra-mobile-search">
             <form id="search-form-mobile" method="GET" action="/">
-                <i class="fa fa-search meesho-mobile-search-icon"></i>
-                <input type="text" name="search" class="meesho-mobile-search-input" placeholder="Search by Keyword or Product ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-                <div class="meesho-mobile-search-right-icons">
+                <i class="fa fa-search pavitra-mobile-search-icon"></i>
+                <input type="text" name="search" class="pavitra-mobile-search-input" placeholder="Search by Keyword or Product ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                <div class="pavitra-mobile-search-right-icons">
                     <i class="fa-solid fa-microphone voice-search-btn" title="Voice Search" style="cursor:pointer;"></i>
                     <i class="fa-solid fa-camera camera-search-btn ms-2" title="Search by Image" style="cursor:pointer;"></i>
                 </div>
@@ -94,7 +94,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </header>
 
-    <header class="meesho-header py-2">
+    <header class="pavitra-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
             <a href="/" class="nisho-logo" style="text-decoration: none;">
                 <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
@@ -131,7 +131,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>
             </div>
 
-            <div class="meesho-nav-items gap-3 align-items-center">
+            <div class="pavitra-nav-items gap-3 align-items-center">
                 <a href="javascript:void(0)" class="text-dark me-2" onclick="$('#search-dropdown').toggle()"><i class="fa-solid fa-magnifying-glass fs-5"></i></a>
                 
                 <?php if ($user): ?>
@@ -166,10 +166,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
         
         <div class="container-xl py-2" id="search-dropdown" style="display: none; border-top: 1px solid #eee;">
-            <form class="meesho-search-form w-100 max-width-none position-relative" id="search-form" method="GET" action="/">
-                <i class="fa fa-search meesho-search-icon"></i>
-                <input type="text" name="search" class="meesho-search-input" placeholder="Search by Keyword or Product ID..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-                <div class="meesho-mobile-search-right-icons" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--premium-dark-muted); z-index: 10 !important; pointer-events: auto !important;">
+            <form class="pavitra-search-form w-100 max-width-none position-relative" id="search-form" method="GET" action="/">
+                <i class="fa fa-search pavitra-search-icon"></i>
+                <input type="text" name="search" class="pavitra-search-input" placeholder="Search by Keyword or Product ID..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                <div class="pavitra-mobile-search-right-icons" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--premium-dark-muted); z-index: 10 !important; pointer-events: auto !important;">
                     <i class="fa-solid fa-microphone voice-search-btn" title="Voice Search"></i>
                     <i class="fa-solid fa-camera camera-search-btn" title="Search by Image"></i>
                 </div>
@@ -219,7 +219,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <textarea id="shipping-address-box" class="form-control" rows="2" placeholder="Street, City, State, PIN Code..." style="font-size: 0.85rem; resize: none;"></textarea>
             </div>
             
-            <button class="btn btn-meesho-pink w-100 py-2 fs-6" id="checkout-order-btn">
+            <button class="btn btn-pavitra-pink w-100 py-2 fs-6" id="checkout-order-btn">
                 Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>
             </button>
         </div>
@@ -269,7 +269,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <div class="text-center py-5 text-muted">
                             <i class="fa fa-shopping-bag mb-3 fs-1 opacity-50"></i>
                             <p class="mb-3">Your wholesale cart is empty.</p>
-                            <button class="btn btn-meesho-pink btn-sm" onclick="$('#cart-close-btn').click()">Shop Sarees</button>
+                            <button class="btn btn-pavitra-pink btn-sm" onclick="$('#cart-close-btn').click()">Shop Sarees</button>
                         </div>
                     `);
                     $('#cart-drawer-footer').hide();
@@ -284,7 +284,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     
                     html += `
                         <div class="d-flex gap-3 pb-3 border-bottom align-items-center">
-                            <img src="${item.image_url || '/assets/images/placeholder.png'}" class="rounded" style="width: 60px; height: 75px; object-fit: cover; border: 1px solid var(--meesho-border);">
+                            <img src="${item.image_url || '/assets/images/placeholder.png'}" class="rounded" style="width: 60px; height: 75px; object-fit: cover; border: 1px solid var(--pavitra-border);">
                             <div class="flex-grow-1" style="min-width: 0;">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h6 class="fw-semibold mb-0 text-truncate" style="font-size: 0.9rem;">${item.title}</h6>
@@ -442,9 +442,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
             $(window).on('scroll', function() {
                 if ($(window).scrollTop() > 30) {
-                    $('.meesho-header').addClass('scrolled');
+                    $('.pavitra-header').addClass('scrolled');
                 } else {
-                    $('.meesho-header').removeClass('scrolled');
+                    $('.pavitra-header').removeClass('scrolled');
                 }
             });
 
@@ -457,7 +457,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     });
                 }, { threshold: 0.05 });
 
-                $(document).find('.meesho-product-card.minimal').each(function() {
+                $(document).find('.pavitra-product-card.minimal').each(function() {
                     cardObserver.observe(this);
                 });
             }
@@ -488,7 +488,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; background-color: #FFFDF8; overflow: hidden;">
                 <div class="modal-header border-0 pb-2" style="background-color: var(--premium-light-bg); padding: 1.25rem;">
-                    <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--meesho-pink);"><i class="fa-solid fa-camera me-2" style="color: var(--premium-gold);"></i>Saree Image Matcher</h5>
+                    <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--pavitra-pink);"><i class="fa-solid fa-camera me-2" style="color: var(--premium-gold);"></i>Saree Image Matcher</h5>
                     <button type="button" class="btn-close" id="btn-close-scanner-modal" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4 text-center">
@@ -520,7 +520,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </div>
                     
                     <div id="scanner-camera-controls" style="display: none;">
-                        <button type="button" class="btn btn-meesho-pink px-4 py-2 text-uppercase fw-bold rounded-0" style="font-size:0.75rem; letter-spacing:0.05em;" id="btn-capture-match">Capture & Match</button>
+                        <button type="button" class="btn btn-pavitra-pink px-4 py-2 text-uppercase fw-bold rounded-0" style="font-size:0.75rem; letter-spacing:0.05em;" id="btn-capture-match">Capture & Match</button>
                     </div>
                 </div>
             </div>
@@ -583,7 +583,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </footer>
 
-    <div class="meesho-mobile-nav">
+    <div class="pavitra-mobile-nav">
         <a href="/" class="mobile-nav-item <?= $_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '' ? 'active' : '' ?>">
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
@@ -622,7 +622,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
                 recognition.onresult = function(event) {
                     var transcript = event.results[0][0].transcript;
-                    $('.meesho-mobile-search-input, .meesho-search-input').val(transcript);
+                    $('.pavitra-mobile-search-input, .pavitra-search-input').val(transcript);
                     window.showToast("Voice matched: " + transcript);
                     setTimeout(function() {
                         $('#search-form-mobile, #search-form').submit();
@@ -954,7 +954,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         </div>
                     </div>
                     <div class="d-flex gap-3 p-3 bg-white border rounded-3" style="border-color: #eaeaec !important;">
-                        <div class="text-primary" style="color: var(--meesho-pink) !important;"><i class="fa-solid fa-truck fs-4"></i></div>
+                        <div class="text-primary" style="color: var(--pavitra-pink) !important;"><i class="fa-solid fa-truck fs-4"></i></div>
                         <div>
                             <h6 class="fw-bold mb-1" style="font-size: 0.85rem; color: #482922;">New Banaras Loom Alert</h6>
                             <p class="text-muted mb-0" style="font-size: 0.75rem; line-height: 1.4;">Weaver direct Katan Silk collection has been updated in your area.</p>
@@ -973,11 +973,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         <div class="offcanvas-body p-0">
             <div class="list-group list-group-flush rounded-0">
                 <a href="/customization" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
-                    <i class="fa-solid fa-wand-magic-sparkles me-3" style="color: var(--meesho-pink);"></i> Custom
+                    <i class="fa-solid fa-wand-magic-sparkles me-3" style="color: var(--pavitra-pink);"></i> Custom
                 </a>
                 
                 <a href="/?show_filters=true" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
-                    <i class="fa-solid fa-sliders me-3" style="color: var(--meesho-pink);"></i> Filters
+                    <i class="fa-solid fa-sliders me-3" style="color: var(--pavitra-pink);"></i> Filters
                 </a>
                 
                 <a href="#" data-bs-toggle="modal" data-bs-target="#chatbotModal" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
@@ -1021,7 +1021,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <div class="p-3 bg-white border-top">
                         <div class="input-group shadow-sm" style="border-radius: 20px; overflow: hidden;">
                             <input type="text" id="chatbot-input" class="form-control border-0 bg-light px-3" placeholder="Type your question..." aria-label="Type your question" style="box-shadow: none;">
-                            <button class="btn text-white px-4 border-0" id="chatbot-send-btn" type="button" style="background-color: var(--meesho-pink);">
+                            <button class="btn text-white px-4 border-0" id="chatbot-send-btn" type="button" style="background-color: var(--pavitra-pink);">
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
@@ -1042,7 +1042,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 if (sender === 'user') {
                     html = `
                     <div class="d-flex mb-3 justify-content-end">
-                        <div class="p-3 text-white shadow-sm" style="font-size: 0.9rem; max-width: 85%; background-color: var(--meesho-pink); border-radius: 16px 0px 16px 16px;">
+                        <div class="p-3 text-white shadow-sm" style="font-size: 0.9rem; max-width: 85%; background-color: var(--pavitra-pink); border-radius: 16px 0px 16px 16px;">
                             ${text}
                         </div>
                     </div>`;

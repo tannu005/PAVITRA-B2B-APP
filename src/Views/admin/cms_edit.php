@@ -85,7 +85,7 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-meesho-pink py-3 fw-bold text-uppercase"><i class="fa fa-save me-1"></i> Save CMS Changes</button>
+                    <button type="submit" class="btn btn-pavitra-pink py-3 fw-bold text-uppercase"><i class="fa fa-save me-1"></i> Save CMS Changes</button>
                     <a href="/admin/cms" class="btn btn-outline-secondary py-2 fw-semibold">Cancel</a>
                 </div>
             </div>
@@ -99,7 +99,7 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
 }
 .cms-block-card {
     transition: all 0.2s ease;
-    border-left: 4px solid var(--meesho-pink) !important;
+    border-left: 4px solid var(--pavitra-pink) !important;
 }
 .cms-block-card:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);

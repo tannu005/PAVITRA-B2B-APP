@@ -70,7 +70,7 @@ class RetailerController extends Controller {
         });
 
         return $this->render('retailer/catalog', [
-            'title' => 'Pavitra Designer Wholesale - Meesho Style Shop',
+            'title' => 'Pavitra Designer Wholesale - Pavitra Style Shop',
             'products' => $products,
             'categoriesList' => $categoriesList,
             'selectedCategory' => $category,

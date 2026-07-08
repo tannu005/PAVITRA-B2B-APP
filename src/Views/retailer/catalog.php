@@ -24,7 +24,7 @@ function renderProductCard($p) {
     
     ob_start();
     ?>
-    <div class="meesho-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>" data-json="<?= htmlspecialchars(json_encode($p), ENT_QUOTES, 'UTF-8') ?>">
+    <div class="pavitra-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>" data-json="<?= htmlspecialchars(json_encode($p), ENT_QUOTES, 'UTF-8') ?>">
         <div class="nisho-card-img-wrapper position-relative">
             <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="nisho-card-img" loading="lazy">
             <img src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="nisho-card-img-hover" loading="lazy">
@@ -40,9 +40,9 @@ function renderProductCard($p) {
                 + Quick Add
             </button>
         </div>
-        <div class="meesho-card-body text-center pt-2 pb-3">
-            <h6 class="meesho-card-title mb-1 text-uppercase nisho-product-title"><?= htmlspecialchars($p['title']) ?></h6>
-            <div class="meesho-price-wholesale fw-bold text-dark mb-1 nisho-product-price">
+        <div class="pavitra-card-body text-center pt-2 pb-3">
+            <h6 class="pavitra-card-title mb-1 text-uppercase nisho-product-title"><?= htmlspecialchars($p['title']) ?></h6>
+            <div class="pavitra-price-wholesale fw-bold text-dark mb-1 nisho-product-price">
                 Rs. <?= number_format($wholesalePrice) ?>
                 <?php if ($price > $wholesalePrice): ?>
                     <span class="text-decoration-line-through text-muted fw-normal ms-1 nisho-product-price-compare">Rs. <?= number_format($price) ?></span>
@@ -58,10 +58,10 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
 ?>
 
 <div class="container-xl py-2 py-md-4">
-    <div class="meesho-category-scroll d-flex d-md-none px-3 mb-2">
+    <div class="pavitra-category-scroll d-flex d-md-none px-3 mb-2">
         <a href="/" class="category-circle-item <?= empty($selectedCategory) ? 'active' : '' ?>">
             <?php if (empty($selectedCategory)): ?>
-                <div class="category-circle-img d-flex align-items-center justify-content-center text-white fw-bold" style="font-size: 1rem; border: none; background-color: var(--meesho-pink) !important;">All</div>
+                <div class="category-circle-img d-flex align-items-center justify-content-center text-white fw-bold" style="font-size: 1rem; border: none; background-color: var(--pavitra-pink) !important;">All</div>
             <?php else: ?>
                 <div class="category-circle-img d-flex align-items-center justify-content-center bg-light text-dark fw-semibold" style="font-size: 1rem; border: 1px solid #ECEFF1;">All</div>
             <?php endif; ?>
@@ -474,7 +474,7 @@ $(document).ready(function() {
                 }
             });
         }, { threshold: 0.05 });
-        document.querySelectorAll('.meesho-product-card.minimal').forEach(el => cardObserver.observe(el));
+        document.querySelectorAll('.pavitra-product-card.minimal').forEach(el => cardObserver.observe(el));
 
         const tileObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
@@ -530,7 +530,7 @@ $(document).ready(function() {
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 550px;">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
             <div class="modal-header border-0 pb-2" style="background-color: var(--premium-light-bg); border-top-left-radius: 16px; border-top-right-radius: 16px; padding: 1.25rem;">
-                <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--meesho-pink);"><i class="fa-solid fa-sliders me-2" style="color: var(--premium-gold);"></i>Refine Sarees</h5>
+                <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--pavitra-pink);"><i class="fa-solid fa-sliders me-2" style="color: var(--premium-gold);"></i>Refine Sarees</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             
@@ -561,7 +561,7 @@ $(document).ready(function() {
                         <div class="filter-content-panel">
                             
                             <div class="filter-pane-group active" id="pane-fabric">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Fabric / Material</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Fabric / Material</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach (['Silk (Kanjeevaram, Banarasi)', 'Cotton', 'Georgette', 'Chiffon', 'Crepe', 'Linen', 'Satin', 'Synthetic Blends'] as $f): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -572,7 +572,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-color">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Color Palette</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Color Palette</h6>
                                 <div class="d-flex flex-column gap-2 mb-3">
                                     <?php foreach (['Red' => '#e74c3c', 'Blue' => '#3498db', 'Green' => '#2ecc71', 'Yellow' => '#f1c40f', 'Peach' => '#ffb8b8', 'Lavender' => '#dec9e9', 'White' => '#ffffff', 'Black' => '#000000', 'Beige' => '#f5f5dc', 'Ombre' => 'linear-gradient(to right, #6b1d1d, #c9972e)'] as $colorName => $colorHex): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -592,7 +592,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-occasion">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Occasion & Usage</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Occasion & Usage</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach (['Casual / Daily wear', 'Office / Formal', 'Festive / Traditional', 'Wedding / Bridal', 'Party / Cocktail'] as $occ): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -603,7 +603,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-price">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Wholesale Price (₹)</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Wholesale Price (₹)</h6>
                                 <div class="row g-2 mb-3">
                                     <div class="col-6">
                                         <input type="number" name="min_price" class="form-control form-control-sm rounded-0" placeholder="Min" value="<?= $minPrice > 0 ? intval($minPrice) : '' ?>">
@@ -630,7 +630,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-pattern">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Pattern / Design</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Pattern / Design</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach (['Plain / Solid', 'Printed (Floral/Motifs)', 'Embroidered / Zari / Sequined', 'Patchwork / Appliqué', 'Block Print / Handloom'] as $pat): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -641,7 +641,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-style">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Weaving Styles</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Weaving Styles</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach ($categoriesList as $cat): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -652,7 +652,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-blouse">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Blouse Customization</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Blouse Customization</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach (['Matching blouse included', 'Full Sleeve options', 'Short Sleeve / Sleeveless', 'Customizable blouse specs'] as $bl): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -663,7 +663,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-dimensions">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Saree Size</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Saree Size</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach (['Standard length (5.5–6.5m)', 'Plus-size / Extended drape', 'Custom width variations'] as $dim): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -674,7 +674,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-ratings">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Ratings & Popularity</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Ratings & Popularity</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
                                         <input type="checkbox" name="filter_rating" value="4_star_above"> <span style="color:var(--premium-gold);"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span> 4-Star & Above
@@ -686,7 +686,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-brand">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Brand & Artisan Hubs</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Brand & Artisan Hubs</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach (['Local Handloom Co-ops', 'Weaver Artisan Labels', 'Exclusive Boutique Brands'] as $br): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -697,7 +697,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-care">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Care Instructions</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Care Instructions</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <?php foreach (['Dry clean only', 'Machine washable', 'Gentle handwash recommended'] as $care): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
@@ -708,7 +708,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-delivery">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Availability</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Availability</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
                                         <input type="checkbox" name="filter_stock" value="in_stock" checked> In Stock / Ready to Ship
@@ -720,7 +720,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-deals">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">New & Deals</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">New & Deals</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
                                         <input type="checkbox" name="filter_newest" value="yes"> Recently Loomed (New)
@@ -732,7 +732,7 @@ $(document).ready(function() {
                             </div>
                             
                             <div class="filter-pane-group" id="pane-green">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--meesho-pink); letter-spacing:0.05em;">Ethical Sourcing</h6>
+                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Ethical Sourcing</h6>
                                 <div class="d-flex flex-column gap-2">
                                     <label class="d-flex align-items-center gap-2 mb-0" style="font-size: 0.8rem; cursor:pointer;">
                                         <input type="checkbox" name="filter_organic" value="organic"> Organic Cotton / Silk
@@ -748,7 +748,7 @@ $(document).ready(function() {
 
                     <div class="p-3 border-0 d-flex gap-2" style="background-color: var(--premium-light-bg); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; border-top: 1px solid var(--premium-border);">
                         <button type="button" class="btn btn-outline-secondary w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;" onclick="document.getElementById('saree-filters-form').reset()">Clear All</button>
-                        <button type="submit" class="btn btn-meesho-pink w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;">Apply Filters</button>
+                        <button type="submit" class="btn btn-pavitra-pink w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;">Apply Filters</button>
                     </div>
                 </form>
             </div>

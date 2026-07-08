@@ -32,7 +32,7 @@
                                 <div class="fw-bold text-pink mt-1">₹<?= number_format($order['net_amount'], 2) ?></div>
                             </div>
                             <div class="col-sm-3 text-sm-end">
-                                <span class="badge bg-pink text-white px-3 py-2 fs-7" style="background-color: var(--meesho-pink) !important;">
+                                <span class="badge bg-pink text-white px-3 py-2 fs-7" style="background-color: var(--pavitra-pink) !important;">
                                     <?= htmlspecialchars($order['status']) ?>
                                 </span>
                             </div>
@@ -64,21 +64,21 @@
                                 
                                 <div class="d-flex flex-column gap-2 mb-3">
                                     <?php if ($order['status'] === 'PLACED'): ?>
-                                        <button class="btn btn-meesho-pink w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="ACCEPTED">
+                                        <button class="btn btn-pavitra-pink w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="ACCEPTED">
                                             <i class="fa fa-circle-check me-2"></i> Accept Wholesale Order
                                         </button>
                                         <button class="btn btn-outline-danger w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="CANCELLED">
                                             Cancel Order
                                         </button>
                                     <?php elseif ($order['status'] === 'ACCEPTED'): ?>
-                                        <button class="btn btn-meesho-pink w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="PACKED">
+                                        <button class="btn btn-pavitra-pink w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="PACKED">
                                             <i class="fa-solid fa-box me-2"></i> Mark as Packed / Sealed
                                         </button>
                                         <button class="btn btn-outline-danger w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="CANCELLED">
                                             Cancel Order
                                         </button>
                                     <?php elseif ($order['status'] === 'PACKED'): ?>
-                                        <button class="btn btn-meesho-pink w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="SHIPPED">
+                                        <button class="btn btn-pavitra-pink w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="SHIPPED">
                                             <i class="fa-solid fa-truck me-2"></i> Dispatch & Ship Package
                                         </button>
                                     <?php elseif ($order['status'] === 'SHIPPED'): ?>

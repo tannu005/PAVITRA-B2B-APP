@@ -157,7 +157,7 @@ fun MainScreen(
       )
     }
 
-    // 2. Loading / Splash Screen Overlay (Meesho Inspired)
+    // 2. Loading / Splash Screen Overlay (Pavitra Inspired)
     if (isLoading && !loadError && !showSettings) {
       Column(
         modifier = Modifier

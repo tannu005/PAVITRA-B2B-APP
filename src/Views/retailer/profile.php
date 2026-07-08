@@ -9,7 +9,7 @@
 
     <div class="p-4 mb-4 rounded-3 border-0 position-relative overflow-hidden bg-white" style="border: 1px solid var(--premium-border) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
         <div class="d-flex align-items-center gap-3">
-            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; background-color: var(--meesho-pink-light); color: var(--meesho-pink); font-weight: 700; font-size: 1.6rem; border: 2px solid var(--meesho-pink);">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; background-color: var(--pavitra-pink-light); color: var(--pavitra-pink); font-weight: 700; font-size: 1.6rem; border: 2px solid var(--pavitra-pink);">
                 <?= strtoupper(substr($user['name'], 0, 1)) ?>
             </div>
             <div>
@@ -24,7 +24,7 @@
         <div class="col-6">
             <a href="/orders" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
-                    <span class="fs-4" style="color: var(--meesho-pink);"><i class="fa-solid fa-box-archive"></i></span>
+                    <span class="fs-4" style="color: var(--pavitra-pink);"><i class="fa-solid fa-box-archive"></i></span>
                     <div>
                         <h6 class="fw-bold text-dark mb-0" style="font-size: 0.82rem;">My Orders</h6>
                         <span class="text-muted" style="font-size: 0.65rem;">Track shipments</span>
@@ -74,7 +74,7 @@
     <div class="bg-white rounded-3 border overflow-hidden mb-4">
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-b2b-terms">
             <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-building-circle-check" style="color: var(--meesho-pink);"></i></span>
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-building-circle-check" style="color: var(--pavitra-pink);"></i></span>
                 <div>
                     <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">B2B Credit & Trade Terms</h6>
                     <p class="text-muted mb-0" style="font-size: 0.7rem;">Verify GSTIN credentials and trade credit limit</p>
@@ -192,13 +192,13 @@
                         <input type="text" class="form-control rounded-0 bg-light-subtle text-muted" value="<?= htmlspecialchars($user['role']) ?>" disabled style="font-size: 0.85rem;">
                     </div>
                 </div>
-                <button type="submit" class="btn text-white text-uppercase fw-bold rounded-0" style="background-color: var(--meesho-pink); font-size: 0.78rem; letter-spacing: 0.05em; padding: 8px 16px;">Save Changes</button>
+                <button type="submit" class="btn text-white text-uppercase fw-bold rounded-0" style="background-color: var(--pavitra-pink); font-size: 0.78rem; letter-spacing: 0.05em; padding: 8px 16px;">Save Changes</button>
             </form>
         </div>
 
         <a href="/wishlist" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
-                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-heart" style="color: var(--meesho-pink);"></i></span>
+                <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-heart" style="color: var(--pavitra-pink);"></i></span>
                 <div>
                     <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Wishlist</h6>
                     <p class="text-muted mb-0" style="font-size: 0.7rem;">Your saved saree designs</p>

@@ -1,6 +1,6 @@
 # Pavitra Designer B2B Marketplace
 
-A robust, enterprise-grade B2B wholesale marketplace platform built from scratch. Inspired by leading Indian B2B platforms like Meesho and Udaan, this application connects local master weavers with boutique retailers, facilitating bulk ordering, logistics management, and role-based access control.
+A robust, enterprise-grade B2B wholesale marketplace platform built from scratch. Inspired by leading Indian B2B platforms like Pavitra and Udaan, this application connects local master weavers with boutique retailers, facilitating bulk ordering, logistics management, and role-based access control.
 
 ## Tech Stack
 
@@ -41,7 +41,7 @@ The application is structured around a clean, scalable MVC pattern:
 ### Demo Accounts
 
 Use the password `password123` for all test accounts:
-*   **Admin Console:** `admin@meeshob2b.com` -> `/admin`
-*   **Seller Panel:** `weaver@meeshob2b.com` -> `/seller`
-*   **Retailer Storefront:** `boutique@meeshob2b.com` -> `/`
-*   **Logistics App:** `delivery@meeshob2b.com` -> `/delivery`
+*   **Admin Console:** `admin@pavitrab2b.com` -> `/admin`
+*   **Seller Panel:** `weaver@pavitrab2b.com` -> `/seller`
+*   **Retailer Storefront:** `boutique@pavitrab2b.com` -> `/`
+*   **Logistics App:** `delivery@pavitrab2b.com` -> `/delivery`

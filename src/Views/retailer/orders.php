@@ -4,7 +4,7 @@
             <h2 class="fw-bold mb-1"><i class="fa-solid fa-box-open me-2 text-pink"></i>My Bulk Orders</h2>
             <p class="text-muted mb-0">Track delivery status, dispatch history, and tax invoices.</p>
         </div>
-        <a href="/" class="btn btn-meesho-outline btn-sm"><i class="fa fa-shopping-bag me-1"></i> Continue Shopping</a>
+        <a href="/" class="btn btn-pavitra-outline btn-sm"><i class="fa fa-shopping-bag me-1"></i> Continue Shopping</a>
     </div>
 
     <?php if (empty($orders)): ?>
@@ -13,7 +13,7 @@
             <h4 class="fw-bold text-dark">No Orders Placed Yet</h4>
             <p class="text-muted mb-4">Explore our authentic GI-tagged saree catalog direct from Banarasi and Kanjeevaram weavers.</p>
             <div>
-                <a href="/" class="btn btn-meesho-pink px-4">Browse Catalog</a>
+                <a href="/" class="btn btn-pavitra-pink px-4">Browse Catalog</a>
             </div>
         </div>
     <?php else: ?>
@@ -96,20 +96,20 @@
                                 <?php else: ?>
                                     <div class="d-flex justify-content-between text-center mt-2 position-relative" style="font-size: 0.65rem;">
                                         <div class="progress position-absolute start-0 end-0 top-50 translate-y-middle bg-secondary-subtle" style="height: 3px; z-index: 1;">
-                                            <div class="progress-bar bg-pink" role="progressbar" style="width: <?= $currentIndex * 20 ?>%; background-color: var(--meesho-pink);"></div>
+                                            <div class="progress-bar bg-pink" role="progressbar" style="width: <?= $currentIndex * 20 ?>%; background-color: var(--pavitra-pink);"></div>
                                         </div>
 
                                         <?php foreach ($statuses as $index => $st): ?>
                                             <div class="position-relative" style="z-index: 2; width: 16%;">
                                                 <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center border" 
-                                                     style="width: 20px; height: 20px; font-size: 0.6rem; background-color: <?= $index <= $currentIndex ? 'var(--meesho-pink)' : 'white' ?>; color: <?= $index <= $currentIndex ? 'white' : '#AAA' ?>; border-color: <?= $index <= $currentIndex ? 'var(--meesho-pink)' : '#CCC' ?>;">
+                                                     style="width: 20px; height: 20px; font-size: 0.6rem; background-color: <?= $index <= $currentIndex ? 'var(--pavitra-pink)' : 'white' ?>; color: <?= $index <= $currentIndex ? 'white' : '#AAA' ?>; border-color: <?= $index <= $currentIndex ? 'var(--pavitra-pink)' : '#CCC' ?>;">
                                                     <?php if ($index <= $currentIndex): ?>
                                                         ✓
                                                     <?php else: ?>
                                                         •
                                                     <?php endif; ?>
                                                 </div>
-                                                <div class="mt-1 fw-bold text-uppercase" style="color: <?= $index <= $currentIndex ? 'var(--meesho-text-main)' : '#AAA' ?>; font-size: 0.55rem; letter-spacing: -0.2px;">
+                                                <div class="mt-1 fw-bold text-uppercase" style="color: <?= $index <= $currentIndex ? 'var(--pavitra-text-main)' : '#AAA' ?>; font-size: 0.55rem; letter-spacing: -0.2px;">
                                                     <?= str_replace('_', ' ', $st) ?>
                                                 </div>
                                             </div>

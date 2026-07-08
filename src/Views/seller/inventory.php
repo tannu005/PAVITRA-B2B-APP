@@ -45,7 +45,7 @@
                                         <td class="text-end">
                                             <div class="input-group input-group-sm ms-auto" style="max-width: 140px;">
                                                 <input type="number" class="form-control restock-qty-input" placeholder="Qty" min="1" id="restock-input-<?= $v['variant_id'] ?>">
-                                                <button class="btn btn-meesho-pink restock-btn" data-id="<?= $v['variant_id'] ?>">Refill</button>
+                                                <button class="btn btn-pavitra-pink restock-btn" data-id="<?= $v['variant_id'] ?>">Refill</button>
                                             </div>
                                         </td>
                                     </tr>

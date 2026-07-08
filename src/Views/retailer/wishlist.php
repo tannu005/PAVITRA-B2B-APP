@@ -8,7 +8,7 @@
     
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div>
-            <h2 class="mb-1" style="font-family: var(--font-headings); color: var(--meesho-pink);">
+            <h2 class="mb-1" style="font-family: var(--font-headings); color: var(--pavitra-pink);">
                 <i class="fa-solid fa-heart me-2" style="color: var(--premium-gold);"></i>My Wishlist
             </h2>
             <p class="text-muted mb-0 small" id="wishlist-count-text">Loading your saved items…</p>
@@ -27,7 +27,7 @@
         <div style="font-size:4rem; margin-bottom:1rem;">🛍️</div>
         <h4 style="color: var(--premium-dark); font-family: var(--font-headings);">Your wishlist is empty</h4>
         <p class="text-muted mb-4">Browse our saree collection and tap <i class="fa-solid fa-heart text-danger"></i> to save products here.</p>
-        <a href="/" class="btn btn-meesho-pink px-4">
+        <a href="/" class="btn btn-pavitra-pink px-4">
             <i class="fa-solid fa-store me-2"></i>Browse Catalogue
         </a>
     </div>
@@ -71,7 +71,7 @@
 .wishlist-card-price {
     font-size: 0.95rem;
     font-weight: 800;
-    color: var(--meesho-pink);
+    color: var(--pavitra-pink);
     margin: 4px 0;
 }
 .wishlist-remove-btn {
@@ -95,7 +95,7 @@
 .wishlist-remove-btn:hover { background: #ffe0e0; }
 .wishlist-add-cart-btn {
     width: 100%;
-    background: var(--meesho-pink-gradient);
+    background: var(--pavitra-pink-gradient);
     color: #fff;
     border: none;
     border-radius: 8px;

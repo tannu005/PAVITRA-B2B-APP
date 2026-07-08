@@ -6,7 +6,7 @@
         </div>
         <div>
             <a href="/" class="btn btn-outline-secondary btn-sm me-2"><i class="fa fa-arrow-left"></i> Go to Shop</a>
-            <a href="/support/create" class="btn btn-meesho-pink btn-sm"><i class="fa fa-plus me-1"></i> Open New Ticket</a>
+            <a href="/support/create" class="btn btn-pavitra-pink btn-sm"><i class="fa fa-plus me-1"></i> Open New Ticket</a>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
                 <i class="fa-solid fa-comments fs-1 opacity-25 mb-3"></i>
                 <h5 class="fw-bold text-dark">No Support Tickets Found</h5>
                 <p class="text-muted mb-3">Everything looks smooth! If you need help with shipping delays, wallets, or KYC approvals, open a ticket.</p>
-                <a href="/support/create" class="btn btn-meesho-pink btn-sm">Get Help Now</a>
+                <a href="/support/create" class="btn btn-pavitra-pink btn-sm">Get Help Now</a>
             </div>
         <?php else: ?>
             <div class="table-responsive">

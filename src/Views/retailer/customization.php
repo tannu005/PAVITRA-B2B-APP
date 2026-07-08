@@ -8,9 +8,9 @@
     
     <div class="text-center mb-5">
         <span class="badge bg-gold text-white text-uppercase px-3 py-2 mb-2" style="font-size:0.68rem; letter-spacing:0.1em; background-color: var(--premium-gold);">Artisan Custom Studio</span>
-        <h2 class="text-uppercase fw-normal mb-1" style="font-family: var(--font-headings); letter-spacing: 0.12em; color: var(--meesho-pink);">Request Custom Saree Design</h2>
+        <h2 class="text-uppercase fw-normal mb-1" style="font-family: var(--font-headings); letter-spacing: 0.12em; color: var(--pavitra-pink);">Request Custom Saree Design</h2>
         <p class="text-muted small text-uppercase" style="letter-spacing: 0.08em;">Collaborate directly with master weavers to craft your custom drape</p>
-        <div style="width: 50px; height: 1.5px; background-color: var(--meesho-pink); margin: 12px auto 0;"></div>
+        <div style="width: 50px; height: 1.5px; background-color: var(--pavitra-pink); margin: 12px auto 0;"></div>
     </div>
 
     <div class="row g-4">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-meesho-pink w-100 py-3 rounded-0 text-uppercase fw-bold" style="letter-spacing: 0.1em;">
+                    <button type="submit" class="btn btn-pavitra-pink w-100 py-3 rounded-0 text-uppercase fw-bold" style="letter-spacing: 0.1em;">
                         <i class="fa-brands fa-whatsapp me-2 fs-5"></i>Send Specs to Master Weaver
                     </button>
                 </form>

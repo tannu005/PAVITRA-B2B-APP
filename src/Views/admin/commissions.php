@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-meesho-pink w-100 py-2" id="save-rule-btn">Save Commission Rule</button>
+                    <button type="submit" class="btn btn-pavitra-pink w-100 py-2" id="save-rule-btn">Save Commission Rule</button>
                 </form>
             </div>
         </div>

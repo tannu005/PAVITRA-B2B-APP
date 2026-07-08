@@ -80,14 +80,14 @@ INSERT INTO `system_settings` (`setting_key`, `setting_value`) VALUES
 -- 8. Seed Super Admin account (Password is "password123" encrypted with bcrypt)
 -- Hash: $2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role_id`, `status`, `is_verified_email`, `is_verified_mobile`) VALUES
-(1, 'System Administrator', 'admin@meeshob2b.com', '+91 9876543210', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 1, 'ACTIVE', 1, 1);
+(1, 'System Administrator', 'admin@pavitrab2b.com', '+91 9876543210', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 1, 'ACTIVE', 1, 1);
 
 INSERT INTO `wallets` (`id`, `user_id`, `balance`) VALUES (1, 1, 0.00);
 
 -- 9. Seed some demo users
 -- Seller / Weaver
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role_id`, `status`, `is_verified_email`, `is_verified_mobile`) VALUES
-(2, 'Pavitra Weavers Ltd.', 'weaver@meeshob2b.com', '+91 8888888888', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 3, 'ACTIVE', 1, 1);
+(2, 'Pavitra Weavers Ltd.', 'weaver@pavitrab2b.com', '+91 8888888888', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 3, 'ACTIVE', 1, 1);
 
 INSERT INTO `seller_profiles` (`user_id`, `company_name`, `brand_name`, `registration_number`, `pan_number`, `gst_number`, `commission_rate`, `balance`) VALUES
 (2, 'Pavitra Weavers & Artisans Guild', 'Pavitra Loom', 'REG-12345', 'BBBBB2222B', '09BBBBB2222B2Z2', 8.50, 150000.00);
@@ -96,7 +96,7 @@ INSERT INTO `wallets` (`id`, `user_id`, `balance`) VALUES (2, 2, 150000.00);
 
 -- Retailer / Buyer
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role_id`, `status`, `is_verified_email`, `is_verified_mobile`) VALUES
-(3, 'Heritage Saree Boutique', 'boutique@meeshob2b.com', '+91 7777777777', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 4, 'ACTIVE', 1, 1);
+(3, 'Heritage Saree Boutique', 'boutique@pavitrab2b.com', '+91 7777777777', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 4, 'ACTIVE', 1, 1);
 
 INSERT INTO `retailer_profiles` (`user_id`, `shop_name`, `credit_limit`, `balance`) VALUES
 (3, 'Heritage Boutique Retail Point', 100000.00, 25000.00);
@@ -105,7 +105,7 @@ INSERT INTO `wallets` (`id`, `user_id`, `balance`) VALUES (3, 3, 25000.00);
 
 -- Delivery Driver
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role_id`, `status`, `is_verified_email`, `is_verified_mobile`) VALUES
-(4, 'Express Logistics', 'delivery@meeshob2b.com', '+91 6666666666', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 5, 'ACTIVE', 1, 1);
+(4, 'Express Logistics', 'delivery@pavitrab2b.com', '+91 6666666666', '$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.', 5, 'ACTIVE', 1, 1);
 
 INSERT INTO `delivery_partner_profiles` (`user_id`, `vehicle_number`, `vehicle_type`, `balance`, `is_online`) VALUES
 (4, 'UP-65-AB-1234', 'Mini Van Truck', 0.00, 1);

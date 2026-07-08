@@ -8,7 +8,7 @@
     </div>
     <div class="row g-4">
         <div class="col-lg-4">
-            <div class="card shadow-sm border-0 bg-pink text-white p-4 mb-4" style="background-color: var(--meesho-pink) !important; border-radius: 12px;">
+            <div class="card shadow-sm border-0 bg-pink text-white p-4 mb-4" style="background-color: var(--pavitra-pink) !important; border-radius: 12px;">
                 <div class="small text-uppercase fw-semibold mb-1 opacity-75">Available Wallet Balance</div>
                 <h1 class="fw-bold mb-3">₹<?= number_format($wallet['balance'] ?? 0, 2) ?></h1>
                 
@@ -33,7 +33,7 @@
                             <input type="number" class="form-control" id="amount" name="amount" required placeholder="5000" min="500">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-meesho-pink w-100 py-2">Submit Simulated Deposit</button>
+                    <button type="submit" class="btn btn-pavitra-pink w-100 py-2">Submit Simulated Deposit</button>
                 </form>
             </div>
             

@@ -6,7 +6,7 @@
         </div>
         <div>
             <a href="/" class="btn btn-outline-secondary btn-sm me-2"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
-            <a href="/seller/products/create" class="btn btn-meesho-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload New Saree</a>
+            <a href="/seller/products/create" class="btn btn-pavitra-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload New Saree</a>
         </div>
     </div>
 

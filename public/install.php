@@ -129,10 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
             <div class="bg-light p-3 rounded mb-4" style="font-size: 0.85rem;">
                 <h6 class="fw-bold mb-2">Merchant Demo Login Credentials:</h6>
-                • <strong>Retailer:</strong> <code>boutique@meeshob2b.com</code> / <code>password123</code><br>
-                • <strong>Seller/Weaver:</strong> <code>weaver@meeshob2b.com</code> / <code>password123</code><br>
-                • <strong>Super Admin:</strong> <code>admin@meeshob2b.com</code> / <code>password123</code><br>
-                • <strong>Delivery Driver:</strong> <code>delivery@meeshob2b.com</code> / <code>password123</code>
+                • <strong>Retailer:</strong> <code>boutique@pavitrab2b.com</code> / <code>password123</code><br>
+                • <strong>Seller/Weaver:</strong> <code>weaver@pavitrab2b.com</code> / <code>password123</code><br>
+                • <strong>Super Admin:</strong> <code>admin@pavitrab2b.com</code> / <code>password123</code><br>
+                • <strong>Delivery Driver:</strong> <code>delivery@pavitrab2b.com</code> / <code>password123</code>
             </div>
 
             <div class="d-grid">
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <?php endif; ?>
 
             <p class="text-muted small mb-4">
-                Clicking the button below will automatically initialize the database catalog `meesho_b2b` on host `<?= htmlspecialchars($config['host']) ?>` using schema file `database/schema.sql` and default parameters.
+                Clicking the button below will automatically initialize the database catalog `pavitra_b2b` on host `<?= htmlspecialchars($config['host']) ?>` using schema file `database/schema.sql` and default parameters.
             </p>
 
             <form action="/install.php" method="POST">

@@ -86,7 +86,7 @@
                         <span class="text-muted" style="font-size: 0.75rem;">In production, this connects to your cloud CDN or file storage bucket.</span>
                     </div>
 
-                    <button type="submit" class="btn btn-meesho-pink w-100 py-3 fs-6 fw-bold">Upload to Catalog & Request Verification</button>
+                    <button type="submit" class="btn btn-pavitra-pink w-100 py-3 fs-6 fw-bold">Upload to Catalog & Request Verification</button>
                 </form>
             </div>
         </div>

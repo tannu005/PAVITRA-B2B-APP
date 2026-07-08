@@ -55,10 +55,10 @@
         
         <div class="p-3 bg-light border-start border-dark" style="font-size: 0.75rem; color: #555; background-color: #f8f9fa;">
             <strong class="text-dark">Demo Credentials:</strong><br>
-            • Retailer/Buyer: <code>boutique@meeshob2b.com</code> / <code>password123</code><br>
-            • Seller/Weaver: <code>weaver@meeshob2b.com</code> / <code>password123</code><br>
-            • Super Admin: <code>admin@meeshob2b.com</code> / <code>password123</code><br>
-            • Delivery Partner: <code>delivery@meeshob2b.com</code> / <code>password123</code>
+            • Retailer/Buyer: <code>boutique@pavitrab2b.com</code> / <code>password123</code><br>
+            • Seller/Weaver: <code>weaver@pavitrab2b.com</code> / <code>password123</code><br>
+            • Super Admin: <code>admin@pavitrab2b.com</code> / <code>password123</code><br>
+            • Delivery Partner: <code>delivery@pavitrab2b.com</code> / <code>password123</code>
         </div>
     </div>
 </div>

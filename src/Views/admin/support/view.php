@@ -52,7 +52,7 @@
                                 Save as Internal Admin Note (Hidden from Customer)
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-meesho-pink py-2 px-4 fw-bold small"><i class="fa fa-reply me-1"></i> Send Reply</button>
+                        <button type="submit" class="btn btn-pavitra-pink py-2 px-4 fw-bold small"><i class="fa fa-reply me-1"></i> Send Reply</button>
                     </div>
                 </form>
             </div>

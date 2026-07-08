@@ -44,7 +44,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-meesho-pink w-100 py-3 fw-bold fs-6">Submit Ticket to Operations Queue</button>
+                    <button type="submit" class="btn btn-pavitra-pink w-100 py-3 fw-bold fs-6">Submit Ticket to Operations Queue</button>
                 </form>
             </div>
         </div>

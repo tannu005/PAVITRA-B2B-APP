@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="text-end">
-                        <button type="submit" class="btn btn-meesho-pink py-2.5 px-5 fw-bold"><i class="fa fa-upload me-1"></i> Start Batch Import</button>
+                        <button type="submit" class="btn btn-pavitra-pink py-2.5 px-5 fw-bold"><i class="fa fa-upload me-1"></i> Start Batch Import</button>
                     </div>
                 </form>
             </div>
@@ -109,11 +109,11 @@
     border-style: dashed !important;
 }
 .btn-outline-pink {
-    border-color: var(--meesho-pink);
-    color: var(--meesho-pink);
+    border-color: var(--pavitra-pink);
+    color: var(--pavitra-pink);
 }
 .btn-outline-pink:hover {
-    background-color: var(--meesho-pink);
+    background-color: var(--pavitra-pink);
     color: #fff;
 }
 </style>

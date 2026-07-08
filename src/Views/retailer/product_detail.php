@@ -33,8 +33,8 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     <span class="text-muted border-start ps-1" style="font-weight: 500;">7.3k</span>
                 </span>
 
-                <div class="position-absolute d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="bottom: 15px; left: 15px; width: 48px; height: 48px; border: 2px solid var(--meesho-pink); cursor: pointer;" onclick="showToast('Loading saree draping video walkthrough... 🎥');">
-                    <i class="fa-solid fa-play" style="color: var(--meesho-pink); font-size: 1rem; margin-left: 2px;"></i>
+                <div class="position-absolute d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="bottom: 15px; left: 15px; width: 48px; height: 48px; border: 2px solid var(--pavitra-pink); cursor: pointer;" onclick="showToast('Loading saree draping video walkthrough... 🎥');">
+                    <i class="fa-solid fa-play" style="color: var(--pavitra-pink); font-size: 1rem; margin-left: 2px;"></i>
                 </div>
             </div>
 
@@ -87,7 +87,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                             <span class="text-muted" style="font-size: 0.85rem;"><i class="fa-solid fa-location-dot"></i></span>
                             <span class="fw-bold text-dark" style="font-size: 0.78rem;" id="detail-delivery-address-label">Check Delivery Availability</span>
                         </div>
-                        <span class="fw-bold text-uppercase pincode-change-trigger" style="font-size: 0.72rem; color: var(--meesho-pink); cursor: pointer;">Check</span>
+                        <span class="fw-bold text-uppercase pincode-change-trigger" style="font-size: 0.72rem; color: var(--pavitra-pink); cursor: pointer;">Check</span>
                     </div>
 
                     <div id="detail-pincode-wrapper" style="display: none;" class="mb-3 border p-3 rounded-2 bg-light">
@@ -216,7 +216,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                 <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
                     <h6 class="fw-bold text-dark mb-2" style="font-size: 0.85rem;">More Information</h6>
                     <div class="small text-muted mb-2">Product Code: <span class="text-dark fw-semibold">3333<?= htmlspecialchars($p['id']) ?></span></div>
-                    <a href="javascript:void(0)" class="fw-bold text-decoration-none" style="font-size: 0.78rem; color: var(--meesho-pink);" onclick="alert('Product Details:\nColor: <?= htmlspecialchars($p['color'] ?? 'Dual-tone') ?>\nDimensions: <?= htmlspecialchars($p['dimensions'] ?? 'Standard Saree') ?>\nSKU: <?= htmlspecialchars($p['sku']) ?>');">View More</a>
+                    <a href="javascript:void(0)" class="fw-bold text-decoration-none" style="font-size: 0.78rem; color: var(--pavitra-pink);" onclick="alert('Product Details:\nColor: <?= htmlspecialchars($p['color'] ?? 'Dual-tone') ?>\nDimensions: <?= htmlspecialchars($p['dimensions'] ?? 'Standard Saree') ?>\nSKU: <?= htmlspecialchars($p['sku']) ?>');">View More</a>
                 </div>
             </div>
         </div>
@@ -227,12 +227,12 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
     <div class="container-xl">
         <div class="row g-2 justify-content-end align-items-center">
             <div class="col-6 col-md-3">
-                <button class="btn btn-outline-dark w-100 py-2.5 fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2" id="detail-buy-now-btn" data-variant-id="<?= htmlspecialchars($p['variant_id']) ?>" style="border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.05em; border-color: var(--meesho-pink) !important; color: var(--meesho-pink) !important;">
+                <button class="btn btn-outline-dark w-100 py-2.5 fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2" id="detail-buy-now-btn" data-variant-id="<?= htmlspecialchars($p['variant_id']) ?>" style="border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.05em; border-color: var(--pavitra-pink) !important; color: var(--pavitra-pink) !important;">
                     <i class="fa-solid fa-bag-shopping"></i> Buy Now
                 </button>
             </div>
             <div class="col-6 col-md-3">
-                <button class="btn w-100 py-2.5 fw-bold text-uppercase text-white d-flex align-items-center justify-content-center gap-2" id="detail-add-bag-btn" data-variant-id="<?= htmlspecialchars($p['variant_id']) ?>" style="background: var(--meesho-pink); border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.05em; border: none;">
+                <button class="btn w-100 py-2.5 fw-bold text-uppercase text-white d-flex align-items-center justify-content-center gap-2" id="detail-add-bag-btn" data-variant-id="<?= htmlspecialchars($p['variant_id']) ?>" style="background: var(--pavitra-pink); border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.05em; border: none;">
                     <i class="fa-solid fa-bag-shopping"></i> Add to Bag
                 </button>
             </div>

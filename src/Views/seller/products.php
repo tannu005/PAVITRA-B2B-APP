@@ -8,7 +8,7 @@
             <a href="/seller" class="btn btn-outline-secondary btn-sm me-2"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
             <a href="/seller/products/bulk" class="btn btn-outline-pink btn-sm me-2"><i class="fa-solid fa-file-csv me-1"></i> Bulk Upload</a>
             <button class="btn btn-outline-secondary btn-sm me-2" onclick="openPrintQRModal()"><i class="fa-solid fa-qrcode me-1"></i> Print QR Labels</button>
-            <a href="/seller/products/create" class="btn btn-meesho-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload Saree</a>
+            <a href="/seller/products/create" class="btn btn-pavitra-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload Saree</a>
         </div>
     </div>
 
@@ -18,7 +18,7 @@
             <h4 class="fw-bold">No Products Uploaded</h4>
             <p class="text-muted mb-3">Begin marketing your weavers' handloom craft by uploading your first saree variant.</p>
             <div>
-                <a href="/seller/products/create" class="btn btn-meesho-pink px-4">Upload First Item</a>
+                <a href="/seller/products/create" class="btn btn-pavitra-pink px-4">Upload First Item</a>
             </div>
         </div>
     <?php else: ?>
@@ -111,7 +111,7 @@
             </div>
             <div class="modal-footer d-print-none bg-white border-top-0 pb-4 pe-4">
                 <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-meesho-pink px-5" onclick="window.print()" <?= !$hasActiveProducts ? 'disabled' : '' ?>><i class="fa-solid fa-print me-2"></i> Print Labels</button>
+                <button type="button" class="btn btn-pavitra-pink px-5" onclick="window.print()" <?= !$hasActiveProducts ? 'disabled' : '' ?>><i class="fa-solid fa-print me-2"></i> Print Labels</button>
             </div>
         </div>
     </div>

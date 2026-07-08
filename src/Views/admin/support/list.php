@@ -60,7 +60,7 @@
                                     <?= date('d M Y, h:i A', strtotime($t['created_at'])) ?>
                                 </td>
                                 <td class="text-end">
-                                    <a href="/admin/support/ticket/<?= $t['id'] ?>" class="btn btn-meesho-pink btn-sm">
+                                    <a href="/admin/support/ticket/<?= $t['id'] ?>" class="btn btn-pavitra-pink btn-sm">
                                         <i class="fa fa-screwdriver-wrench me-1"></i> Resolve Ticket
                                     </a>
                                 </td>

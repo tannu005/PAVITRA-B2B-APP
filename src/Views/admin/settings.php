@@ -218,7 +218,7 @@
         </div>
 
         <div class="mt-4 text-end">
-            <button type="submit" class="btn btn-meesho-pink py-2 px-5 fw-bold"><i class="fa fa-save me-1"></i> Save Platform Configurations</button>
+            <button type="submit" class="btn btn-pavitra-pink py-2 px-5 fw-bold"><i class="fa fa-save me-1"></i> Save Platform Configurations</button>
         </div>
     </form>
 </div>

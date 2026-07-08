@@ -55,7 +55,7 @@
                             <label for="message" class="form-label small fw-semibold text-muted text-uppercase">Post Response Reply</label>
                             <textarea class="form-control" id="message" name="message" rows="3" required placeholder="Type your reply message here..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-meesho-pink py-2 px-4 fw-bold small"><i class="fa fa-reply me-1"></i> Send Reply</button>
+                        <button type="submit" class="btn btn-pavitra-pink py-2 px-4 fw-bold small"><i class="fa fa-reply me-1"></i> Send Reply</button>
                     </form>
                 <?php else: ?>
                     <div class="alert alert-secondary text-center py-2 mb-0" style="font-size: 0.85rem;">

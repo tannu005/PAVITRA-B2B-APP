@@ -53,7 +53,7 @@
                         </tbody>
                     </table>
                 </div>
-                <button type="submit" class="btn btn-meesho-pink py-2 px-4" id="run-settlement-btn">Execute Bank Settlement Run</button>
+                <button type="submit" class="btn btn-pavitra-pink py-2 px-4" id="run-settlement-btn">Execute Bank Settlement Run</button>
             </form>
         <?php endif; ?>
     </div>

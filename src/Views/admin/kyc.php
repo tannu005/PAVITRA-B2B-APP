@@ -12,7 +12,7 @@
             <div class="text-center py-5 text-muted">
                 <i class="fa-solid fa-file-shield fs-1 opacity-25 mb-2"></i>
                 <p class="mb-3">No compliance documents submitted for verification.</p>
-                <button class="btn btn-meesho-pink btn-sm" id="simulate-kyc-btn">Simulate Demo KYC Submission</button>
+                <button class="btn btn-pavitra-pink btn-sm" id="simulate-kyc-btn">Simulate Demo KYC Submission</button>
             </div>
         <?php else: ?>
             <div class="table-responsive">

@@ -4,5 +4,5 @@
     <p class="text-muted mb-4 col-md-6 mx-auto">
         The page you are looking for does not exist, has been removed, or is temporarily unavailable. Browse our catalog of heritage weaves to get back on track.
     </p>
-    <a href="/" class="btn btn-meesho-pink py-2 px-4">Go to Shop Page</a>
+    <a href="/" class="btn btn-pavitra-pink py-2 px-4">Go to Shop Page</a>
 </div>
