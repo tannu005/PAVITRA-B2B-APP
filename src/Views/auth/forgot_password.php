@@ -26,7 +26,7 @@
                 <div class="mb-4 position-relative">
                     <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">New Password</label>
                     <div class="position-relative">
-                        <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="Minimum 6 characters" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                        <input type="password" class="form-control pavitra-input" id="password" name="password" required placeholder="Minimum 6 characters" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                         <span id="toggle-password" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 5;"><i class="fa-solid fa-eye"></i></span>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="mb-5 position-relative">
                     <label for="confirm_password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Confirm New Password</label>
                     <div class="position-relative">
-                        <input type="password" class="form-control nisho-input" id="confirm_password" name="confirm_password" required placeholder="••••••••" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                        <input type="password" class="form-control pavitra-input" id="confirm_password" name="confirm_password" required placeholder="••••••••" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                         <span id="toggle-confirm-password" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 5;"><i class="fa-solid fa-eye"></i></span>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 
                 <div class="mb-5">
                     <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
-                    <input type="email" class="form-control nisho-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <input type="email" class="form-control pavitra-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                 </div>
 
                 <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
@@ -86,7 +86,7 @@
 </div>
 
 <style>
-.nisho-input:focus {
+.pavitra-input:focus {
     border-bottom-color: #1a1a1a !important;
     box-shadow: none !important;
 }

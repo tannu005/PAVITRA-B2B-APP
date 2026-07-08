@@ -25,9 +25,9 @@ function renderProductCard($p) {
     ob_start();
     ?>
     <div class="pavitra-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>" data-json="<?= htmlspecialchars(json_encode($p), ENT_QUOTES, 'UTF-8') ?>">
-        <div class="nisho-card-img-wrapper position-relative">
-            <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="nisho-card-img" loading="lazy">
-            <img src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="nisho-card-img-hover" loading="lazy">
+        <div class="pavitra-card-img-wrapper position-relative">
+            <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="pavitra-card-img" loading="lazy">
+            <img src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="pavitra-card-img-hover" loading="lazy">
             <button class="wishlist-heart-btn" onclick="event.stopPropagation(); $(this).toggleClass('active'); showToast($(this).hasClass('active') ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');">
                 <i class="fa-solid fa-heart"></i>
             </button>
@@ -36,16 +36,16 @@ function renderProductCard($p) {
             <?php else: ?>
                 <span class="badge position-absolute border-0 text-white" style="top: 8px; left: 8px; font-size: 0.6rem; border-radius: 2px; font-weight: 700; padding: 4px 8px; letter-spacing: 0.05em; text-transform: uppercase; background-color: <?= $badgeColors[$badgeIdx] ?>;"><?= $badges[$badgeIdx] ?></span>
             <?php endif; ?>
-            <button class="nisho-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold" data-variant-id="<?= $p['variant_id'] ?>" style="bottom: 0; left: 0; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
+            <button class="pavitra-quick-add-btn position-absolute w-100 py-2 border-0 text-white text-uppercase fw-bold" data-variant-id="<?= $p['variant_id'] ?>" style="bottom: 0; left: 0; background-color: rgba(72, 41, 34, 0.95); transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100%);">
                 + Quick Add
             </button>
         </div>
         <div class="pavitra-card-body text-center pt-2 pb-3">
-            <h6 class="pavitra-card-title mb-1 text-uppercase nisho-product-title"><?= htmlspecialchars($p['title']) ?></h6>
-            <div class="pavitra-price-wholesale fw-bold text-dark mb-1 nisho-product-price">
+            <h6 class="pavitra-card-title mb-1 text-uppercase pavitra-product-title"><?= htmlspecialchars($p['title']) ?></h6>
+            <div class="pavitra-price-wholesale fw-bold text-dark mb-1 pavitra-product-price">
                 Rs. <?= number_format($wholesalePrice) ?>
                 <?php if ($price > $wholesalePrice): ?>
-                    <span class="text-decoration-line-through text-muted fw-normal ms-1 nisho-product-price-compare">Rs. <?= number_format($price) ?></span>
+                    <span class="text-decoration-line-through text-muted fw-normal ms-1 pavitra-product-price-compare">Rs. <?= number_format($price) ?></span>
                 <?php endif; ?>
             </div>
         </div>
@@ -113,9 +113,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Wedding Season 2026</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Shaadi Ka Ghar</h1>
-                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Pavitra Banarasi Bridal Collection</p>
-                        <a href="/?category=Banarasi+Brocade" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Shaadi Ka Ghar</h1>
+                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Pavitra Banarasi Bridal Collection</p>
+                        <a href="/?category=Banarasi+Brocade" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -125,9 +125,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Handloomed Zari Heritage</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Royal Kanjeevaram</h1>
-                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Wholesale Temple Silk Weaves</p>
-                        <a href="/?category=Kanjeevaram+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Royal Kanjeevaram</h1>
+                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Wholesale Temple Silk Weaves</p>
+                        <a href="/?category=Kanjeevaram+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -137,9 +137,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Double Ikat Masterpiece</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Patan Patola</h1>
-                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">GI-Tagged Handloom Craft</p>
-                        <a href="/?category=Patola+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Patan Patola</h1>
+                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">GI-Tagged Handloom Craft</p>
+                        <a href="/?category=Patola+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -149,9 +149,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Sheer Elegance</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2 nisho-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Organza & Tissue</h1>
-                        <p class="mb-3 nisho-hero-subtitle" style="color: rgba(255,255,255,0.7);">Lightweight Premium Drapes</p>
-                        <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Organza & Tissue</h1>
+                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Lightweight Premium Drapes</p>
+                        <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -167,62 +167,62 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Pavitra Muse</h2>
-                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Curated Most Wanted Wholesale Handlooms</p>
+                <h2 class="text-uppercase fw-normal mb-0 pavitra-section-title">Pavitra Muse</h2>
+                <p class="text-muted text-uppercase mb-0 pavitra-section-subtitle">Curated Most Wanted Wholesale Handlooms</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/?sort=price_high" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?sort=price_high" class="text-decoration-none text-uppercase fw-bold ms-3 pavitra-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
-        <div class="nisho-carousel-container">
+        <div class="pavitra-carousel-container">
             <?php
             $museCollection = $products;
             usort($museCollection, function($a, $b) { return $b['wholesale_price'] <=> $a['wholesale_price']; });
             foreach (array_slice($museCollection, 0, 8) as $item): ?>
-                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+                <div class="pavitra-carousel-item"><?= renderProductCard($item) ?></div>
             <?php endforeach; ?>
         </div>
     </div>
 
-    <div class="w-100 my-5 nisho-parallax-container" style="height: 45vh; min-height: 320px; max-height: 480px;">
-        <div class="nisho-parallax-bg" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png');"></div>
+    <div class="w-100 my-5 pavitra-parallax-container" style="height: 45vh; min-height: 320px; max-height: 480px;">
+        <div class="pavitra-parallax-bg" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png');"></div>
         <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center text-white p-4" style="position: relative; z-index: 2;">
-            <p class="text-uppercase mb-2 nisho-hero-subtitle" style="color: rgba(255,255,255,0.6);">Wholesale Wedding Collection</p>
-            <h2 class="text-uppercase mb-3 nisho-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Tyoharcore</h2>
+            <p class="text-uppercase mb-2 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.6);">Wholesale Wedding Collection</p>
+            <h2 class="text-uppercase mb-3 pavitra-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Tyoharcore</h2>
             <p class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); max-width: 500px;">Festive silks handpicked for the bridal season. Bulk orders with exclusive wholesale margins.</p>
-            <a href="/?category=Banarasi+Brocade" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="border-width: 2px;">Explore Collection</a>
+            <a href="/?category=Banarasi+Brocade" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="border-width: 2px;">Explore Collection</a>
         </div>
     </div>
 
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">New Arrivals</h2>
-                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Fresh Off the Handloom — Just Landed</p>
+                <h2 class="text-uppercase fw-normal mb-0 pavitra-section-title">New Arrivals</h2>
+                <p class="text-muted text-uppercase mb-0 pavitra-section-subtitle">Fresh Off the Handloom — Just Landed</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/?all_sarees=true" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?all_sarees=true" class="text-decoration-none text-uppercase fw-bold ms-3 pavitra-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
-        <div class="nisho-carousel-container">
+        <div class="pavitra-carousel-container">
             <?php foreach (array_slice($products, 0, 8) as $item): ?>
-                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+                <div class="pavitra-carousel-item"><?= renderProductCard($item) ?></div>
             <?php endforeach; ?>
         </div>
     </div>
 
     <div class="my-5 py-4" id="home-categories-grid">
         <div class="text-center mb-5">
-            <h2 class="text-uppercase fw-normal nisho-section-title">Shop by Weaving Style</h2>
-            <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Weaver-Direct GI-Tagged Handloom Masterpieces</p>
+            <h2 class="text-uppercase fw-normal pavitra-section-title">Shop by Weaving Style</h2>
+            <p class="text-muted text-uppercase mb-0 pavitra-section-subtitle">Weaver-Direct GI-Tagged Handloom Masterpieces</p>
         </div>
         <div class="row g-3 g-md-4 justify-content-center">
             <?php
@@ -234,11 +234,11 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             ];
             foreach ($cats as $cat): ?>
             <div class="col-6 col-md-3">
-                <a href="<?= $cat['link'] ?>" class="nisho-cat-block position-relative d-block overflow-hidden" style="height: 400px; text-decoration: none;">
-                    <div class="nisho-cat-img w-100 h-100" style="background-image: url('<?= $cat['img'] ?>'); background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);"></div>
-                    <div class="nisho-cat-overlay position-absolute d-flex flex-column justify-content-end p-4 text-white" style="background: linear-gradient(transparent 40%, rgba(0,0,0,0.7)); top: 0; left: 0; right: 0; bottom: 0;">
-                        <h4 class="fw-bold text-uppercase mb-0 nisho-section-title" style="color: #FFF !important;"><?= $cat['name'] ?></h4>
-                        <span class="text-white-50 text-uppercase nisho-section-subtitle" style="color: rgba(255,255,255,0.5) !important;"><?= $cat['count'] ?> — Explore →</span>
+                <a href="<?= $cat['link'] ?>" class="pavitra-cat-block position-relative d-block overflow-hidden" style="height: 400px; text-decoration: none;">
+                    <div class="pavitra-cat-img w-100 h-100" style="background-image: url('<?= $cat['img'] ?>'); background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                    <div class="pavitra-cat-overlay position-absolute d-flex flex-column justify-content-end p-4 text-white" style="background: linear-gradient(transparent 40%, rgba(0,0,0,0.7)); top: 0; left: 0; right: 0; bottom: 0;">
+                        <h4 class="fw-bold text-uppercase mb-0 pavitra-section-title" style="color: #FFF !important;"><?= $cat['name'] ?></h4>
+                        <span class="text-white-50 text-uppercase pavitra-section-subtitle" style="color: rgba(255,255,255,0.5) !important;"><?= $cat['count'] ?> — Explore →</span>
                     </div>
                 </a>
             </div>
@@ -249,23 +249,23 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Goodbye Deals <span style="font-size: 1.2rem;">;)</span></h2>
-                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Last Pieces at Best Wholesale Discounts</p>
+                <h2 class="text-uppercase fw-normal mb-0 pavitra-section-title">Goodbye Deals <span style="font-size: 1.2rem;">;)</span></h2>
+                <p class="text-muted text-uppercase mb-0 pavitra-section-subtitle">Last Pieces at Best Wholesale Discounts</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/?sort=price_low" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?sort=price_low" class="text-decoration-none text-uppercase fw-bold ms-3 pavitra-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
-        <div class="nisho-carousel-container">
+        <div class="pavitra-carousel-container">
             <?php
             $deals = $products;
             usort($deals, function($a, $b) { return $a['wholesale_price'] <=> $b['wholesale_price']; });
             foreach (array_slice($deals, 0, 8) as $item): ?>
-                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+                <div class="pavitra-carousel-item"><?= renderProductCard($item) ?></div>
             <?php endforeach; ?>
         </div>
     </div>
@@ -274,33 +274,33 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         <div class="row g-4 text-center">
             <div class="col-4">
                 <div class="mb-3"><i class="fa-solid fa-truck-fast" style="font-size: 2rem; color: #482922;"></i></div>
-                <h6 class="fw-bold text-uppercase nisho-section-subtitle" style="color: #1c1c1c;">Fast Shipping</h6>
+                <h6 class="fw-bold text-uppercase pavitra-section-subtitle" style="color: #1c1c1c;">Fast Shipping</h6>
                 <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">Dispatched in 24-48 hours from weaver hubs across India.</p>
             </div>
             <div class="col-4">
                 <div class="mb-3"><i class="fa-solid fa-arrow-rotate-left" style="font-size: 2rem; color: #482922;"></i></div>
-                <h6 class="fw-bold text-uppercase nisho-section-subtitle" style="color: #1c1c1c;">7-Day Easy Returns</h6>
+                <h6 class="fw-bold text-uppercase pavitra-section-subtitle" style="color: #1c1c1c;">7-Day Easy Returns</h6>
                 <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">Hassle-free returns and exchanges on all wholesale orders.</p>
             </div>
             <div class="col-4">
                 <div class="mb-3"><i class="fa-solid fa-certificate" style="font-size: 2rem; color: #482922;"></i></div>
-                <h6 class="fw-bold text-uppercase nisho-section-subtitle" style="color: #1c1c1c;">Premium Quality</h6>
+                <h6 class="fw-bold text-uppercase pavitra-section-subtitle" style="color: #1c1c1c;">Premium Quality</h6>
                 <p class="text-secondary mb-0 px-2" style="font-size: 0.75rem;">100% GI-certified authentic handloom with weaver verification.</p>
             </div>
         </div>
     </div>
 
     <div class="my-5">
-        <section class="nisho-video-banner position-relative overflow-hidden w-100">
-            <video class="nisho-video-media" autoplay loop muted playsinline poster="/saree-banner4.png" preload="metadata">
+        <section class="pavitra-video-banner position-relative overflow-hidden w-100">
+            <video class="pavitra-video-media" autoplay loop muted playsinline poster="/saree-banner4.png" preload="metadata">
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-waving-red-fabric-surface-40294-large.mp4" type="video/mp4">
             </video>
-            <div class="nisho-video-overlay"></div>
-            <div class="nisho-video-content position-absolute d-flex flex-column justify-content-center align-items-center text-center text-white p-4">
-                <p class="text-uppercase mb-2 nisho-hero-subtitle" style="color: rgba(255,255,255,0.6);">Heritage Storytelling</p>
-                <h2 class="text-uppercase mb-3 nisho-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Desi Romance</h2>
-                <p class="mb-4 nisho-video-copy">A rhythmic celebration of warp and weft. Traditional sarees reimagined for the modern wholesale buyer.</p>
-                <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold nisho-hero-cta" style="color: #482922;">Explore Story</a>
+            <div class="pavitra-video-overlay"></div>
+            <div class="pavitra-video-content position-absolute d-flex flex-column justify-content-center align-items-center text-center text-white p-4">
+                <p class="text-uppercase mb-2 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.6);">Heritage Storytelling</p>
+                <h2 class="text-uppercase mb-3 pavitra-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Desi Romance</h2>
+                <p class="mb-4 pavitra-video-copy">A rhythmic celebration of warp and weft. Traditional sarees reimagined for the modern wholesale buyer.</p>
+                <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Explore Story</a>
             </div>
         </section>
     </div>
@@ -308,33 +308,33 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h2 class="text-uppercase fw-normal mb-0 nisho-section-title">Wholesale Bestsellers</h2>
-                <p class="text-muted text-uppercase mb-0 nisho-section-subtitle">Top-Selling Sarees Among Our B2B Retailers</p>
+                <h2 class="text-uppercase fw-normal mb-0 pavitra-section-title">Wholesale Bestsellers</h2>
+                <p class="text-muted text-uppercase mb-0 pavitra-section-subtitle">Top-Selling Sarees Among Our B2B Retailers</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <div class="d-none d-md-flex gap-2">
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
-                    <button class="btn btn-outline-dark rounded-circle nisho-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-prev" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-left" style="font-size: 0.7rem;"></i></button>
+                    <button class="btn btn-outline-dark rounded-circle pavitra-carousel-next" style="width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-width: 1.5px;"><i class="fa fa-chevron-right" style="font-size: 0.7rem;"></i></button>
                 </div>
-                <a href="/?all_sarees=true" class="text-decoration-none text-uppercase fw-bold ms-3 nisho-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
+                <a href="/?all_sarees=true" class="text-decoration-none text-uppercase fw-bold ms-3 pavitra-section-link" style="color: #482922; border-bottom: 1px solid #482922;">Shop All →</a>
             </div>
         </div>
-        <div class="nisho-carousel-container">
+        <div class="pavitra-carousel-container">
             <?php
             $bestsellers = $products;
             shuffle($bestsellers);
             foreach (array_slice($bestsellers, 0, 8) as $item): ?>
-                <div class="nisho-carousel-item"><?= renderProductCard($item) ?></div>
+                <div class="pavitra-carousel-item"><?= renderProductCard($item) ?></div>
             <?php endforeach; ?>
         </div>
     </div>
 
     <div class="w-100 py-5 mt-5" style="background-color: #482922; font-family: 'Nunito', sans-serif;">
         <div class="container text-center py-4">
-            <h3 class="text-uppercase fw-bold mb-2 nisho-section-title" style="color: #FFF !important;">Join the Movement</h3>
+            <h3 class="text-uppercase fw-bold mb-2 pavitra-section-title" style="color: #FFF !important;">Join the Movement</h3>
             <p class="mb-4" style="font-size: 0.85rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.55);">Get 10% off your first wholesale order. Stay updated on exclusive handloom drops.</p>
             <form class="d-flex justify-content-center gap-2 mx-auto" style="max-width: 480px;" onsubmit="event.preventDefault(); showToast('Subscribed successfully! 🎉'); $(this).find('input').val('');">
-                <input type="email" class="form-control rounded-0 border-0 py-2 px-3 nisho-newsletter-input" placeholder="Enter your email address" required style="font-size: 0.85rem; background: rgba(255,255,255,0.12); color: #FFF !important;">
+                <input type="email" class="form-control rounded-0 border-0 py-2 px-3 pavitra-newsletter-input" placeholder="Enter your email address" required style="font-size: 0.85rem; background: rgba(255,255,255,0.12); color: #FFF !important;">
                 <button type="submit" class="btn btn-light rounded-0 px-4 text-uppercase fw-bold" style="font-size: 0.8rem; letter-spacing: 0.12em; color: #482922; white-space: nowrap;">Subscribe</button>
             </form>
         </div>
@@ -389,12 +389,12 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
 
 <script>
 $(document).ready(function() {
-    $('.nisho-carousel-prev').on('click', function() {
-        const c = $(this).closest('.carousel-section-wrapper').find('.nisho-carousel-container');
+    $('.pavitra-carousel-prev').on('click', function() {
+        const c = $(this).closest('.carousel-section-wrapper').find('.pavitra-carousel-container');
         c.animate({ scrollLeft: c.scrollLeft() - 320 }, 300);
     });
-    $('.nisho-carousel-next').on('click', function() {
-        const c = $(this).closest('.carousel-section-wrapper').find('.nisho-carousel-container');
+    $('.pavitra-carousel-next').on('click', function() {
+        const c = $(this).closest('.carousel-section-wrapper').find('.pavitra-carousel-container');
         c.animate({ scrollLeft: c.scrollLeft() + 320 }, 300);
     });
 
@@ -406,14 +406,14 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.product-card-trigger', function(e) {
-        if ($(e.target).closest('.wishlist-heart-btn, .nisho-quick-add-btn').length > 0) return;
+        if ($(e.target).closest('.wishlist-heart-btn, .pavitra-quick-add-btn').length > 0) return;
         const productId = $(this).attr('data-id');
         if (productId) {
             window.location.href = '/product/' + productId;
         }
     });
 
-    $(document).on('click', '.nisho-quick-add-btn', function(e) {
+    $(document).on('click', '.pavitra-quick-add-btn', function(e) {
         e.stopPropagation();
         const btn = $(this);
         const variantId = btn.attr('data-variant-id');
@@ -450,7 +450,7 @@ $(document).ready(function() {
         }, 200);
     }
 
-    // ═══ NISHORAMA SCROLL-TRIGGERED ANIMATIONS ═══
+    // ═══ pavitraRAMA SCROLL-TRIGGERED ANIMATIONS ═══
     if ('IntersectionObserver' in window) {
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -461,8 +461,8 @@ $(document).ready(function() {
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.carousel-section-wrapper, #home-categories-grid, .nisho-footer').forEach(el => {
-            el.classList.add('nisho-anim-section');
+        document.querySelectorAll('.carousel-section-wrapper, #home-categories-grid, .pavitra-footer').forEach(el => {
+            el.classList.add('pavitra-anim-section');
             sectionObserver.observe(el);
         });
 
@@ -487,7 +487,7 @@ $(document).ready(function() {
                 }
             });
         }, { threshold: 0.15 });
-        document.querySelectorAll('.nisho-cat-block').forEach(el => {
+        document.querySelectorAll('.pavitra-cat-block').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
@@ -507,7 +507,7 @@ $(document).ready(function() {
     }
 
     // ═══ SMOOTH CAROUSEL DRAG-TO-SCROLL ═══
-    document.querySelectorAll('.nisho-carousel-container').forEach(container => {
+    document.querySelectorAll('.pavitra-carousel-container').forEach(container => {
         let isDown = false, startX, scrollLeft;
         container.addEventListener('mousedown', (e) => {
             isDown = true; container.style.cursor = 'grabbing';

@@ -62,7 +62,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 <?php else: ?>
-                    <a href="/" class="nisho-logo" style="margin-right: 10px; text-decoration: none;">
+                    <a href="/" class="pavitra-logo" style="margin-right: 10px; text-decoration: none;">
                         <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 38px; width: auto; display: block;" class="pavitra-logo-img">
                     </a>
                 <?php endif; ?>
@@ -96,27 +96,27 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
     <header class="pavitra-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
-            <a href="/" class="nisho-logo" style="text-decoration: none;">
+            <a href="/" class="pavitra-logo" style="text-decoration: none;">
                 <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
             </a>
 
-            <div class="nisho-desktop-menu d-flex flex-column align-items-center gap-1">
+            <div class="pavitra-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
-                    <a href="/?category=Organza+Silk" class="nisho-menu-link">Pavitra MUSE</a>
-                    <a href="/?sort=price_high" class="nisho-menu-link">MOST WANTED</a>
-                    <a href="/?sort=newest" class="nisho-menu-link">NEW ARRIVALS</a>
-                    <a href="/?all_sarees=true" class="nisho-menu-link">ALL SAREES</a>
-                    <a href="/?category=Banarasi+Brocade" class="nisho-menu-link">BANARASI</a>
-                    <a href="/?category=Kanjeevaram+Silk" class="nisho-menu-link">KANJEEVARAM</a>
-                    <a href="/?category=Patola+Silk" class="nisho-menu-link">PATOLA</a>
+                    <a href="/?category=Organza+Silk" class="pavitra-menu-link">Pavitra MUSE</a>
+                    <a href="/?sort=price_high" class="pavitra-menu-link">MOST WANTED</a>
+                    <a href="/?sort=newest" class="pavitra-menu-link">NEW ARRIVALS</a>
+                    <a href="/?all_sarees=true" class="pavitra-menu-link">ALL SAREES</a>
+                    <a href="/?category=Banarasi+Brocade" class="pavitra-menu-link">BANARASI</a>
+                    <a href="/?category=Kanjeevaram+Silk" class="pavitra-menu-link">KANJEEVARAM</a>
+                    <a href="/?category=Patola+Silk" class="pavitra-menu-link">PATOLA</a>
                 </div>
                 <div class="menu-row-2 d-flex gap-4">
-                    <a href="/?category=Organza+Silk" class="nisho-menu-link">ORGANZA</a>
-                    <a href="/?category=Chanderi+Weave" class="nisho-menu-link">CHANDERI</a>
-                    <a href="/?category=Mysore+Crepe+Silk" class="nisho-menu-link">MYSORE SILK</a>
-                    <a href="/?category=Jamdani+Muslin" class="nisho-menu-link">JAMDANI</a>
+                    <a href="/?category=Organza+Silk" class="pavitra-menu-link">ORGANZA</a>
+                    <a href="/?category=Chanderi+Weave" class="pavitra-menu-link">CHANDERI</a>
+                    <a href="/?category=Mysore+Crepe+Silk" class="pavitra-menu-link">MYSORE SILK</a>
+                    <a href="/?category=Jamdani+Muslin" class="pavitra-menu-link">JAMDANI</a>
                     <div class="dropdown d-inline-block collections-dropdown">
-                        <a href="#" class="dropdown-toggle text-decoration-none text-dark nisho-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
+                        <a href="#" class="dropdown-toggle text-decoration-none text-dark pavitra-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
                         <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraOffice-SS2</a></li>
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">Pavitra OFFICE-SS1</a></li>
@@ -126,8 +126,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
                         </ul>
                     </div>
-                    <a href="/?sort=price_low" class="text-danger fw-bold nisho-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
-                    <a href="/customization" class="fw-bold nisho-menu-link text-uppercase" style="color: var(--premium-gold-dark) !important; border-bottom: 1.5px dashed var(--premium-gold-dark);">Custom Studio</a>
+                    <a href="/?sort=price_low" class="text-danger fw-bold pavitra-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>
+                    <a href="/customization" class="fw-bold pavitra-menu-link text-uppercase" style="color: var(--premium-gold-dark) !important; border-bottom: 1.5px dashed var(--premium-gold-dark);">Custom Studio</a>
                 </div>
             </div>
 
@@ -527,15 +527,15 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
     </div>
 
-    <footer class="nisho-footer">
+    <footer class="pavitra-footer">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
-                    <a href="/" class="nisho-logo d-inline-block mb-3">
+                    <a href="/" class="pavitra-logo d-inline-block mb-3">
                         <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
                     </a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
-                    <div class="nisho-footer-social mt-3">
+                    <div class="pavitra-footer-social mt-3">
                         <a href="#"><i class="fa-brands fa-instagram"></i></a>
                         <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
                         <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -576,7 +576,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </div>
                 </div>
             </div>
-            <div class="nisho-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="pavitra-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <span>© 2026 Pavitra Designer. All Rights Reserved.</span>
                 <span class="mt-2 mt-md-0"></span>
             </div>
@@ -615,7 +615,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
                 $('.voice-search-btn').on('click', function() {
                     var btn = $(this);
-                    btn.addClass('text-danger animate-pulse').css('animation', 'nishoPulse 1s infinite');
+                    btn.addClass('text-danger animate-pulse').css('animation', 'pavitraPulse 1s infinite');
                     window.showToast("Listening... Speak now!");
                     recognition.start();
                 });

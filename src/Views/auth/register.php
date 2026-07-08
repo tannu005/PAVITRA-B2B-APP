@@ -21,31 +21,31 @@
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
             <div class="mb-4">
                 <label for="name" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Full Name</label>
-                <input type="text" class="form-control nisho-input" id="name" name="name" required placeholder="e.g. Ramesh Kumar" value="<?= htmlspecialchars($name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                <input type="text" class="form-control pavitra-input" id="name" name="name" required placeholder="e.g. Ramesh Kumar" value="<?= htmlspecialchars($name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
-                    <input type="email" class="form-control nisho-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <input type="email" class="form-control pavitra-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                 </div>
                 <div class="col-md-6 mb-4">
                     <label for="mobile" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Mobile Number</label>
-                    <input type="text" class="form-control nisho-input" id="mobile" name="mobile" required placeholder="e.g. +91 9999999999" value="<?= htmlspecialchars($mobile ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <input type="text" class="form-control pavitra-input" id="mobile" name="mobile" required placeholder="e.g. +91 9999999999" value="<?= htmlspecialchars($mobile ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                 </div>
             </div>
 
             <div class="mb-4 position-relative">
                 <label for="password" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Password</label>
                 <div class="position-relative">
-                    <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="Minimum 6 characters" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <input type="password" class="form-control pavitra-input" id="password" name="password" required placeholder="Minimum 6 characters" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                     <span id="toggle-password" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 5;"><i class="fa-solid fa-eye"></i></span>
                 </div>
             </div>
 
             <div class="mb-4">
                 <label for="role_id" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Join Platform As</label>
-                <select class="form-select nisho-input" id="role_id" name="role_id" required style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                <select class="form-select pavitra-input" id="role_id" name="role_id" required style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                     <option value="" class="text-dark">Select Profile Role...</option>
                     <?php foreach ($roles as $role): ?>
                         <option value="<?= $role['id'] ?>" <?= intval($role_id ?? 0) === intval($role['id']) ? 'selected' : '' ?> class="text-dark">
@@ -62,7 +62,7 @@
 
             <div class="mb-5">
                 <label id="shop-label" for="shop_company_name" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Shop / Company Name</label>
-                <input type="text" class="form-control nisho-input" id="shop_company_name" name="shop_company_name" required placeholder="e.g. Sri Lakshmi Saree Loom" value="<?= htmlspecialchars($shop_company_name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                <input type="text" class="form-control pavitra-input" id="shop_company_name" name="shop_company_name" required placeholder="e.g. Sri Lakshmi Saree Loom" value="<?= htmlspecialchars($shop_company_name ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
@@ -78,7 +78,7 @@
 </div>
 
 <style>
-.nisho-input:focus {
+.pavitra-input:focus {
     border-bottom-color: #1a1a1a !important;
     box-shadow: none !important;
 }

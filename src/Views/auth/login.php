@@ -27,7 +27,7 @@
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
             <div class="mb-4">
                 <label for="email" class="form-label fw-bold text-muted mb-1" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Email Address</label>
-                <input type="email" class="form-control nisho-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                <input type="email" class="form-control pavitra-input" id="email" name="email" required placeholder="name@company.com" value="<?= htmlspecialchars($email ?? '') ?>" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
             </div>
 
             <div class="mb-5">
@@ -36,7 +36,7 @@
                     <a href="/forgot-password" class="text-decoration-none text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase;">Forgot?</a>
                 </div>
                 <div class="position-relative">
-                    <input type="password" class="form-control nisho-input" id="password" name="password" required placeholder="••••••••" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
+                    <input type="password" class="form-control pavitra-input" id="password" name="password" required placeholder="••••••••" style="border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 8px 30px 8px 0; outline: none; background: transparent; font-size: 0.95rem; width: 100%;">
                     <span id="toggle-password" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888; z-index: 5;"><i class="fa-solid fa-eye"></i></span>
                 </div>
             </div>
@@ -64,7 +64,7 @@
 </div>
 
 <style>
-.nisho-input:focus {
+.pavitra-input:focus {
     border-bottom-color: #1a1a1a !important;
     box-shadow: none !important;
 }

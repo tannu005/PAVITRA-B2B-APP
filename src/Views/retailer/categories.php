@@ -32,7 +32,7 @@
         <?php foreach ($stores as $store): ?>
             <div class="col">
                 <a href="/?category=<?= $store['slug'] ?>" class="text-decoration-none text-dark d-block h-100">
-                    <div class="card h-100 border-0 shadow-sm p-4 text-center nisho-store-card" style="border-radius: 16px; background-color: #FFFDF8; border: 1px solid var(--premium-border) !important; transition: all 0.35s ease;">
+                    <div class="card h-100 border-0 shadow-sm p-4 text-center pavitra-store-card" style="border-radius: 16px; background-color: #FFFDF8; border: 1px solid var(--premium-border) !important; transition: all 0.35s ease;">
                         
                         <div class="d-flex justify-content-center mb-3">
                             <div class="img-wrapper" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #FFF; box-shadow: 0 8px 24px rgba(107,29,29,0.12); position:relative;">
@@ -68,13 +68,13 @@
 </div>
 
 <style>
-.nisho-store-card:hover {
+.pavitra-store-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 16px 36px rgba(107,29,29,0.08) !important;
     background-color: #FFF !important;
     border-color: var(--premium-gold) !important;
 }
-.nisho-store-card:hover .img-wrapper {
+.pavitra-store-card:hover .img-wrapper {
     box-shadow: 0 12px 30px rgba(201,151,46,0.3) !important;
     transform: scale(1.05);
     transition: all 0.35s ease;
