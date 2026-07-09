@@ -358,6 +358,7 @@ class RetailerController extends Controller {
         }
 
         $amountInPaise = intval(round($netSubtotal * 100));
+        error_log("Razorpay Checkout Started. Net Subtotal: $netSubtotal, Key: $key");
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.razorpay.com/v1/orders');
@@ -369,19 +370,24 @@ class RetailerController extends Controller {
             'receipt' => 'rcpt_' . time()
         ]));
         curl_setopt($ch, CURLOPT_USERPWD, $key . ':' . $secret);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Fix for local Windows cURL SSL issues
         $headers = ['Content-Type: application/json'];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
+            error_log("Razorpay CURL Error: " . curl_error($ch));
             return $response->json(['error' => 'Payment gateway error: ' . curl_error($ch)], 500);
         }
         curl_close($ch);
 
         $rzp = json_decode($result, true);
         if (isset($rzp['error'])) {
+            error_log("Razorpay API Error: " . json_encode($rzp['error']));
             return $response->json(['error' => 'Razorpay Error: ' . $rzp['error']['description']], 500);
         }
+
+        error_log("Razorpay Order Created: " . $rzp['id']);
 
         return $response->json([
             'order_id' => $rzp['id'],
