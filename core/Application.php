@@ -28,9 +28,8 @@ class Application {
         $this->applySecurityHeaders();
 
         $this->db = new Database();
-        
         $this->cache = new Cache();
-        
+        $this->loadEnv();
         $this->loadConfig();
     }
 
@@ -103,6 +102,26 @@ class Application {
                 'support_email' => 'p14115419@gmail.com',
                 'support_mobile' => '+91 9999999999',
             ];
+        }
+    }
+
+    public function loadEnv(): void {
+        $envPath = dirname(__DIR__) . '/.env';
+        if (file_exists($envPath)) {
+            $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                if (str_starts_with(trim($line), '#')) continue;
+                if (str_contains($line, '=')) {
+                    list($name, $value) = explode('=', $line, 2);
+                    $name = trim($name);
+                    $value = trim($value, ' "\'');
+                    if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
+                        putenv(sprintf('%s=%s', $name, $value));
+                        $_ENV[$name] = $value;
+                        $_SERVER[$name] = $value;
+                    }
+                }
+            }
         }
     }
 
