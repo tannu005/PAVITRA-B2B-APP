@@ -98,6 +98,8 @@ class Router {
         $token = $body['csrf_token'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
 
         if (!Application::$app->validateCsrfToken(is_string($token) ? $token : null)) {
+            $sessionToken = $_SESSION['csrf_token'] ?? 'EMPTY_SESSION_TOKEN';
+            file_put_contents(__DIR__ . '/../csrf_debug.log', "CSRF FAILED. POST Token: {$token} | Session Token: {$sessionToken} | POST BODY: " . json_encode($body) . "\n", FILE_APPEND);
             $this->response->setStatusCode(419);
             echo 'CSRF token validation failed.';
             exit;

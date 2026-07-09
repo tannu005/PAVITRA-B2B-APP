@@ -19,6 +19,8 @@ class Application {
         $this->router = new Router($this->request, $this->response);
         
         if (session_status() === PHP_SESSION_NONE) {
+            session_name('PAVITRASESSID');
+            session_set_cookie_params(86400 * 30, '/');
             session_start();
         }
 
