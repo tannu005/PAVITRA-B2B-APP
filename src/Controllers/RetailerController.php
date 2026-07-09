@@ -298,13 +298,8 @@ class RetailerController extends Controller {
         return $this->cartView($request, $response);
     }
 
-    public function createRazorpayOrder(Request $request, Response $response) {
-        $user = $this->checkAuth(['RETAILER']);
-        if (!$user) return;
-
+    private function calculateCartTotals(int $cartId): array|string {
         $db = Application::$app->db;
-        $cartId = $this->getOrCreateCartId();
-
         $stmt = $db->prepare("
             SELECT ci.quantity, pv.id as variant_id, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.stock
             FROM cart_items ci
@@ -315,14 +310,14 @@ class RetailerController extends Controller {
         $cartItems = $stmt->fetchAll();
 
         if (empty($cartItems)) {
-            return $response->json(['error' => 'Your wholesale cart is empty.'], 400);
+            return 'Your wholesale cart is empty.';
         }
 
         $subtotal = 0;
         foreach ($cartItems as $item) {
             $qty = intval($item['quantity']);
             if ($item['stock'] < $qty) {
-                return $response->json(['error' => "Stock limit exceeded for variant SKU: #{$item['variant_id']}"], 400);
+                return "Stock limit exceeded for variant SKU: #{$item['variant_id']}";
             }
             $isWholesale = ($qty >= intval($item['bulk_threshold']));
             $price = $isWholesale ? floatval($item['wholesale_price']) : floatval($item['price']);
@@ -346,6 +341,26 @@ class RetailerController extends Controller {
         }
         
         $netSubtotal = $subtotal - $discountAmount;
+        return [
+            'subtotal' => $subtotal,
+            'discountAmount' => $discountAmount,
+            'netSubtotal' => $netSubtotal
+        ];
+    }
+
+
+    public function createRazorpayOrder(Request $request, Response $response) {
+        $user = $this->checkAuth(['RETAILER']);
+        if (!$user) return;
+
+        $cartId = $this->getOrCreateCartId();
+        $totals = $this->calculateCartTotals($cartId);
+        
+        if (is_string($totals)) {
+            return $response->json(['error' => $totals], 400);
+        }
+
+        $netSubtotal = $totals['netSubtotal'];
 
         $key = Application::$app->config['payment_gateway_key'] ?? '';
         if (empty($key) || $key === 'YOUR_PAYMENT_GATEWAY_KEY') $key = getenv('PAYMENT_GATEWAY_KEY') ?: '';
@@ -371,6 +386,8 @@ class RetailerController extends Controller {
         ]));
         curl_setopt($ch, CURLOPT_USERPWD, $key . ':' . $secret);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Fix for local Windows cURL SSL issues
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); // Force IPv4 to prevent hanging
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Prevent PHP max_execution_time fatal errors
         $headers = ['Content-Type: application/json'];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -402,6 +419,105 @@ class RetailerController extends Controller {
         ]);
     }
 
+    public function createWalletOrder(Request $request, Response $response) {
+        $user = $this->checkAuth(['RETAILER']);
+        if (!$user) return;
+
+        $body = $request->getBody();
+        $address = trim($body['address'] ?? '');
+
+        if (empty($address)) {
+            return $response->json(['error' => 'Delivery shipping address is required.'], 400);
+        }
+
+        $cartId = $this->getOrCreateCartId();
+        $totals = $this->calculateCartTotals($cartId);
+        if (is_string($totals)) {
+            return $response->json(['error' => $totals], 400);
+        }
+
+        $db = Application::$app->db;
+        $netSubtotal = $totals['netSubtotal'];
+
+        // Wallet checkout logic
+        try {
+            $db->beginTransaction();
+
+            // Lock the wallet row to prevent race conditions
+            $stmtWallet = $db->prepare("SELECT id, balance FROM wallets WHERE user_id = ? FOR UPDATE");
+            $stmtWallet->execute([$user['id']]);
+            $wallet = $stmtWallet->fetch();
+
+            if (!$wallet || floatval($wallet['balance']) < $netSubtotal) {
+                $db->rollBack();
+                return $response->json(['error' => 'Insufficient wallet balance.'], 400);
+            }
+
+            // Perform transaction based checkout
+            $checkoutResult = $this->processConfirmedCheckout($user, $address, 'WALLET_TXN', 'WALLET', 'PAID', $db);
+            if (isset($checkoutResult['error'])) {
+                $db->rollBack();
+                return $response->json($checkoutResult, 400);
+            }
+
+            // Deduct from wallet
+            $stmtUpWallet = $db->prepare("UPDATE wallets SET balance = balance - ? WHERE id = ?");
+            $stmtUpWallet->execute([$netSubtotal, $wallet['id']]);
+
+            // Add ledger entry
+            $stmtTx = $db->prepare("
+                INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
+                VALUES (?, 'DEBIT', ?, ?, 'ORDER_PAYMENT', (SELECT balance FROM wallets WHERE id = ?))
+            ");
+            $stmtTx->execute([$wallet['id'], $netSubtotal, "Payment for Wholesale Order", $wallet['id']]);
+
+            $db->commit();
+            return $response->json(['success' => true]);
+        } catch (\Throwable $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            error_log($e);
+            return $response->json(['error' => 'Server error processing wallet order.'], 500);
+        }
+    }
+
+    public function createCodOrder(Request $request, Response $response) {
+        $user = $this->checkAuth(['RETAILER']);
+        if (!$user) return;
+
+        $body = $request->getBody();
+        $address = trim($body['address'] ?? '');
+
+        if (empty($address)) {
+            return $response->json(['error' => 'Delivery shipping address is required.'], 400);
+        }
+
+        $cartId = $this->getOrCreateCartId();
+        $totals = $this->calculateCartTotals($cartId);
+        if (is_string($totals)) {
+            return $response->json(['error' => $totals], 400);
+        }
+
+        try {
+            $db = Application::$app->db;
+            $db->beginTransaction();
+            $checkoutResult = $this->processConfirmedCheckout($user, $address, null, 'COD', 'PENDING', $db);
+            if (isset($checkoutResult['error'])) {
+                $db->rollBack();
+                return $response->json($checkoutResult, 400);
+            }
+            $db->commit();
+            return $response->json(['success' => true]);
+        } catch (\Throwable $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            error_log($e);
+            return $response->json(['error' => 'Server error processing COD order.'], 500);
+        }
+    }
+
     public function verifyRazorpayPayment(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
@@ -424,10 +540,15 @@ class RetailerController extends Controller {
             return $response->json(['error' => 'Payment signature verification failed.'], 400);
         }
 
-        return $this->processConfirmedCheckout($user, $address, $response, $razorpayPaymentId);
+        $db = Application::$app->db;
+        $checkoutResult = $this->processConfirmedCheckout($user, $address, $razorpayPaymentId, 'RAZORPAY', 'PAID', $db);
+        if (isset($checkoutResult['error'])) {
+            return $response->json($checkoutResult, 400);
+        }
+        return $response->json($checkoutResult);
     }
 
-    private function processConfirmedCheckout($user, $address, $response, $paymentId) {
+    private function processConfirmedCheckout($user, $address, $paymentId, $paymentMethod = 'RAZORPAY', $paymentStatus = 'PAID', $db = null) {
         try {
             $db = Application::$app->db;
             $cartId = $this->getOrCreateCartId();
@@ -443,7 +564,7 @@ class RetailerController extends Controller {
             $cartItems = $stmt->fetchAll();
 
             if (empty($cartItems)) {
-                return $response->json(['error' => 'Your wholesale cart is empty.'], 400);
+                return ['error' => 'Your wholesale cart is empty.'];
             }
 
             $subtotal = 0;
@@ -485,9 +606,13 @@ class RetailerController extends Controller {
             }
             $netSubtotal = $subtotal - $discountAmount;
 
-            $db->beginTransaction();
+            $hasActiveTransaction = $db->inTransaction();
+            if (!$hasActiveTransaction) {
+                $db->beginTransaction();
+            }
 
             $stmtAddr = $db->prepare("INSERT INTO user_addresses (user_id, address_line1, city, state, pin_code) VALUES (?, ?, 'Varanasi', 'Uttar Pradesh', '221001')");
+
             $stmtAddr->execute([$user['id'], $address]);
             $addressId = $db->lastInsertId();
 
@@ -500,9 +625,9 @@ class RetailerController extends Controller {
                 
                 $stmtOrder = $db->prepare("
                     INSERT INTO orders (order_number, user_id, seller_id, status, total_amount, discount_amount, net_amount, payment_status, payment_method, address_id)
-                    VALUES (?, ?, ?, 'PLACED', ?, ?, ?, 'PAID', 'RAZORPAY', ?)
+                    VALUES (?, ?, ?, 'PLACED', ?, ?, ?, ?, ?, ?)
                 ");
-                $stmtOrder->execute([$orderNumber, $user['id'], $sellerId, $orderTotal, $orderDiscount, $orderNet, $addressId]);
+                $stmtOrder->execute([$orderNumber, $user['id'], $sellerId, $orderTotal, $orderDiscount, $orderNet, $paymentStatus, $paymentMethod, $addressId]);
                 $orderId = $db->lastInsertId();
 
                 if ($couponId) {
@@ -514,7 +639,8 @@ class RetailerController extends Controller {
                     INSERT INTO order_status_history (order_id, status, comments, created_by)
                     VALUES (?, 'PLACED', ?, ?)
                 ");
-                $stmtHistory->execute([$orderId, "Paid via Razorpay (Txn: {$paymentId})", $user['id']]);
+                $paymentComment = ($paymentMethod === 'COD') ? "Order Placed via COD" : "Paid via {$paymentMethod} (Txn: {$paymentId})";
+                $stmtHistory->execute([$orderId, $paymentComment, $user['id']]);
 
                 foreach ($items as $item) {
                     $stmtItem = $db->prepare("
@@ -538,14 +664,16 @@ class RetailerController extends Controller {
             $stmtClear->execute([$cartId]);
             unset($_SESSION['applied_coupon']);
 
-            $db->commit();
-            return $response->json(['success' => true]);
-
+            if (!$hasActiveTransaction) {
+                $db->commit();
+            }
+            
+            return ['success' => true];
         } catch (\Throwable $e) {
-            if (isset($db) && $db->inTransaction()) {
+            if (isset($db) && $db->inTransaction() && (!isset($hasActiveTransaction) || !$hasActiveTransaction)) {
                 $db->rollBack();
             }
-            return $response->json(['error' => 'Checkout execution crashed: ' . $e->getMessage()], 500);
+            return ['error' => 'Checkout execution crashed: ' . $e->getMessage()];
         }
     }
 

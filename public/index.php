@@ -65,6 +65,8 @@ $app->router->get('/cart', [App\Controllers\RetailerController::class, 'cartView
 $app->router->post('/cart/coupon', [App\Controllers\RetailerController::class, 'applyCoupon']);
 $app->router->post('/checkout/razorpay/create', [App\Controllers\RetailerController::class, 'createRazorpayOrder']);
 $app->router->post('/checkout/razorpay/verify', [App\Controllers\RetailerController::class, 'verifyRazorpayPayment']);
+$app->router->post('/checkout/wallet/create', [App\Controllers\RetailerController::class, 'createWalletOrder']);
+$app->router->post('/checkout/cod/create', [App\Controllers\RetailerController::class, 'createCodOrder']);
 $app->router->get('/orders', [App\Controllers\RetailerController::class, 'orders']);
 $app->router->get('/wallet', [App\Controllers\RetailerController::class, 'wallet']);
 $app->router->get('/wishlist', [App\Controllers\RetailerController::class, 'wishlist']);

@@ -17,6 +17,16 @@ class Controller {
     protected function checkAuth(array $allowedRoles = []): ?array {
         $user = Application::$app->getSessionUser();
         if (!$user) {
+            $isAjax = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') || 
+                      ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'XMLHttpRequest' ||
+                      str_contains($_SERVER['CONTENT_TYPE'] ?? '', 'application/json');
+                      
+            if ($isAjax) {
+                Application::$app->response->setStatusCode(401);
+                header('Content-Type: application/json');
+                echo json_encode(['error' => 'Unauthorized. Please login to continue.']);
+                exit;
+            }
             Application::$app->response->redirect('/login');
             return null;
         }

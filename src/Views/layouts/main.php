@@ -190,7 +190,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
         </div>
         <div class="flex-grow-1 overflow-auto p-4" id="cart-drawer-items">
         </div>
-        <div class="p-4 border-top" id="cart-drawer-footer" style="display: none;">
+        <div class="p-4 border-top flex-shrink-0" id="cart-drawer-footer" style="display: none; max-height: 65vh; overflow-y: auto;">
             <div class="d-flex justify-content-between align-items-center mb-2" style="font-size: 0.85rem;">
                 <span class="fw-semibold text-muted">Subtotal</span>
                 <span class="fw-bold text-dark" id="cart-subtotal-display">₹0.00</span>
@@ -218,6 +218,34 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <div class="mb-4">
                 <label for="shipping-address-box" class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.7rem;">Delivery Shipping Address <span class="text-danger">*</span></label>
                 <textarea id="shipping-address-box" class="form-control" rows="2" placeholder="Street, City, State, PIN Code..." style="font-size: 0.85rem; resize: none;"></textarea>
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.7rem;">Payment Method <span class="text-danger">*</span></label>
+                
+                <div class="form-check custom-radio mb-2 rounded border p-2 bg-light">
+                    <input class="form-check-input ms-1 mt-1" type="radio" name="payment_method" id="pay_razorpay" value="RAZORPAY" checked>
+                    <label class="form-check-label ms-2 d-block cursor-pointer" for="pay_razorpay" style="font-size: 0.85rem;">
+                        <span class="fw-bold">Razorpay Gateways</span>
+                        <br><span class="text-muted" style="font-size: 0.75rem;">UPI, Net Banking, Cards, External Wallets</span>
+                    </label>
+                </div>
+
+                <div class="form-check custom-radio mb-2 rounded border p-2 bg-light">
+                    <input class="form-check-input ms-1 mt-1" type="radio" name="payment_method" id="pay_wallet" value="WALLET">
+                    <label class="form-check-label ms-2 d-block cursor-pointer" for="pay_wallet" style="font-size: 0.85rem;">
+                        <span class="fw-bold">Pavitra B2B Wallet</span>
+                        <br><span class="text-muted" style="font-size: 0.75rem;">Pay directly using your internal wallet balance</span>
+                    </label>
+                </div>
+
+                <div class="form-check custom-radio rounded border p-2 bg-light">
+                    <input class="form-check-input ms-1 mt-1" type="radio" name="payment_method" id="pay_cod" value="COD">
+                    <label class="form-check-label ms-2 d-block cursor-pointer" for="pay_cod" style="font-size: 0.85rem;">
+                        <span class="fw-bold">Cash on Delivery (COD)</span>
+                        <br><span class="text-muted" style="font-size: 0.75rem;">Pay offline when the goods arrive</span>
+                    </label>
+                </div>
             </div>
             
             <button class="btn btn-pavitra-pink w-100 py-2 fs-6" id="checkout-order-btn">
@@ -416,8 +444,41 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     return;
                 }
 
-                $(this).prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-1"></i> Generating Bill...');
+                const paymentMethod = $('input[name="payment_method"]:checked').val();
+                
+                $(this).prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-1"></i> Processing Order...');
 
+                if (paymentMethod === 'WALLET' || paymentMethod === 'COD') {
+                    const url = paymentMethod === 'WALLET' ? '/checkout/wallet/create' : '/checkout/cod/create';
+                    
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ address: address }),
+                        dataType: 'json',
+                        success: function(res) {
+                            if (res.error) {
+                                window.showToast(res.error);
+                                $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                                return;
+                            }
+                            window.showToast('Wholesale order successfully placed! Redirecting...');
+                            setTimeout(() => window.location.href = '/orders', 1500);
+                        },
+                        error: function(xhr) {
+                            const err = xhr.responseJSON ? xhr.responseJSON.error : 'Network error processing order.';
+                            window.showToast(err);
+                            $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                            if (xhr.status === 401 || err.toLowerCase().includes('unauthorized')) {
+                                setTimeout(() => { window.location.href = '/login'; }, 1500);
+                            }
+                        }
+                    });
+                    return;
+                }
+
+                // Razorpay Flow
                 $.ajax({
                     url: '/checkout/razorpay/create',
                     method: 'POST',
@@ -441,6 +502,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             "prefill": res.prefill,
                             "theme": {
                                 "color": "#E50046"
+                            },
+                            "modal": {
+                                "ondismiss": function() {
+                                    window.showToast('Payment was cancelled. You can retry placing the order.');
+                                    $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                                }
                             },
                             "handler": function (response) {
                                 window.showToast('Payment successful. Verifying order...');
@@ -470,17 +537,27 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                 });
                             }
                         };
-                        var rzp1 = new Razorpay(options);
-                        rzp1.on('payment.failed', function (response){
-                            window.showToast('Payment failed: ' + response.error.description);
+                        try {
+                            var rzp1 = new Razorpay(options);
+                            rzp1.on('payment.failed', function (response){
+                                window.showToast('Payment failed: ' + response.error.description);
+                                $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                            });
+                            rzp1.open();
+                        } catch (e) {
+                            window.showToast('Failed to load payment gateway. Please disable adblockers or try again.');
                             $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
-                        });
-                        rzp1.open();
+                            console.error('Razorpay Error:', e);
+                        }
                     },
                     error: function(xhr) {
                         const err = xhr.responseJSON ? xhr.responseJSON.error : 'Network error creating bill.';
                         window.showToast(err);
                         $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                        
+                        if (xhr.status === 401 || err.toLowerCase().includes('unauthorized')) {
+                            setTimeout(() => { window.location.href = '/login'; }, 1500);
+                        }
                     }
                 });
             });
