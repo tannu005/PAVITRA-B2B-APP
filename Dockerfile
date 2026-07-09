@@ -1,16 +1,5 @@
-FROM php:8.2-apache
-
+FROM php:8.2-cli
 RUN docker-php-ext-install pdo pdo_mysql
-RUN a2enmod rewrite
-
-ENV PORT=8080
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
-
-COPY . /var/www/html/
-
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-enabled/000-default.conf
-
-RUN chown -R www-data:www-data /var/www/html
-
-EXPOSE $PORT
+COPY . /app
+WORKDIR /app
+CMD ["sh", "-c", "php -S 0.0.0.0:$PORT -t public public/index.php"]
