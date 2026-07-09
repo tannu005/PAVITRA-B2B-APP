@@ -6,6 +6,8 @@ use Core\Controller;
 use Core\Request;
 use Core\Response;
 use Core\Application;
+use App\Utils\EmailService;
+use App\Utils\SmsService;
 
 class AuthController extends Controller {
     protected function createWebSession(array $user, string $context = 'WEB_LOGIN'): void {
@@ -171,6 +173,9 @@ class AuthController extends Controller {
                 $stmtLog->execute([$userId, 'Registered from web signup form', $_SERVER['REMOTE_ADDR'] ?? '']);
 
                 $db->commit();
+
+                EmailService::send($email, "Welcome to Pavitra B2B", "<h2>Welcome, $name!</h2><p>Your B2B account has been created successfully.</p>");
+                SmsService::send($mobile, "Welcome to Pavitra B2B, $name! Your account is active.");
 
                 $_SESSION['user_id'] = $userId;
                 $this->createWebSession(['id' => $userId], 'REGISTER');
