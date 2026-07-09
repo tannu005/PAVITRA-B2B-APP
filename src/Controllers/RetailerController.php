@@ -348,7 +348,10 @@ class RetailerController extends Controller {
         $netSubtotal = $subtotal - $discountAmount;
 
         $key = Application::$app->config['payment_gateway_key'] ?? '';
+        if (empty($key) || $key === 'YOUR_PAYMENT_GATEWAY_KEY') $key = getenv('PAYMENT_GATEWAY_KEY') ?: '';
+        
         $secret = Application::$app->config['payment_gateway_secret'] ?? '';
+        if (empty($secret) || $secret === 'YOUR_PAYMENT_GATEWAY_SECRET') $secret = getenv('PAYMENT_GATEWAY_SECRET') ?: '';
 
         if (empty($key) || empty($secret)) {
             return $response->json(['error' => 'Payment gateway keys are not configured in system settings.'], 500);
@@ -408,6 +411,7 @@ class RetailerController extends Controller {
         }
 
         $secret = Application::$app->config['payment_gateway_secret'] ?? '';
+        if (empty($secret) || $secret === 'YOUR_PAYMENT_GATEWAY_SECRET') $secret = getenv('PAYMENT_GATEWAY_SECRET') ?: '';
         $generatedSignature = hash_hmac('sha256', $razorpayOrderId . "|" . $razorpayPaymentId, $secret);
 
         if ($generatedSignature !== $razorpaySignature) {
