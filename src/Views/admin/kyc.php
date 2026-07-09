@@ -90,15 +90,15 @@
             data: JSON.stringify({ kyc_id: kycId, status: targetStatus }),
             success: function(res) {
                 if (res.success) {
-                    alert('KYC audit log updated to status: ' + targetStatus);
+                    window.showToast('KYC audit log updated to status: ' + targetStatus);
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to update KYC');
+                    window.showToast(res.error || 'Failed to update KYC');
                     window.location.reload();
                 }
             },
             error: function() {
-                alert('Network error updating compliance.');
+                window.showToast('Network error updating compliance.');
                 window.location.reload();
             }
         });
@@ -110,11 +110,11 @@
             url: '/api/kyc/simulate',
             method: 'POST',
             success: function() {
-                alert('Demo KYC document submission simulated!');
+                window.showToast('Demo KYC document submission simulated!');
                 window.location.reload();
             },
             error: function() {
-                alert('Simulate API requires API seeder trigger.');
+                window.showToast('Simulate API requires API seeder trigger.');
                 window.location.reload();
             }
         });

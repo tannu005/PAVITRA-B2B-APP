@@ -102,15 +102,15 @@
             data: JSON.stringify({ assignment_id: assignId, status: nextStatus }),
             success: function(res) {
                 if (res.success) {
-                    alert('Delivery status updated successfully!');
+                    window.showToast('Delivery status updated successfully!');
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to update delivery status');
+                    window.showToast(res.error || 'Failed to update delivery status');
                     window.location.reload();
                 }
             },
             error: function() {
-                alert('Network error updating status.');
+                window.showToast('Network error updating status.');
                 window.location.reload();
             }
         });
@@ -121,7 +121,7 @@
         const otpVal = $('#otp-input-' + assignId).val().trim();
 
         if (otpVal === '') {
-            alert('Please enter the 4-digit handover OTP.');
+            window.showToast('Please enter the 4-digit handover OTP.');
             return;
         }
 
@@ -135,16 +135,16 @@
             data: JSON.stringify({ assignment_id: assignId, otp: otpVal }),
             success: function(res) {
                 if (res.success) {
-                    alert('Logistics delivery verified! Payout release and order completed.');
+                    window.showToast('Logistics delivery verified! Payout release and order completed.');
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Incorrect OTP code');
+                    window.showToast(res.error || 'Incorrect OTP code');
                     btn.prop('disabled', false).text('Verify');
                 }
             },
             error: function(xhr) {
                 const err = xhr.responseJSON ? xhr.responseJSON.error : 'Handover failed';
-                alert(err);
+                window.showToast(err);
                 btn.prop('disabled', false).text('Verify');
             }
         });

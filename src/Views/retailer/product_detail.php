@@ -20,8 +20,10 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
 
     <div class="row g-4">
         <div class="col-lg-6 col-md-12">
-            <div class="position-relative overflow-hidden bg-light border rounded-3 text-center mb-3">
+            <div class="position-relative overflow-hidden bg-light border rounded-3 text-center mb-3" id="main-media-container" style="min-height: 400px; display: flex; align-items: center; justify-content: center;">
                 <img id="detail-saree-img" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" class="img-fluid w-100 zoomable-saree-img" style="max-height: 580px; object-fit: cover; cursor: zoom-in;" title="Click to zoom saree pattern">
+                <video id="detail-saree-video" src="" controls style="display: none; max-height: 580px; width: 100%;"></video>
+                <iframe id="detail-saree-iframe" src="" frameborder="0" allowfullscreen style="display: none; height: 400px; width: 100%;"></iframe>
                 
                 <span class="position-absolute bg-dark text-white px-2 py-1 small fw-bold" style="top: 15px; left: 15px; background-color: #7952B3 !important; font-size: 0.65rem; border-radius: 2px;">
                     House of Brands
@@ -32,14 +34,32 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     <span class="text-success" style="color: #03a685 !important;"><i class="fa-solid fa-star"></i></span>
                     <span class="text-muted border-start ps-1" style="font-weight: 500;">7.3k</span>
                 </span>
-
-                <div class="position-absolute d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="bottom: 15px; left: 15px; width: 48px; height: 48px; border: 2px solid var(--pavitra-pink); cursor: pointer;" onclick="showToast('Loading saree draping video walkthrough... 🎥');">
-                    <i class="fa-solid fa-play" style="color: var(--pavitra-pink); font-size: 1rem; margin-left: 2px;"></i>
-                </div>
             </div>
 
+            <?php if (!empty($images) || !empty($videos)): ?>
+            <div class="d-flex gap-2 overflow-auto pb-2 mb-3 px-1 custom-scrollbar">
+                <?php if (!empty($p['image_url'])): ?>
+                <div class="border rounded-2 overflow-hidden flex-shrink-0 cursor-pointer thumbnail-item border-dark" style="width: 70px; height: 70px;" onclick="changeMainMedia('<?= htmlspecialchars($p['image_url']) ?>', 'image', this)">
+                    <img src="<?= htmlspecialchars($p['image_url']) ?>" class="w-100 h-100" style="object-fit: cover;">
+                </div>
+                <?php endif; ?>
+                <?php foreach($images as $img): ?>
+                <?php if($img['image_url'] !== $p['image_url']): ?>
+                <div class="border rounded-2 overflow-hidden flex-shrink-0 cursor-pointer thumbnail-item opacity-75" style="width: 70px; height: 70px;" onclick="changeMainMedia('<?= htmlspecialchars($img['image_url']) ?>', 'image', this)">
+                    <img src="<?= htmlspecialchars($img['image_url']) ?>" class="w-100 h-100" style="object-fit: cover;">
+                </div>
+                <?php endif; ?>
+                <?php endforeach; ?>
+                <?php foreach($videos as $vid): ?>
+                <div class="border rounded-2 overflow-hidden flex-shrink-0 cursor-pointer thumbnail-item opacity-75 position-relative" style="width: 70px; height: 70px;" onclick="changeMainMedia('<?= htmlspecialchars($vid['video_url']) ?>', 'video', this)">
+                    <div class="w-100 h-100 bg-dark d-flex align-items-center justify-content-center text-white"><i class="fa-solid fa-play"></i></div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+
             <div class="d-flex justify-content-between gap-2 mb-4">
-                <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" onclick="alert('Saree Size Guide:\nStandard Length: 5.5 meters\nBlouse Piece: 0.8 meters (unstitched)\nTotal Width: 1.1 meters');" style="font-size: 0.78rem; border-radius: 6px;">
+                <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted" onclick="window.showToast('Saree Size Guide:\nStandard Length: 5.5 meters\nBlouse Piece: 0.8 meters (unstitched)\nTotal Width: 1.1 meters');" style="font-size: 0.78rem; border-radius: 6px;">
                     <i class="fa-solid fa-ruler-horizontal"></i> Size Guide
                 </button>
                 <button class="btn btn-sm bg-white border w-33 py-2 d-flex align-items-center justify-content-center gap-2 fw-semibold text-muted detail-wishlist-btn" style="font-size: 0.78rem; border-radius: 6px;">
@@ -216,7 +236,28 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                 <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
                     <h6 class="fw-bold text-dark mb-2" style="font-size: 0.85rem;">More Information</h6>
                     <div class="small text-muted mb-2">Product Code: <span class="text-dark fw-semibold">3333<?= htmlspecialchars($p['id']) ?></span></div>
-                    <a href="javascript:void(0)" class="fw-bold text-decoration-none" style="font-size: 0.78rem; color: var(--pavitra-pink);" onclick="alert('Product Details:\nColor: <?= htmlspecialchars($p['color'] ?? 'Dual-tone') ?>\nDimensions: <?= htmlspecialchars($p['dimensions'] ?? 'Standard Saree') ?>\nSKU: <?= htmlspecialchars($p['sku']) ?>');">View More</a>
+                    
+                    <a href="#moreDetailsCollapse" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="moreDetailsCollapse" class="fw-bold text-decoration-none" style="font-size: 0.78rem; color: var(--pavitra-pink);">
+                        View More <i class="fa fa-chevron-down ms-1" style="font-size: 0.7rem;"></i>
+                    </a>
+                    
+                    <div class="collapse mt-3" id="moreDetailsCollapse">
+                        <div class="card card-body border-0 bg-light p-3" style="font-size: 0.8rem; border-radius: 8px;">
+                            <div class="row g-2">
+                                <div class="col-5 text-muted fw-semibold">Color:</div>
+                                <div class="col-7 text-dark fw-bold"><?= htmlspecialchars($p['color'] ?? 'Dual-tone') ?></div>
+                                
+                                <div class="col-5 text-muted fw-semibold">Dimensions:</div>
+                                <div class="col-7 text-dark fw-bold"><?= htmlspecialchars($p['dimensions'] ?? 'Standard Saree') ?></div>
+                                
+                                <div class="col-5 text-muted fw-semibold">SKU:</div>
+                                <div class="col-7 text-dark fw-bold"><?= htmlspecialchars($p['sku']) ?></div>
+                                
+                                <div class="col-5 text-muted fw-semibold">Weight:</div>
+                                <div class="col-7 text-dark fw-bold"><?= htmlspecialchars($p['weight'] ?? 'N/A') ?></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -319,7 +360,7 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr) {
-                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add to bag');
+                window.showToast(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add to bag');
                 btn.prop('disabled', false).html('<i class="fa-solid fa-bag-shopping"></i> Add to Bag');
             }
         });
@@ -338,10 +379,14 @@ $(document).ready(function() {
             data: JSON.stringify({ variant_id: variantId, quantity: qty }),
             dataType: 'json',
             success: function() {
-                window.location.href = '/cart'; // Redirect directly to checkout/cart
+                if (typeof window.openCart === 'function') {
+                    window.openCart();
+                } else {
+                    window.location.href = '/';
+                }
             },
             error: function(xhr) {
-                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to buy now');
+                window.showToast(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to buy now');
                 btn.prop('disabled', false).html('<i class="fa-solid fa-bag-shopping"></i> Buy Now');
             }
         });
@@ -354,4 +399,25 @@ $(document).ready(function() {
         showToast(isActive ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');
     });
 });
+
+function changeMainMedia(url, type, element) {
+    $('.thumbnail-item').removeClass('border-dark').addClass('opacity-75');
+    if (element) {
+        $(element).removeClass('opacity-75').addClass('border-dark');
+    }
+    
+    $('#detail-saree-img').hide();
+    $('#detail-saree-video').hide();
+    $('#detail-saree-iframe').hide();
+    
+    if (type === 'image') {
+        $('#detail-saree-img').attr('src', url).show();
+    } else if (type === 'video') {
+        if (url.includes('youtube.com') || url.includes('vimeo.com')) {
+            $('#detail-saree-iframe').attr('src', url).show();
+        } else {
+            $('#detail-saree-video').attr('src', url).show();
+        }
+    }
+}
 </script>

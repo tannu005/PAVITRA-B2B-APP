@@ -20,8 +20,8 @@
     --surface-white: #ffffff;
     --surface-warm: #f9f9fa;
 
-    --font-headings: 'Italiana', 'Playfair Display', Georgia, serif;
-    --font-body: 'Plus Jakarta Sans', 'Nunito', sans-serif;
+    --font-headings: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --pavitra-body-size: 14px;
     --pavitra-body-line-height: 1.65;
     --pavitra-logo-size: 28px;

@@ -106,7 +106,13 @@ class SellerController extends Controller {
         $wholesalePrice = floatval($body['wholesale_price'] ?? 0);
         $bulkThreshold = intval($body['bulk_threshold'] ?? 5);
         $stock = intval($body['stock'] ?? 0);
-        $imageUrl = trim($body['image_url'] ?? '');
+        $imageUrls = $body['image_urls'] ?? [];
+        $videoUrl = trim($body['video_url'] ?? '');
+        
+        $primaryImageUrl = '';
+        if (is_array($imageUrls) && count($imageUrls) > 0) {
+            $primaryImageUrl = trim($imageUrls[0]);
+        }
 
         $errors = [];
         if (empty($title)) $errors[] = 'Product Title is required.';
@@ -141,8 +147,24 @@ class SellerController extends Controller {
                     INSERT INTO product_variants (product_id, sku, color, size, price, wholesale_price, bulk_threshold, stock, image_url)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ");
-                $stmtVariant->execute([$productId, $sku, $color, $size, $price, $wholesalePrice, $bulkThreshold, $stock, $imageUrl]);
+                $stmtVariant->execute([$productId, $sku, $color, $size, $price, $wholesalePrice, $bulkThreshold, $stock, $primaryImageUrl]);
                 $variantId = $db->lastInsertId();
+                
+                if (is_array($imageUrls)) {
+                    foreach ($imageUrls as $index => $url) {
+                        $url = trim($url);
+                        if (!empty($url)) {
+                            $isPrimary = ($index === 0) ? 1 : 0;
+                            $stmtImg = $db->prepare("INSERT INTO product_images (product_id, image_url, is_primary) VALUES (?, ?, ?)");
+                            $stmtImg->execute([$productId, $url, $isPrimary]);
+                        }
+                    }
+                }
+                
+                if (!empty($videoUrl)) {
+                    $stmtVid = $db->prepare("INSERT INTO product_videos (product_id, video_url) VALUES (?, ?)");
+                    $stmtVid->execute([$productId, $videoUrl]);
+                }
 
                 $stmtInv = $db->prepare("INSERT INTO inventory (product_variant_id, stock, min_alert_stock) VALUES (?, ?, 5)");
                 $stmtInv->execute([$variantId, $stock]);
@@ -173,8 +195,7 @@ class SellerController extends Controller {
             'price_val' => $price,
             'wholesale_price_val' => $wholesalePrice,
             'bulk_threshold_val' => $bulkThreshold,
-            'stock_val' => $stock,
-            'image_url_val' => $imageUrl
+            'stock_val' => $stock
         ]);
     }
 

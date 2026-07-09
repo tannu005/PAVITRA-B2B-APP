@@ -12,8 +12,9 @@ if (file_exists($envPath)) {
     }
 }
 
-// Support Railway's MYSQL_URL natively
-$mysqlUrl = $_ENV['MYSQL_URL'] ?? $_ENV['DATABASE_URL'] ?? null;
+$dbHost = $_ENV['DB_HOST'] ?? null;
+$mysqlUrl = $_ENV['MYSQL_URL'] ?? $_ENV['DATABASE_URL'] ?? (strpos($dbHost, 'mysql://') === 0 ? $dbHost : null);
+
 if ($mysqlUrl) {
     $url = parse_url($mysqlUrl);
     return [
@@ -27,7 +28,7 @@ if ($mysqlUrl) {
 }
 
 return [
-    'host' => $_ENV['DB_HOST'] ?? '127.0.0.1',
+    'host' => $dbHost ?? '127.0.0.1',
     'port' => $_ENV['DB_PORT'] ?? '3306',
     'dbname' => $_ENV['DB_NAME'] ?? 'pavitra_b2b',
     'username' => $_ENV['DB_USER'] ?? 'root',

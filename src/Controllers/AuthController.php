@@ -146,7 +146,7 @@ class AuthController extends Controller {
                     throw new \Exception("Invalid registration role selected.");
                 }
 
-                $status = 'ACTIVE';
+                $status = ($role['name'] === 'SELLER') ? 'PENDING' : 'ACTIVE';
 
                 $stmtInsert = $db->prepare("
                     INSERT INTO users (name, email, mobile, password_hash, role_id, status, is_verified_email, is_verified_mobile) 

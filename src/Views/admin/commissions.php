@@ -102,7 +102,7 @@
         const r = parseFloat($('#rate').val());
 
         if (isNaN(r) || r < 0 || r > 100) {
-            alert('Please select a valid commission percentage between 0 and 100.');
+            window.showToast('Please select a valid commission percentage between 0 and 100.');
             return;
         }
 
@@ -116,15 +116,15 @@
             data: JSON.stringify({ category_id: cat, seller_id: sel, rate: r }),
             success: function(res) {
                 if (res.success) {
-                    alert('Commission rule saved successfully!');
+                    window.showToast('Commission rule saved successfully!');
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to save commission rule');
+                    window.showToast(res.error || 'Failed to save commission rule');
                     btn.prop('disabled', false).text('Save Commission Rule');
                 }
             },
             error: function() {
-                alert('Network error saving commission rule.');
+                window.showToast('Network error saving commission rule.');
                 btn.prop('disabled', false).text('Save Commission Rule');
             }
         });

@@ -7,7 +7,6 @@ $logs = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'install') {
     try {
-        // 1. Connect to MySQL database directly
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
         $pdo = new PDO($dsn, $config['username'], $config['password'], [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -16,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
 
-        // 4. Load schema.sql
         $schemaPath = dirname(__DIR__) . '/database/schema.sql';
         if (!file_exists($schemaPath)) {
             throw new Exception("schema.sql file not found at " . $schemaPath);
@@ -26,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $pdo->exec($schemaSql);
         $logs[] = "Successfully imported all database tables (86 tables created).";
 
-        // 5. Load seeds.sql
         $seedsPath = dirname(__DIR__) . '/database/seeds.sql';
         if (!file_exists($seedsPath)) {
             throw new Exception("seeds.sql file not found at " . $seedsPath);

@@ -423,12 +423,12 @@ $(document).ready(function() {
                         setupContainer.slideUp(200);
                     }
                 } else {
-                    alert('Error toggling 2FA: ' + (response.error || 'Unknown error'));
+                    window.showToast('Error toggling 2FA: ' + (response.error || 'Unknown error'));
                     $('#twofa-switch').prop('checked', !isChecked);
                 }
             },
             error: function(xhr) {
-                alert('Connection error toggling 2FA.');
+                window.showToast('Connection error toggling 2FA.');
                 $('#twofa-switch').prop('checked', !isChecked);
             }
         });

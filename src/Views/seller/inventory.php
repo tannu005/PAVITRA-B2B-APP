@@ -82,7 +82,7 @@
         const qtyVal = parseInt($('#restock-input-' + variantId).val());
 
         if (isNaN(qtyVal) || qtyVal <= 0) {
-            alert('Please enter a valid stock refill quantity.');
+            window.showToast('Please enter a valid stock refill quantity.');
             return;
         }
 
@@ -96,16 +96,16 @@
             data: JSON.stringify({ variant_id: variantId, qty: qtyVal }),
             success: function(res) {
                 if (res.success) {
-                    alert('Inventory refilled successfully!');
+                    window.showToast('Inventory refilled successfully!');
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to update stock');
+                    window.showToast(res.error || 'Failed to update stock');
                     btn.prop('disabled', false).text('Refill');
                 }
             },
             error: function(xhr) {
                 const err = xhr.responseJSON ? xhr.responseJSON.error : 'Network error';
-                alert(err);
+                window.showToast(err);
                 btn.prop('disabled', false).text('Refill');
             }
         });

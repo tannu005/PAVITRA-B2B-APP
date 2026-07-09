@@ -294,14 +294,14 @@ $(document).ready(function() {
             data: formData,
             success: function(response) {
                 if (response.success) {
-                    alert('CMS Page blocks saved successfully!');
+                    window.showToast('CMS Page blocks saved successfully!');
                     window.location.href = '/admin/cms';
                 } else {
-                    alert('Failed to save: ' + (response.error || 'Unknown error'));
+                    window.showToast('Failed to save: ' + (response.error || 'Unknown error'));
                 }
             },
             error: function(xhr) {
-                alert('Connection error saving CMS page.');
+                window.showToast('Connection error saving CMS page.');
             }
         });
     });

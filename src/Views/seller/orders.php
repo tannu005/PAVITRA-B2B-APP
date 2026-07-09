@@ -131,16 +131,16 @@
             data: JSON.stringify({ order_id: orderId, status: newStatus }),
             success: function(res) {
                 if (res.success) {
-                    alert('Order updated to status: ' + newStatus);
+                    window.showToast('Order updated to status: ' + newStatus);
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to update order status');
+                    window.showToast(res.error || 'Failed to update order status');
                     window.location.reload();
                 }
             },
             error: function(xhr) {
                 const err = xhr.responseJSON ? xhr.responseJSON.error : 'Network error';
-                alert(err);
+                window.showToast(err);
                 window.location.reload();
             }
         });

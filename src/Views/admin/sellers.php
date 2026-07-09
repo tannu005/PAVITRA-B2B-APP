@@ -77,15 +77,15 @@
             data: JSON.stringify({ user_id: userId, status: targetStatus }),
             success: function(res) {
                 if (res.success) {
-                    alert('Merchant status updated successfully!');
+                    window.showToast('Merchant status updated successfully!');
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to update user');
+                    window.showToast(res.error || 'Failed to update user');
                     window.location.reload();
                 }
             },
             error: function() {
-                alert('Network error updating status.');
+                window.showToast('Network error updating status.');
                 window.location.reload();
             }
         });

@@ -63,7 +63,8 @@ $app->router->post('/cart/update', [App\Controllers\RetailerController::class, '
 $app->router->post('/cart/remove', [App\Controllers\RetailerController::class, 'removeFromCart']);
 $app->router->get('/cart', [App\Controllers\RetailerController::class, 'cartView']);
 $app->router->post('/cart/coupon', [App\Controllers\RetailerController::class, 'applyCoupon']);
-$app->router->post('/checkout', [App\Controllers\RetailerController::class, 'checkout']);
+$app->router->post('/checkout/razorpay/create', [App\Controllers\RetailerController::class, 'createRazorpayOrder']);
+$app->router->post('/checkout/razorpay/verify', [App\Controllers\RetailerController::class, 'verifyRazorpayPayment']);
 $app->router->get('/orders', [App\Controllers\RetailerController::class, 'orders']);
 $app->router->get('/wallet', [App\Controllers\RetailerController::class, 'wallet']);
 $app->router->get('/wishlist', [App\Controllers\RetailerController::class, 'wishlist']);

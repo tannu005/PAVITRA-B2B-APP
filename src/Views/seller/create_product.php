@@ -79,11 +79,27 @@
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-3 text-pink">4. Media URL</h5>
-                    <div class="mb-4">
-                        <label for="image_url" class="form-label small fw-semibold text-muted text-uppercase">Product Image URL</label>
-                        <input type="text" class="form-control" id="image_url" name="image_url" placeholder="/banarasi.png" value="<?= htmlspecialchars($image_url_val ?? '/banarasi.png') ?>">
-                        <span class="text-muted" style="font-size: 0.75rem;">In production, this connects to your cloud CDN or file storage bucket.</span>
+                    <h5 class="fw-bold mb-3 text-pink">4. Media URLs</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="image_url_1" class="form-label small fw-semibold text-muted text-uppercase">Primary Image URL <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="image_url_1" name="image_urls[]" required placeholder="https://example.com/image1.jpg">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="image_url_2" class="form-label small fw-semibold text-muted text-uppercase">Image URL 2</label>
+                            <input type="text" class="form-control" id="image_url_2" name="image_urls[]" placeholder="https://example.com/image2.jpg">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="image_url_3" class="form-label small fw-semibold text-muted text-uppercase">Image URL 3</label>
+                            <input type="text" class="form-control" id="image_url_3" name="image_urls[]" placeholder="https://example.com/image3.jpg">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="video_url" class="form-label small fw-semibold text-muted text-uppercase">Video URL (Optional)</label>
+                            <input type="text" class="form-control" id="video_url" name="video_url" placeholder="https://example.com/video.mp4">
+                        </div>
+                        <div class="col-12">
+                            <span class="text-muted" style="font-size: 0.75rem;">Provide public URLs for your media assets to display on the product page.</span>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-pavitra-pink w-100 py-3 fs-6 fw-bold">Upload to Catalog & Request Verification</button>

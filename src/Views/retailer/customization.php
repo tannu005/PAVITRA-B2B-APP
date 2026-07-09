@@ -117,7 +117,7 @@
                             <i class="fa-solid fa-cloud-arrow-up fs-3 mb-2" style="color: var(--premium-gold);"></i>
                             <h6 class="mb-1" style="font-size:0.8rem; font-weight:700;">Drag reference image here</h6>
                             <p class="text-muted mb-0 small" style="font-size:0.7rem;">Or select from your files (Max size: 5MB)</p>
-                            <input type="file" id="reference-image-file" class="d-none" onchange="alert('Demo Mode: Image upload selected!')">
+                            <input type="file" id="reference-image-file" class="d-none" onchange="window.showToast('Demo Mode: Image upload selected!')">
                             <button type="button" class="btn btn-sm btn-outline-dark mt-3 px-3 rounded-0 text-uppercase fw-bold" style="font-size:0.65rem;" onclick="document.getElementById('reference-image-file').click()">Choose File</button>
                         </div>
                     </div>
@@ -198,7 +198,7 @@ function sendCustomizationToWhatsapp(event) {
 Please assign this custom design request to a master weaver. Thank you!`;
 
     const encodedMsg = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodedMsg}`;
+    const whatsappUrl = `https://wa.me/919950489678?text=${encodedMsg}`;
     window.open(whatsappUrl, '_blank');
 }
 

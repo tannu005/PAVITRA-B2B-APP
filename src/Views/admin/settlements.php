@@ -113,7 +113,7 @@
         
         const checked = $('.order-select-chk:checked');
         if (checked.length === 0) {
-            alert('Please select at least one order to settle.');
+            window.showToast('Please select at least one order to settle.');
             return;
         }
 
@@ -132,15 +132,15 @@
             data: JSON.stringify({ order_ids: ids }),
             success: function(res) {
                 if (res.success) {
-                    alert('Settlement processed successfully! Funds transferred to weaver profiles.');
+                    window.showToast('Settlement processed successfully! Funds transferred to weaver profiles.');
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to process settlements');
+                    window.showToast(res.error || 'Failed to process settlements');
                     btn.prop('disabled', false).text('Execute Bank Settlement Run');
                 }
             },
             error: function() {
-                alert('Network error executing settlement.');
+                window.showToast('Network error executing settlement.');
                 btn.prop('disabled', false).text('Execute Bank Settlement Run');
             }
         });

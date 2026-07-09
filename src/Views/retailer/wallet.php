@@ -112,11 +112,11 @@
             contentType: 'application/json',
             data: JSON.stringify({ amount: amt }),
             success: function(res) {
-                alert('Simulated deposit of ₹' + amt.toLocaleString('en-IN') + ' successful!');
+                window.showToast('Simulated deposit of ₹' + amt.toLocaleString('en-IN') + ' successful!');
                 window.location.reload();
             },
             error: function() {
-                alert('Failed to simulate deposit. In demo, check routing.');
+                window.showToast('Failed to simulate deposit. In demo, check routing.');
                 btn.prop('disabled', false).text('Submit Simulated Deposit');
             }
         });

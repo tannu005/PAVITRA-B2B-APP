@@ -29,9 +29,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Cinzel:wght@400;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= Application::assetUrl('/assets/css/pavitra.css?v=' . time()) ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         window.__CSRF_TOKEN__ = <?= json_encode($csrfToken) ?>;
         $.ajaxSetup({
@@ -234,19 +235,19 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             });
 
             $('#cart-close-btn, #cart-backdrop').on('click', function() {
-                closeCart();
+                window.closeCart();
             });
 
-            function openCart() {
+            window.openCart = function() {
                 $('#cart-backdrop').addClass('show');
                 $('#cart-drawer-box').addClass('open');
                 loadCartItems();
-            }
+            };
 
-            function closeCart() {
+            window.closeCart = function() {
                 $('#cart-backdrop').removeClass('show');
                 $('#cart-drawer-box').removeClass('open');
-            }
+            };
 
             function loadCartItems() {
                 $.ajax({
@@ -411,30 +412,74 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             $('#checkout-order-btn').on('click', function() {
                 const address = $('#shipping-address-box').val().trim();
                 if (address === '') {
-                    alert('Please enter a delivery shipping address.');
+                    window.showToast('Please enter a delivery shipping address.');
                     return;
                 }
 
-                $(this).prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-1"></i> Processing Order...');
+                $(this).prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-1"></i> Generating Bill...');
 
                 $.ajax({
-                    url: '/checkout',
+                    url: '/checkout/razorpay/create',
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({ address: address }),
                     dataType: 'json',
                     success: function(res) {
-                        if (res.success) {
-                            alert('Wholesale orders successfully placed! Redirecting to orders tab...');
-                            window.location.href = '/orders';
-                        } else {
-                            alert(res.error || 'Failed to place order.');
+                        if (res.error) {
+                            window.showToast(res.error);
                             $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                            return;
                         }
+                        
+                        var options = {
+                            "key": res.key,
+                            "amount": res.amount,
+                            "currency": "INR",
+                            "name": res.name,
+                            "description": res.description || "Wholesale Order",
+                            "order_id": res.order_id,
+                            "prefill": res.prefill,
+                            "theme": {
+                                "color": "#E50046"
+                            },
+                            "handler": function (response) {
+                                window.showToast('Payment successful. Verifying order...');
+                                $.ajax({
+                                    url: '/checkout/razorpay/verify',
+                                    method: 'POST',
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({
+                                        razorpay_payment_id: response.razorpay_payment_id,
+                                        razorpay_order_id: response.razorpay_order_id,
+                                        razorpay_signature: response.razorpay_signature,
+                                        address: address
+                                    }),
+                                    success: function(verifyRes) {
+                                        if (verifyRes.success) {
+                                            window.showToast('Wholesale order successfully placed! Redirecting...');
+                                            setTimeout(() => window.location.href = '/orders', 1500);
+                                        } else {
+                                            window.showToast(verifyRes.error || 'Verification failed.');
+                                            $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                                        }
+                                    },
+                                    error: function(xhr) {
+                                        window.showToast(xhr.responseJSON ? xhr.responseJSON.error : 'Network error verifying payment.');
+                                        $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                                    }
+                                });
+                            }
+                        };
+                        var rzp1 = new Razorpay(options);
+                        rzp1.on('payment.failed', function (response){
+                            window.showToast('Payment failed: ' + response.error.description);
+                            $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
+                        });
+                        rzp1.open();
                     },
                     error: function(xhr) {
-                        const err = xhr.responseJSON ? xhr.responseJSON.error : 'Network error during checkout';
-                        alert(err);
+                        const err = xhr.responseJSON ? xhr.responseJSON.error : 'Network error creating bill.';
+                        window.showToast(err);
                         $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
                     }
                 });
@@ -463,13 +508,17 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             }
 
             window.showToast = function(msg) {
-                $('#toast-message').text(msg);
+                if (typeof msg === 'string') {
+                    $('#toast-message').html(msg.replace(/\n/g, '<br>'));
+                } else {
+                    $('#toast-message').text(msg);
+                }
                 const toastEl = document.getElementById('app-toast');
                 if (toastEl && window.bootstrap) {
                     const toast = window.bootstrap.Toast.getOrCreateInstance(toastEl);
                     toast.show();
                 } else {
-                    alert(msg);
+                    window.window.showToast(msg);
                 }
             };
         });
@@ -679,6 +728,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
             }
 
+            $('.pavitra-cart-btn').on('click', function(e) {
+                e.preventDefault();
+                window.openCart();
+            });
+
             $('.camera-search-btn').on('click', function(e) {
                 e.preventDefault();
                 if (window.bootstrap) {
@@ -838,7 +892,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span>Upload</span>
             </a>
             
-            <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
+            <a href="https://wa.me/919950489678?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
                 <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
                     <i class="fa-brands fa-whatsapp"></i>
                 </div>
@@ -859,7 +913,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span>Custom</span>
             </a>
 
-            <a href="https://wa.me/919876543210?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
+            <a href="https://wa.me/919950489678?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
                 <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
                     <i class="fa-brands fa-whatsapp"></i>
                 </div>
@@ -986,7 +1040,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
                 <div class="border-top my-2"></div>
                 
-                <a href="https://wa.me/919876543210" class="list-group-item list-group-item-action py-3 border-0 text-success" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
+                <a href="https://wa.me/919950489678" class="list-group-item list-group-item-action py-3 border-0 text-success" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-brands fa-whatsapp me-3 fs-5"></i> WhatsApp Support
                 </a>
             </div>
@@ -1176,7 +1230,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                             });
                                             if (code && code.data) {
                                                 video.srcObject.getTracks().forEach(track => track.stop());
-                                                alert("Scanned Saree QR: " + code.data);
+                                                window.showToast("Scanned Saree QR: " + code.data);
                                                 $('#qrScannerModal').modal('hide');
                                                 
                                                 if (code.data.startsWith('http') || code.data.startsWith('/')) {
@@ -1200,7 +1254,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         })
                         .catch(function(err) {
                             console.error("Camera access denied or error:", err);
-                            alert("Direct camera access failed (often happens in WebViews). We will now open your device's native camera.");
+                            window.showToast("Direct camera access failed (often happens in WebViews). We will now open your device's native camera.");
                             
                             let fileInput = document.getElementById('qr-fallback-input');
                             if (!fileInput) {
@@ -1231,13 +1285,13 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                                         inversionAttempts: "dontInvert",
                                                     });
                                                     if (code && code.data) {
-                                                        alert("Scanned Saree QR: " + code.data);
+                                                        window.showToast("Scanned Saree QR: " + code.data);
                                                         $('#qrScannerModal').modal('hide');
                                                         if (code.data.startsWith('http') || code.data.startsWith('/')) {
                                                             window.location.href = code.data;
                                                         }
                                                     } else {
-                                                        alert("Could not detect a QR code in the image. Please try again.");
+                                                        window.showToast("Could not detect a QR code in the image. Please try again.");
                                                     }
                                                 }
                                             };
@@ -1250,7 +1304,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             fileInput.click();
                         });
                 } else {
-                    alert("Your browser does not support direct camera access.");
+                    window.showToast("Your browser does not support direct camera access.");
                 }
             });
         });

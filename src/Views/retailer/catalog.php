@@ -435,7 +435,7 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 btn.prop('disabled', false).html('+ Quick Add');
-                alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add to bag');
+                window.showToast(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to add to bag');
             }
         });
     });

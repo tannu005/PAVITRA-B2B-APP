@@ -83,15 +83,15 @@
             data: JSON.stringify({ product_id: prodId, approve: actionApprove }),
             success: function(res) {
                 if (res.success) {
-                    alert('Product catalog status updated successfully!');
+                    window.showToast('Product catalog status updated successfully!');
                     window.location.reload();
                 } else {
-                    alert(res.error || 'Failed to update catalog status');
+                    window.showToast(res.error || 'Failed to update catalog status');
                     window.location.reload();
                 }
             },
             error: function() {
-                alert('Network error updating catalog.');
+                window.showToast('Network error updating catalog.');
                 window.location.reload();
             }
         });

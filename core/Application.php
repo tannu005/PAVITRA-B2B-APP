@@ -63,7 +63,7 @@ class Application {
         header('X-Content-Type-Options: nosniff');
         header('X-Frame-Options: SAMEORIGIN');
         header('Referrer-Policy: strict-origin-when-cross-origin');
-        header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
+        header('Permissions-Policy: geolocation=(), microphone=(self), camera=(self)');
         header('Cross-Origin-Opener-Policy: same-origin');
         header('Cross-Origin-Resource-Policy: same-origin');
         header("Content-Security-Policy: default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https: data: blob:; media-src 'self' https: data: blob:; connect-src 'self' https:; frame-src 'self' https:;");
@@ -98,7 +98,7 @@ class Application {
             $this->config = [
                 'company_name' => 'Pavitra Designer',
                 'brand_name' => 'Pavitra Designer',
-                'support_email' => 'support@Pavitradesigner.com',
+                'support_email' => 'p14115419@gmail.com',
                 'support_mobile' => '+91 9999999999',
             ];
         }

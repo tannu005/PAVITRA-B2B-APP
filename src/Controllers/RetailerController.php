@@ -100,8 +100,18 @@ class RetailerController extends Controller {
             return;
         }
         
+        $stmtImg = $db->prepare("SELECT image_url, is_primary FROM product_images WHERE product_id = ? ORDER BY is_primary DESC, id ASC");
+        $stmtImg->execute([$id]);
+        $images = $stmtImg->fetchAll();
+        
+        $stmtVid = $db->prepare("SELECT video_url FROM product_videos WHERE product_id = ?");
+        $stmtVid->execute([$id]);
+        $videos = $stmtVid->fetchAll();
+        
         return $this->render('retailer/product_detail', [
-            'product' => $product
+            'product' => $product,
+            'images' => $images,
+            'videos' => $videos
         ]);
     }
 
@@ -288,25 +298,17 @@ class RetailerController extends Controller {
         return $this->cartView($request, $response);
     }
 
-    public function checkout(Request $request, Response $response) {
+    public function createRazorpayOrder(Request $request, Response $response) {
         $user = $this->checkAuth(['RETAILER']);
         if (!$user) return;
-
-        $body = $request->getBody();
-        $address = trim($body['address'] ?? '');
-
-        if (empty($address)) {
-            return $response->json(['error' => 'Delivery shipping address is required.'], 400);
-        }
 
         $db = Application::$app->db;
         $cartId = $this->getOrCreateCartId();
 
         $stmt = $db->prepare("
-            SELECT ci.quantity, pv.id as variant_id, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.stock, p.seller_id, p.id as product_id
+            SELECT ci.quantity, pv.id as variant_id, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.stock
             FROM cart_items ci
             JOIN product_variants pv ON ci.product_variant_id = pv.id
-            JOIN products p ON pv.product_id = p.id
             WHERE ci.cart_id = ?
         ");
         $stmt->execute([$cartId]);
@@ -317,38 +319,23 @@ class RetailerController extends Controller {
         }
 
         $subtotal = 0;
-        $groupedItems = [];
-        
         foreach ($cartItems as $item) {
             $qty = intval($item['quantity']);
             if ($item['stock'] < $qty) {
                 return $response->json(['error' => "Stock limit exceeded for variant SKU: #{$item['variant_id']}"], 400);
             }
-            
             $isWholesale = ($qty >= intval($item['bulk_threshold']));
             $price = $isWholesale ? floatval($item['wholesale_price']) : floatval($item['price']);
-            $itemTotal = $price * $qty;
-            $subtotal += $itemTotal;
-
-            $groupedItems[$item['seller_id']][] = [
-                'variant_id' => $item['variant_id'],
-                'quantity' => $qty,
-                'price' => $item['price'],
-                'wholesale_price' => $item['wholesale_price'],
-                'price_used' => $price,
-                'total' => $itemTotal
-            ];
+            $subtotal += $price * $qty;
         }
 
         $discountAmount = 0.00;
-        $couponId = null;
         if (isset($_SESSION['applied_coupon'])) {
             $sessCoupon = $_SESSION['applied_coupon'];
             $stmtC = $db->prepare("SELECT * FROM coupons WHERE id = ? AND active = 1 AND start_date <= CURDATE() AND end_date >= CURDATE()");
             $stmtC->execute([$sessCoupon['id']]);
             $coupon = $stmtC->fetch();
             if ($coupon && $subtotal >= floatval($coupon['min_cart_value'])) {
-                $couponId = $coupon['id'];
                 if ($coupon['type'] === 'FLAT') {
                     $discountAmount = floatval($coupon['value']);
                 } else if ($coupon['type'] === 'PERCENTAGE') {
@@ -357,40 +344,138 @@ class RetailerController extends Controller {
                 if ($discountAmount > $subtotal) $discountAmount = $subtotal;
             }
         }
+        
         $netSubtotal = $subtotal - $discountAmount;
 
-        $stmtProfile = $db->prepare("SELECT * FROM retailer_profiles WHERE user_id = ?");
-        $stmtProfile->execute([$user['id']]);
-        $profile = $stmtProfile->fetch();
+        $key = Application::$app->config['payment_gateway_key'] ?? '';
+        $secret = Application::$app->config['payment_gateway_secret'] ?? '';
 
-        if (!$profile) {
-            return $response->json(['error' => 'Retailer profile not found.'], 404);
+        if (empty($key) || empty($secret)) {
+            return $response->json(['error' => 'Payment gateway keys are not configured in system settings.'], 500);
         }
 
-        $availableBalance = floatval($profile['balance']);
-        if ($availableBalance < $netSubtotal) {
-            return $response->json(['error' => "Insufficient wallet balance. You need ₹" . number_format($netSubtotal, 2) . " but only have ₹" . number_format($availableBalance, 2) . " in your wallet."], 400);
+        $amountInPaise = intval(round($netSubtotal * 100));
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.razorpay.com/v1/orders');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+            'amount' => $amountInPaise,
+            'currency' => 'INR',
+            'receipt' => 'rcpt_' . time()
+        ]));
+        curl_setopt($ch, CURLOPT_USERPWD, $key . ':' . $secret);
+        $headers = ['Content-Type: application/json'];
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            return $response->json(['error' => 'Payment gateway error: ' . curl_error($ch)], 500);
+        }
+        curl_close($ch);
+
+        $rzp = json_decode($result, true);
+        if (isset($rzp['error'])) {
+            return $response->json(['error' => 'Razorpay Error: ' . $rzp['error']['description']], 500);
         }
 
+        return $response->json([
+            'order_id' => $rzp['id'],
+            'amount' => $amountInPaise,
+            'key' => $key,
+            'name' => Application::$app->config['company_name'] ?? 'Pavitra Designer',
+            'prefill' => [
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'contact' => $user['mobile']
+            ]
+        ]);
+    }
+
+    public function verifyRazorpayPayment(Request $request, Response $response) {
+        $user = $this->checkAuth(['RETAILER']);
+        if (!$user) return;
+
+        $body = $request->getBody();
+        $razorpayPaymentId = $body['razorpay_payment_id'] ?? '';
+        $razorpayOrderId = $body['razorpay_order_id'] ?? '';
+        $razorpaySignature = $body['razorpay_signature'] ?? '';
+        $address = trim($body['address'] ?? '');
+
+        if (empty($address)) {
+            return $response->json(['error' => 'Delivery shipping address is required.'], 400);
+        }
+
+        $secret = Application::$app->config['payment_gateway_secret'] ?? '';
+        $generatedSignature = hash_hmac('sha256', $razorpayOrderId . "|" . $razorpayPaymentId, $secret);
+
+        if ($generatedSignature !== $razorpaySignature) {
+            return $response->json(['error' => 'Payment signature verification failed.'], 400);
+        }
+
+        return $this->processConfirmedCheckout($user, $address, $response, $razorpayPaymentId);
+    }
+
+    private function processConfirmedCheckout($user, $address, $response, $paymentId) {
         try {
-            $db->beginTransaction();
+            $db = Application::$app->db;
+            $cartId = $this->getOrCreateCartId();
 
-            $newBalance = $availableBalance - $netSubtotal;
-            $stmtUpdateProfile = $db->prepare("UPDATE retailer_profiles SET balance = ? WHERE user_id = ?");
-            $stmtUpdateProfile->execute([$newBalance, $user['id']]);
-
-            $stmtWallet = $db->prepare("UPDATE wallets SET balance = ? WHERE user_id = ?");
-            $stmtWallet->execute([$newBalance, $user['id']]);
-
-            $stmtWalletId = $db->prepare("SELECT id FROM wallets WHERE user_id = ?");
-            $stmtWalletId->execute([$user['id']]);
-            $walletId = $stmtWalletId->fetchColumn();
-
-            $stmtTx = $db->prepare("
-                INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
-                VALUES (?, 'DEBIT', ?, ?, 'ORDER_PURCHASE', ?)
+            $stmt = $db->prepare("
+                SELECT ci.quantity, pv.id as variant_id, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.stock, p.seller_id, p.id as product_id
+                FROM cart_items ci
+                JOIN product_variants pv ON ci.product_variant_id = pv.id
+                JOIN products p ON pv.product_id = p.id
+                WHERE ci.cart_id = ?
             ");
-            $stmtTx->execute([$walletId, $netSubtotal, "Bulk order payment for Pavitra Designer catalog sarees", $newBalance]);
+            $stmt->execute([$cartId]);
+            $cartItems = $stmt->fetchAll();
+
+            if (empty($cartItems)) {
+                return $response->json(['error' => 'Your wholesale cart is empty.'], 400);
+            }
+
+            $subtotal = 0;
+            $groupedItems = [];
+            
+            foreach ($cartItems as $item) {
+                $qty = intval($item['quantity']);
+                $isWholesale = ($qty >= intval($item['bulk_threshold']));
+                $price = $isWholesale ? floatval($item['wholesale_price']) : floatval($item['price']);
+                $itemTotal = $price * $qty;
+                $subtotal += $itemTotal;
+
+                $groupedItems[$item['seller_id']][] = [
+                    'variant_id' => $item['variant_id'],
+                    'quantity' => $qty,
+                    'price' => $item['price'],
+                    'wholesale_price' => $item['wholesale_price'],
+                    'price_used' => $price,
+                    'total' => $itemTotal
+                ];
+            }
+
+            $discountAmount = 0.00;
+            $couponId = null;
+            if (isset($_SESSION['applied_coupon'])) {
+                $sessCoupon = $_SESSION['applied_coupon'];
+                $stmtC = $db->prepare("SELECT * FROM coupons WHERE id = ? AND active = 1 AND start_date <= CURDATE() AND end_date >= CURDATE()");
+                $stmtC->execute([$sessCoupon['id']]);
+                $coupon = $stmtC->fetch();
+                if ($coupon && $subtotal >= floatval($coupon['min_cart_value'])) {
+                    $couponId = $coupon['id'];
+                    if ($coupon['type'] === 'FLAT') {
+                        $discountAmount = floatval($coupon['value']);
+                    } else if ($coupon['type'] === 'PERCENTAGE') {
+                        $discountAmount = ($subtotal * floatval($coupon['value'])) / 100.00;
+                    }
+                    if ($discountAmount > $subtotal) $discountAmount = $subtotal;
+                }
+            }
+            $netSubtotal = $subtotal - $discountAmount;
+
+            $db->beginTransaction();
 
             $stmtAddr = $db->prepare("INSERT INTO user_addresses (user_id, address_line1, city, state, pin_code) VALUES (?, ?, 'Varanasi', 'Uttar Pradesh', '221001')");
             $stmtAddr->execute([$user['id'], $address]);
@@ -405,7 +490,7 @@ class RetailerController extends Controller {
                 
                 $stmtOrder = $db->prepare("
                     INSERT INTO orders (order_number, user_id, seller_id, status, total_amount, discount_amount, net_amount, payment_status, payment_method, address_id)
-                    VALUES (?, ?, ?, 'PLACED', ?, ?, ?, 'PAID', 'WALLET', ?)
+                    VALUES (?, ?, ?, 'PLACED', ?, ?, ?, 'PAID', 'RAZORPAY', ?)
                 ");
                 $stmtOrder->execute([$orderNumber, $user['id'], $sellerId, $orderTotal, $orderDiscount, $orderNet, $addressId]);
                 $orderId = $db->lastInsertId();
@@ -417,9 +502,9 @@ class RetailerController extends Controller {
 
                 $stmtHistory = $db->prepare("
                     INSERT INTO order_status_history (order_id, status, comments, created_by)
-                    VALUES (?, 'PLACED', 'Order placed successfully by retailer', ?)
+                    VALUES (?, 'PLACED', ?, ?)
                 ");
-                $stmtHistory->execute([$orderId, $user['id']]);
+                $stmtHistory->execute([$orderId, "Paid via Razorpay (Txn: {$paymentId})", $user['id']]);
 
                 foreach ($items as $item) {
                     $stmtItem = $db->prepare("
@@ -447,7 +532,9 @@ class RetailerController extends Controller {
             return $response->json(['success' => true]);
 
         } catch (\Throwable $e) {
-            $db->rollBack();
+            if (isset($db) && $db->inTransaction()) {
+                $db->rollBack();
+            }
             return $response->json(['error' => 'Checkout execution crashed: ' . $e->getMessage()], 500);
         }
     }

@@ -47,7 +47,7 @@
         </p>
         <div class="d-grid gap-2">
             <a href="/" class="btn btn-primary" style="background-color: #F43397; border-color: #F43397;">Go to Homepage</a>
-            <a href="mailto:support@Pavitra.com" class="btn btn-outline-secondary">Contact Support</a>
+            <a href="mailto:p14115419@gmail.com" class="btn btn-outline-secondary">Contact Support</a>
         </div>
     </div>
 </body>
