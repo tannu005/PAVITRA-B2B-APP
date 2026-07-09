@@ -1,6 +1,6 @@
 <?php
 
-// Load .env variables securely if the file exists locally
+
 $envPath = dirname(__DIR__) . '/.env';
 if (file_exists($envPath)) {
     $envVars = parse_ini_file($envPath);
