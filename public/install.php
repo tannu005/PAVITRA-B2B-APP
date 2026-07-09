@@ -7,23 +7,12 @@ $logs = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'install') {
     try {
-        // 1. Connect to MySQL without dbname first
-        $dsnTemp = "mysql:host={$config['host']};port={$config['port']};charset={$config['charset']}";
-        $pdo = new PDO($dsnTemp, $config['username'], $config['password'], [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
-        $logs[] = "Connected to MySQL host {$config['host']}.";
-
-        // 2. Drop and recreate database for a clean installation slate
-        $pdo->exec("DROP DATABASE IF EXISTS `{$config['dbname']}`");
-        $pdo->exec("CREATE DATABASE `{$config['dbname']}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-        $logs[] = "Database `{$config['dbname']}` dropped and fresh database created.";
-
-        // 3. Reconnect to the database
+        // 1. Connect to MySQL database directly
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
         $pdo = new PDO($dsn, $config['username'], $config['password'], [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
+        $logs[] = "Connected to MySQL database {$config['dbname']} on {$config['host']}.";
 
         $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
 
