@@ -1,1 +1,4 @@
 providers = ["php"]
+
+[variables]
+NIXPACKS_PHP_ROOT_DIR = "public"
