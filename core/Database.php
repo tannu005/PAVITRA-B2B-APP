@@ -70,5 +70,9 @@ class Database {
     public function rollBack(): bool {
         return $this->getPdo()->rollBack();
     }
+
+    public function inTransaction(): bool {
+        return $this->getPdo()->inTransaction();
+    }
 }
 
