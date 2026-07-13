@@ -58,8 +58,8 @@ function renderProductCard($p) {
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div class="text-muted fw-bold mb-1" style="font-size: 0.85rem; color: #555 !important;">SIRIL</div>
-            <h6 class="pavitra-card-title mb-1 pavitra-product-title" style="text-transform: none; font-weight: normal; color: #333; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 40px;"><?= htmlspecialchars($p['title']) ?></h6>
+            <div class="text-muted fw-bold mb-1 custom-caps" style="font-size: 0.85rem; color: #555 !important;"><?= htmlspecialchars($p['brand_name'] ?? 'Pavitra') ?></div>
+            <h6 class="pavitra-card-title mb-1 pavitra-product-title custom-caps" style="font-weight: normal; color: #333; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 40px;"><?= htmlspecialchars($p['title']) ?></h6>
             <div class="pavitra-price-wholesale fw-bold text-dark mt-2 pavitra-product-price" style="font-size: 1.1rem;">
                 ₹<?= number_format($wholesalePrice) ?>
                 <?php if ($price > $wholesalePrice): ?>

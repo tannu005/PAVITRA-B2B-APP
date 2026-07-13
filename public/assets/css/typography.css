@@ -1,5 +1,5 @@
 :root {
-    --custom-font: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --custom-font: "Plus Jakarta Sans", "Inter", sans-serif;
 }
 body, h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea, select {
     font-family: var(--custom-font) !important;
