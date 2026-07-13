@@ -12,7 +12,7 @@ set "DATADIR=%BASEDIR%\db-bin\mariadb-10.11.8-winx64\data"
 set "PHP=%BASEDIR%\php-bin\php.exe"
 set "CLOUDFLARED=%BASEDIR%\cloudflared.exe"
 
-REM 1. Kill any leftover processes
+REM 1. Kill leftover processes
 echo [1/4] Cleaning up old processes...
 taskkill /F /IM mysqld.exe /T >nul 2>&1
 taskkill /F /IM cloudflared.exe /T >nul 2>&1
