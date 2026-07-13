@@ -5,7 +5,7 @@ namespace App\Utils;
 class EmailService {
     public static function send($to, $subject, $htmlContent) {
         $apiKey = $_ENV['SENDGRID_API_KEY'] ?? '';
-        $fromEmail = $_ENV['MAIL_FROM_ADDRESS'] ?? '';
+        $fromEmail = 'p14115419@gmail.com';
         
         if (empty($apiKey) || empty($fromEmail)) {
             return false;
