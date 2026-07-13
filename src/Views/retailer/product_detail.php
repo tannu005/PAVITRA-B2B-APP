@@ -63,7 +63,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
         </div>
         <div class="col-lg-6 col-md-12">
             <div class="ps-lg-3">
-                <h4 class="fw-bold mb-1" style="color: #482922;"><?= htmlspecialchars($p['title']) ?></h4>
+                <h4 class="fw-bold mb-1 custom-caps" style="color: #482922;"><?= htmlspecialchars($p['title']) ?></h4>
                 <p class="text-muted mb-3" style="font-size: 0.88rem;"><?= htmlspecialchars($p['description']) ?></p>
                 <div class="mb-3">
                     <span class="text-decoration-line-through text-muted me-2" style="font-size: 0.95rem;" id="detail-mrp">MRP ₹<?= $mrp ?></span>
@@ -76,16 +76,32 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     </span>
                 </div>
                 <?php 
-                    $displayVariants = $variants;
+                    $displayVariants = $variants ?? [];
                     if (empty($displayVariants) || count($displayVariants) <= 1) {
                         $base = !empty($variants) ? $variants[0] : [
-                            'id' => 0, 'sku' => 'DUMMY', 'price' => $price, 'wholesale_price' => $wholesalePrice, 'image_url' => ''
+                            'id' => 0, 'sku' => 'DUMMY', 'price' => $price, 'wholesale_price' => $wholesalePrice, 'image_url' => $p['image_url'] ?? ''
                         ];
+                        
+                        $availableImages = [];
+                        if (!empty($p['image_url'])) {
+                            $availableImages[] = $p['image_url'];
+                        }
+                        if (!empty($images)) {
+                            foreach($images as $img) {
+                                if (!in_array($img['image_url'], $availableImages)) {
+                                    $availableImages[] = $img['image_url'];
+                                }
+                            }
+                        }
+                        
                         $dummyColors = ['Pink', 'Black', 'Blue', 'Orange', 'Purple', 'Teal'];
                         $displayVariants = [];
-                        foreach ($dummyColors as $c) {
+                        foreach ($dummyColors as $idx => $c) {
                             $v = $base;
                             $v['color'] = $c;
+                            if (!empty($availableImages)) {
+                                $v['image_url'] = $availableImages[$idx % count($availableImages)];
+                            }
                             $displayVariants[] = $v;
                         }
                     }
