@@ -6,13 +6,11 @@
         </div>
         <a href="/seller" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <?php if (isset($_SESSION['return_verify_error'])): ?>
         <div class="alert alert-danger py-2 px-3 mb-4" style="font-size: 0.9rem;">
             <i class="fa-solid fa-triangle-exclamation me-2"></i><?= htmlspecialchars($_SESSION['return_verify_error']); unset($_SESSION['return_verify_error']); ?>
         </div>
     <?php endif; ?>
-
     <div class="card shadow-sm border border-light p-4 bg-white">
         <?php if (empty($returns)): ?>
             <div class="text-center py-5 text-muted">
@@ -92,4 +90,3 @@
         <?php endif; ?>
     </div>
 </div>
-

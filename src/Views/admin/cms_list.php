@@ -6,14 +6,12 @@
         </div>
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <?php if (isset($_SESSION['settings_success'])): ?>
         <div class="alert alert-success alert-dismissible fade show py-2 px-3 mb-4" role="alert" style="font-size: 0.9rem;">
             <i class="fa fa-circle-check me-2"></i><?= htmlspecialchars($_SESSION['settings_success']); unset($_SESSION['settings_success']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.75rem 1rem;"></button>
         </div>
     <?php endif; ?>
-
     <div class="card shadow-sm border border-light p-4">
         <div class="table-responsive">
             <table class="table align-middle">
@@ -65,4 +63,3 @@
         </div>
     </div>
 </div>
-

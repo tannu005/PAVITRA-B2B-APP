@@ -6,11 +6,9 @@
         </div>
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <div class="card shadow-sm border border-light p-4 bg-white mb-5">
         <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-hourglass-half text-warning me-2"></i>Pending Settlements Run</h5>
         <p class="text-muted small">Orders below are marked as <strong>DELIVERED</strong> but have not yet been settled. Check items to execute bank disbursements.</p>
-        
         <?php if (empty($unsettledOrders)): ?>
             <div class="alert alert-success py-3 mb-0" style="font-size: 0.85rem;">
                 <i class="fa fa-circle-check me-1"></i> All completed orders have been successfully settled with weavers.
@@ -57,10 +55,8 @@
             </form>
         <?php endif; ?>
     </div>
-
     <div class="card shadow-sm border border-light p-4 bg-white">
         <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-clock-rotate-left text-pink me-2"></i>Disbursement History Log</h5>
-        
         <?php if (empty($settledList)): ?>
             <div class="text-center py-5 text-muted">
                 <i class="fa-solid fa-receipt fs-1 opacity-25 mb-2"></i>
@@ -102,29 +98,23 @@
         <?php endif; ?>
     </div>
 </div>
-
 <script>
     $('#select-all-orders').on('change', function() {
         $('.order-select-chk').prop('checked', $(this).prop('checked'));
     });
-
     $('#settlement-run-form').on('submit', function(e) {
         e.preventDefault();
-        
         const checked = $('.order-select-chk:checked');
         if (checked.length === 0) {
             window.showToast('Please select at least one order to settle.');
             return;
         }
-
         const ids = [];
         checked.each(function() {
             ids.push($(this).val());
         });
-
         const btn = $('#run-settlement-btn');
         btn.prop('disabled', true).text('Processing Settlements Run...');
-
         $.ajax({
             url: '/admin/settlements/process',
             method: 'POST',
@@ -146,4 +136,3 @@
         });
     });
 </script>
-

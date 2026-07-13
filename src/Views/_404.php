@@ -6,4 +6,3 @@
     </p>
     <a href="/" class="btn btn-pavitra-pink py-2 px-4">Go to Shop Page</a>
 </div>
-

@@ -6,7 +6,6 @@
         </div>
         <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
     </div>
-
     <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="card shadow-sm border border-light p-3 bg-white">
@@ -37,7 +36,6 @@
             </div>
         </div>
     </div>
-
     <h5 class="fw-bold mb-3 text-dark">Administrative Sections</h5>
     <div class="row g-3">
         <div class="col-6 col-md-4 col-lg-2">
@@ -95,8 +93,6 @@
             </a>
         </div>
     </div>
-
-    <!-- Announce Sale Section -->
     <h5 class="fw-bold mb-3 mt-5 text-dark">Promotions & Marketing</h5>
     <div class="card shadow-sm border border-light p-4 bg-white">
         <form id="announce-sale-form">
@@ -111,16 +107,13 @@
             <button type="submit" class="btn text-white fw-bold px-4" style="background-color: var(--pavitra-pink);">Send Announcement Email</button>
         </form>
     </div>
-
 </div>
-
 <script>
 document.getElementById('announce-sale-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = this.querySelector('button');
     btn.disabled = true;
     btn.textContent = 'Sending...';
-
     const formData = new FormData(this);
     try {
         const response = await fetch('/admin/announce-sale', {
@@ -128,7 +121,6 @@ document.getElementById('announce-sale-form').addEventListener('submit', async f
             body: formData
         });
         const result = await response.json();
-        
         if (result.success) {
             alert(`Emails successfully sent to ${result.sent_count} subscribed users!`);
             this.reset();
@@ -143,7 +135,6 @@ document.getElementById('announce-sale-form').addEventListener('submit', async f
     }
 });
 </script>
-
 <style>
 .hover-card {
     transition: transform 0.2s, box-shadow 0.2s;
@@ -153,4 +144,3 @@ document.getElementById('announce-sale-form').addEventListener('submit', async f
     box-shadow: 0 8px 16px rgba(0,0,0,0.05);
 }
 </style>
-

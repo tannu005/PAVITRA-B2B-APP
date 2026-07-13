@@ -1,8 +1,6 @@
 <?php
-
 ?>
 <div class="container-xl py-4" style="min-height: 60vh;">
-    
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div>
             <h2 class="mb-1" style="font-family: var(--font-headings); color: var(--pavitra-pink);">
@@ -14,12 +12,10 @@
             <i class="fa-solid fa-trash me-1"></i> Clear All
         </button>
     </div>
-
     <div id="wishlist-loading" class="text-center py-5">
         <div class="spinner-border text-muted" style="width:2rem;height:2rem;"></div>
         <p class="mt-3 text-muted">Fetching your saved items…</p>
     </div>
-
     <div id="wishlist-empty" class="text-center py-5" style="display:none;">
         <div style="font-size:4rem; margin-bottom:1rem;">🛍️</div>
         <h4 style="color: var(--premium-dark); font-family: var(--font-headings);">Your wishlist is empty</h4>
@@ -28,11 +24,8 @@
             <i class="fa-solid fa-store me-2"></i>Browse Catalogue
         </a>
     </div>
-
     <div id="wishlist-grid" class="row g-3" style="display:none;"></div>
-
 </div>
-
 <style>
 .wishlist-card {
     background: #fff;
@@ -106,19 +99,15 @@
 }
 .wishlist-add-cart-btn:hover { opacity: 0.88; }
 </style>
-
 <script>
 const WISHLIST_KEY = 'pavitra_wishlist';
-
 function getWishlist() {
     try { return JSON.parse(localStorage.getItem(WISHLIST_KEY) || '[]'); }
     catch(e) { return []; }
 }
-
 function saveWishlist(ids) {
     localStorage.setItem(WISHLIST_KEY, JSON.stringify(ids));
 }
-
 function removeFromWishlist(variantId) {
     let ids = getWishlist().filter(id => id != variantId);
     saveWishlist(ids);
@@ -126,41 +115,33 @@ function removeFromWishlist(variantId) {
     updateCountText(ids.length);
     if (ids.length === 0) showEmpty();
 }
-
 function clearWishlist() {
     if (!confirm('Remove all items from wishlist?')) return;
     saveWishlist([]);
     document.getElementById('wishlist-grid').innerHTML = '';
     showEmpty();
 }
-
 function updateCountText(n) {
     document.getElementById('wishlist-count-text').textContent = n === 0 ? 'No saved items' : n + ' item' + (n > 1 ? 's' : '') + ' saved';
     document.getElementById('clear-wishlist-btn').style.display = n > 0 ? 'inline-flex' : 'none';
 }
-
 function showEmpty() {
     document.getElementById('wishlist-grid').style.display = 'none';
     document.getElementById('wishlist-empty').style.display = 'block';
     document.getElementById('clear-wishlist-btn').style.display = 'none';
     document.getElementById('wishlist-count-text').textContent = 'No saved items';
 }
-
 async function loadWishlist() {
     const ids = getWishlist();
     document.getElementById('wishlist-loading').style.display = 'none';
-
     if (ids.length === 0) {
         showEmpty();
         return;
     }
-
     updateCountText(ids.length);
     document.getElementById('wishlist-grid').style.display = '';
-
     const grid = document.getElementById('wishlist-grid');
     grid.innerHTML = '';
-
     const fetchPromises = ids.map(async (variantId) => {
         try {
             const res = await fetch('/api/product-variant/' + variantId);
@@ -168,9 +149,7 @@ async function loadWishlist() {
             return await res.json();
         } catch(e) { return null; }
     });
-
     const products = await Promise.all(fetchPromises);
-
     products.forEach((p, idx) => {
         if (!p) return;
         const variantId = ids[idx];
@@ -180,7 +159,6 @@ async function loadWishlist() {
         const price = parseFloat(p.wholesale_price || p.price || 0);
         const mrp = parseFloat(p.price || price);
         const savings = mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
-
         card.innerHTML = `
             <div class="wishlist-card" onclick="window.location='/product/${p.product_id || variantId}'">
                 <button class="wishlist-remove-btn" onclick="event.stopPropagation(); removeFromWishlist(${variantId})" title="Remove from Wishlist">
@@ -200,7 +178,6 @@ async function loadWishlist() {
         grid.appendChild(card);
     });
 }
-
 async function addToCartFromWishlist(variantId, btn) {
     btn.disabled = true;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i>Adding…';
@@ -232,7 +209,5 @@ async function addToCartFromWishlist(variantId, btn) {
         btn.innerHTML = '<i class="fa-solid fa-bag-shopping me-1"></i>Add to Cart';
     }
 }
-
 document.addEventListener('DOMContentLoaded', loadWishlist);
 </script>
-

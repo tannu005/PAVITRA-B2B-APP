@@ -11,7 +11,6 @@
             <a href="/seller/products/create" class="btn btn-pavitra-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload Saree</a>
         </div>
     </div>
-
     <?php if (empty($products)): ?>
         <div class="card p-5 text-center shadow-sm border border-light">
             <i class="fa-solid fa-store-slash text-muted mb-3" style="font-size: 3.5rem;"></i>
@@ -78,7 +77,6 @@
         </div>
     <?php endif; ?>
 </div>
-
 <div class="modal fade" id="printQrModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -116,7 +114,6 @@
         </div>
     </div>
 </div>
-
 <style>
 @media print {
     body * {
@@ -148,20 +145,17 @@
         page-break-inside: avoid;
         margin-bottom: 20px;
     }
-    
     ::-webkit-scrollbar {
         display: none;
     }
 }
 </style>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
     let qrsGenerated = false;
     function openPrintQRModal() {
         var myModal = new bootstrap.Modal(document.getElementById('printQrModal'));
         myModal.show();
-        
         if (!qrsGenerated) {
             $('.qr-code-container').each(function() {
                 var url = $(this).data('url');
@@ -179,4 +173,3 @@
         }
     }
 </script>
-

@@ -18,10 +18,8 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
         </div>
         <a href="/admin/cms" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Pages List</a>
     </div>
-
     <form id="cms-builder-form">
         <input type="hidden" name="id" value="<?= $page['id'] ?>">
-        
         <div class="row g-4">
             <div class="col-lg-8">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
@@ -38,10 +36,8 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
                             </ul>
                         </div>
                     </div>
-
                     <div id="blocks-container" class="d-flex flex-column gap-3">
                     </div>
-
                     <div class="text-center py-4 bg-light rounded border border-dashed mt-3 d-none" id="empty-blocks-alert">
                         <i class="fa-solid fa-folder-open text-muted mb-2" style="font-size: 2rem;"></i>
                         <h6 class="fw-bold mb-1">No content blocks added yet</h6>
@@ -49,11 +45,9 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-4">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-gear me-2"></i>Page Configuration</h5>
-                    
                     <div class="mb-3">
                         <label for="title" class="form-label small fw-semibold text-muted text-uppercase">Page Title</label>
                         <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($page['title']) ?>" required>
@@ -70,10 +64,8 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
                         </select>
                     </div>
                 </div>
-
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-magnifying-glass me-2"></i>SEO Metadata</h5>
-                    
                     <div class="mb-3">
                         <label for="meta_title" class="form-label small fw-semibold text-muted text-uppercase">Meta Title Prefix</label>
                         <input type="text" class="form-control" id="meta_title" name="meta_title" value="<?= htmlspecialchars($page['meta_title'] ?? '') ?>">
@@ -83,7 +75,6 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
                         <textarea class="form-control" id="meta_description" name="meta_description" rows="3"><?= htmlspecialchars($page['meta_description'] ?? '') ?></textarea>
                     </div>
                 </div>
-
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-pavitra-pink py-3 fw-bold text-uppercase"><i class="fa fa-save me-1"></i> Save CMS Changes</button>
                     <a href="/admin/cms" class="btn btn-outline-secondary py-2 fw-semibold">Cancel</a>
@@ -92,7 +83,6 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
         </div>
     </form>
 </div>
-
 <style>
 .border-dashed {
     border-style: dashed !important;
@@ -108,25 +98,20 @@ if (json_last_error() !== JSON_ERROR_NONE || !is_array($blocks)) {
     cursor: move;
 }
 </style>
-
 <script>
 var blocks = <?= json_encode($blocks) ?>;
-
 $(document).ready(function() {
     function renderBlocks() {
         var container = $('#blocks-container');
         container.empty();
-        
         if (blocks.length === 0) {
             $('#empty-blocks-alert').removeClass('d-none');
             return;
         } else {
             $('#empty-blocks-alert').addClass('d-none');
         }
-
         blocks.forEach(function(block, index) {
             var blockHtml = '';
-
             if (block.type === 'heading') {
                 blockHtml = `
                 <div class="card cms-block-card border p-3 bg-white" data-index="${index}">
@@ -171,7 +156,6 @@ $(document).ready(function() {
             } else if (block.type === 'accordion') {
                 var itemsHtml = '';
                 var items = block.items || [];
-                
                 items.forEach(function(item, itemIdx) {
                     itemsHtml += `
                     <div class="border p-3 rounded mb-2 bg-light accordion-item-builder" data-item-index="${itemIdx}">
@@ -187,7 +171,6 @@ $(document).ready(function() {
                         </div>
                     </div>`;
                 });
-
                 blockHtml = `
                 <div class="card cms-block-card border p-3 bg-white" data-index="${index}">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -200,23 +183,19 @@ $(document).ready(function() {
                             <button type="button" class="btn btn-sm btn-outline-danger btn-delete-block" data-index="${index}"><i class="fa fa-trash"></i></button>
                         </div>
                     </div>
-                    
                     <div class="accordion-items-container">
                         ${itemsHtml}
                         ${items.length === 0 ? '<div class="text-center py-2 text-muted small">No tabs added. Click "Add Tab" to create accordions.</div>' : ''}
                     </div>
                 </div>`;
             }
-
             container.append(blockHtml);
         });
     }
-
     $('.btn-add-block').on('click', function(e) {
         e.preventDefault();
         var type = $(this).data('type');
         var newBlock = { type: type };
-
         if (type === 'heading') {
             newBlock.text = '';
             newBlock.level = 'h2';
@@ -225,24 +204,20 @@ $(document).ready(function() {
         } else if (type === 'accordion') {
             newBlock.items = [];
         }
-
         blocks.push(newBlock);
         renderBlocks();
     });
-
     $(document).on('click', '.btn-delete-block', function() {
         var index = $(this).data('index');
         blocks.splice(index, 1);
         renderBlocks();
     });
-
     $(document).on('click', '.btn-add-accordion-item', function() {
         var index = $(this).data('index');
         saveCurrentInputs();
         blocks[index].items.push({ title: '', content: '' });
         renderBlocks();
     });
-
     $(document).on('click', '.btn-delete-accordion-item', function() {
         var blockIdx = $(this).closest('.cms-block-card').data('index');
         var itemIdx = $(this).data('item-index');
@@ -250,12 +225,10 @@ $(document).ready(function() {
         blocks[blockIdx].items.splice(itemIdx, 1);
         renderBlocks();
     });
-
     function saveCurrentInputs() {
         $('.cms-block-card').each(function() {
             var index = $(this).data('index');
             var block = blocks[index];
-
             if (block.type === 'heading') {
                 block.text = $(this).find('.block-val-text').val();
                 block.level = $(this).find('.block-val-level').val();
@@ -273,11 +246,9 @@ $(document).ready(function() {
             }
         });
     }
-
     $('#cms-builder-form').on('submit', function(e) {
         e.preventDefault();
         saveCurrentInputs();
-
         var formData = {
             id: $('input[name="id"]').val(),
             title: $('#title').val(),
@@ -287,7 +258,6 @@ $(document).ready(function() {
             meta_description: $('#meta_description').val(),
             content: JSON.stringify(blocks) 
         };
-
         $.ajax({
             url: '/admin/cms/save',
             method: 'POST',
@@ -305,8 +275,6 @@ $(document).ready(function() {
             }
         });
     });
-
     renderBlocks();
 });
 </script>
-

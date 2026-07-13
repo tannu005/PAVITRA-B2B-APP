@@ -9,17 +9,14 @@
                     </div>
                     <a href="/orders" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Orders</a>
                 </div>
-
                 <?php if (isset($_SESSION['return_error'])): ?>
                     <div class="alert alert-danger py-2 px-3 mb-4" style="font-size: 0.9rem;">
                         <i class="fa-solid fa-triangle-exclamation me-2"></i><?= htmlspecialchars($_SESSION['return_error']); unset($_SESSION['return_error']); ?>
                     </div>
                 <?php endif; ?>
-
                 <form action="/orders/return/<?= $order['id'] ?>" method="POST">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2">Select Items to Return</h5>
-                    
                     <div class="table-responsive mb-4">
                         <table class="table align-middle" style="font-size: 0.9rem;">
                             <thead class="table-light text-uppercase text-muted" style="font-size: 0.75rem;">
@@ -52,16 +49,13 @@
                             </tbody>
                         </table>
                     </div>
-
                     <div class="mb-4">
                         <label for="reason" class="form-label small fw-semibold text-muted text-uppercase">Return & Refund Reason <span class="text-danger">*</span></label>
                         <textarea class="form-control" id="reason" name="reason" rows="3" required placeholder="State why these items are being returned (e.g. damaged brocades, shade mismatched, weave discrepancies)..."></textarea>
                     </div>
-
                     <button type="submit" class="btn btn-pavitra-pink w-100 py-3 fw-bold fs-6">Submit Return Request for Review</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-

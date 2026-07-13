@@ -1,6 +1,4 @@
 <?php
-
-
 $envPath = dirname(__DIR__) . '/.env';
 if (file_exists($envPath)) {
     $envVars = parse_ini_file($envPath);
@@ -11,10 +9,8 @@ if (file_exists($envPath)) {
         }
     }
 }
-
 $dbHost = $_ENV['DB_HOST'] ?? null;
 $mysqlUrl = $_ENV['MYSQL_URL'] ?? $_ENV['DATABASE_URL'] ?? (strpos($dbHost, 'mysql://') === 0 ? $dbHost : null);
-
 if ($mysqlUrl) {
     $url = parse_url($mysqlUrl);
     return [
@@ -26,7 +22,6 @@ if ($mysqlUrl) {
         'charset' => 'utf8mb4'
     ];
 }
-
 return [
     'host' => $dbHost ?? '127.0.0.1',
     'port' => $_ENV['DB_PORT'] ?? '3306',

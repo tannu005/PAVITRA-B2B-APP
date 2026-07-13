@@ -9,7 +9,6 @@
                     </div>
                     <a href="/seller/products" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Catalog</a>
                 </div>
-
                 <?php if (!empty($errors)): ?>
                     <div class="alert alert-danger py-2 px-3 mb-4" style="font-size: 0.85rem;">
                         <ul class="mb-0 ps-3">
@@ -19,7 +18,6 @@
                         </ul>
                     </div>
                 <?php endif; ?>
-
                 <form action="/seller/products/create" method="POST">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <h5 class="fw-bold mb-3 text-pink">1. Saree Information</h5>
@@ -42,7 +40,6 @@
                             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Provide background on the fabric, yarn count, motifs, and weaver heritage..."><?= htmlspecialchars($description_val ?? '') ?></textarea>
                         </div>
                     </div>
-
                     <h5 class="fw-bold mb-3 text-pink">2. Attributes & Stock</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-3">
@@ -62,7 +59,6 @@
                             <input type="number" class="form-control" id="stock" name="stock" required placeholder="10" min="0" value="<?= isset($stock_val) ? intval($stock_val) : '15' ?>">
                         </div>
                     </div>
-
                     <h5 class="fw-bold mb-3 text-pink">3. Pricing Tiers (B2B Wholesale)</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-4">
@@ -78,7 +74,6 @@
                             <input type="number" class="form-control" id="bulk_threshold" name="bulk_threshold" required placeholder="5" min="1" value="<?= isset($bulk_threshold_val) ? intval($bulk_threshold_val) : '5' ?>">
                         </div>
                     </div>
-
                     <h5 class="fw-bold mb-3 text-pink">4. Media URLs</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
@@ -101,11 +96,9 @@
                             <span class="text-muted" style="font-size: 0.75rem;">Provide public URLs for your media assets to display on the product page.</span>
                         </div>
                     </div>
-
                     <button type="submit" class="btn btn-pavitra-pink w-100 py-3 fs-6 fw-bold">Upload to Catalog & Request Verification</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-

@@ -1,12 +1,10 @@
 <div class="container-xl py-4" style="max-width: 600px; font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f5f5f6; min-height: 90vh; padding-bottom: 80px;">
-    
     <div class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 border-bottom sticky-top" style="z-index: 100; margin: -24px -15px 24px -15px;">
         <div class="d-flex align-items-center gap-3">
             <a href="/" class="text-dark fs-5" style="text-decoration: none;"><i class="fa-solid fa-arrow-left"></i></a>
             <h5 class="fw-bold mb-0 text-dark" style="font-size: 1.1rem; letter-spacing: -0.2px;">Profile</h5>
         </div>
     </div>
-
     <div class="p-4 mb-4 rounded-3 border-0 position-relative overflow-hidden bg-white" style="border: 1px solid var(--premium-border) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
         <div class="d-flex align-items-center gap-3">
             <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; background-color: var(--pavitra-pink-light); color: var(--pavitra-pink); font-weight: 700; font-size: 1.6rem; border: 2px solid var(--pavitra-pink);">
@@ -19,7 +17,6 @@
             </div>
         </div>
     </div>
-
     <div class="row g-2 mb-4">
         <div class="col-6">
             <a href="/orders" class="bg-white p-3 rounded-3 border d-flex align-items-center justify-content-between text-decoration-none" style="transition: transform 0.2s ease;">
@@ -70,7 +67,6 @@
             </a>
         </div>
     </div>
-
     <div class="bg-white rounded-3 border overflow-hidden mb-4">
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-b2b-terms">
             <div class="d-flex align-items-center gap-3">
@@ -82,14 +78,12 @@
             </div>
             <span id="b2b-terms-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
-
         <div id="b2b-terms-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem; line-height: 1.6;">
             <div class="mb-2"><strong>GST Identification Number (GSTIN):</strong> <code class="text-dark">09AAAAA1111A1Z1</code> (Verified)</div>
             <div class="mb-2"><strong>Tax registration type:</strong> Wholesaler / Retailer Composition Scheme</div>
             <div class="mb-2"><strong>Trade credit limit:</strong> <span class="text-dark fw-bold">₹1,00,000.00</span> (85,000.00 available)</div>
             <div><strong>Payment terms:</strong> Net-30 days billing terms on approved weaver loom invoices</div>
         </div>
-
         <a href="/customization" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-scissors" style="color: var(--premium-gold);"></i></span>
@@ -100,7 +94,6 @@
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
-
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-weaver-dir">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-map-location-dot" style="color: #16a085;"></i></span>
@@ -111,7 +104,6 @@
             </div>
             <span id="weaver-dir-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
-
         <div id="weaver-dir-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem;">
             <ul class="mb-0 ps-3">
                 <li class="mb-1"><strong>Banaras (UP):</strong> Brocade, Katan Silk, Georgette Handlooms</li>
@@ -121,7 +113,6 @@
                 <li><strong>Santipur (WB):</strong> Muslin and Jamdani traditional hand-spin looms</li>
             </ul>
         </div>
-
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-logistics">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-truck-moving" style="color: #34495e;"></i></span>
@@ -132,13 +123,11 @@
             </div>
             <span id="logistics-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
-
         <div id="logistics-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem;">
             <div class="mb-1"><strong>Weaver-to-Store Logistics:</strong> BlueDart Heavy & Gati Transport</div>
             <div class="mb-1"><strong>Estimated Transport Time:</strong> 3-5 business days weaver direct</div>
             <div><strong>Bulk Rates:</strong> Free transport logistics for orders exceeding 25 pieces</div>
         </div>
-
         <a href="/support/create" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-palette" style="color: #e74c3c;"></i></span>
@@ -149,7 +138,6 @@
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
-
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-account-settings" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-user-gear" style="color: #7f8c8d;"></i></span>
@@ -160,7 +148,6 @@
             </div>
             <span id="settings-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
-
         <div id="account-settings-form-block" class="p-4 bg-light border-bottom" style="display: none;">
             <?php if (!empty($errors)): ?>
                 <div class="alert alert-danger py-2 px-3 mb-3" style="font-size: 0.8rem;">
@@ -171,7 +158,6 @@
                     </ul>
                 </div>
             <?php endif; ?>
-
             <form action="/profile" method="POST">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                 <div class="mb-3">
@@ -200,7 +186,6 @@
                 <button type="submit" class="btn text-white text-uppercase fw-bold rounded-0" style="background-color: var(--pavitra-pink); font-size: 0.78rem; letter-spacing: 0.05em; padding: 8px 16px;">Save Changes</button>
             </form>
         </div>
-
         <a href="/wishlist" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-heart" style="color: var(--pavitra-pink);"></i></span>
@@ -211,7 +196,6 @@
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </a>
-
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-gears" style="color: #7f8c8d;"></i></span>
@@ -222,7 +206,6 @@
             </div>
             <span style="color: #ccc; font-size: 0.75rem;"><i class="fa-solid fa-chevron-right"></i></span>
         </div>
-
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-2fa">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-shield-halved" style="color: #e74c3c;"></i></span>
@@ -233,7 +216,6 @@
             </div>
             <span id="twofa-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
-
         <div id="twofa-block" class="p-4 bg-light border-bottom" style="display: none; font-size: 0.82rem;">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
@@ -246,7 +228,6 @@
                     <input class="form-check-input" type="checkbox" id="twofa-switch" <?= !empty($user['two_factor_secret']) ? 'checked' : '' ?> style="cursor: pointer; width: 2.5em; height: 1.25em;">
                 </div>
             </div>
-
             <div id="twofa-setup-container" class="text-center p-3 border rounded bg-white mt-3" style="display: none;">
                 <p class="mb-3 text-muted" style="font-size: 0.75rem;">Scan this QR code using Google Authenticator or Microsoft Authenticator, then copy the 2FA secret.</p>
                 <div class="mb-3">
@@ -259,7 +240,6 @@
                 <p class="mb-0 text-success fw-semibold small"><i class="fa-solid fa-circle-check"></i> 2FA is now active! It will be required on your next login.</p>
             </div>
         </div>
-
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-bottom cursor-pointer" id="toggle-devices">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-display" style="color: #2980b9;"></i></span>
@@ -270,7 +250,6 @@
             </div>
             <span id="devices-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
-
         <div id="devices-block" class="p-3 bg-light border-bottom text-muted" style="display: none; font-size: 0.82rem;">
             <div class="mb-3">
                 <span class="fw-bold text-dark d-block mb-2">Active Devices:</span>
@@ -297,7 +276,6 @@
                     <?php endif; ?>
                 </div>
             </div>
-
             <?php if (count($activeSessions) > 1): ?>
                 <form action="/profile/sessions/revoke-others" method="POST">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
@@ -308,7 +286,6 @@
                 <button class="btn btn-outline-secondary btn-sm w-100 rounded-0 py-2 fw-bold text-uppercase" disabled style="font-size: 0.75rem;"><i class="fa-solid fa-circle-check me-1"></i> Secure: No other active devices</button>
             <?php endif; ?>
         </div>
-
         <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 cursor-pointer" id="toggle-help-policies" style="text-decoration: none;">
             <div class="d-flex align-items-center gap-3">
                 <span class="text-secondary" style="font-size: 1rem; width: 20px; text-align: center;"><i class="fa-solid fa-circle-info" style="color: #482922;"></i></span>
@@ -319,7 +296,6 @@
             </div>
             <span id="help-policies-chevron" style="color: #888; font-size: 0.8rem;"><i class="fa-solid fa-chevron-down"></i></span>
         </div>
-
         <div id="help-policies-block" class="p-3 bg-light" style="display: none; font-size: 0.8rem;">
             <div class="row">
                 <div class="col-6 mb-2">
@@ -340,19 +316,15 @@
             </div>
         </div>
     </div>
-
     <div class="d-grid gap-2 px-1">
         <a href="/logout" class="btn btn-outline-dark py-3 fw-bold text-uppercase" style="border-color: #282c3f; color: #282c3f; border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.1em; background-color: #ffffff; transition: all 0.2s ease;">
             Log Out
         </a>
-        
         <button type="button" class="btn btn-outline-danger py-3 fw-bold text-uppercase border-danger mt-1" id="btn-delete-account" style="border-radius: 4px; font-size: 0.85rem; letter-spacing: 0.1em; transition: all 0.2s ease;">
             Delete Account
         </button>
     </div>
-
 </div>
-
 <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
         <div class="modal-content border-0" style="border-radius: 8px;">
@@ -360,7 +332,6 @@
                 <span class="text-danger fs-1 mb-2 d-inline-block"><i class="fa-solid fa-triangle-exclamation"></i></span>
                 <h5 class="fw-bold text-dark mb-2">Delete Account Permanently?</h5>
                 <p class="text-muted mb-4" style="font-size: 0.82rem; line-height: 1.5;">This action is irreversible. All of your orders, address logs, wishlist records, and wholesale profile credits will be deleted forever.</p>
-                
                 <form action="/profile/delete-account" method="POST" id="delete-account-form">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <div class="d-flex gap-2">
@@ -373,7 +344,6 @@
         </div>
     </div>
 </div>
-
 <style>
 .list-group-item-action:hover {
     background-color: #f9f9fa !important;
@@ -382,7 +352,6 @@
     cursor: pointer;
 }
 </style>
-
 <script>
 $(document).ready(function() {
     function setupCollapse(triggerId, blockId, chevronId) {
@@ -399,7 +368,6 @@ $(document).ready(function() {
             }
         });
     }
-
     setupCollapse('#toggle-account-settings', '#account-settings-form-block', '#settings-chevron');
     setupCollapse('#toggle-b2b-terms', '#b2b-terms-block', '#b2b-terms-chevron');
     setupCollapse('#toggle-weaver-dir', '#weaver-dir-block', '#weaver-dir-chevron');
@@ -407,13 +375,10 @@ $(document).ready(function() {
     setupCollapse('#toggle-2fa', '#twofa-block', '#twofa-chevron');
     setupCollapse('#toggle-devices', '#devices-block', '#devices-chevron');
     setupCollapse('#toggle-help-policies', '#help-policies-block', '#help-policies-chevron');
-
-    
     $('#twofa-switch').on('change', function() {
         var isChecked = $(this).is(':checked');
         var badge = $('#twofa-status-badge');
         var setupContainer = $('#twofa-setup-container');
-
         $.ajax({
             url: '/profile/2fa/toggle',
             method: 'POST',
@@ -440,7 +405,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $('#btn-delete-account').on('click', function() {
         if (window.bootstrap) {
             var myModal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));
@@ -451,5 +415,3 @@ $(document).ready(function() {
     });
 });
 </script>
-
-

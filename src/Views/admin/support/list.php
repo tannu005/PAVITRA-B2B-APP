@@ -6,7 +6,6 @@
         </div>
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <div class="card shadow-sm border border-light p-4 bg-white">
         <?php if (empty($tickets)): ?>
             <div class="text-center py-5 text-muted">
@@ -72,4 +71,3 @@
         <?php endif; ?>
     </div>
 </div>
-

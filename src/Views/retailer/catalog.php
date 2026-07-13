@@ -1,5 +1,4 @@
 <?php
-
 function renderProductCard($p) {
     $hoverImg = '/saree-banner1.png';
     if (strpos($p['image_url'], 'kanjeevaram') !== false) {
@@ -11,15 +10,12 @@ function renderProductCard($p) {
     } else if (strpos($p['image_url'], 'banarasi') !== false) {
         $hoverImg = '/saree-banner1.png';
     }
-    
     $price = floatval($p['price']);
     $wholesalePrice = floatval($p['wholesale_price']);
     $discVal = $price > $wholesalePrice ? round((($price - $wholesalePrice) / $price) * 100) : 0;
-    
     $badges = ['New In', 'Most Popular', 'Limited Stock', 'Best Seller'];
     $badgeColors = ['#1a1a1a', '#8B6914', '#C75000', '#2E7D32'];
     $badgeIdx = $p['id'] % 4;
-    
     ob_start();
     ?>
     <div class="pavitra-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>" data-json="<?= htmlspecialchars(json_encode($p), ENT_QUOTES, 'UTF-8') ?>">
@@ -75,10 +71,8 @@ function renderProductCard($p) {
     <?php
     return ob_get_clean();
 }
-
 $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort) || ($minPrice > 0) || ($maxPrice > 0) || !empty($_GET['all_sarees']);
 ?>
-
 <div class="container-xl py-2 py-md-4">
     <div class="pavitra-category-scroll d-flex d-md-none px-3 mb-2">
         <a href="/" class="category-circle-item <?= empty($selectedCategory) ? 'active' : '' ?>">
@@ -118,9 +112,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <div class="category-circle-title">Jamdani</div>
         </a>
     </div>
-
     <?php if (!$isFiltered): ?>
-
     <div id="heroCarousel" class="carousel slide carousel-fade mb-0" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -185,7 +177,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </button>
     </div>
-
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -209,7 +200,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php endforeach; ?>
         </div>
     </div>
-
     <div class="w-100 my-5 pavitra-parallax-container" style="height: 45vh; min-height: 320px; max-height: 480px;">
         <div class="pavitra-parallax-bg" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)), url('/shaadi-banner.png');"></div>
         <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center text-white p-4" style="position: relative; z-index: 2;">
@@ -219,7 +209,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <a href="/?category=Banarasi+Brocade" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="border-width: 2px;">Explore Collection</a>
         </div>
     </div>
-
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -240,7 +229,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php endforeach; ?>
         </div>
     </div>
-
     <div class="my-5 py-4" id="home-categories-grid">
         <div class="text-center mb-5">
             <h2 class="text-uppercase fw-normal pavitra-section-title">Shop by Weaving Style</h2>
@@ -267,7 +255,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php endforeach; ?>
         </div>
     </div>
-
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -291,7 +278,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php endforeach; ?>
         </div>
     </div>
-
     <div class="my-5 py-5 border-top border-bottom" style="background-color: #FAF8F6; font-family: 'Nunito', sans-serif;">
         <div class="row g-4 text-center">
             <div class="col-4">
@@ -311,7 +297,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             </div>
         </div>
     </div>
-
     <div class="my-5">
         <section class="pavitra-video-banner position-relative overflow-hidden w-100">
             <video class="pavitra-video-media" autoplay loop muted playsinline poster="/saree-banner4.png" preload="metadata">
@@ -326,7 +311,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             </div>
         </section>
     </div>
-
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -350,7 +334,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php endforeach; ?>
         </div>
     </div>
-
     <div class="w-100 py-5 mt-5" style="background-color: #482922; font-family: 'Nunito', sans-serif;">
         <div class="container text-center py-4">
             <h3 class="text-uppercase fw-bold mb-2 pavitra-section-title" style="color: #FFF !important;">Join the Movement</h3>
@@ -361,9 +344,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             </form>
         </div>
     </div>
-
     <?php else: ?>
-
     <div class="d-flex justify-content-between align-items-center py-2 px-3 border rounded-3 mb-4 refinement-toolbar" style="font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF8F5; border-color: #EFECE6 !important;">
         <div class="d-flex align-items-center gap-2">
             <button class="btn btn-outline-dark btn-sm rounded-pill border-0 text-uppercase fw-bold p-0 d-flex align-items-center" id="refinement-filters-btn" style="font-size: 0.65rem; letter-spacing: 0.08em; color: #482922; background: transparent;">
@@ -385,7 +366,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             </select>
         </div>
     </div>
-
     <div class="row">
         <section class="col-12" id="product-feed-section">
             <?php if (empty($products)): ?>
@@ -406,9 +386,6 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     </div>
     <?php endif; ?>
 </div>
-
-
-
 <script>
 $(document).ready(function() {
     $('.pavitra-carousel-prev').on('click', function() {
@@ -419,14 +396,12 @@ $(document).ready(function() {
         const c = $(this).closest('.carousel-section-wrapper').find('.pavitra-carousel-container');
         c.animate({ scrollLeft: c.scrollLeft() + 320 }, 300);
     });
-
     $('#sort-selector').on('change', function() {
         const val = $(this).val();
         const u = new URLSearchParams(window.location.search);
         val ? u.set('sort', val) : u.delete('sort');
         window.location.search = u.toString();
     });
-
     $(document).on('click', '.product-card-trigger', function(e) {
         if ($(e.target).closest('.wishlist-heart-btn, .pavitra-quick-add-btn').length > 0) return;
         const productId = $(this).attr('data-id');
@@ -434,7 +409,6 @@ $(document).ready(function() {
             window.location.href = '/product/' + productId;
         }
     });
-
     $(document).on('click', '.pavitra-quick-add-btn', function(e) {
         e.stopPropagation();
         const btn = $(this);
@@ -461,9 +435,7 @@ $(document).ready(function() {
             }
         });
     });
-    
     $('#refinement-filters-btn').on('click', function() { $('#filtersModal').modal('show'); });
-
     const u = new URLSearchParams(window.location.search);
     if (u.has('category') || u.has('sort') || u.has('search') || u.has('min_price') || u.has('all_sarees')) {
         setTimeout(function() {
@@ -471,8 +443,6 @@ $(document).ready(function() {
             if (t.length) { $('html, body').animate({ scrollTop: t.offset().top - 120 }, 600); }
         }, 200);
     }
-
-    
     if ('IntersectionObserver' in window) {
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -482,12 +452,10 @@ $(document).ready(function() {
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
         document.querySelectorAll('.carousel-section-wrapper, #home-categories-grid, .pavitra-footer').forEach(el => {
             el.classList.add('pavitra-anim-section');
             sectionObserver.observe(el);
         });
-
         const cardObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -497,7 +465,6 @@ $(document).ready(function() {
             });
         }, { threshold: 0.05 });
         document.querySelectorAll('.pavitra-product-card.minimal').forEach(el => cardObserver.observe(el));
-
         const tileObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
@@ -516,8 +483,6 @@ $(document).ready(function() {
             tileObserver.observe(el);
         });
     }
-
-    
     const heroCarousel = document.getElementById('heroCarousel');
     if (heroCarousel) {
         heroCarousel.addEventListener('mouseenter', () => {
@@ -527,8 +492,6 @@ $(document).ready(function() {
             bootstrap.Carousel.getInstance(heroCarousel)?.cycle();
         });
     }
-
-    
     document.querySelectorAll('.pavitra-carousel-container').forEach(container => {
         let isDown = false, startX, scrollLeft;
         container.addEventListener('mousedown', (e) => {
@@ -547,7 +510,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
 <div class="modal fade" id="filtersModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 550px;">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
@@ -555,13 +517,11 @@ $(document).ready(function() {
                 <h5 class="modal-title fw-bold" style="font-family: var(--font-headings); color: var(--pavitra-pink);"><i class="fa-solid fa-sliders me-2" style="color: var(--premium-gold);"></i>Refine Sarees</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            
             <div class="modal-body p-0">
                 <form method="GET" action="/" id="saree-filters-form">
                     <?php if (!empty($searchQuery)): ?>
                         <input type="hidden" name="search" value="<?= htmlspecialchars($searchQuery) ?>">
                     <?php endif; ?>
-                    
                     <div class="filter-split-container">
                         <div class="filter-sidebar-menu">
                             <button type="button" class="filter-tab-btn active" data-target="pane-fabric">Fabric</button>
@@ -579,9 +539,7 @@ $(document).ready(function() {
                             <button type="button" class="filter-tab-btn" data-target="pane-deals">Deals</button>
                             <button type="button" class="filter-tab-btn" data-target="pane-green">Green</button>
                         </div>
-                        
                         <div class="filter-content-panel">
-                            
                             <div class="filter-pane-group active" id="pane-fabric">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Fabric / Material</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -592,7 +550,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-color">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Color Palette</h6>
                                 <div class="d-flex flex-column gap-2 mb-3">
@@ -612,7 +569,6 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-occasion">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Occasion & Usage</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -623,7 +579,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-price">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Wholesale Price (₹)</h6>
                                 <div class="row g-2 mb-3">
@@ -650,7 +605,6 @@ $(document).ready(function() {
                                     </label>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-pattern">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Pattern / Design</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -661,7 +615,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-style">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Weaving Styles</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -672,7 +625,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-blouse">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Blouse Customization</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -683,7 +635,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-dimensions">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Saree Size</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -694,7 +645,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-ratings">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Ratings & Popularity</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -706,7 +656,6 @@ $(document).ready(function() {
                                     </label>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-brand">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Brand & Artisan Hubs</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -717,7 +666,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-care">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Care Instructions</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -728,7 +676,6 @@ $(document).ready(function() {
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-delivery">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Availability</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -740,7 +687,6 @@ $(document).ready(function() {
                                     </label>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-deals">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">New & Deals</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -752,7 +698,6 @@ $(document).ready(function() {
                                     </label>
                                 </div>
                             </div>
-                            
                             <div class="filter-pane-group" id="pane-green">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Ethical Sourcing</h6>
                                 <div class="d-flex flex-column gap-2">
@@ -764,10 +709,8 @@ $(document).ready(function() {
                                     </label>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
-
                     <div class="p-3 border-0 d-flex gap-2" style="background-color: var(--premium-light-bg); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; border-top: 1px solid var(--premium-border);">
                         <button type="button" class="btn btn-outline-secondary w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;" onclick="document.getElementById('saree-filters-form').reset()">Clear All</button>
                         <button type="submit" class="btn btn-pavitra-pink w-50 py-2 rounded-0 text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.05em;">Apply Filters</button>
@@ -778,23 +721,17 @@ $(document).ready(function() {
     </div>
 </div>
 <script>
-
 $(document).ready(function() {
     $('.filter-tab-btn').on('click', function() {
         $('.filter-tab-btn').removeClass('active');
         $(this).addClass('active');
-        
         var targetPane = $(this).data('target');
         $('.filter-pane-group').removeClass('active');
         $('#' + targetPane).addClass('active');
     });
-
-    
-    
     $(document).on('click', '.zoomable-saree-img', function(e) {
         var src = $(this).attr('src');
         if (!src) return;
-
         var lightboxHtml = `
             <div class="pavitra-zoom-lightbox">
                 <button class="pavitra-zoom-close" title="Close"><i class="fa-solid fa-xmark"></i></button>
@@ -808,29 +745,24 @@ $(document).ready(function() {
                 </div>
             </div>
         `;
-        
         $('body').append(lightboxHtml);
         setTimeout(function() {
             $('.pavitra-zoom-lightbox').addClass('show');
         }, 10);
-
         var scale = 1;
         var posX = 0, posY = 0;
         var startX = 0, startY = 0;
         var isDragging = false;
         var $img = $('.pavitra-zoom-img');
         var $wrapper = $('.pavitra-zoom-wrapper');
-
         function updateTransform() {
             $img.css('transform', `translate3d(${posX}px, ${posY}px, 0) scale(${scale})`);
         }
-
         $('.btn-zoom-in').on('click', function(e) {
             e.stopPropagation();
             scale = Math.min(scale + 0.5, 4);
             updateTransform();
         });
-
         $('.btn-zoom-out').on('click', function(e) {
             e.stopPropagation();
             scale = Math.max(scale - 0.5, 0.5);
@@ -840,7 +772,6 @@ $(document).ready(function() {
             }
             updateTransform();
         });
-
         $('.btn-zoom-reset').on('click', function(e) {
             e.stopPropagation();
             scale = 1;
@@ -848,7 +779,6 @@ $(document).ready(function() {
             posY = 0;
             updateTransform();
         });
-
         $('.pavitra-zoom-close, .pavitra-zoom-lightbox').on('click', function(e) {
             if (e.target !== this && !$(e.target).closest('.pavitra-zoom-close').length) return;
             $('.pavitra-zoom-lightbox').removeClass('show');
@@ -856,7 +786,6 @@ $(document).ready(function() {
                 $('.pavitra-zoom-lightbox').remove();
             }, 300);
         });
-
         $wrapper.on('mousedown touchstart', function(e) {
             e.preventDefault();
             isDragging = true;
@@ -865,7 +794,6 @@ $(document).ready(function() {
             startX = clientX - posX;
             startY = clientY - posY;
         });
-
         $(document).on('mousemove touchmove', function(e) {
             if (!isDragging) return;
             var clientX = e.clientX || (e.originalEvent.touches ? e.originalEvent.touches[0].clientX : 0);
@@ -874,11 +802,9 @@ $(document).ready(function() {
             posY = clientY - startY;
             updateTransform();
         });
-
         $(document).on('mouseup touchend', function() {
             isDragging = false;
         });
-
         $wrapper.on('wheel', function(e) {
             e.preventDefault();
             var delta = e.originalEvent.deltaY;
@@ -892,4 +818,3 @@ $(document).ready(function() {
     });
 });
 </script>
-

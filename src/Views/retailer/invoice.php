@@ -12,7 +12,6 @@
             --light-color: #f8f9fa;
             --border-color: #dee2e6;
         }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             font-size: 13px;
@@ -22,7 +21,6 @@
             padding: 0;
             background-color: #e9ecef;
         }
-
         .invoice-wrapper {
             max-width: 850px;
             margin: 30px auto;
@@ -32,7 +30,6 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             position: relative;
         }
-
         .action-bar {
             display: flex;
             justify-content: space-between;
@@ -43,7 +40,6 @@
             border-radius: 8px;
             border: 1px solid var(--border-color);
         }
-
         .btn {
             display: inline-flex;
             align-items: center;
@@ -57,30 +53,24 @@
             text-decoration: none;
             transition: all 0.2s ease;
         }
-
         .btn-primary {
             background-color: var(--primary-color);
             color: white;
         }
-
         .btn-primary:hover {
             background-color: #83144d;
         }
-
         .btn-secondary {
             background-color: white;
             border-color: var(--border-color);
             color: var(--dark-color);
         }
-
         .btn-secondary:hover {
             background-color: #f1f3f5;
         }
-
         .btn svg {
             margin-right: 6px;
         }
-
         .invoice-header {
             display: flex;
             justify-content: space-between;
@@ -89,7 +79,6 @@
             padding-bottom: 20px;
             margin-bottom: 25px;
         }
-
         .company-logo {
             font-size: 24px;
             font-weight: 700;
@@ -99,11 +88,9 @@
             align-items: center;
             gap: 8px;
         }
-
         .invoice-title {
             text-align: right;
         }
-
         .invoice-title h1 {
             margin: 0 0 5px 0;
             font-size: 22px;
@@ -111,27 +98,23 @@
             letter-spacing: 0.5px;
             color: var(--primary-color);
         }
-
         .invoice-title p {
             margin: 0;
             color: #6c757d;
             font-size: 12px;
         }
-
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-bottom: 30px;
         }
-
         .details-card {
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 18px;
             background-color: #fafbfc;
         }
-
         .details-card h3 {
             margin: 0 0 10px 0;
             font-size: 14px;
@@ -142,25 +125,21 @@
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 6px;
         }
-
         .details-card p {
             margin: 4px 0;
             font-size: 12.5px;
         }
-
         .meta-label {
             font-weight: 500;
             color: #6c757d;
             display: inline-block;
             width: 110px;
         }
-
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 30px;
         }
-
         .invoice-table th {
             background-color: #343a40;
             color: white;
@@ -172,25 +151,20 @@
             text-align: left;
             border: 1px solid #495057;
         }
-
         .invoice-table td {
             padding: 12px;
             border: 1px solid var(--border-color);
             vertical-align: middle;
         }
-
         .invoice-table tr:nth-child(even) {
             background-color: #fcfdfe;
         }
-
         .text-right {
             text-align: right !important;
         }
-
         .text-center {
             text-align: center !important;
         }
-
         .summary-container {
             display: flex;
             justify-content: space-between;
@@ -198,7 +172,6 @@
             margin-bottom: 40px;
             gap: 40px;
         }
-
         .payment-notes {
             flex: 1;
             font-size: 12px;
@@ -208,13 +181,11 @@
             padding: 15px;
             background-color: #fdfdfd;
         }
-
         .payment-notes h4 {
             margin: 0 0 6px 0;
             color: var(--dark-color);
             font-weight: 600;
         }
-
         .totals-box {
             width: 320px;
             border: 1px solid var(--border-color);
@@ -222,7 +193,6 @@
             background-color: #fdfdfd;
             overflow: hidden;
         }
-
         .totals-row {
             display: flex;
             justify-content: space-between;
@@ -230,11 +200,9 @@
             font-size: 13px;
             border-bottom: 1px solid #f1f3f5;
         }
-
         .totals-row:last-child {
             border-bottom: none;
         }
-
         .totals-row-bold {
             font-weight: 700;
             font-size: 15px;
@@ -242,7 +210,6 @@
             background-color: var(--primary-color);
             border-top: 1px solid var(--primary-color);
         }
-
         .invoice-footer {
             border-top: 1px solid var(--border-color);
             padding-top: 25px;
@@ -251,38 +218,32 @@
             align-items: flex-end;
             margin-top: 20px;
         }
-
         .declaration {
             max-width: 450px;
             font-size: 11px;
             color: #6c757d;
         }
-
         .signature-area {
             text-align: center;
             width: 220px;
         }
-
         .signature-line {
             border-bottom: 1px solid var(--dark-color);
             margin-bottom: 8px;
             height: 45px;
         }
-
         .signature-title {
             font-size: 11px;
             font-weight: 600;
             color: #495057;
             text-transform: uppercase;
         }
-
         @media print {
             body {
                 background-color: #fff;
                 color: #000;
                 font-size: 12px;
             }
-
             .invoice-wrapper {
                 margin: 0;
                 padding: 0;
@@ -290,21 +251,17 @@
                 max-width: 100%;
                 border-radius: 0;
             }
-
             .action-bar {
                 display: none !important;
             }
-
             .invoice-table th {
                 background-color: #e9ecef !important;
                 color: #000 !important;
                 border: 1px solid #000 !important;
             }
-
             .invoice-table td {
                 border: 1px solid #000 !important;
             }
-
             .totals-row-bold {
                 color: #000 !important;
                 background-color: #fff !important;
@@ -313,7 +270,6 @@
                 padding-left: 0;
                 padding-right: 0;
             }
-
             .details-card {
                 background-color: #fff !important;
                 border: 1px solid #000 !important;
@@ -322,7 +278,6 @@
     </style>
 </head>
 <body>
-
 <div class="invoice-wrapper">
     <div class="action-bar">
         <a href="/orders" class="btn btn-secondary">
@@ -339,7 +294,6 @@
             Print Tax Invoice
         </button>
     </div>
-
     <div class="invoice-header">
         <div>
             <div class="company-logo">
@@ -363,7 +317,6 @@
             <p><span class="meta-label" style="width: auto;">Status:</span> <span style="text-transform: uppercase; font-weight: 600; color: #2b8a3e;"><?= htmlspecialchars($order['payment_status']) ?></span></p>
         </div>
     </div>
-
     <div class="details-grid">
         <div class="details-card">
             <h3>Sold By (Weaver)</h3>
@@ -372,7 +325,6 @@
             <p><span class="meta-label">Email:</span> <?= htmlspecialchars($order['buyer_email'])  ?></p>
             <p><span class="meta-label">Dispatched From:</span> Varanasi Weaver Cluster, UP</p>
         </div>
-
         <div class="details-card">
             <h3>Billed & Shipped To</h3>
             <p><strong><?= htmlspecialchars($order['buyer_name']) ?></strong></p>
@@ -381,7 +333,6 @@
             <p><span class="meta-label">Location:</span> <?= htmlspecialchars($order['city'] ?: 'Varanasi') ?>, <?= htmlspecialchars($order['state'] ?: 'Uttar Pradesh') ?> - <?= htmlspecialchars($order['pin_code'] ?: '221001') ?></p>
         </div>
     </div>
-
     <table class="invoice-table">
         <thead>
             <tr>
@@ -400,20 +351,16 @@
             $calculatedSubtotal = 0;
             $totalGst = 0;
             $totalTaxable = 0;
-            
             foreach ($items as $item):
                 $qty = intval($item['quantity']);
                 $unitPrice = ($qty >= intval($item['bulk_threshold'])) ? floatval($item['wholesale_price']) : floatval($item['price']);
                 $itemTotal = $unitPrice * $qty;
                 $calculatedSubtotal += $itemTotal;
-
                 $itemDiscount = ($order['total_amount'] > 0) ? ($itemTotal / floatval($order['total_amount'])) * floatval($order['discount_amount']) : 0;
                 $netItemTotal = $itemTotal - $itemDiscount;
-
                 $gstRate = floatval($item['gst_percentage'] ?? 5.00);
                 $taxableValue = $netItemTotal / (1 + ($gstRate / 100.00));
                 $gstAmount = $netItemTotal - $taxableValue;
-
                 $totalTaxable += $taxableValue;
                 $totalGst += $gstAmount;
             ?>
@@ -423,7 +370,7 @@
                     <strong><?= htmlspecialchars($item['title']) ?></strong>
                     <div style="font-size: 11px; color: #6c757d; margin-top: 2px;">SKU: <?= htmlspecialchars($item['sku'] ?: 'VRS-SARI-00' . $item['product_variant_id']) ?></div>
                 </td>
-                <td class="text-center">5007</td> <!-- HSN 5007 represents woven fabrics of silk -->
+                <td class="text-center">5007</td> 
                 <td class="text-center"><?= $qty ?></td>
                 <td class="text-right">₹<?= number_format($unitPrice, 2) ?></td>
                 <td class="text-right"><?= number_format($gstRate, 1) ?>%</td>
@@ -432,7 +379,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-
     <div class="summary-container">
         <div class="payment-notes">
             <h4>Terms & Conditions:</h4>
@@ -443,7 +389,6 @@
                 <li>For any disputes or support, please open a ticket under the Support Desk using Reference #<?= htmlspecialchars($order['order_number']) ?>.</li>
             </ul>
         </div>
-
         <div class="totals-box">
             <div class="totals-row">
                 <span>Gross Subtotal:</span>
@@ -475,7 +420,6 @@
             </div>
         </div>
     </div>
-
     <div class="invoice-footer">
         <div class="declaration">
             <p><strong>Declaration:</strong> We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct. Taxes have been computed under GST guidelines for handicraft handlooms.</p>
@@ -487,7 +431,6 @@
         </div>
     </div>
 </div>
-
 <script>
     window.onload = function() {
         setTimeout(function() {
@@ -497,4 +440,3 @@
 </script>
 </body>
 </html>
-

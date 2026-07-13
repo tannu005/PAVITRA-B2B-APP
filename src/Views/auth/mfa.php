@@ -6,7 +6,6 @@
             <h4 class="fw-bold text-uppercase mb-1" style="letter-spacing: 0.15em; font-size: 1.15rem; color: #1a1a1a; font-family: 'Plus Jakarta Sans', sans-serif;">2FA Verification</h4>
             <p class="text-muted" style="font-size: 0.85rem;">Enter the 6-digit verification code from your Google Authenticator app.</p>
         </div>
-
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger py-2 px-3 mb-4 rounded-0" style="font-size: 0.82rem; border-left: 3px solid #dc3545;">
                 <ul class="mb-0 ps-3">
@@ -16,26 +15,22 @@
                 </ul>
             </div>
         <?php endif; ?>
-
         <form action="/login/mfa" method="POST" id="mfa-form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
             <div class="mb-5 text-center">
                 <label for="code" class="form-label fw-bold text-muted mb-3 d-block" style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;">Verification Code</label>
                 <input type="text" class="form-control text-center code-input" id="code" name="code" required maxlength="6" autofocus placeholder="000000" autocomplete="one-time-code" style="border: none; border-bottom: 2px solid #ccc; border-radius: 0; padding: 10px 0; outline: none; background: transparent; font-size: 2rem; font-weight: bold; letter-spacing: 12px; width: 200px; margin: 0 auto; text-indent: 6px;">
             </div>
-
             <button type="submit" class="btn w-100 py-3 text-uppercase fw-bold" style="background-color: #1a1a1a; color: white; border: none; border-radius: 0; letter-spacing: 0.15em; font-size: 0.85rem; transition: background-color 0.2s ease;">
                 Verify & Sign In
             </button>
         </form>
-
         <div class="text-center mt-4" style="font-size: 0.85rem;">
             <span class="text-muted">Trouble verifying?</span>
             <a href="/support" class="fw-bold text-decoration-none ms-1 text-dark border-bottom border-dark">Contact Support</a>
         </div>
     </div>
 </div>
-
 <style>
 .code-input:focus {
     border-bottom-color: #1a1a1a !important;
@@ -45,4 +40,3 @@
     background-color: #333 !important;
 }
 </style>
-

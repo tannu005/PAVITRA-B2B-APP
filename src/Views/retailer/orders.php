@@ -6,7 +6,6 @@
         </div>
         <a href="/" class="btn btn-pavitra-outline btn-sm"><i class="fa fa-shopping-bag me-1"></i> Continue Shopping</a>
     </div>
-
     <?php if (empty($orders)): ?>
         <div class="card p-5 text-center shadow-sm border border-light">
             <i class="fa-solid fa-receipt text-muted mb-3" style="font-size: 3.5rem;"></i>
@@ -47,7 +46,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card-body p-4">
                         <div class="row g-4">
                             <div class="col-lg-7">
@@ -67,28 +65,24 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-
                             <div class="col-lg-5 border-start-lg">
                                 <h6 class="fw-bold text-uppercase text-muted mb-2" style="font-size: 0.75rem;">Weaver & Shipping Details</h6>
                                 <div class="mb-3 small">
                                     <div class="mb-1"><strong>Weaver/Seller:</strong> <?= htmlspecialchars($order['seller_name']) ?></div>
                                     <div class="text-muted"><strong>Deliver To Address:</strong> Varanasi Handloom Cluster Hub, UP</div>
                                 </div>
-
                                 <?php if ($order['status'] === 'DELIVERED'): ?>
                                     <div class="mt-3 mb-2 d-flex gap-2">
                                         <a href="/orders/return/<?= $order['id'] ?>" class="btn btn-outline-pink btn-sm flex-grow-1 py-1 fw-bold" style="border-color: #482922; color: #482922;"><i class="fa fa-rotate-left me-1"></i> Return Items</a>
                                         <a href="/order/invoice/<?= $order['id'] ?>" target="_blank" class="btn btn-outline-secondary btn-sm flex-grow-1 py-1 fw-bold"><i class="fa fa-file-invoice me-1"></i> Invoice</a>
                                     </div>
                                 <?php endif; ?>
-
                                 <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem;">Delivery Roadmap</h6>
                                 <?php
                                     $statuses = ['PLACED', 'ACCEPTED', 'PACKED', 'SHIPPED', 'OUT_FOR_DELIVERY', 'DELIVERED'];
                                     $currentIndex = array_search($order['status'], $statuses);
                                     if ($currentIndex === false) $currentIndex = -1; 
                                 ?>
-
                                 <?php if (in_array($order['status'], ['CANCELLED', 'RETURNED', 'REFUNDED'])): ?>
                                     <div class="alert alert-danger py-2 mb-0" style="font-size: 0.85rem;">
                                         <i class="fa fa-info-circle me-1"></i> Order state is marked as <strong><?= htmlspecialchars($order['status']) ?></strong>.
@@ -98,7 +92,6 @@
                                         <div class="progress position-absolute start-0 end-0 top-50 translate-y-middle bg-secondary-subtle" style="height: 3px; z-index: 1;">
                                             <div class="progress-bar bg-pink" role="progressbar" style="width: <?= $currentIndex * 20 ?>%; background-color: var(--pavitra-pink);"></div>
                                         </div>
-
                                         <?php foreach ($statuses as $index => $st): ?>
                                             <div class="position-relative" style="z-index: 2; width: 16%;">
                                                 <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center border" 
@@ -124,4 +117,3 @@
         </div>
     <?php endif; ?>
 </div>
-

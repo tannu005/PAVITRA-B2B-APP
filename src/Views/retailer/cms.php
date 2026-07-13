@@ -9,7 +9,6 @@
                     <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($page['title']) ?></li>
                 </ol>
             </nav>
-
             <div class="card shadow-sm border border-light p-4 p-md-5 bg-white rounded-3">
                 <div class="border-bottom pb-3 mb-4">
                     <h1 class="fw-extrabold text-pink mb-2" style="color: #482922; font-size: 2rem;"><?= htmlspecialchars($page['title']) ?></h1>
@@ -17,7 +16,6 @@
                         <p class="text-muted mb-0" style="font-size: 0.95rem; font-style: italic;"><?= htmlspecialchars($page['meta_description']) ?></p>
                     <?php endif; ?>
                 </div>
-
                 <div class="cms-content-body text-secondary" style="line-height: 1.8; font-size: 1rem;">
                     <?php
                     $content = $page['content'];
@@ -56,11 +54,9 @@
                     ?>
                 </div>
             </div>
-            
             <div class="mt-4 p-4 text-center rounded border bg-light text-muted" style="font-size: 0.85rem;">
                 🛡️ Verified compliance and handloom GI protection document of <strong><?= htmlspecialchars($config['company_name'] ?? 'Pavitra Designer') ?></strong>.
             </div>
         </div>
     </div>
 </div>
-

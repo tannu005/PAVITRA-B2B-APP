@@ -6,27 +6,23 @@
         </div>
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <?php if (isset($_SESSION['settings_success'])): ?>
         <div class="alert alert-success alert-dismissible fade show py-2 px-3 mb-4" role="alert" style="font-size: 0.9rem;">
             <i class="fa fa-circle-check me-2"></i><?= htmlspecialchars($_SESSION['settings_success']); unset($_SESSION['settings_success']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.75rem 1rem;"></button>
         </div>
     <?php endif; ?>
-
     <?php if (!empty($error)): ?>
         <div class="alert alert-danger py-2 px-3 mb-4" style="font-size: 0.9rem;">
             <i class="fa-solid fa-triangle-exclamation me-2"></i><?= htmlspecialchars($error) ?>
         </div>
     <?php endif; ?>
-
     <form action="/admin/settings" method="POST">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
         <div class="row g-4">
             <div class="col-lg-7">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-building me-2"></i>Corporate Identity</h5>
-                    
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="company_name" class="form-label small fw-semibold text-muted text-uppercase">Legal Company Name</label>
@@ -58,10 +54,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card shadow-sm border border-light p-4 bg-white">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-file-shield me-2"></i>Compliance & Registration</h5>
-                    
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label for="gst_number" class="form-label small fw-semibold text-muted text-uppercase">GSTIN / Tax ID</label>
@@ -78,11 +72,9 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-5">
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-envelope me-2"></i>Customer Support Channels</h5>
-                    
                     <div class="row g-3">
                         <div class="col-12">
                             <label for="support_email" class="form-label small fw-semibold text-muted text-uppercase">Support Mailbox</label>
@@ -102,10 +94,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-share-nodes me-2"></i>Gateway SMTP Server</h5>
-                    
                     <div class="row g-3">
                         <div class="col-md-8">
                             <label for="smtp_host" class="form-label small fw-semibold text-muted text-uppercase">SMTP Server Host</label>
@@ -125,10 +115,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-share-nodes me-2"></i>Social & Delivery Integrations</h5>
-
                     <div class="row g-3">
                         <div class="col-12">
                             <label for="social_facebook" class="form-label small fw-semibold text-muted text-uppercase">Facebook Link</label>
@@ -148,10 +136,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-credit-card me-2"></i>Razorpay Gateway API</h5>
-                    
                     <div class="row g-3">
                         <div class="col-12">
                             <label for="payment_gateway_key" class="form-label small fw-semibold text-muted text-uppercase">Razorpay Key ID</label>
@@ -163,10 +149,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                     <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-shield-halved me-2"></i>Cloudflare & Messaging Keys</h5>
-
                     <div class="row g-3">
                         <div class="col-12">
                             <label for="cloudflare_account_id" class="form-label small fw-semibold text-muted text-uppercase">Cloudflare Account ID</label>
@@ -216,10 +200,8 @@
                 </div>
             </div>
         </div>
-
         <div class="mt-4 text-end">
             <button type="submit" class="btn btn-pavitra-pink py-2 px-5 fw-bold"><i class="fa fa-save me-1"></i> Save Platform Configurations</button>
         </div>
     </form>
 </div>
-

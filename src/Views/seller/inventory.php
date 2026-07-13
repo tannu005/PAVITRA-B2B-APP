@@ -6,12 +6,10 @@
         </div>
         <a href="/seller" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <div class="row g-4">
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-3 text-dark">Weaver Reserves</h5>
-                
                 <?php if (empty($variants)): ?>
                     <div class="text-center py-5 text-muted">
                         <i class="fa-solid fa-boxes-stacked fs-1 opacity-25 mb-2"></i>
@@ -56,7 +54,6 @@
                 <?php endif; ?>
             </div>
         </div>
-
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-dark">Multi-Warehouse Strategy</h5>
@@ -67,7 +64,6 @@
                     <li>Surat Textile Trade Depot</li>
                 </ul>
             </div>
-            
             <div class="card shadow-sm border border-light bg-light p-3 text-muted" style="font-size: 0.75rem;">
                 <div class="fw-bold text-dark mb-1"><i class="fa fa-info-circle me-1"></i>Audit Logs Active</div>
                 All stock entries and sales dispatch cycles automatically generate immutable audit logs to resolve inventory differences.
@@ -75,20 +71,16 @@
         </div>
     </div>
 </div>
-
 <script>
     $('.restock-btn').on('click', function() {
         const variantId = $(this).data('id');
         const qtyVal = parseInt($('#restock-input-' + variantId).val());
-
         if (isNaN(qtyVal) || qtyVal <= 0) {
             window.showToast('Please enter a valid stock refill quantity.');
             return;
         }
-
         const btn = $(this);
         btn.prop('disabled', true).text('...');
-
         $.ajax({
             url: '/seller/inventory/update',
             method: 'POST',
@@ -111,4 +103,3 @@
         });
     });
 </script>
-

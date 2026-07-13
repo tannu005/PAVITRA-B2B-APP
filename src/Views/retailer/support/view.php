@@ -9,7 +9,6 @@
                     </div>
                     <a href="/support" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Helpdesk</a>
                 </div>
-
                 <div class="row g-3 text-secondary small">
                     <div class="col-md-4">
                         <strong>Priority:</strong>
@@ -25,7 +24,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h6 class="fw-bold mb-3 border-bottom pb-2 text-pink">Conversation Log</h6>
                 <div class="d-flex flex-column gap-3 mb-4" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
@@ -47,7 +45,6 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
-
                 <?php if ($ticket['status'] !== 'CLOSED'): ?>
                     <form action="/support/ticket/<?= $ticket['id'] ?>/reply" method="POST" class="border-top pt-3">
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
@@ -66,10 +63,8 @@
         </div>
     </div>
 </div>
-
 <style>
 .max-w-75 {
     max-width: 75%;
 }
 </style>
-

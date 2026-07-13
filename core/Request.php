@@ -1,7 +1,5 @@
 <?php
-
 namespace Core;
-
 class Request {
     public function getPath(): string {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
@@ -11,20 +9,16 @@ class Request {
         }
         return substr($path, 0, $position);
     }
-
     public function getMethod(): string {
         $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
         return $method === 'HEAD' ? 'GET' : $method;
     }
-
     public function isGet(): bool {
         return $this->getMethod() === 'GET';
     }
-
     public function isPost(): bool {
         return $this->getMethod() === 'POST';
     }
-
     public function getBody(): array {
         $body = [];
         if ($this->isGet()) {

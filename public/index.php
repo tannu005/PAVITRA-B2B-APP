@@ -1,48 +1,34 @@
 <?php
-
 if (php_sapi_name() === 'cli-server') {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     if (file_exists(__DIR__ . $path) && is_file(__DIR__ . $path)) {
         return false;
     }
 }
-
-
 spl_autoload_register(function ($class) {
     $baseDir = dirname(__DIR__) . '/';
-
     $prefixes = [
         'Core\\' => 'core/',
         'App\\' => 'src/'
     ];
-
     foreach ($prefixes as $prefix => $dir) {
         $len = strlen($prefix);
         if (strncmp($prefix, $class, $len) !== 0) {
             continue;
         }
-
         $relativeClass = substr($class, $len);
         $file = $baseDir . $dir . str_replace('\\', '/', $relativeClass) . '.php';
-
         if (file_exists($file)) {
             require $file;
             return;
         }
     }
 });
-
 if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
     require_once dirname(__DIR__) . '/vendor/autoload.php';
 }
-
-
 use Core\Application;
-
 $app = new Application();
-
-
-
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
 $app->router->get('/login/mfa', [App\Controllers\AuthController::class, 'mfaView']);
@@ -54,7 +40,6 @@ $app->router->get('/forgot-password', [App\Controllers\AuthController::class, 'f
 $app->router->post('/forgot-password', [App\Controllers\AuthController::class, 'forgotPassword']);
 $app->router->get('/reset-password', [App\Controllers\AuthController::class, 'resetPasswordView']);
 $app->router->post('/reset-password', [App\Controllers\AuthController::class, 'resetPassword']);
-
 $app->router->get('/', [App\Controllers\RetailerController::class, 'index']);
 $app->router->get('/categories', [App\Controllers\RetailerController::class, 'categoriesView']);
 $app->router->get('/product/{id}', [App\Controllers\RetailerController::class, 'detail']);
@@ -76,16 +61,13 @@ $app->router->post('/profile', [App\Controllers\RetailerController::class, 'upda
 $app->router->post('/profile/2fa/toggle', [App\Controllers\AuthController::class, 'toggle2fa']);
 $app->router->post('/profile/sessions/revoke-others', [App\Controllers\RetailerController::class, 'revokeOtherSessions']);
 $app->router->post('/profile/delete-account', [App\Controllers\RetailerController::class, 'deleteAccount']);
-
 $app->router->get('/about-us', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/contact-us', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/privacy-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/terms-conditions', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/refund-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
 $app->router->get('/shipping-policy', [App\Controllers\RetailerController::class, 'cmsPage']);
-
 $app->router->get('/order/invoice/{id}', [App\Controllers\InvoiceController::class, 'printInvoice']);
-
 $app->router->get('/support', [App\Controllers\SupportController::class, 'index']);
 $app->router->get('/support/create', [App\Controllers\SupportController::class, 'createView']);
 $app->router->post('/support/create', [App\Controllers\SupportController::class, 'create']);
@@ -95,14 +77,12 @@ $app->router->get('/admin/support', [App\Controllers\SupportController::class, '
 $app->router->get('/admin/support/ticket/{id}', [App\Controllers\SupportController::class, 'adminViewTicket']);
 $app->router->post('/admin/support/ticket/{id}/reply', [App\Controllers\SupportController::class, 'adminReply']);
 $app->router->post('/admin/support/ticket/{id}/status', [App\Controllers\SupportController::class, 'adminStatus']);
-
 $app->router->get('/orders/return/{id}', [App\Controllers\ReturnController::class, 'createView']);
 $app->router->post('/orders/return/{id}', [App\Controllers\ReturnController::class, 'create']);
 $app->router->get('/seller/returns', [App\Controllers\ReturnController::class, 'sellerIndex']);
 $app->router->post('/seller/returns/{id}/approve', [App\Controllers\ReturnController::class, 'sellerApprove']);
 $app->router->post('/seller/returns/{id}/verify', [App\Controllers\ReturnController::class, 'sellerVerify']);
 $app->router->post('/admin/returns/{id}/refund', [App\Controllers\ReturnController::class, 'adminRefund']);
-
 $app->router->get('/admin', [App\Controllers\SuperAdminController::class, 'dashboard']);
 $app->router->get('/admin/sellers', [App\Controllers\SuperAdminController::class, 'sellers']);
 $app->router->post('/admin/sellers/approve', [App\Controllers\SuperAdminController::class, 'approveSeller']);
@@ -123,7 +103,6 @@ $app->router->get('/admin/errors', [App\Controllers\SuperAdminController::class,
 $app->router->get('/admin/sessions', [App\Controllers\SuperAdminController::class, 'sessions']);
 $app->router->post('/admin/sessions/revoke', [App\Controllers\SuperAdminController::class, 'revokeSession']);
 $app->router->get('/admin/activity', [App\Controllers\SuperAdminController::class, 'activityLogs']);
-
 $app->router->get('/seller', [App\Controllers\SellerController::class, 'dashboard']);
 $app->router->get('/seller/products', [App\Controllers\SellerController::class, 'products']);
 $app->router->get('/seller/products/create', [App\Controllers\SellerController::class, 'createProductView']);
@@ -135,13 +114,9 @@ $app->router->post('/seller/inventory/update', [App\Controllers\SellerController
 $app->router->get('/seller/orders', [App\Controllers\SellerController::class, 'orders']);
 $app->router->post('/seller/orders/status', [App\Controllers\SellerController::class, 'updateOrderStatus']);
 $app->router->get('/seller/settlements', [App\Controllers\SellerController::class, 'settlements']);
-
 $app->router->get('/delivery', [App\Controllers\DeliveryController::class, 'dashboard']);
 $app->router->post('/delivery/status', [App\Controllers\DeliveryController::class, 'updateDeliveryStatus']);
 $app->router->post('/delivery/verify-otp', [App\Controllers\DeliveryController::class, 'verifyDeliveryOtp']);
-
-
-
 $app->router->post('/api/auth/login', [App\Controllers\ApiController::class, 'login']);
 $app->router->post('/api/auth/register', [App\Controllers\ApiController::class, 'register']);
 $app->router->get('/api/categories', [App\Controllers\ApiController::class, 'getCategories']);
@@ -156,12 +131,7 @@ $app->router->post('/api/kyc/upload', [App\Controllers\ApiController::class, 'up
 $app->router->get('/api/notifications', [App\Controllers\ApiController::class, 'getNotifications']);
 $app->router->get('/api/reports/sales', [App\Controllers\ApiController::class, 'getSalesReport']);
 $app->router->post('/api/delivery/update', [App\Controllers\ApiController::class, 'updateDelivery']);
-
 $app->router->post('/api/wallet/deposit', [App\Controllers\ApiController::class, 'depositSimulate']);
 $app->router->post('/api/kyc/simulate', [App\Controllers\ApiController::class, 'kycSimulate']);
-
 $app->router->get('/api/product-variant/{id}', [App\Controllers\ApiController::class, 'getProductVariant']);
-
 $app->run();
-
-

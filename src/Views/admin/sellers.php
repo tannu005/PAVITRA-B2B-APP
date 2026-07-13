@@ -6,7 +6,6 @@
         </div>
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <div class="card shadow-sm border border-light p-4 bg-white">
         <div class="table-responsive">
             <table class="table align-middle" style="font-size: 0.9rem;">
@@ -61,15 +60,12 @@
         </div>
     </div>
 </div>
-
 <script>
     $('.change-user-btn').on('click', function() {
         const userId = $(this).data('id');
         const targetStatus = $(this).data('status');
         const btn = $(this);
-        
         btn.prop('disabled', true).text('Updating...');
-
         $.ajax({
             url: '/admin/sellers/approve',
             method: 'POST',
@@ -91,4 +87,3 @@
         });
     });
 </script>
-

@@ -6,7 +6,6 @@
         </div>
         <a href="/seller" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <?php if (empty($orders)): ?>
         <div class="card p-5 text-center shadow-sm border border-light bg-white">
             <i class="fa-solid fa-truck-ramp-box text-muted mb-3" style="font-size: 3.5rem;"></i>
@@ -38,7 +37,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card-body p-4">
                         <div class="row g-4">
                             <div class="col-md-7">
@@ -58,10 +56,8 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-
                             <div class="col-md-5 border-start-md">
                                 <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.75rem;">Packaging & Dispatch Actions</h6>
-                                
                                 <div class="d-flex flex-column gap-2 mb-3">
                                     <?php if ($order['status'] === 'PLACED'): ?>
                                         <button class="btn btn-pavitra-pink w-100 py-2 change-status-btn" data-id="<?= $order['id'] ?>" data-status="ACCEPTED">
@@ -99,7 +95,6 @@
                                         </div>
                                     <?php endif; ?>
                                 </div>
-
                                 <div class="bg-light p-3 rounded" style="font-size: 0.75rem; color: #666;">
                                     <strong>GST Details:</strong> Includes 5% HSN fabric tax rate. Automatic e-invoices are created on Shipped status.
                                 </div>
@@ -111,19 +106,15 @@
         </div>
     <?php endif; ?>
 </div>
-
 <script>
     $('.change-status-btn').on('click', function() {
         const orderId = $(this).data('id');
         const newStatus = $(this).data('status');
-        
         if (newStatus === 'CANCELLED' && !confirm('Are you sure you want to cancel this order and refund the retailer?')) {
             return;
         }
-
         const btn = $(this);
         btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
-
         $.ajax({
             url: '/seller/orders/status',
             method: 'POST',
@@ -146,4 +137,3 @@
         });
     });
 </script>
-

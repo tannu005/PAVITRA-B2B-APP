@@ -1,23 +1,16 @@
-
-
 :root {
-    
     --pavitra-pink: #482922;
     --pavitra-pink-hover: #1c1c1c;
     --pavitra-pink-gradient: linear-gradient(135deg, #482922 0%, #1c1c1c 100%);
     --pavitra-pink-light: rgba(72, 41, 34, 0.03);
-
     --premium-gold: #C5A059;
     --premium-gold-dark: #A37F3F;
     --premium-gold-gradient: linear-gradient(135deg, #C5A059 0%, #9F7E3C 100%);
     --premium-gold-light: rgba(197, 160, 89, 0.06);
-
     --premium-dark: #1E1E24;
     --premium-dark-muted: #64646F;
     --premium-light-bg: #FAF9FB;
-    
     --premium-border: #E8E8EC;
-
     --font-headings: 'Instrument Sans', sans-serif;
     --font-body: 'Nunito', sans-serif;
     --nisho-body-size: 14px;
@@ -29,14 +22,11 @@
     --nisho-section-title-line-height: 1.5;
     --nisho-product-title-size: 11.2px;
     --nisho-product-letter-spacing: 2.016px;
-
     --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
     --hover-shadow: 0 25px 50px rgba(244, 51, 151, 0.06);
     --btn-shadow: 0 4px 15px rgba(244, 51, 151, 0.15);
-
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 body {
     font-family: var(--font-body);
     font-size: var(--nisho-body-size);
@@ -46,12 +36,10 @@ body {
     -webkit-font-smoothing: antialiased;
     letter-spacing: -0.01em;
 }
-
 html,
 body {
     overflow-x: hidden;
 }
-
 h1,
 h2,
 h3,
@@ -60,14 +48,12 @@ h4 {
     font-weight: 700;
     color: var(--premium-dark);
 }
-
 h5,
 h6 {
     font-family: var(--font-body);
     font-weight: 700;
     color: var(--premium-dark);
 }
-
 .text-white h1,
 .text-white h2,
 .text-white h3,
@@ -89,7 +75,6 @@ h6 {
 .position-relative.overflow-hidden span {
     color: #FFFFFF !important;
 }
-
 .btn-pavitra-pink {
     background: var(--pavitra-pink-gradient);
     color: white;
@@ -103,7 +88,6 @@ h6 {
     box-shadow: var(--btn-shadow);
     transition: var(--transition-smooth);
 }
-
 .btn-pavitra-pink:hover {
     background: var(--pavitra-pink-gradient);
     opacity: 0.95;
@@ -111,7 +95,6 @@ h6 {
     box-shadow: 0 8px 25px rgba(244, 51, 151, 0.25);
     color: white;
 }
-
 .btn-pavitra-outline {
     background-color: transparent;
     color: var(--pavitra-pink);
@@ -124,14 +107,12 @@ h6 {
     padding: 0.65rem 1.6rem;
     transition: var(--transition-smooth);
 }
-
 .btn-pavitra-outline:hover {
     background-color: var(--pavitra-pink-light);
     color: var(--pavitra-pink-hover);
     border-color: var(--pavitra-pink-hover);
     transform: translateY(-2px);
 }
-
 .pavitra-header {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
@@ -142,14 +123,12 @@ h6 {
     z-index: 1000;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.015);
 }
-
 .pavitra-header-top {
     padding: 0.95rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .pavitra-logo {
     font-family: var(--font-headings);
     font-size: 2.1rem;
@@ -159,14 +138,12 @@ h6 {
     text-decoration: none;
     letter-spacing: -1.5px;
 }
-
 .pavitra-search-form {
     flex: 1;
     max-width: 550px;
     margin: 0 3rem;
     position: relative;
 }
-
 .pavitra-search-input {
     width: 100%;
     padding: 0.7rem 1rem 0.7rem 2.8rem;
@@ -179,13 +156,11 @@ h6 {
     transition: var(--transition-smooth);
     color: var(--premium-dark);
 }
-
 .pavitra-search-input:focus {
     border-color: var(--pavitra-pink);
     background-color: white;
     box-shadow: 0 0 20px rgba(244, 51, 151, 0.05);
 }
-
 .pavitra-search-icon {
     position: absolute;
     left: 1.1rem;
@@ -194,13 +169,11 @@ h6 {
     color: var(--premium-dark-muted);
     font-size: 0.95rem;
 }
-
 .pavitra-nav-items {
     display: flex;
     align-items: center;
     gap: 2.2rem;
 }
-
 .pavitra-nav-item {
     display: flex;
     flex-direction: column;
@@ -216,21 +189,17 @@ h6 {
     position: relative;
     transition: var(--transition-smooth);
 }
-
 .pavitra-nav-item:hover {
     color: var(--pavitra-pink);
 }
-
 .pavitra-nav-item i {
     font-size: 1.35rem;
     margin-bottom: 0.25rem;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
 .pavitra-nav-item:hover i {
     transform: translateY(-3px) scale(1.05);
 }
-
 .nisho-logo {
     font-family: var(--font-body) !important;
     font-size: var(--nisho-logo-size) !important;
@@ -239,7 +208,6 @@ h6 {
     letter-spacing: normal !important;
     text-transform: uppercase;
 }
-
 .nisho-menu-link {
     font-family: var(--font-headings) !important;
     font-size: var(--nisho-nav-size) !important;
@@ -249,7 +217,6 @@ h6 {
     text-transform: uppercase !important;
     color: var(--pavitra-pink) !important;
 }
-
 .nisho-hero-title {
     font-family: var(--font-headings) !important;
     font-size: clamp(2.2rem, 5vw, 4.5rem) !important;
@@ -258,7 +225,6 @@ h6 {
     letter-spacing: 0.18em !important;
     text-transform: uppercase !important;
 }
-
 .nisho-hero-subtitle,
 .nisho-section-subtitle {
     font-family: var(--font-headings) !important;
@@ -268,7 +234,6 @@ h6 {
     letter-spacing: 0.18em !important;
     text-transform: uppercase !important;
 }
-
 .nisho-section-title {
     font-family: var(--font-headings) !important;
     font-size: var(--nisho-section-title-size) !important;
@@ -278,7 +243,6 @@ h6 {
     text-transform: uppercase !important;
     color: var(--pavitra-pink) !important;
 }
-
 .nisho-section-link,
 .nisho-hero-cta {
     font-family: var(--font-headings) !important;
@@ -288,7 +252,6 @@ h6 {
     letter-spacing: 0.18em !important;
     text-transform: uppercase !important;
 }
-
 .nisho-product-title {
     font-family: var(--font-headings) !important;
     font-size: var(--nisho-product-title-size) !important;
@@ -298,7 +261,6 @@ h6 {
     text-transform: uppercase !important;
     color: var(--pavitra-pink) !important;
 }
-
 .nisho-product-price,
 .nisho-product-price-compare {
     font-family: var(--font-headings) !important;
@@ -308,14 +270,12 @@ h6 {
     letter-spacing: var(--nisho-product-letter-spacing) !important;
     text-transform: uppercase !important;
 }
-
 .pavitra-subcategory-bar {
     background-color: white;
     border-bottom: 1px solid var(--premium-border);
     overflow-x: auto;
     white-space: nowrap;
 }
-
 .pavitra-subcategory-list {
     display: flex;
     justify-content: center;
@@ -324,7 +284,6 @@ h6 {
     margin: 0;
     list-style: none;
 }
-
 .pavitra-subcategory-link {
     color: var(--premium-dark-muted);
     text-decoration: none;
@@ -335,13 +294,11 @@ h6 {
     transition: var(--transition-smooth);
     letter-spacing: 0.2px;
 }
-
 .pavitra-subcategory-link:hover,
 .pavitra-subcategory-link.active {
     color: var(--pavitra-pink);
     border-bottom-color: var(--pavitra-pink);
 }
-
 .pavitra-product-card {
     background: white;
     border: none;
@@ -354,20 +311,16 @@ h6 {
     flex-direction: column;
     box-shadow: var(--card-shadow);
 }
-
 .pavitra-product-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
 }
-
 .pavitra-card-img-wrapper {
     position: relative;
     padding-top: 125%;
-    
     background-color: var(--premium-light-bg);
     overflow: hidden;
 }
-
 .pavitra-card-img {
     position: absolute;
     top: 0;
@@ -377,18 +330,15 @@ h6 {
     object-fit: cover;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .pavitra-product-card:hover .pavitra-card-img {
     transform: scale(1.04);
 }
-
 .pavitra-card-body {
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
-
 .pavitra-card-title {
     font-family: var(--font-body);
     font-size: 0.88rem;
@@ -400,33 +350,28 @@ h6 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .pavitra-card-price-row {
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
     margin-bottom: 0.55rem;
 }
-
 .pavitra-price-wholesale {
     font-family: var(--font-body);
     font-size: 1.25rem;
     font-weight: 800;
     color: var(--premium-dark);
 }
-
 .pavitra-price-retail {
     font-size: 0.85rem;
     text-decoration: line-through;
     color: rgba(0, 0, 0, 0.35);
 }
-
 .pavitra-price-discount {
     font-size: 0.82rem;
     color: var(--pavitra-pink);
     font-weight: 700;
 }
-
 .pavitra-rating-badge {
     background-color: var(--pavitra-green);
     color: white;
@@ -439,13 +384,11 @@ h6 {
     gap: 0.15rem;
     width: fit-content;
 }
-
 .pavitra-rating-count {
     font-size: 0.72rem;
     color: rgba(0, 0, 0, 0.4);
     margin-left: 0.35rem;
 }
-
 .pavitra-delivery-tag {
     font-size: 0.72rem;
     color: var(--pavitra-green);
@@ -457,7 +400,6 @@ h6 {
     font-weight: 700;
     letter-spacing: 0.1px;
 }
-
 .pavitra-moq-tag {
     font-size: 0.72rem;
     color: var(--premium-gold-dark);
@@ -470,7 +412,6 @@ h6 {
     font-weight: 700;
     letter-spacing: 0.1px;
 }
-
 .pavitra-filter-panel {
     background-color: white;
     border: none;
@@ -478,13 +419,11 @@ h6 {
     padding: 1.5rem;
     box-shadow: var(--card-shadow);
 }
-
 .pavitra-filter-section {
     border-bottom: 1px solid var(--premium-border);
     padding-bottom: 1.25rem;
     margin-bottom: 1.25rem;
 }
-
 .pavitra-filter-title {
     font-family: var(--font-body);
     font-weight: 700;
@@ -494,7 +433,6 @@ h6 {
     text-transform: uppercase;
     letter-spacing: 0.8px;
 }
-
 .pavitra-filter-option {
     display: flex;
     align-items: center;
@@ -506,17 +444,14 @@ h6 {
     font-weight: 500;
     transition: var(--transition-smooth);
 }
-
 .pavitra-filter-option:hover {
     color: var(--pavitra-pink);
 }
-
 .pavitra-filter-option input {
     accent-color: var(--pavitra-pink);
     width: 17px;
     height: 17px;
 }
-
 .pavitra-promo-banner {
     background: linear-gradient(135deg, #0F0C20 0%, #1D1537 35%, #7E1E50 70%, #9C1F5E 100%);
     border-radius: 20px;
@@ -530,7 +465,6 @@ h6 {
     position: relative;
     overflow: hidden;
 }
-
 .pavitra-promo-banner::before {
     content: '';
     position: absolute;
@@ -541,7 +475,6 @@ h6 {
     background: radial-gradient(circle, rgba(244, 51, 151, 0.08) 0%, transparent 70%);
     pointer-events: none;
 }
-
 .pavitra-promo-text h2 {
     font-family: var(--font-headings);
     color: white;
@@ -549,21 +482,18 @@ h6 {
     font-size: 2.6rem;
     margin-bottom: 0.6rem;
 }
-
 .pavitra-promo-text p {
     font-family: var(--font-body);
     font-weight: 400;
     color: rgba(255, 255, 255, 0.6);
     font-size: 1.05rem;
 }
-
 .pavitra-promo-text .badge {
     background: var(--premium-gold-gradient) !important;
     font-weight: 700;
     font-size: 0.72rem;
     color: #121216 !important;
 }
-
 .pavitra-promo-badge {
     background: rgba(255, 255, 255, 0.08) !important;
     backdrop-filter: blur(15px);
@@ -573,14 +503,12 @@ h6 {
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
-
 .pavitra-promo-badge .text-pink {
     background: var(--pavitra-pink-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
 }
-
 .cart-drawer {
     position: fixed;
     top: 0;
@@ -596,11 +524,9 @@ h6 {
     transform: translateX(100%);
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .cart-drawer.open {
     transform: translateX(0);
 }
-
 .cart-drawer-backdrop {
     position: fixed;
     inset: 0;
@@ -609,11 +535,9 @@ h6 {
     z-index: 1040;
     display: none;
 }
-
 .cart-drawer-backdrop.show {
     display: block;
 }
-
 .card-stat {
     background: white;
     border: none;
@@ -622,12 +546,10 @@ h6 {
     box-shadow: var(--card-shadow);
     transition: var(--transition-smooth);
 }
-
 .card-stat:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
 }
-
 .stat-icon {
     width: 50px;
     height: 50px;
@@ -638,38 +560,31 @@ h6 {
     font-size: 1.5rem;
     margin-bottom: 1.1rem;
 }
-
 .stat-icon.pink {
     background-color: var(--pavitra-pink-light);
     color: var(--pavitra-pink);
 }
-
 .stat-icon.gold {
     background-color: var(--premium-gold-light);
     color: var(--premium-gold-dark);
 }
-
 .stat-icon.green {
     background-color: rgba(3, 141, 99, 0.05);
     color: var(--pavitra-green);
 }
-
 .table-premium {
     border-collapse: separate;
     border-spacing: 0 0.5rem;
 }
-
 .table-premium tbody tr {
     background: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.01);
     transition: var(--transition-smooth);
 }
-
 .table-premium tbody tr:hover {
     transform: scale(1.003);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
 }
-
 .table-premium th {
     font-family: var(--font-body);
     font-weight: 700;
@@ -680,26 +595,22 @@ h6 {
     border: none;
     padding: 1rem;
 }
-
 .table-premium td {
     padding: 1.25rem 1rem;
     border-top: 1px solid var(--premium-border);
     border-bottom: 1px solid var(--premium-border);
     vertical-align: middle;
 }
-
 .table-premium td:first-child {
     border-left: 1px solid var(--premium-border);
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
 }
-
 .table-premium td:last-child {
     border-right: 1px solid var(--premium-border);
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 }
-
 .badge-status {
     font-family: var(--font-body);
     font-weight: 700;
@@ -710,37 +621,30 @@ h6 {
     letter-spacing: 0.8px;
     display: inline-block;
 }
-
 .badge-status.placed {
     background-color: #E3F2FD;
     color: #1E88E5;
 }
-
 .badge-status.accepted {
     background-color: #FFF3E0;
     color: #FB8C00;
 }
-
 .badge-status.packed {
     background-color: #EDE7F6;
     color: #5E35B1;
 }
-
 .badge-status.shipped {
     background-color: #E8F5E9;
     color: #43A047;
 }
-
 .badge-status.delivered {
     background-color: #D4EDDA;
     color: #155724;
 }
-
 .badge-status.cancelled {
     background-color: #F8D7DA;
     color: #721C24;
 }
-
 .chat-bubble {
     max-width: 75%;
     padding: 1.1rem;
@@ -749,7 +653,6 @@ h6 {
     font-size: 0.92rem;
     line-height: 1.6;
 }
-
 .chat-bubble.sent {
     background: var(--pavitra-pink-gradient);
     color: white;
@@ -757,7 +660,6 @@ h6 {
     border-bottom-right-radius: 2px;
     box-shadow: 0 4px 20px rgba(244, 51, 151, 0.12);
 }
-
 .chat-bubble.received {
     background-color: white;
     color: var(--premium-dark);
@@ -765,19 +667,16 @@ h6 {
     border-bottom-left-radius: 2px;
     border: 1px solid var(--premium-border);
 }
-
 .footer-link {
     color: rgba(255, 255, 255, 0.5) !important;
     transition: var(--transition-smooth);
     text-decoration: none;
     font-weight: 500;
 }
-
 .footer-link:hover {
     color: var(--pavitra-pink) !important;
     padding-left: 5px;
 }
-
 .pavitra-mobile-nav {
     position: fixed;
     bottom: 0;
@@ -793,7 +692,6 @@ h6 {
     align-items: center;
     padding-bottom: env(safe-area-inset-bottom);
 }
-
 .mobile-nav-item {
     display: flex;
     flex-direction: column;
@@ -806,40 +704,31 @@ h6 {
     width: 25%;
     text-align: center;
 }
-
 .mobile-nav-item i {
     font-size: 1.25rem;
     margin-bottom: 0.2rem;
 }
-
 .mobile-nav-item:hover,
 .mobile-nav-item.active {
     color: var(--pavitra-pink);
 }
-
 @media (max-width: 768px) {
     .pavitra-mobile-nav {
         display: flex;
     }
-
     body {
         padding-bottom: 75px;
-        
     }
-
     .pavitra-nav-item span {
         display: none;
     }
-
     .pavitra-nav-items {
         gap: 1.2rem;
     }
-
     .pavitra-subcategory-bar {
         display: none;
     }
 }
-
 .pavitra-back-arrow {
     display: inline-flex;
     align-items: center;
@@ -850,77 +739,60 @@ h6 {
     background-color: var(--pavitra-pink-light);
     transition: var(--transition-smooth);
 }
-
 .pavitra-back-arrow:hover {
     background-color: rgba(244, 51, 151, 0.1);
     transform: scale(1.05);
 }
-
 @media (max-width: 768px) {
-
     .pavitra-header {
         display: none !important;
     }
-
     body {
         padding-top: 110px;
-        
         padding-bottom: 75px;
-        
     }
-
     .pavitra-subcategory-bar {
         display: none !important;
     }
-
     .pavitra-card-body {
         padding: 0.65rem;
     }
-
     .pavitra-card-title {
         font-size: 0.76rem;
         margin-bottom: 0.15rem;
         color: #55555d;
         font-weight: 500;
     }
-
     .pavitra-price-wholesale {
         font-size: 0.98rem;
         font-weight: 700;
     }
-
     .pavitra-price-retail {
         font-size: 0.7rem;
     }
-
     .pavitra-price-discount {
         font-size: 0.7rem;
         font-weight: 700;
     }
-
     .pavitra-moq-tag {
         font-size: 0.6rem;
         padding: 0.1rem 0.25rem;
         margin-top: 0.25rem;
     }
-
     .pavitra-delivery-tag {
         font-size: 0.62rem;
         padding: 0.12rem 0.35rem;
         font-weight: 600;
     }
-
     .pavitra-rating-badge {
         font-size: 0.65rem;
         padding: 0.08rem 0.25rem;
         border-radius: 4px;
     }
 }
-
 .pavitra-mobile-header {
     display: none;
 }
-
 @media (max-width: 768px) {
     .pavitra-mobile-header {
         display: block;
@@ -935,14 +807,12 @@ h6 {
         padding: 0.6rem 0.8rem;
     }
 }
-
 .mobile-header-top-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.5rem;
 }
-
 .mobile-avatar {
     width: 32px;
     height: 32px;
@@ -950,7 +820,6 @@ h6 {
     object-fit: cover;
     border: 1.5px solid #eee;
 }
-
 .refer-badge {
     background-color: #FFF0F6;
     border: 1px solid rgba(244, 51, 151, 0.15);
@@ -963,26 +832,22 @@ h6 {
     align-items: center;
     gap: 0.2rem;
 }
-
 .mobile-header-icons {
     display: flex;
     align-items: center;
     gap: 1.1rem;
     color: var(--premium-dark);
 }
-
 .mobile-header-icons a {
     color: inherit;
     text-decoration: none;
     font-size: 1.25rem;
     position: relative;
 }
-
 .pavitra-mobile-search {
     position: relative;
     width: 100%;
 }
-
 .pavitra-mobile-search-input {
     width: 100%;
     padding: 0.55rem 2.4rem 0.55rem 2.2rem;
@@ -993,7 +858,6 @@ h6 {
     background-color: white;
     color: var(--premium-dark);
 }
-
 .pavitra-mobile-search-icon {
     position: absolute;
     left: 0.75rem;
@@ -1002,7 +866,6 @@ h6 {
     color: #888890;
     font-size: 0.85rem;
 }
-
 .pavitra-mobile-search-right-icons {
     position: absolute;
     right: 0.75rem;
@@ -1013,22 +876,17 @@ h6 {
     color: #888890;
     font-size: 0.88rem;
 }
-
 .pavitra-category-scroll {
     display: flex;
     gap: 1.2rem;
     overflow-x: auto;
     scrollbar-width: none;
-    
     padding: 0.8rem 0;
     margin: 0 -0.8rem;
 }
-
 .pavitra-category-scroll::-webkit-scrollbar {
     display: none;
-    
 }
-
 .category-circle-item {
     display: flex;
     flex-direction: column;
@@ -1038,12 +896,10 @@ h6 {
     color: var(--premium-dark-muted);
     transition: var(--transition-smooth);
 }
-
 .category-circle-item:hover,
 .category-circle-item.active {
     color: var(--pavitra-pink);
 }
-
 .category-circle-img {
     width: 52px;
     height: 52px;
@@ -1054,7 +910,6 @@ h6 {
     background-color: white;
     margin-bottom: 0.3rem;
 }
-
 .category-circle-title {
     font-size: 0.68rem;
     font-weight: 600;
@@ -1065,7 +920,6 @@ h6 {
     height: 28px;
     overflow: hidden;
 }
-
 .pavitra-refinement-bar {
     display: flex;
     align-items: center;
@@ -1077,7 +931,6 @@ h6 {
     top: 104px;
     z-index: 1020;
 }
-
 .refinement-btn {
     flex: 1;
     border: none;
@@ -1092,15 +945,12 @@ h6 {
     gap: 0.3rem;
     border-right: 1px solid var(--premium-border);
 }
-
 .refinement-btn:last-child {
     border-right: none;
 }
-
 .refinement-btn.active {
     color: var(--pavitra-pink);
 }
-
 .wishlist-heart-btn {
     position: absolute;
     top: 8px;
@@ -1118,13 +968,11 @@ h6 {
     transition: var(--transition-smooth);
     z-index: 10;
 }
-
 .wishlist-heart-btn:hover,
 .wishlist-heart-btn.active {
     color: #E91E63;
     transform: scale(1.05);
 }
-
 .trusted-badge-pill {
     background-color: #F3E5F5;
     color: #7B1FA2;
@@ -1136,21 +984,18 @@ h6 {
     display: inline-block;
     text-transform: uppercase;
 }
-
 .rating-count-text {
     font-size: 0.7rem;
     color: rgba(0, 0, 0, 0.4);
     font-weight: 500;
     margin-left: 0.15rem;
 }
-
 .mobile-header-back-arrow {
     color: var(--premium-dark);
     font-size: 1.15rem;
     margin-right: 0.65rem;
     text-decoration: none;
 }
-
 .nisho-logo {
     font-family: var(--font-body) !important;
     font-size: var(--nisho-logo-size) !important;
@@ -1160,11 +1005,9 @@ h6 {
     line-height: 1.65;
     transition: transform 0.2s ease;
 }
-
 .nisho-logo:hover {
     transform: scale(1.05);
 }
-
 .nisho-logo-sm {
     font-family: var(--font-body) !important;
     font-size: 1.1rem;
@@ -1180,11 +1023,9 @@ h6 {
     margin-right: 8px;
     line-height: 1;
 }
-
 .nisho-desktop-menu {
     font-family: var(--font-headings);
 }
-
 .nisho-desktop-menu a {
     font-size: var(--nisho-nav-size) !important;
     font-weight: 600 !important;
@@ -1195,11 +1036,9 @@ h6 {
     padding: 2px 4px;
     transition: color 0.2s ease;
 }
-
 .nisho-desktop-menu a:hover {
     color: var(--pavitra-pink);
 }
-
 .nisho-download-btn {
     position: fixed;
     bottom: 24px;
@@ -1217,13 +1056,11 @@ h6 {
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
-
 .nisho-download-btn:hover {
     transform: translateY(-4px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
     background-color: #1a1a1a;
 }
-
 .pavitra-product-card.minimal {
     border: none !important;
     box-shadow: none !important;
@@ -1231,18 +1068,15 @@ h6 {
     padding: 0 !important;
     margin-bottom: 1.5rem;
 }
-
 .pavitra-product-card.minimal .pavitra-card-img-wrapper {
     border-radius: 0px !important;
     background-color: #f7f7f7;
     margin-bottom: 12px;
 }
-
 .pavitra-product-card.minimal .pavitra-card-body {
     padding: 0 !important;
     text-align: center;
 }
-
 .pavitra-product-card.minimal .pavitra-card-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.78rem;
@@ -1256,17 +1090,14 @@ h6 {
     text-overflow: clip;
     white-space: normal;
 }
-
 .pavitra-product-card.minimal .pavitra-price-wholesale {
     font-size: 0.85rem;
     font-weight: 600;
     color: #1c1c1c;
 }
-
 .pavitra-product-card.minimal .rating-count-text {
     font-size: 0.65rem;
 }
-
 .nisho-hero-banner {
     background-image: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)), url('/nisho-hero.png');
     background-size: cover;
@@ -1279,7 +1110,6 @@ h6 {
     margin-bottom: 2rem;
     position: relative;
 }
-
 .nisho-video-banner {
     min-height: 320px;
     height: min(48vw, 480px);
@@ -1287,7 +1117,6 @@ h6 {
     border-radius: 0;
     isolation: isolate;
 }
-
 .nisho-video-media {
     position: absolute;
     inset: 0;
@@ -1296,29 +1125,24 @@ h6 {
     object-fit: cover;
     object-position: center;
 }
-
 .nisho-video-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42));
 }
-
 .nisho-video-content {
     inset: 0;
     z-index: 1;
 }
-
 .nisho-video-copy {
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.95) !important;
     max-width: 450px;
 }
-
 @media (max-width: 768px) {
     .nisho-hero-banner {
         height: 240px;
     }
-
     .pavitra-header {
         position: sticky;
         top: 0;
@@ -1327,21 +1151,17 @@ h6 {
         padding: 8px 12px !important;
         border-bottom: 1px solid #ECEFF1;
     }
-
     .pavitra-header .container-xl {
         flex-direction: column !important;
         align-items: center !important;
         gap: 8px !important;
     }
-
     .pavitra-header .nisho-logo {
         font-size: var(--nisho-logo-size) !important;
     }
-
     .pavitra-header .pavitra-nav-items {
         display: none !important;
     }
-
     .nisho-desktop-menu {
         width: 100% !important;
         overflow-x: auto !important;
@@ -1351,11 +1171,9 @@ h6 {
         gap: 6px !important;
         -webkit-overflow-scrolling: touch;
     }
-
     .nisho-desktop-menu::-webkit-scrollbar {
         display: none !important;
     }
-
     .nisho-desktop-menu .menu-row-1,
     .nisho-desktop-menu .menu-row-2 {
         display: flex !important;
@@ -1364,52 +1182,43 @@ h6 {
         gap: 16px !important;
         padding: 2px 4px !important;
     }
-
     .nisho-desktop-menu a {
         font-size: var(--nisho-nav-size) !important;
         display: inline-block !important;
     }
-
     .nisho-video-banner {
         height: 240px;
         min-height: 240px;
         max-height: 240px;
     }
-
     .nisho-video-copy {
         font-size: 0.78rem;
         max-width: 320px;
     }
-
     .nisho-video-content {
         padding: 1rem !important;
     }
 }
-
 .pavitra-product-card.minimal {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .pavitra-product-card.minimal.visible {
     opacity: 1;
     transform: translateY(0);
 }
-
 .nisho-card-img-wrapper {
     position: relative;
     overflow: hidden;
     aspect-ratio: 3 / 4;
 }
-
 .nisho-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .nisho-card-img-hover {
     position: absolute;
     top: 0;
@@ -1420,59 +1229,47 @@ h6 {
     opacity: 0;
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .pavitra-product-card:hover .nisho-card-img {
     opacity: 0;
     transform: scale(1.05);
 }
-
 .pavitra-product-card:hover .nisho-card-img-hover {
     opacity: 1;
     transform: scale(1.05);
 }
-
 .nisho-cat-block {
     border-radius: 0px;
     border: 1px solid #eee;
 }
-
 .nisho-cat-block:hover .nisho-cat-img {
     transform: scale(1.06);
 }
-
 .nisho-cat-overlay {
     transition: background 0.3s ease;
 }
-
 .nisho-cat-block:hover .nisho-cat-overlay {
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.72)) !important;
 }
-
 .nisho-quick-add-btn {
     z-index: 5;
     opacity: 0;
 }
-
 .pavitra-product-card:hover .nisho-quick-add-btn {
     transform: translateY(0) !important;
     opacity: 1;
 }
-
 .nisho-quick-add-btn:hover {
     background-color: #1a1a1a !important;
 }
-
 .nisho-card-sizes {
     font-size: 0.65rem;
     color: #888;
     letter-spacing: 0.05em;
     font-weight: 500;
 }
-
 .pavitra-product-card:hover .nisho-card-sizes {
     color: #482922;
 }
-
 .nisho-carousel-container {
     display: flex;
     flex-wrap: nowrap;
@@ -1482,213 +1279,166 @@ h6 {
     gap: 20px;
     padding-bottom: 20px;
 }
-
 .nisho-carousel-container::-webkit-scrollbar {
     height: 4px;
 }
-
 .nisho-carousel-container::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
-
 .nisho-carousel-container::-webkit-scrollbar-thumb {
     background: #482922;
     border-radius: 2px;
 }
-
 .nisho-carousel-item {
     flex: 0 0 calc(25% - 15px);
-    
 }
-
 @media (max-width: 991px) {
     .nisho-carousel-item {
         flex: 0 0 calc(33.333% - 14px);
-        
     }
 }
-
 @media (max-width: 576px) {
     .nisho-carousel-item {
         flex: 0 0 calc(50% - 10px);
-        
         scroll-snap-align: start;
     }
-
     .nisho-carousel-container {
         scroll-snap-type: x mandatory;
         padding-bottom: 10px;
     }
 }
-
 @keyframes nishoFadeInUp {
     from {
         opacity: 0;
         transform: translateY(40px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
-
 @keyframes nishoFadeIn {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
 }
-
 @keyframes nishoSlideInLeft {
     from {
         opacity: 0;
         transform: translateX(-30px);
     }
-
     to {
         opacity: 1;
         transform: translateX(0);
     }
 }
-
 @keyframes nishoSlideInRight {
     from {
         opacity: 0;
         transform: translateX(30px);
     }
-
     to {
         opacity: 1;
         transform: translateX(0);
     }
 }
-
 @keyframes nishoPulse {
-
     0%,
     100% {
         transform: scale(1);
     }
-
     50% {
         transform: scale(1.08);
     }
 }
-
 @keyframes nishoShimmer {
     0% {
         background-position: -200% 0;
     }
-
     100% {
         background-position: 200% 0;
     }
 }
-
 @keyframes nishoFloat {
-
     0%,
     100% {
         transform: translateY(0);
     }
-
     50% {
         transform: translateY(-10px);
     }
 }
-
 @keyframes nishoCounterSpin {
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
 }
-
 @keyframes nishoHeartBeat {
     0% {
         transform: scale(1);
     }
-
     14% {
         transform: scale(1.3);
     }
-
     28% {
         transform: scale(1);
     }
-
     42% {
         transform: scale(1.3);
     }
-
     70% {
         transform: scale(1);
     }
 }
-
 .nisho-anim-section {
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .nisho-anim-section.in-view {
     opacity: 1;
     transform: translateY(0);
 }
-
 .nisho-carousel-item:nth-child(1) {
     transition-delay: 0s;
 }
-
 .nisho-carousel-item:nth-child(2) {
     transition-delay: 0.08s;
 }
-
 .nisho-carousel-item:nth-child(3) {
     transition-delay: 0.16s;
 }
-
 .nisho-carousel-item:nth-child(4) {
     transition-delay: 0.24s;
 }
-
 .nisho-carousel-item:nth-child(5) {
     transition-delay: 0.32s;
 }
-
 .nisho-carousel-item:nth-child(6) {
     transition-delay: 0.40s;
 }
-
 .nisho-carousel-item:nth-child(7) {
     transition-delay: 0.48s;
 }
-
 .nisho-carousel-item:nth-child(8) {
     transition-delay: 0.56s;
 }
-
 .carousel-fade .carousel-item {
     transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-
 .carousel-fade .carousel-item.active {
     z-index: 1;
 }
-
 .carousel-fade .carousel-item-start,
 .carousel-fade .carousel-item-end {
     z-index: 0;
 }
-
 .carousel-indicators [data-bs-target] {
     width: 32px;
     height: 3px;
@@ -1697,52 +1447,42 @@ h6 {
     border-radius: 2px;
     transition: all 0.4s ease;
 }
-
 .carousel-indicators .active {
     background-color: #FFF;
     width: 48px;
 }
-
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     width: 20px;
     height: 20px;
     opacity: 0.6;
 }
-
 .carousel-control-prev:hover .carousel-control-prev-icon,
 .carousel-control-next:hover .carousel-control-next-icon {
     opacity: 1;
 }
-
 .carousel-item.active h1 {
     animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
-
 .carousel-item.active p {
     animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
 }
-
 .carousel-item.active .btn {
     animation: nishoFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
 }
-
 @media (max-width: 768px) {
     [style*='background-attachment: fixed'] {
         background-attachment: scroll !important;
     }
 }
-
 .pavitra-product-card.minimal:hover {
     transform: translateY(-6px) !important;
     box-shadow: 0 20px 50px rgba(72, 41, 34, 0.08) !important;
 }
-
 .wishlist-heart-btn.active {
     animation: nishoHeartBeat 0.6s ease-in-out;
     color: #E91E63 !important;
 }
-
 .carousel-section-wrapper h3::after {
     content: '';
     display: block;
@@ -1751,12 +1491,10 @@ h6 {
     background: #482922;
     margin-top: 8px;
 }
-
 .col-4:hover .fa-solid {
     animation: nishoFloat 1.5s ease-in-out infinite;
     color: #C5A059 !important;
 }
-
 .nisho-cat-block::after {
     content: '';
     position: absolute;
@@ -1769,37 +1507,30 @@ h6 {
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 10;
 }
-
 .nisho-cat-block:hover::after {
     transform: scaleX(1);
 }
-
 html {
     scroll-behavior: smooth;
 }
-
 .form-control:focus {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15) !important;
     outline: none !important;
 }
-
 .nisho-newsletter-input::placeholder {
     color: rgba(255, 255, 255, 0.6) !important;
 }
-
 .pavitra-header.scrolled {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
     backdrop-filter: blur(20px) !important;
     background: rgba(255, 255, 255, 0.97) !important;
 }
-
 .nisho-footer {
     background-color: #1a1a1a;
     color: rgba(255, 255, 255, 0.55);
     font-family: 'Plus Jakarta Sans', sans-serif;
     padding: 60px 0 0;
 }
-
 .nisho-footer h5 {
     color: #FFF;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1809,7 +1540,6 @@ html {
     text-transform: uppercase;
     margin-bottom: 1.2rem;
 }
-
 .nisho-footer a {
     color: rgba(255, 255, 255, 0.45);
     text-decoration: none;
@@ -1818,12 +1548,10 @@ html {
     display: block;
     margin-bottom: 0.6rem;
 }
-
 .nisho-footer a:hover {
     color: #C5A059;
     padding-left: 4px;
 }
-
 .nisho-footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding: 20px 0;
@@ -1831,7 +1559,6 @@ html {
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.3);
 }
-
 .nisho-footer-social a {
     display: inline-flex !important;
     width: 36px;
@@ -1845,93 +1572,74 @@ html {
     margin-right: 8px;
     transition: all 0.3s ease;
 }
-
 .nisho-footer-social a:hover {
     background: #C5A059;
     color: #1a1a1a !important;
     transform: translateY(-3px);
     padding-left: 0 !important;
 }
-
 .skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: nishoShimmer 1.5s infinite;
     border-radius: 4px;
 }
-
 @media (max-width: 576px) {
     .carousel-section-wrapper h3 {
         font-size: 1.3rem !important;
     }
-
     .carousel-section-wrapper p {
         font-size: 0.58rem !important;
     }
-
     #home-categories-grid h2 {
         font-size: 1.4rem !important;
     }
-
     #home-categories-grid p {
         font-size: 0.6rem !important;
     }
-
     .nisho-cat-block {
         height: 240px !important;
     }
-
     .nisho-cat-overlay h4 {
         font-size: 0.85rem !important;
     }
-
     .nisho-cat-overlay span {
         font-size: 0.55rem !important;
     }
 }
-
 .hide-on-mobile {
     display: block;
 }
-
 @media (max-width: 768px) {
     .hide-on-mobile {
         display: none !important;
     }
 }
-
 .pavitra-modal-content {
     border: none;
     border-radius: 12px;
     overflow: hidden;
 }
-
 .pavitra-modal-content .modal-header {
     border-bottom: 1px solid #f0f0f0;
     padding: 1.2rem 1.5rem;
 }
-
 .pavitra-modal-content .modal-body {
     padding: 1.5rem;
 }
-
 ::-webkit-scrollbar {
     width: 6px;
 }
-
 ::-webkit-scrollbar-track {
     background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
     background: rgba(72, 41, 34, 0.2);
     border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(72, 41, 34, 0.4);
 }
-
 .pavitra-edge-trigger {
     position: fixed;
     right: 16px;
@@ -1962,7 +1670,6 @@ html {
 .pavitra-edge-trigger.active i {
     transform: rotate(180deg);
 }
-
 .pavitra-edge-panel {
     position: fixed;
     right: -105px; 
@@ -1986,7 +1693,6 @@ html {
 .pavitra-edge-panel.open {
     right: 16px; 
 }
-
 .pavitra-edge-item {
     display: flex;
     flex-direction: column;
@@ -2025,7 +1731,6 @@ html {
 .pavitra-edge-item:hover span {
     color: #C5A059;
 }
-
 .pavitra-edge-close {
     width: 32px;
     height: 32px;
@@ -2043,14 +1748,12 @@ html {
 .pavitra-edge-close:hover {
     background-color: rgba(255, 255, 255, 0.3);
 }
-
 @media (max-width: 360px) {
     .pavitra-edge-trigger {
         right: 8px;
         bottom: 85px;
     }
 }
-
 #filtersModal.modal {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -2065,7 +1768,6 @@ html {
         max-width: 420px;
     }
 }
-
 .android-apk .pavitra-mobile-nav {
     height: 76px !important;
     padding-bottom: 16px !important;
@@ -2076,7 +1778,6 @@ html {
 .android-apk .pavitra-edge-trigger {
     bottom: 105px !important;
 }
-
 #sort-selector {
     width: 90px !important;
 }

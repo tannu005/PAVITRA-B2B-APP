@@ -31,6 +31,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= Application::assetUrl('/assets/css/pavitra.css?v=' . time()) ?>">
+    <link rel="stylesheet" href="<?= Application::assetUrl('/assets/css/typography.css?v=' . time()) ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
@@ -47,11 +48,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
-
     <div class="py-2 hide-on-mobile text-center" style="background-color: #F8F9FA; border-bottom: 1px solid #ECEFF1; color: #555;">
         ⚡ Lowest Prices • Free Shipping on Bulk Orders • Weaver-Direct Verified Quality
     </div>
-
     <header class="pavitra-mobile-header">
         <div class="mobile-header-top-row">
             <div class="d-flex align-items-center">
@@ -68,8 +67,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </a>
                 <?php endif; ?>
             </div>
-
-
             <div class="mobile-header-icons d-flex align-items-center gap-3">
                 <a href="javascript:void(0)" class="position-relative text-dark" title="Notifications" data-bs-toggle="modal" data-bs-target="#notificationsModal">
                     <i class="fa-regular fa-bell fs-5"></i>
@@ -82,7 +79,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </a>
             </div>
         </div>
-
         <div class="pavitra-mobile-search">
             <form id="search-form-mobile" method="GET" action="/">
                 <i class="fa fa-search pavitra-mobile-search-icon"></i>
@@ -94,13 +90,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </form>
         </div>
     </header>
-
     <header class="pavitra-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
             <a href="/" class="pavitra-logo" style="text-decoration: none;">
                 <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
             </a>
-
             <div class="pavitra-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
                     <a href="/?category=Organza+Silk" class="pavitra-menu-link">Pavitra MUSE</a>
@@ -131,10 +125,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/customization" class="fw-bold pavitra-menu-link text-uppercase" style="color: var(--premium-gold-dark) !important; border-bottom: 1.5px dashed var(--premium-gold-dark);">Custom Studio</a>
                 </div>
             </div>
-
             <div class="pavitra-nav-items gap-3 align-items-center">
                 <a href="javascript:void(0)" class="text-dark me-2" onclick="$('#search-dropdown').toggle()"><i class="fa-solid fa-magnifying-glass fs-5"></i></a>
-                
                 <?php if ($user): ?>
                     <div class="dropdown d-inline-block">
                         <button class="bg-transparent border-0 p-0 text-dark dropdown-toggle no-caret" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -151,21 +143,17 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <?php else: ?>
                     <a href="/login" class="text-dark"><i class="fa-regular fa-user fs-5"></i></a>
                 <?php endif; ?>
-                
                 <a href="javascript:void(0)" class="position-relative text-dark me-1" title="Notifications" data-bs-toggle="modal" data-bs-target="#notificationsModal">
                     <i class="fa-regular fa-bell fs-5"></i>
                     <span class="badge bg-danger rounded-circle position-absolute p-0" style="width: 14px; height: 14px; font-size: 0.52rem; top: -5px; right: -5px; line-height: 14px; text-align: center;">1</span>
                 </a>
-                
                 <a href="/wishlist" class="text-dark" title="My Wishlist"><i class="fa-regular fa-heart fs-5"></i></a>
-                
                 <button class="bg-transparent border-0 p-0 text-dark position-relative" id="cart-trigger-btn">
                     <i class="fa-solid fa-bag-shopping fs-5"></i>
                     <span class="badge bg-danger rounded-circle position-absolute p-1" id="cart-count-badge" style="display: none; font-size: 0.52rem; top: -5px; right: -5px;">0</span>
                 </button>
             </div>
         </div>
-        
         <div class="container-xl py-2" id="search-dropdown" style="display: none; border-top: 1px solid #eee;">
             <form class="pavitra-search-form w-100 max-width-none position-relative" id="search-form" method="GET" action="/">
                 <i class="fa fa-search pavitra-search-icon"></i>
@@ -177,11 +165,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </form>
         </div>
     </header>
-
     <main>
         {{content}}
     </main>
-
     <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
     <div class="cart-drawer" id="cart-drawer-box">
         <div class="p-4 d-flex justify-between align-items-center border-bottom">
@@ -195,7 +181,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span class="fw-semibold text-muted">Subtotal</span>
                 <span class="fw-bold text-dark" id="cart-subtotal-display">₹0.00</span>
             </div>
-
             <div class="mb-3 border-bottom pb-3">
                 <label class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.65rem; letter-spacing: 0.5px;">B2B Coupon Code</label>
                 <div class="input-group input-group-sm">
@@ -204,25 +189,20 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>
                 <div id="coupon-message" class="small mt-1" style="display: none; font-size: 0.75rem;"></div>
             </div>
-
             <div class="d-flex justify-content-between align-items-center mb-2 text-success" id="coupon-discount-row" style="display: none; font-size: 0.85rem;">
                 <span class="fw-semibold">Discount (<span id="coupon-applied-code"></span>)</span>
                 <span class="fw-bold" id="cart-discount-display">-₹0.00</span>
             </div>
-
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="fw-bold text-dark">Estimated Total</span>
                 <span class="fs-4 fw-bold text-pink" id="cart-total-display" style="color: #482922;">₹0.00</span>
             </div>
-            
             <div class="mb-4">
                 <label for="shipping-address-box" class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.7rem;">Delivery Shipping Address <span class="text-danger">*</span></label>
                 <textarea id="shipping-address-box" class="form-control" rows="2" placeholder="Street, City, State, PIN Code..." style="font-size: 0.85rem; resize: none;"></textarea>
             </div>
-            
             <div class="mb-4">
                 <label class="form-label text-uppercase fw-semibold text-muted" style="font-size: 0.7rem;">Payment Method <span class="text-danger">*</span></label>
-                
                 <div class="form-check custom-radio mb-2 rounded border p-2 bg-light">
                     <input class="form-check-input ms-1 mt-1" type="radio" name="payment_method" id="pay_razorpay" value="RAZORPAY" checked>
                     <label class="form-check-label ms-2 d-block cursor-pointer" for="pay_razorpay" style="font-size: 0.85rem;">
@@ -230,7 +210,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <br><span class="text-muted" style="font-size: 0.75rem;">UPI, Net Banking, Cards, External Wallets</span>
                     </label>
                 </div>
-
                 <div class="form-check custom-radio mb-2 rounded border p-2 bg-light">
                     <input class="form-check-input ms-1 mt-1" type="radio" name="payment_method" id="pay_wallet" value="WALLET">
                     <label class="form-check-label ms-2 d-block cursor-pointer" for="pay_wallet" style="font-size: 0.85rem;">
@@ -238,7 +217,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <br><span class="text-muted" style="font-size: 0.75rem;">Pay directly using your internal wallet balance</span>
                     </label>
                 </div>
-
                 <div class="form-check custom-radio rounded border p-2 bg-light">
                     <input class="form-check-input ms-1 mt-1" type="radio" name="payment_method" id="pay_cod" value="COD">
                     <label class="form-check-label ms-2 d-block cursor-pointer" for="pay_cod" style="font-size: 0.85rem;">
@@ -247,36 +225,29 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </label>
                 </div>
             </div>
-            
             <button class="btn btn-pavitra-pink w-100 py-2 fs-6" id="checkout-order-btn">
                 Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>
             </button>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
         $(document).ready(function() {
             $('#cart-trigger-btn, #cart-trigger-btn-mobile').on('click', function() {
                 openCart();
             });
-
             $('#cart-close-btn, #cart-backdrop').on('click', function() {
                 window.closeCart();
             });
-
             window.openCart = function() {
                 $('#cart-backdrop').addClass('show');
                 $('#cart-drawer-box').addClass('open');
                 loadCartItems();
             };
-
             window.closeCart = function() {
                 $('#cart-backdrop').removeClass('show');
                 $('#cart-drawer-box').removeClass('open');
             };
-
             function loadCartItems() {
                 $.ajax({
                     url: '/cart',
@@ -291,7 +262,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     }
                 });
             }
-
             function renderCart(res) {
                 if (!res.items || res.items.length === 0) {
                     $('#cart-drawer-items').html(`
@@ -305,12 +275,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     $('#cart-count-badge, #cart-count-badge-mobile').hide();
                     return;
                 }
-
                 let html = '<div class="d-flex flex-column gap-3">';
                 res.items.forEach(function(item) {
                     const priceFormatted = parseFloat(item.price).toLocaleString('en-IN');
                     const totalFormatted = parseFloat(item.total).toLocaleString('en-IN');
-                    
                     html += `
                         <div class="d-flex gap-3 pb-3 border-bottom align-items-center">
                             <img src="${item.image_url || '/assets/images/placeholder.png'}" class="rounded" style="width: 60px; height: 75px; object-fit: cover; border: 1px solid var(--pavitra-border);">
@@ -320,7 +288,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                     <button class="btn btn-link text-muted p-0 remove-item-btn" data-id="${item.variant_id}"><i class="fa fa-trash-can"></i></button>
                                 </div>
                                 <span class="badge text-secondary bg-light border mt-1" style="font-size: 0.65rem;">Min Wholesale MOQ: ${item.bulk_threshold}</span>
-                                
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <div class="d-flex align-items-center border rounded">
                                         <button class="btn btn-sm btn-light py-0 px-2 qty-btn minus" data-id="${item.variant_id}">-</button>
@@ -341,10 +308,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     `;
                 });
                 html += '</div>';
-
                 $('#cart-drawer-items').html(html);
                 $('#cart-subtotal-display').text('₹' + parseFloat(res.subtotal).toLocaleString('en-IN', {minimumFractionDigits: 2}));
-                
                 if (res.discount > 0) {
                     $('#coupon-discount-row').show();
                     $('#coupon-applied-code').text(res.coupon_code);
@@ -355,24 +320,19 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     $('#coupon-discount-row').hide();
                     $('#coupon-message').hide();
                 }
-
                 $('#cart-total-display').text('₹' + parseFloat(res.total).toLocaleString('en-IN', {minimumFractionDigits: 2}));
                 $('#cart-drawer-footer').show();
-                
                 const count = res.items.reduce((sum, item) => sum + parseInt(item.quantity), 0);
                 $('#cart-count-badge, #cart-count-badge-mobile').text(count).show();
             }
-
             $('#apply-coupon-btn').on('click', function() {
                 const code = $('#coupon-code-input').val().trim();
                 const subtotalDisplay = $('#cart-subtotal-display').text().replace(/[^\d.]/g, '');
                 const subtotal = parseFloat(subtotalDisplay) || 0;
-
                 if (code === '') {
                     $('#coupon-message').text('Please enter a coupon code.').removeClass('text-success').addClass('text-danger').show();
                     return;
                 }
-
                 $.ajax({
                     url: '/cart/coupon',
                     method: 'POST',
@@ -392,12 +352,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     }
                 });
             });
-
             $(document).on('click', '.qty-btn', function() {
                 const variantId = $(this).data('id');
                 const isPlus = $(this).hasClass('plus');
                 const change = isPlus ? 1 : -1;
-                
                 $.ajax({
                     url: '/cart/update',
                     method: 'POST',
@@ -409,7 +367,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     }
                 });
             });
-
             $(document).on('click', '.remove-item-btn', function() {
                 const variantId = $(this).data('id');
                 $.ajax({
@@ -423,7 +380,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     }
                 });
             });
-
             $.ajax({
                 url: '/cart',
                 method: 'GET',
@@ -436,21 +392,16 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     }
                 }
             });
-
             $('#checkout-order-btn').on('click', function() {
                 const address = $('#shipping-address-box').val().trim();
                 if (address === '') {
                     window.showToast('Please enter a delivery shipping address.');
                     return;
                 }
-
                 const paymentMethod = $('input[name="payment_method"]:checked').val();
-                
                 $(this).prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-1"></i> Processing Order...');
-
                 if (paymentMethod === 'WALLET' || paymentMethod === 'COD') {
                     const url = paymentMethod === 'WALLET' ? '/checkout/wallet/create' : '/checkout/cod/create';
-                    
                     $.ajax({
                         url: url,
                         method: 'POST',
@@ -477,8 +428,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     });
                     return;
                 }
-
-                
                 $.ajax({
                     url: '/checkout/razorpay/create',
                     method: 'POST',
@@ -491,7 +440,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
                             return;
                         }
-                        
                         var options = {
                             "key": res.key,
                             "amount": res.amount,
@@ -554,14 +502,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         const err = xhr.responseJSON ? xhr.responseJSON.error : 'Network error creating bill.';
                         window.showToast(err);
                         $('#checkout-order-btn').prop('disabled', false).html('Place Wholesale Order <i class="fa fa-arrow-right ms-1"></i>');
-                        
                         if (xhr.status === 401 || err.toLowerCase().includes('unauthorized')) {
                             setTimeout(() => { window.location.href = '/login'; }, 1500);
                         }
                     }
                 });
             });
-
             $(window).on('scroll', function() {
                 if ($(window).scrollTop() > 30) {
                     $('.pavitra-header').addClass('scrolled');
@@ -569,7 +515,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     $('.pavitra-header').removeClass('scrolled');
                 }
             });
-
             if ('IntersectionObserver' in window) {
                 const cardObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -578,12 +523,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         }
                     });
                 }, { threshold: 0.05 });
-
                 $(document).find('.pavitra-product-card.minimal').each(function() {
                     cardObserver.observe(this);
                 });
             }
-
             window.showToast = function(msg) {
                 if (typeof msg === 'string') {
                     $('#toast-message').html(msg.replace(/\n/g, '<br>'));
@@ -600,7 +543,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             };
         });
     </script>
-    
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
         <div id="app-toast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -609,7 +551,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
     </div>
-    
     <div class="modal fade" id="cameraSearchModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(10px); background-color: rgba(0, 0, 0, 0.65);">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; background-color: #FFFDF8; overflow: hidden;">
@@ -619,12 +560,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>
                 <div class="modal-body p-4 text-center">
                     <p class="small text-muted mb-3">Snap a photo of a saree pattern or color to scan and search our weaver looms.</p>
-                    
                     <div class="scanner-container position-relative overflow-hidden mb-3 bg-dark d-flex align-items-center justify-content-center" style="height: 280px; border-radius: 12px; border: 2px solid var(--premium-gold);">
                         <video id="scanner-video" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
                         <div class="scanner-laser" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; z-index: 10; animation: scanAnimation 2s linear infinite;"></div>
                         <div class="scanner-reticle" style="position: absolute; width: 180px; height: 180px; border: 2px dashed rgba(201, 151, 46, 0.5); border-radius: 8px; z-index: 5;"></div>
-                        
                         <div id="scanner-cta" class="text-white p-3 z-3">
                             <i class="fa-solid fa-camera fa-3x mb-3 text-warning" style="color: var(--premium-gold) !important;"></i>
                             <h6 class="fw-bold">Camera Access Required</h6>
@@ -637,14 +576,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                 </label>
                             </div>
                         </div>
-                        
                         <div id="scanner-loading" class="position-absolute w-100 h-100 top-0 left-0 bg-dark bg-opacity-75 d-flex flex-column align-items-center justify-content-center text-white" style="display: none; z-index: 15;">
                             <div class="spinner-border text-warning mb-3" style="color: var(--premium-gold) !important;" role="status"></div>
                             <h6 class="fw-bold mb-1" id="scanner-loading-text">Analyzing weaves...</h6>
                             <p style="font-size: 0.65rem; color: rgba(255,255,255,0.7);">Matching textures and color spectrums</p>
                         </div>
                     </div>
-                    
                     <div id="scanner-camera-controls" style="display: none;">
                         <button type="button" class="btn btn-pavitra-pink px-4 py-2 text-uppercase fw-bold rounded-0" style="font-size:0.75rem; letter-spacing:0.05em;" id="btn-capture-match">Capture & Match</button>
                     </div>
@@ -652,7 +589,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
     </div>
-
     <footer class="pavitra-footer">
         <div class="container">
             <div class="row g-4">
@@ -711,7 +647,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
     </footer>
-
     <div class="pavitra-mobile-nav">
         <a href="/" class="mobile-nav-item <?= $_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '' ? 'active' : '' ?>">
             <i class="fa-solid fa-house"></i>
@@ -730,8 +665,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <span>Account</span>
         </a>
     </div>
-
-
     <script>
         $(document).ready(function() {
             var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -741,14 +674,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 recognition.lang = 'en-IN'; 
                 recognition.interimResults = false;
                 recognition.maxAlternatives = 1;
-
                 $('.voice-search-btn').on('click', function() {
                     var btn = $(this);
                     btn.addClass('text-danger animate-pulse').css('animation', 'pavitraPulse 1s infinite');
                     window.showToast("Listening... Speak now!");
                     recognition.start();
                 });
-
                 recognition.onresult = function(event) {
                     var transcript = event.results[0][0].transcript;
                     $('.pavitra-mobile-search-input, .pavitra-search-input').val(transcript);
@@ -757,16 +688,13 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         $('#search-form-mobile, #search-form').submit();
                     }, 800);
                 };
-
                 recognition.onspeechend = function() {
                     recognition.stop();
                 };
-
                 recognition.onerror = function(event) {
                     $('.voice-search-btn').removeClass('text-danger animate-pulse').css('animation', 'none');
                     window.showToast("Voice search error: " + event.error);
                 };
-
                 recognition.onend = function() {
                     $('.voice-search-btn').removeClass('text-danger animate-pulse').css('animation', 'none');
                 };
@@ -775,9 +703,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     window.showToast("Voice search not supported in this browser.");
                 });
             }
-
             var stream = null;
-            
             function startScannerCamera() {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
@@ -807,12 +733,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     $('#scanner-camera-controls').hide();
                 }
             }
-
             $('.pavitra-cart-btn').on('click', function(e) {
                 e.preventDefault();
                 window.openCart();
             });
-
             $('.camera-search-btn').on('click', function(e) {
                 e.preventDefault();
                 if (window.bootstrap) {
@@ -821,15 +745,12 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     $('#cameraSearchModal').modal('show');
                 }
             });
-
             $('#cameraSearchModal').on('shown.bs.modal', function () {
                 startScannerCamera();
             });
-
             $('#btn-start-camera').on('click', function() {
                 startScannerCamera();
             });
-
             $('#scanner-file-input').on('change', function() {
                 var file = this.files[0];
                 if (file) {
@@ -838,11 +759,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         localStorage.setItem('captured_saree_pattern', e.target.result);
                     };
                     reader.readAsDataURL(file);
-                    
                     startScanSimulation("Analyzing Pattern Motifs...");
                 }
             });
-
             $('#btn-capture-match').on('click', function() {
                 var video = document.getElementById('scanner-video');
                 if (video && stream) {
@@ -860,34 +779,27 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 }
                 startScanSimulation("Matching Weaver Colors...");
             });
-
             function startScanSimulation(text) {
                 $('#scanner-video').hide();
                 $('#scanner-cta').hide();
                 $('#scanner-camera-controls').hide();
                 $('.scanner-laser').hide();
                 $('.scanner-reticle').hide();
-                
                 $('#scanner-loading-text').text(text);
                 $('#scanner-loading').css('display', 'flex'); 
-                
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                     stream = null;
                 }
-                
                 setTimeout(function() {
                     var categories = ["Banarasi Brocade", "Kanjeevaram Silk", "Patola Silk", "Organza Silk", "Mysore Crepe Silk", "Jamdani Muslin"];
                     var matchedCategory = categories[Math.floor(Math.random() * categories.length)];
-                    
                     window.showToast("Loom match: " + matchedCategory + " found!");
-                    
                     setTimeout(function() {
                         window.location.href = "/?category=" + encodeURIComponent(matchedCategory);
                     }, 1000);
                 }, 2500);
             }
-
             $('#cameraSearchModal').on('hidden.bs.modal', function () {
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
@@ -902,30 +814,24 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('#scanner-camera-controls').hide();
                 $('#scanner-loading').css('display', 'none');
             });
-
-
             $('#pavitra-edge-trigger-btn').on('click', function(e) {
                 e.stopPropagation();
                 $(this).fadeOut(150);
                 $('#pavitra-edge-sidebar').addClass('open');
             });
-
             $('#pavitra-edge-close-btn').on('click', function(e) {
                 e.stopPropagation();
                 closeEdgePanel();
             });
-
             $(document).on('click', function(event) {
                 if (!$(event.target).closest('#pavitra-edge-sidebar, #pavitra-edge-trigger-btn').length) {
                     closeEdgePanel();
                 }
             });
-
             function closeEdgePanel() {
                 $('#pavitra-edge-sidebar').removeClass('open');
                 $('#pavitra-edge-trigger-btn').fadeIn(150);
             }
-
             $('#pavitra-edge-filter-btn').on('click', function(e) {
                 e.stopPropagation();
                 closeEdgePanel();
@@ -940,12 +846,9 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     window.location.href = '/?show_filters=true';
                 }
             });
-
             $(window).trigger('scroll');
         });
     </script>
-
-
     <?php
         $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
         $isLandingPage = ($requestUri === '/' || $requestUri === '' || $requestUri === '/index.php');
@@ -955,7 +858,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <button class="pavitra-edge-trigger" id="pavitra-edge-trigger-btn" title="Quick Access Menu">
         <i class="fa-solid fa-chevron-left"></i>
     </button>
-
     <div class="pavitra-edge-panel" id="pavitra-edge-sidebar">
         <?php if ($isSellerPage): ?>
             <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
@@ -964,21 +866,18 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>
                 <span>Chatbot</span>
             </div>
-            
             <a href="/seller/products/bulk" class="pavitra-edge-item" title="Bulk Upload">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-file-csv"></i>
                 </div>
                 <span>Upload</span>
             </a>
-            
             <a href="https://wa.me/919950489678?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
                 <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
                     <i class="fa-brands fa-whatsapp"></i>
                 </div>
                 <span>WhatsApp</span>
             </a>
-            
             <a href="/seller/orders" class="pavitra-edge-item" title="Order Management">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-box-open"></i>
@@ -992,21 +891,18 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>
                 <span>Custom</span>
             </a>
-
             <a href="https://wa.me/919950489678?text=Hello%20Pavitra%20B2B%20Support!%20I%20have%20a%20question%20about%20my%20saree%20bulk%20order." class="pavitra-edge-item" target="_blank" title="Chat on WhatsApp">
                 <div class="pavitra-edge-icon-circle" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #FFF; border-color: #128C7E;">
                     <i class="fa-brands fa-whatsapp"></i>
                 </div>
                 <span>WhatsApp</span>
             </a>
-
             <div class="pavitra-edge-item" id="pavitra-edge-filter-btn" title="Filter Products">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-sliders"></i>
                 </div>
                 <span>Filters</span>
             </div>
-            
             <div class="pavitra-edge-item" data-bs-toggle="modal" data-bs-target="#chatbotModal" title="Ask Pavitra AI">
                 <div class="pavitra-edge-icon-circle">
                     <i class="fa-solid fa-robot"></i>
@@ -1014,13 +910,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <span>Chatbot</span>
             </div>
         <?php endif; ?>
-
         <div class="pavitra-edge-close" id="pavitra-edge-close-btn" title="Close Menu">
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
     <?php endif; ?>
-
     <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.9);">
         <div class="modal-dialog modal-fullscreen m-0">
             <div class="modal-content bg-transparent border-0 h-100">
@@ -1030,7 +924,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="javascript:void(0)" class="text-white fs-4" style="text-decoration:none;"><i class="fa-regular fa-circle-question"></i></a>
                 </div>
                 <div class="modal-body d-flex flex-column align-items-center justify-content-center position-relative p-0 overflow-hidden">
-                    
                     <div id="qr-scanner-viewfinder" class="position-relative" style="width: 280px; height: 280px; border-radius: 16px; overflow: hidden; display: none; margin-bottom: 20vh;">
                         <video id="qr-video" class="w-100 h-100 object-fit-cover" autoplay playsinline muted style="background-color: #222;"></video>
                         <div class="position-absolute top-0 start-0 border-top border-start" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-top-left-radius: 16px;"></div>
@@ -1039,7 +932,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         <div class="position-absolute bottom-0 end-0 border-bottom border-end" style="border-color: #FFD814 !important; width: 40px; height: 40px; border-width: 4px !important; border-bottom-right-radius: 16px;"></div>
                         <div class="position-absolute w-100 shadow-sm" style="background-color: #FFD814; height: 2px; top: 0; left: 0; animation: scanline 2s linear infinite; box-shadow: 0 0 10px rgba(255,216,20,0.8);"></div>
                     </div>
-
                     <div id="qr-permission-prompt" class="bg-white p-4 shadow position-absolute w-100" style="bottom: 0; left: 0; right: 0; border-top-left-radius: 16px; border-top-right-radius: 16px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold m-0" style="color: #111; font-size: 1.1rem;">Allow camera access to scan Saree QR code</h6>
@@ -1064,12 +956,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             <button type="button" class="btn flex-fill fw-semibold py-2" id="qr-allow-access-btn" style="background-color: #FFD814; color: #111; border: 1px solid #FCD200;">Allow access</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="notificationsModal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(5px); background-color: rgba(0, 0, 0, 0.4);">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
@@ -1098,7 +988,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
     </div>
-
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebarMenu" aria-labelledby="mobileSidebarMenuLabel" style="width: 280px; border-right: none;">
         <div class="offcanvas-header" style="background-color: #FDFBF7; border-bottom: 1px solid #ECEFF1;">
             <h5 class="offcanvas-title" id="mobileSidebarMenuLabel" style="font-family: 'Rozha One', serif; font-size: 1.3rem; color: #482922;">पवित्रा</h5>
@@ -1109,24 +998,19 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <a href="/customization" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-solid fa-wand-magic-sparkles me-3" style="color: var(--pavitra-pink);"></i> Custom
                 </a>
-                
                 <a href="/?show_filters=true" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-solid fa-sliders me-3" style="color: var(--pavitra-pink);"></i> Filters
                 </a>
-                
                 <a href="#" data-bs-toggle="modal" data-bs-target="#chatbotModal" class="list-group-item list-group-item-action py-3 border-0" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-solid fa-robot me-3 text-primary"></i> Ask Pavitra AI (Chatbot)
                 </a>
-
                 <div class="border-top my-2"></div>
-                
                 <a href="https://wa.me/919950489678" class="list-group-item list-group-item-action py-3 border-0 text-success" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">
                     <i class="fa-brands fa-whatsapp me-3 fs-5"></i> WhatsApp Support
                 </a>
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; background-color: #FFFDF8;">
@@ -1151,7 +1035,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                             </div>
                         </div>
                     </div>
-                    
                     <div class="p-3 bg-white border-top">
                         <div class="input-group shadow-sm" style="border-radius: 20px; overflow: hidden;">
                             <input type="text" id="chatbot-input" class="form-control border-0 bg-light px-3" placeholder="Type your question..." aria-label="Type your question" style="box-shadow: none;">
@@ -1164,13 +1047,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </div>
         </div>
     </div>
-
     <script>
         $(document).ready(function() {
             const chatMessages = $('#chatbot-messages');
             const chatInput = $('#chatbot-input');
             const chatSendBtn = $('#chatbot-send-btn');
-
             function appendMessage(sender, text) {
                 let html = '';
                 if (sender === 'user') {
@@ -1196,14 +1077,11 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 chatMessages.append(html);
                 chatMessages.scrollTop(chatMessages[0].scrollHeight);
             }
-
             function handleSend() {
                 const text = chatInput.val().trim();
                 if (!text) return;
-                
                 appendMessage('user', text);
                 chatInput.val('');
-                
                 const typingId = 'typing-' + Date.now();
                 const typingHtml = `
                 <div id="${typingId}" class="d-flex mb-3">
@@ -1220,10 +1098,8 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </div>`;
                 chatMessages.append(typingHtml);
                 chatMessages.scrollTop(chatMessages[0].scrollHeight);
-
                 setTimeout(() => {
                     $('#' + typingId).remove();
-                    
                     let response = `I'd be happy to guide you! Here is a step-by-step guide on how to use Pavitra Designer for your wholesale business:<br><br>
                     <b>Step 1: Browse & Filter</b><br>
                     Tap the 'Filters' button in the side menu to find exactly what you need (Silk, Banarasi, etc.).<br><br>
@@ -1235,7 +1111,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     Go to your cart to securely checkout. We offer Free Shipping on orders over ₹10,000!<br><br>
                     <i>Need a custom weave? Tap 'Custom' in the side menu!</i><br><br>
                     Which step would you like more details about?`;
-                    
                     if (text.toLowerCase().includes('price') || text.toLowerCase().includes('cost') || text.toLowerCase().includes('rate')) {
                         response = "Wholesale pricing requires a minimum order quantity (MOQ) of 4 pieces. Would you like me to filter the catalog for the best bulk deals?";
                     } else if (text.toLowerCase().includes('shipping') || text.toLowerCase().includes('delivery') || text.toLowerCase().includes('track')) {
@@ -1245,16 +1120,13 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     } else if (text.toLowerCase().includes('hello') || text.toLowerCase().includes('hi') || text.toLowerCase().includes('hey')) {
                         response = "Namaste! I'm here to guide you. Would you like a step-by-step explanation of how to place a bulk order, or do you have a specific question about our sarees?";
                     }
-                    
                     appendMessage('bot', response);
                 }, 1500);
             }
-
             chatSendBtn.on('click', handleSend);
             chatInput.on('keypress', function(e) {
                 if (e.which === 13) handleSend();
             });
-            
             if (!$('style#chatbot-styles').length) {
                 $('head').append(`
                 <style id="chatbot-styles">
@@ -1263,27 +1135,22 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 </style>
                 `);
             }
-
             $('#qrScannerModal').on('show.bs.modal', function () {
                 $('#qr-scanner-viewfinder').hide();
                 $('#qr-scan-title').css('opacity', '0');
                 $('#qr-permission-prompt').show();
             });
-
             $('#qrScannerModal').on('hidden.bs.modal', function () {
                 const video = document.getElementById('qr-video');
                 if (video && video.srcObject) {
                     video.srcObject.getTracks().forEach(track => track.stop());
                 }
             });
-
             $('#qr-allow-access-btn').on('click', function() {
                 $('#qr-permission-prompt').slideUp(300);
                 $('#qr-scan-title').css('opacity', '1');
                 $('#qr-scanner-viewfinder').fadeIn(500);
-                
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    
                     function startCamera(constraints) {
                         return navigator.mediaDevices.getUserMedia(constraints)
                             .then(function(stream) {
@@ -1292,9 +1159,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                 video.setAttribute("playsinline", true);
                                 video.muted = true;
                                 video.play();
-                                
                                 requestAnimationFrame(tick);
-                                
                                 function tick() {
                                     if (video.readyState === video.HAVE_ENOUGH_DATA) {
                                         const canvasElement = document.createElement("canvas");
@@ -1303,7 +1168,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                         const canvas = canvasElement.getContext("2d");
                                         canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
                                         var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-                                        
                                         if (typeof jsQR !== 'undefined') {
                                             var code = jsQR(imageData.data, imageData.width, imageData.height, {
                                                 inversionAttempts: "dontInvert",
@@ -1312,7 +1176,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                                 video.srcObject.getTracks().forEach(track => track.stop());
                                                 window.showToast("Scanned Saree QR: " + code.data);
                                                 $('#qrScannerModal').modal('hide');
-                                                
                                                 if (code.data.startsWith('http') || code.data.startsWith('/')) {
                                                     window.location.href = code.data;
                                                 }
@@ -1326,7 +1189,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                 }
                             });
                     }
-
                     startCamera({ video: { facingMode: "environment" } })
                         .catch(function(err) {
                             console.warn("Environment camera failed, trying default:", err);
@@ -1335,7 +1197,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                         .catch(function(err) {
                             console.error("Camera access denied or error:", err);
                             window.showToast("Direct camera access failed (often happens in WebViews). We will now open your device's native camera.");
-                            
                             let fileInput = document.getElementById('qr-fallback-input');
                             if (!fileInput) {
                                 fileInput = document.createElement('input');
@@ -1345,7 +1206,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                 fileInput.id = 'qr-fallback-input';
                                 fileInput.style.display = 'none';
                                 document.body.appendChild(fileInput);
-                                
                                 fileInput.addEventListener('change', function(e) {
                                     if (e.target.files && e.target.files.length > 0) {
                                         const file = e.target.files[0];
@@ -1359,7 +1219,6 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                                                 const ctx = canvas.getContext('2d');
                                                 ctx.drawImage(img, 0, 0, img.width, img.height);
                                                 const imageData = ctx.getImageData(0, 0, img.width, img.height);
-                                                
                                                 if (typeof jsQR !== 'undefined') {
                                                     const code = jsQR(imageData.data, imageData.width, imageData.height, {
                                                         inversionAttempts: "dontInvert",
@@ -1389,7 +1248,5 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             });
         });
     </script>
-
 </body>
 </html>
-

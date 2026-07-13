@@ -9,7 +9,6 @@
             <a href="/support/create" class="btn btn-pavitra-pink btn-sm"><i class="fa fa-plus me-1"></i> Open New Ticket</a>
         </div>
     </div>
-
     <div class="card shadow-sm border border-light p-4 bg-white">
         <?php if (empty($tickets)): ?>
             <div class="text-center py-5 text-muted">
@@ -72,4 +71,3 @@
         <?php endif; ?>
     </div>
 </div>
-

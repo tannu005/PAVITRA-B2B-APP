@@ -9,7 +9,6 @@
             <a href="/seller/products/create" class="btn btn-pavitra-pink btn-sm"><i class="fa fa-plus me-1"></i> Upload New Saree</a>
         </div>
     </div>
-
     <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="card shadow-sm border border-light p-3 bg-white">
@@ -40,7 +39,6 @@
             </div>
         </div>
     </div>
-
     <div class="row g-4">
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white h-100">
@@ -54,7 +52,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white h-100">
                 <h5 class="fw-bold mb-3 text-dark">Recent Bulk Orders</h5>
@@ -97,4 +94,3 @@
         </div>
     </div>
 </div>
-

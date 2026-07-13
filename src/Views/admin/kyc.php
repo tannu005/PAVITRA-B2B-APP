@@ -6,7 +6,6 @@
         </div>
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <div class="card shadow-sm border border-light p-4 bg-white">
         <?php if (empty($kycList)): ?>
             <div class="text-center py-5 text-muted">
@@ -74,15 +73,12 @@
         <?php endif; ?>
     </div>
 </div>
-
 <script>
     $(document).on('click', '.kyc-verify-btn', function() {
         const kycId = $(this).data('id');
         const targetStatus = $(this).data('status');
         const btn = $(this);
-        
         btn.prop('disabled', true);
-
         $.ajax({
             url: '/admin/kyc/verify',
             method: 'POST',
@@ -103,7 +99,6 @@
             }
         });
     });
-
     $('#simulate-kyc-btn').on('click', function() {
         $(this).prop('disabled', true).text('Simulating...');
         $.ajax({
@@ -120,4 +115,3 @@
         });
     });
 </script>
-

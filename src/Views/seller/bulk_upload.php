@@ -6,12 +6,10 @@
         </div>
         <a href="/seller/products" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> My Catalog</a>
     </div>
-
     <div class="row g-4">
         <div class="col-lg-7">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-upload me-2"></i>Select CSV Document</h5>
-                
                 <?php if (!empty($errors)): ?>
                     <div class="alert alert-danger py-3 px-3 mb-4 rounded-0" style="font-size: 0.85rem; border-left: 3px solid #dc3545;">
                         <i class="fa-solid fa-triangle-exclamation me-2"></i> <strong>Upload failed:</strong>
@@ -22,7 +20,6 @@
                         </ul>
                     </div>
                 <?php endif; ?>
-
                 <?php if (isset($submitted) && $successCount > 0): ?>
                     <div class="alert alert-success py-3 px-3 mb-4 rounded-0" style="font-size: 0.85rem; border-left: 3px solid #2ecc71; background-color: rgba(46, 204, 113, 0.05); color: #27ae60;">
                         <i class="fa-solid fa-circle-check me-2"></i> <strong>Import successful!</strong>
@@ -30,7 +27,6 @@
                         <span class="d-block mt-1 small text-muted">All uploaded products are pending admin approval before listing.</span>
                     </div>
                 <?php endif; ?>
-
                 <?php if (!empty($rowErrors)): ?>
                     <div class="alert alert-warning py-3 px-3 mb-4 rounded-0" style="font-size: 0.85rem; border-left: 3px solid #f39c12; background-color: rgba(243, 156, 18, 0.03); color: #d35400;">
                         <i class="fa-solid fa-triangle-exclamation me-2"></i> <strong>Parsing Warnings:</strong>
@@ -43,10 +39,8 @@
                         </div>
                     </div>
                 <?php endif; ?>
-
                 <form action="/seller/products/bulk" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
-                    
                     <div class="mb-4 text-center p-5 border border-dashed rounded-3 bg-light cursor-pointer position-relative" id="drop-zone" style="border-width: 2px;">
                         <span class="fs-1 text-muted mb-2 d-block"><i class="fa-solid fa-cloud-arrow-up text-pink"></i></span>
                         <h6 class="fw-bold text-dark mb-1">Drag and drop your spreadsheet here</h6>
@@ -54,7 +48,6 @@
                         <button type="button" class="btn btn-outline-pink btn-sm fw-bold">Select File</button>
                         <input type="file" name="csv_file" id="csv-file-input" required accept=".csv" class="position-absolute start-0 top-0 w-100 h-100 opacity-0" style="cursor: pointer;">
                     </div>
-
                     <div class="mb-3 d-none" id="file-details-container">
                         <div class="p-3 border rounded bg-light-subtle d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center gap-3">
@@ -67,14 +60,12 @@
                             <button type="button" class="btn btn-sm text-danger" id="btn-remove-file"><i class="fa fa-times"></i></button>
                         </div>
                     </div>
-
                     <div class="text-end">
                         <button type="submit" class="btn btn-pavitra-pink py-2.5 px-5 fw-bold"><i class="fa fa-upload me-1"></i> Start Batch Import</button>
                     </div>
                 </form>
             </div>
         </div>
-
         <div class="col-lg-5">
             <div class="card shadow-sm border border-light p-4 bg-white mb-4">
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-circle-info me-2"></i>CSV File Guidelines</h5>
@@ -89,7 +80,6 @@
                     <li class="mb-2"><strong>Prices:</strong> Wholesale price must be lower than the retail price.</li>
                     <li class="mb-2"><strong>SKUs:</strong> Must be unique. Duplicate SKU rows will fail to import.</li>
                 </ol>
-
                 <h5 class="fw-bold mb-3 text-pink border-bottom pb-2"><i class="fa-solid fa-code me-2"></i>Template & Sample Data</h5>
                 <div class="mb-3">
                     <span class="text-muted d-block small mb-2">CSV Column Header Layout:</span>
@@ -103,7 +93,6 @@
         </div>
     </div>
 </div>
-
 <style>
 .border-dashed {
     border-style: dashed !important;
@@ -117,7 +106,6 @@
     color: #fff;
 }
 </style>
-
 <script>
 $(document).ready(function() {
     $('#csv-file-input').on('change', function(e) {
@@ -129,7 +117,6 @@ $(document).ready(function() {
             $('#drop-zone').addClass('d-none');
         }
     });
-
     $('#btn-remove-file').on('click', function() {
         $('#csv-file-input').val('');
         $('#file-details-container').addClass('d-none');
@@ -137,4 +124,3 @@ $(document).ready(function() {
     });
 });
 </script>
-

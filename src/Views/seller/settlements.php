@@ -17,7 +17,6 @@
                 </div>
                 <div class="text-muted small">Once courier driver confirms delivery, payouts are credited to your bank details on record within 3 business days.</div>
             </div>
-            
             <div class="card shadow-sm border border-light bg-light p-3 text-muted" style="font-size: 0.75rem;">
                 <div class="fw-bold text-dark mb-1"><i class="fa-solid fa-building-columns me-1"></i>Linked Bank Details</div>
                 • Bank: State Bank of India<br>
@@ -26,11 +25,9 @@
                 • IFSC Code: SBIN0001234
             </div>
         </div>
-
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-file-invoice-dollar text-pink me-2"></i>Payout Settlement Ledger</h5>
-
                 <?php if (empty($settlements)): ?>
                     <div class="text-center py-5 text-muted">
                         <i class="fa-solid fa-receipt fs-1 opacity-25 mb-2"></i>
@@ -76,4 +73,3 @@
         </div>
     </div>
 </div>
-

@@ -6,7 +6,6 @@
         </div>
         <a href="/admin" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
     </div>
-
     <div class="row g-4">
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white">
@@ -22,7 +21,6 @@
                         </select>
                         <span class="text-muted" style="font-size: 0.7rem;">Leave empty if applying to a specific weaver.</span>
                     </div>
-
                     <div class="mb-3">
                         <label for="seller_id" class="form-label small fw-semibold text-muted text-uppercase">Specific Weaver/Seller Scope</label>
                         <select class="form-select" id="seller_id" name="seller_id">
@@ -33,7 +31,6 @@
                         </select>
                         <span class="text-muted" style="font-size: 0.7rem;">Select a merchant to overwrite default rates.</span>
                     </div>
-
                     <div class="mb-4">
                         <label for="rate" class="form-label small fw-semibold text-muted text-uppercase">Commission Percentage (%)</label>
                         <div class="input-group">
@@ -41,16 +38,13 @@
                             <span class="input-group-text bg-light">%</span>
                         </div>
                     </div>
-
                     <button type="submit" class="btn btn-pavitra-pink w-100 py-2" id="save-rule-btn">Save Commission Rule</button>
                 </form>
             </div>
         </div>
-
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-3 text-dark">Active B2B Commission Rules</h5>
-                
                 <?php if (empty($rules)): ?>
                     <div class="text-center py-5 text-muted">
                         <i class="fa-solid fa-calculator fs-1 opacity-25 mb-2"></i>
@@ -92,23 +86,18 @@
         </div>
     </div>
 </div>
-
 <script>
     $('#comm-rule-form').on('submit', function(e) {
         e.preventDefault();
-        
         const cat = $('#category_id').val();
         const sel = $('#seller_id').val();
         const r = parseFloat($('#rate').val());
-
         if (isNaN(r) || r < 0 || r > 100) {
             window.showToast('Please select a valid commission percentage between 0 and 100.');
             return;
         }
-
         const btn = $('#save-rule-btn');
         btn.prop('disabled', true).text('Saving...');
-
         $.ajax({
             url: '/admin/commissions/rule',
             method: 'POST',
@@ -130,4 +119,3 @@
         });
     });
 </script>
-

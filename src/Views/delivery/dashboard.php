@@ -6,7 +6,6 @@
         </div>
         <a href="/" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-left"></i> Go to Storefront</a>
     </div>
-
     <div class="row g-4">
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 bg-dark text-white p-4 mb-4" style="border-radius: 12px;">
@@ -17,7 +16,6 @@
                     <i class="fa-solid fa-circle-check text-success"></i>
                 </div>
             </div>
-            
             <div class="card shadow-sm border border-light bg-light p-3 rounded" style="font-size: 0.8rem;">
                 <div class="fw-bold text-dark mb-1"><i class="fa fa-info-circle me-1 text-pink"></i>Logistics Protocol</div>
                 • Collect package from weaver warehouse.<br>
@@ -25,11 +23,9 @@
                 • Ask the boutique owner for their 4-digit OTP code to complete delivery.
             </div>
         </div>
-
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white">
                 <h5 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-list-check text-pink me-2"></i>My Delivery Assignments</h5>
-                
                 <?php if (empty($assignments)): ?>
                     <div class="text-center py-5 text-muted">
                         <i class="fa-solid fa-truck-pickup fs-1 opacity-25 mb-2"></i>
@@ -53,14 +49,12 @@
                                             <div class="mb-1"><strong>Client Phone:</strong> <?= htmlspecialchars($a['buyer_mobile']) ?></div>
                                             <div><strong>Delivery Route Location:</strong> Varanasi Handloom Cluster Point, UP</div>
                                         </div>
-                                        
                                         <?php if ($a['assignment_status'] === 'OUT_FOR_DELIVERY'): ?>
                                             <div class="mt-2 bg-warning-subtle text-warning border border-warning-subtle p-2 rounded small" style="font-size: 0.8rem;">
                                                 🔑 <strong>Demo Access Handover OTP:</strong> <code class="text-dark fw-bold"><?= $a['otp_code'] ?></code>
                                             </div>
                                         <?php endif; ?>
                                     </div>
-                                    
                                     <div class="col-md-4 text-md-end">
                                         <?php if ($a['assignment_status'] === 'ASSIGNED'): ?>
                                             <button class="btn btn-pavitra-pink btn-sm w-100 py-2 change-assignment-status-btn" data-id="<?= $a['assignment_id'] ?>" data-status="PICKED_UP">
@@ -86,15 +80,12 @@
         </div>
     </div>
 </div>
-
 <script>
     $('.change-assignment-status-btn').on('click', function() {
         const assignId = $(this).data('id');
         const nextStatus = $(this).data('status');
         const btn = $(this);
-
         btn.prop('disabled', true).text('Updating...');
-
         $.ajax({
             url: '/delivery/status',
             method: 'POST',
@@ -115,19 +106,15 @@
             }
         });
     });
-
     $('.verify-otp-btn').on('click', function() {
         const assignId = $(this).data('id');
         const otpVal = $('#otp-input-' + assignId).val().trim();
-
         if (otpVal === '') {
             window.showToast('Please enter the 4-digit handover OTP.');
             return;
         }
-
         const btn = $(this);
         btn.prop('disabled', true).text('Checking...');
-
         $.ajax({
             url: '/delivery/verify-otp',
             method: 'POST',
@@ -150,4 +137,3 @@
         });
     });
 </script>
-
