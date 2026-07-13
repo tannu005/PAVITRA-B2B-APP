@@ -676,20 +676,23 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <a href="/catalog?category=Patola+Silk">Patola</a>
                     <a href="/catalog?category=Organza+Silk">Organza</a>
                 </div>
-                <div class="col-lg-2 col-md-6 col-6 d-none d-lg-block">
+                <div class="col-lg-4 col-md-6 d-none d-lg-block">
                     <h5>Help & Support</h5>
-                    <a href="/support">Contact Us</a>
-                    <a href="/orders">Track Order</a>
-                    <a href="/about-us">About Us</a>
-                    <a href="/support">FAQs</a>
-                    <a href="/about-us">Size Guide</a>
-                </div>
-                <div class="col-lg-2 col-md-6 col-6 d-none d-lg-block">
-                    <h5>Policies</h5>
-                    <a href="/about-us">Shipping Info</a>
-                    <a href="/about-us">Returns & Refunds</a>
-                    <a href="/about-us">Privacy Policy</a>
-                    <a href="/about-us">Terms of Service</a>
+                    <div style="font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-top: 10px;">
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="/support" class="d-block mb-1" style="color: #fff; text-decoration: none;">Contact Us</a>
+                                <a href="/orders" class="d-block mb-1" style="color: #fff; text-decoration: none;">Track Order</a>
+                                <a href="/about-us" class="d-block mb-1" style="color: #fff; text-decoration: none;">About Us</a>
+                                <a href="/support" class="d-block mb-1" style="color: #fff; text-decoration: none;">FAQs</a>
+                            </div>
+                            <div class="col-6">
+                                <strong>Buyer Support:</strong><br> <a href="mailto:supporttearm2001@gmail.com" style="color: #fff; text-decoration: none;">supporttearm2001@gmail.com</a><br>
+                                <strong class="mt-2 d-inline-block">Seller Support:</strong><br> <a href="mailto:p14115419@gmail.com" style="color: #fff; text-decoration: none;">p14115419@gmail.com</a><br>
+                                <strong class="mt-2 d-inline-block">Admin:</strong><br> <a href="mailto:pavitrasupport.com@gmail.com" style="color: #fff; text-decoration: none;">pavitrasupport.com@gmail.com</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5>Wholesale Enquiry</h5>
