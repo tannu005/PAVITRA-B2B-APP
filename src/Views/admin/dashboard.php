@@ -95,7 +95,54 @@
             </a>
         </div>
     </div>
+
+    <!-- Announce Sale Section -->
+    <h5 class="fw-bold mb-3 mt-5 text-dark">Promotions & Marketing</h5>
+    <div class="card shadow-sm border border-light p-4 bg-white">
+        <form id="announce-sale-form">
+            <div class="mb-3">
+                <label class="form-label fw-bold small text-muted text-uppercase">Sale/Event Title</label>
+                <input type="text" class="form-control" name="title" required placeholder="E.g., Diwali Mega Sale - Flat 50% Off">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold small text-muted text-uppercase">Announcement Message</label>
+                <textarea class="form-control" name="message" rows="3" required placeholder="Describe the promotion..."></textarea>
+            </div>
+            <button type="submit" class="btn text-white fw-bold px-4" style="background-color: var(--pavitra-pink);">Send Announcement Email</button>
+        </form>
+    </div>
+
 </div>
+
+<script>
+document.getElementById('announce-sale-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    const formData = new FormData(this);
+    try {
+        const response = await fetch('/admin/announce-sale', {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(`Emails successfully sent to ${result.sent_count} subscribed users!`);
+            this.reset();
+        } else {
+            alert(result.error || 'Failed to send emails.');
+        }
+    } catch (err) {
+        alert('Server error occurred.');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Announcement Email';
+    }
+});
+</script>
 
 <style>
 .hover-card {

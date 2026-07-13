@@ -192,6 +192,11 @@
                         <input type="text" class="form-control rounded-0 bg-light-subtle text-muted" value="<?= htmlspecialchars($user['role']) ?>" disabled style="font-size: 0.85rem;">
                     </div>
                 </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="email_opt_in" name="email_opt_in" value="1" <?= !isset($user['email_opt_in']) || $user['email_opt_in'] ? 'checked' : '' ?>>
+                    <label class="form-check-label small fw-bold text-muted" for="email_opt_in" style="font-size: 0.75rem;">Receive Promotional & Notification Emails</label>
+                </div>
+                <div class="mb-3 form-check"><input type="checkbox" class="form-check-input" id="email_opt_in" name="email_opt_in" value="1" <?= (!isset($user['email_opt_in']) || $user['email_opt_in']) ? 'checked' : '' ?>><label class="form-check-label small fw-bold text-muted" for="email_opt_in" style="font-size: 0.75rem;">Receive Promotional & Notification Emails</label></div>
                 <button type="submit" class="btn text-white text-uppercase fw-bold rounded-0" style="background-color: var(--pavitra-pink); font-size: 0.78rem; letter-spacing: 0.05em; padding: 8px 16px;">Save Changes</button>
             </form>
         </div>
@@ -296,7 +301,8 @@
             <?php if (count($activeSessions) > 1): ?>
                 <form action="/profile/sessions/revoke-others" method="POST">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
-                    <button type="submit" class="btn btn-outline-danger btn-sm w-100 rounded-0 py-2 fw-bold text-uppercase" style="font-size: 0.75rem;"><i class="fa-solid fa-right-from-bracket me-1"></i> Sign out of other devices</button>
+                    <div class="mb-3 form-check"><input type="checkbox" class="form-check-input" id="email_opt_in" name="email_opt_in" value="1" <?= (!isset($user['email_opt_in']) || $user['email_opt_in']) ? 'checked' : '' ?>><label class="form-check-label small fw-bold text-muted" for="email_opt_in" style="font-size: 0.75rem;">Receive Promotional & Notification Emails</label></div>
+                <button type="submit" class="btn btn-outline-danger btn-sm w-100 rounded-0 py-2 fw-bold text-uppercase" style="font-size: 0.75rem;"><i class="fa-solid fa-right-from-bracket me-1"></i> Sign out of other devices</button>
                 </form>
             <?php else: ?>
                 <button class="btn btn-outline-secondary btn-sm w-100 rounded-0 py-2 fw-bold text-uppercase" disabled style="font-size: 0.75rem;"><i class="fa-solid fa-circle-check me-1"></i> Secure: No other active devices</button>
@@ -359,7 +365,8 @@
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(\Core\Application::$app->getCsrfToken()) ?>">
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-light w-50 py-2.5 fw-bold rounded-0" data-bs-dismiss="modal" style="font-size: 0.82rem;">Cancel</button>
-                        <button type="submit" class="btn btn-danger w-50 py-2.5 fw-bold rounded-0" style="font-size: 0.82rem;">Yes, Delete</button>
+                        <div class="mb-3 form-check"><input type="checkbox" class="form-check-input" id="email_opt_in" name="email_opt_in" value="1" <?= (!isset($user['email_opt_in']) || $user['email_opt_in']) ? 'checked' : '' ?>><label class="form-check-label small fw-bold text-muted" for="email_opt_in" style="font-size: 0.75rem;">Receive Promotional & Notification Emails</label></div>
+                <button type="submit" class="btn btn-danger w-50 py-2.5 fw-bold rounded-0" style="font-size: 0.82rem;">Yes, Delete</button>
                     </div>
                 </form>
             </div>
@@ -444,4 +451,5 @@ $(document).ready(function() {
     });
 });
 </script>
+
 

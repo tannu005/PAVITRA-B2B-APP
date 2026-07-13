@@ -6,6 +6,7 @@ use Core\Controller;
 use Core\Request;
 use Core\Response;
 use Core\Application;
+use App\Utils\EmailService;
 
 class DeliveryController extends Controller {
 
@@ -93,6 +94,20 @@ class DeliveryController extends Controller {
                     VALUES (?, ?, ?, ?)
                 ");
                 $stmtHistory->execute([$orderId, $mappedOrderStatus, "Status advanced by delivery rider", $user['id']]);
+
+                if ($mappedOrderStatus === 'OUT_FOR_DELIVERY') {
+                    $stmtOrderData = $db->prepare("SELECT order_number, net_amount FROM orders WHERE id = ?");
+                    $stmtOrderData->execute([$orderId]);
+                    $orderData = $stmtOrderData->fetch();
+                    if ($orderData) {
+                        $targetEmail = 'p14115419@gmail.com';
+                        $subject = "Order Out For Delivery - {$orderData['order_number']}";
+                        $html = "<h2>Your Order is Out For Delivery!</h2>";
+                        $html .= "<p>Order <b>{$orderData['order_number']}</b> has been picked up by our delivery partner and is on its way to you.</p>";
+                        $html .= "<p>Net Amount: ₹" . number_format($orderData['net_amount'], 2) . "</p>";
+                        EmailService::send($targetEmail, $subject, $html);
+                    }
+                }
             }
 
             $db->commit();

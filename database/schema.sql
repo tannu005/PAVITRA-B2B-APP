@@ -961,3 +961,38 @@ CREATE TABLE IF NOT EXISTS `error_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- Email Subscribers
+CREATE TABLE IF NOT EXISTS subscribers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Coupons
+CREATE TABLE IF NOT EXISTS coupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    seller_id INT NOT NULL,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    discount_percent INT NOT NULL,
+    valid_from DATE NOT NULL,
+    valid_to DATE NOT NULL,
+    usage_limit INT DEFAULT 0,
+    used_count INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (seller_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Applied Coupons (for tracking)
+CREATE TABLE IF NOT EXISTS applied_coupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    coupon_id INT NOT NULL,
+    discount_amount DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (coupon_id) REFERENCES coupons(id) ON DELETE CASCADE
+);
+
+ALTER TABLE users ADD COLUMN email_opt_in TINYINT(1) DEFAULT 1;

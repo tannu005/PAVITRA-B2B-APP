@@ -88,11 +88,25 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     </span>
                 </div>
 
-                <?php if (!empty($variants) && count($variants) > 1): ?>
+                <?php 
+                    $displayVariants = $variants;
+                    if (empty($displayVariants) || count($displayVariants) <= 1) {
+                        $base = !empty($variants) ? $variants[0] : [
+                            'id' => 0, 'sku' => 'DUMMY', 'price' => $price, 'wholesale_price' => $wholesalePrice, 'image_url' => ''
+                        ];
+                        $dummyColors = ['Pink', 'Black', 'Blue', 'Orange', 'Purple', 'Teal'];
+                        $displayVariants = [];
+                        foreach ($dummyColors as $c) {
+                            $v = $base;
+                            $v['color'] = $c;
+                            $displayVariants[] = $v;
+                        }
+                    }
+                ?>
                 <div class="mb-4">
                     <label class="form-label small fw-bold text-muted text-uppercase mb-2">Select Color</label>
                     <div class="d-flex flex-wrap gap-2" id="color-swatches-container">
-                        <?php foreach($variants as $index => $v): ?>
+                        <?php foreach($displayVariants as $index => $v): ?>
                             <?php 
                                 $colorClass = 'color-default';
                                 $lowerColor = strtolower(trim($v['color']));
@@ -104,20 +118,22 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                                     }
                                 }
                             ?>
-                            <div class="color-swatch <?= $colorClass ?> <?= $index === 0 ? 'active' : '' ?>" 
-                                 title="<?= htmlspecialchars($v['color']) ?>"
-                                 data-variant-id="<?= $v['id'] ?>"
-                                 data-sku="<?= htmlspecialchars($v['sku']) ?>"
-                                 data-price="<?= $v['price'] ?>"
-                                 data-wholesale="<?= $v['wholesale_price'] ?>"
-                                 data-mrp="<?= number_format($v['price'] > 0 ? $v['price'] : $v['wholesale_price'] + 8500) ?>"
-                                 data-saving="<?= number_format(($v['price'] > 0 ? $v['price'] : $v['wholesale_price'] + 8500) - $v['wholesale_price']) ?>"
-                                 data-image="<?= htmlspecialchars($v['image_url']) ?>">
+                            <div class="color-swatch-wrapper <?= $index === 0 ? 'active' : '' ?>" style="border: 2px solid <?= $index === 0 ? '#999' : 'transparent' ?>; border-radius: 50%; padding: 2px; display: inline-flex; cursor: pointer; transition: all 0.2s;">
+                                <div class="color-swatch shadow-sm" 
+                                     title="<?= htmlspecialchars($v['color']) ?>"
+                                     data-variant-id="<?= $v['id'] ?>"
+                                     data-sku="<?= htmlspecialchars($v['sku']) ?>"
+                                     data-price="<?= $v['price'] ?>"
+                                     data-wholesale="<?= $v['wholesale_price'] ?>"
+                                     data-mrp="<?= number_format($v['price'] > 0 ? $v['price'] : $v['wholesale_price'] + 8500) ?>"
+                                     data-saving="<?= number_format(($v['price'] > 0 ? $v['price'] : $v['wholesale_price'] + 8500) - $v['wholesale_price']) ?>"
+                                     data-image="<?= htmlspecialchars($v['image_url']) ?>"
+                                     style="width: 28px; height: 28px; border: 1px solid rgba(0,0,0,0.15) !important; margin: 0; border-radius: 50%; background-color: <?= in_array($lowerColor, $cssColors) ? $lowerColor : '#ccc' ?>; <?= !empty($v['image_url']) ? 'background-image: url(\'' . htmlspecialchars($v['image_url']) . '\'); background-size: cover; background-position: center;' : '' ?>">
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
-                <?php endif; ?>
 
                 <div class="mb-4">
                     <label class="form-label small fw-bold text-muted text-uppercase mb-2">Select Quantity</label>
@@ -431,9 +447,10 @@ $(document).ready(function() {
     });
 
     $('.color-swatch').on('click', function() {
-        $('.color-swatch').removeClass('active');
-        $(this).addClass('active');
+        $('.color-swatch-wrapper').removeClass('active').css('border-color', 'transparent');
+        $(this).closest('.color-swatch-wrapper').addClass('active').css('border-color', '#999');
         
+
         const variantId = $(this).attr('data-variant-id');
         const wholesale = parseInt($(this).attr('data-wholesale')).toLocaleString('en-IN');
         const mrp = $(this).attr('data-mrp');

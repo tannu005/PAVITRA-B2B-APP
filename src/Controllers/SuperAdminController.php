@@ -541,6 +541,29 @@ class SuperAdminController extends Controller {
 
         return $response->json(['error' => implode(' ', $errors)], 400);
     }
+
+    public function announceSale(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+
+        $body = $request->getBody();
+        $title = trim($body['title'] ?? '');
+        $message = trim($body['message'] ?? '');
+
+        if(empty($title) || empty($message)) {
+            return $response->json(['error' => 'Title and message are required.'], 400);
+        }
+
+        $db = Application::$app->db;
+        $stmt = $db->query("SELECT email FROM users WHERE email_opt_in = 1");
+        $users = $stmt->fetchAll();
+
+        foreach($users as $u) {
+            \App\Utils\EmailService::send($u['email'], $title, "<p>" . nl2br(htmlspecialchars($message)) . "</p>");
+        }
+
+        return $response->json(['success' => true, 'sent_count' => count($users)]);
+    }
 }
 
 
