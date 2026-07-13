@@ -1,4 +1,4 @@
--- 1. Insert default roles
+-- 1.default roles
 INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 (1, 'SUPER_ADMIN', 'Super Administrator with full control over the platform'),
 (2, 'ADMIN', 'Administrator with user approval and KYC permissions'),
@@ -7,7 +7,7 @@ INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 (5, 'DELIVERY', 'Logistics and delivery partner'),
 (6, 'EMPLOYEE', 'Support or operations employee');
 
--- 2. Insert standard permissions
+-- 2.standard permissions
 INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (1, 'manage_users', 'Ability to create, update, block users'),
 (2, 'approve_sellers', 'Verify seller KYC and approve seller profiles'),
@@ -20,7 +20,7 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 (9, 'view_reports', 'Access sales, tax, settlement, and platform reports'),
 (10, 'system_settings', 'Edit brand, logo, and integration API credentials');
 
--- 3. Link permissions to Super Admin role
+-- 3. Linking permissions to Super Admin role
 INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
 (2, 1), (2, 2), (2, 3), (2, 6), (2, 9),
@@ -28,7 +28,7 @@ INSERT INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 (4, 7),
 (5, 8);
 
--- 4. Insert default bank list
+-- 4.default bank list
 INSERT INTO `banks` (`id`, `name`, `code`) VALUES
 (1, 'State Bank of India', 'SBI'),
 (2, 'HDFC Bank', 'HDFC'),
@@ -36,7 +36,7 @@ INSERT INTO `banks` (`id`, `name`, `code`) VALUES
 (4, 'Axis Bank', 'AXIS'),
 (5, 'Punjab National Bank', 'PNB');
 
--- 5. Insert default category and subcategories
+-- 5.default category and subcategories
 INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `image_url`) VALUES
 (1, 'Kanjeevaram Silk', 'kanjeevaram-silk', 'Authentic temple gold border sarees from Tamil Nadu', '/uploads/categories/kanji.png'),
 (2, 'Banarasi Brocade', 'banarasi-brocade', 'Fine woven silk sarees from Varanasi with gold and silver zari', '/uploads/categories/banarasi.png'),
@@ -52,13 +52,13 @@ INSERT INTO `subcategories` (`id`, `category_id`, `name`, `slug`, `description`)
 (3, 3, 'Patan Double Ikat', 'patan-double-ikat', 'Traditional geometric double ikat patterns'),
 (4, 4, 'Chanderi Cotton Silk', 'chanderi-cotton-silk', 'Summer sheer blends');
 
--- 6. Insert default HSN/GST rates
+-- 6.default HSN/GST rates
 INSERT INTO `gst_rates` (`id`, `hsn_code`, `percentage`, `description`) VALUES
 (1, '5007', 5.00, 'Woven fabrics of silk or of silk waste (Saree handloom rate)'),
 (2, '5208', 5.00, 'Woven fabrics of cotton, containing 85% or more by weight of cotton'),
 (3, '6214', 12.00, 'Shawls, scarves, mufflers, mantillas, veils and the like');
 
--- 7. Insert default company settings
+-- 7.default company settings
 INSERT INTO `system_settings` (`setting_key`, `setting_value`) VALUES
 ('company_name', 'Pavitra Textiles Private Limited'),
 ('brand_name', 'Pavitra B2B'),
@@ -112,7 +112,7 @@ INSERT INTO `delivery_partner_profiles` (`user_id`, `vehicle_number`, `vehicle_t
 
 INSERT INTO `wallets` (`id`, `user_id`, `balance`) VALUES (4, 4, 0.00);
 
--- 10. Seed Demo Products
+-- 10.  Demo Products
 -- Product 1: Kanjeevaram Green
 INSERT INTO `products` (`id`, `title`, `description`, `category_id`, `subcategory_id`, `brand_id`, `seller_id`, `status`, `is_approved`) VALUES
 (1, 'Authentic Kanjeevaram Emerald Silk Saree', 'Traditional handloomed Kanjeevaram silk saree in emerald green with broad temple gold borders, woven with 2-ply pure zari threads.', 1, 1, NULL, 2, 'ACTIVE', 1);
