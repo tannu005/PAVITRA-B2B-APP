@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
         <div>
             <h2 class="fw-bold mb-1"><i class="fa-solid fa-headset text-pink me-2"></i>Help & Support Desk</h2>
-            <p class="text-muted mb-0">Open tickets, file complaints, and check responses from our operations team.</p>
+            <p class="text-muted mb-0">Open tickets, file complaints, and check responses from our operations team. You can also contact us at <a href="mailto:supporttearm2001@gmail.com" class="text-pink fw-bold text-decoration-none">supporttearm2001@gmail.com</a></p>
         </div>
         <div>
             <a href="/" class="btn btn-outline-secondary btn-sm me-2"><i class="fa fa-arrow-left"></i> Go to Shop</a>
