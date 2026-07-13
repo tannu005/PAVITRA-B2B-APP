@@ -1,24 +1,17 @@
-# Local binaries
+
 db-bin/
 php-bin/
 *.apk
 *.exe
 
-# IDE files
-# Local binaries
-db-bin/
-php-bin/
-*.apk
-*.exe
 
-# IDE files
 .vscode/
 .idea/
 
-# Composer dependencies
+
 vendor/
 
-# Temporary / logs
+
 error_log
 *.log
 *.tmp
