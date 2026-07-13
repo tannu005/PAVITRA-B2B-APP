@@ -50,8 +50,8 @@
                             <input type="text" class="form-control" id="sku" name="sku" required placeholder="e.g. BAN-KAT-105" value="<?= htmlspecialchars($sku_val ?? '') ?>">
                         </div>
                         <div class="col-md-3">
-                            <label for="color" class="form-label small fw-semibold text-muted text-uppercase">Weft Color</label>
-                            <input type="text" class="form-control" id="color" name="color" placeholder="e.g. Emerald Gold" value="<?= htmlspecialchars($color_val ?? '') ?>">
+                            <label for="color" class="form-label small fw-semibold text-muted text-uppercase">Weft Color(s)</label>
+                            <input type="text" class="form-control" id="color" name="color" placeholder="e.g. Red, Blue, Pink (comma-separated)" value="<?= htmlspecialchars($color_val ?? '') ?>">
                         </div>
                         <div class="col-md-3">
                             <label for="size" class="form-label small fw-semibold text-muted text-uppercase">Size / Length</label>

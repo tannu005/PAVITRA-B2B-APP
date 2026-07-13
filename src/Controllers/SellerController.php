@@ -124,9 +124,25 @@ class SellerController extends Controller {
 
         $db = Application::$app->db;
 
+        $colorsList = array_map('trim', explode(',', $color));
+        $colorsList = array_filter($colorsList, function($c) { return $c !== ''; });
+        if (empty($colorsList)) {
+            $colorsList = [''];
+        }
+
         if (empty($errors)) {
-            $stmtCheck = $db->prepare("SELECT id FROM product_variants WHERE sku = ?");
-            $stmtCheck->execute([$sku]);
+            $skusToCheck = [];
+            if (count($colorsList) > 1) {
+                foreach ($colorsList as $index => $col) {
+                    $skusToCheck[] = $sku . '-' . ($index + 1);
+                }
+            } else {
+                $skusToCheck[] = $sku;
+            }
+            
+            $placeholders = implode(',', array_fill(0, count($skusToCheck), '?'));
+            $stmtCheck = $db->prepare("SELECT id FROM product_variants WHERE sku IN ($placeholders)");
+            $stmtCheck->execute($skusToCheck);
             if ($stmtCheck->fetch()) {
                 $errors[] = 'A product variant with this SKU code already exists.';
             }
@@ -147,7 +163,11 @@ class SellerController extends Controller {
                     INSERT INTO product_variants (product_id, sku, color, size, price, wholesale_price, bulk_threshold, stock, image_url)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ");
-                $stmtVariant->execute([$productId, $sku, $color, $size, $price, $wholesalePrice, $bulkThreshold, $stock, $primaryImageUrl]);
+                
+                foreach ($colorsList as $index => $col) {
+                    $variantSku = count($colorsList) > 1 ? $sku . '-' . ($index + 1) : $sku;
+                    $stmtVariant->execute([$productId, $variantSku, $col, $size, $price, $wholesalePrice, $bulkThreshold, $stock, $primaryImageUrl]);
+                }
                 $variantId = $db->lastInsertId();
                 
                 if (is_array($imageUrls)) {

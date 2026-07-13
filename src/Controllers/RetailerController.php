@@ -86,9 +86,8 @@ class RetailerController extends Controller {
         $db = Application::$app->db;
         
         $stmt = $db->prepare("
-            SELECT p.*, pv.id as variant_id, pv.sku, pv.color, pv.size, pv.weight, pv.dimensions, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.stock, pv.image_url, c.name as category_name
+            SELECT p.*, c.name as category_name
             FROM products p
-            JOIN product_variants pv ON pv.product_id = p.id
             JOIN categories c ON p.category_id = c.id
             WHERE p.id = ? AND p.status = 'ACTIVE'
         ");
@@ -98,6 +97,24 @@ class RetailerController extends Controller {
         if (!$product) {
             $response->redirect('/');
             return;
+        }
+
+        $stmtVariants = $db->prepare("SELECT * FROM product_variants WHERE product_id = ? ORDER BY id ASC");
+        $stmtVariants->execute([$id]);
+        $variants = $stmtVariants->fetchAll();
+
+        if (!empty($variants)) {
+            $product['variant_id'] = $variants[0]['id'];
+            $product['sku'] = $variants[0]['sku'];
+            $product['color'] = $variants[0]['color'];
+            $product['size'] = $variants[0]['size'];
+            $product['weight'] = $variants[0]['weight'];
+            $product['dimensions'] = $variants[0]['dimensions'];
+            $product['wholesale_price'] = $variants[0]['wholesale_price'];
+            $product['price'] = $variants[0]['price'];
+            $product['bulk_threshold'] = $variants[0]['bulk_threshold'];
+            $product['stock'] = $variants[0]['stock'];
+            $product['image_url'] = $variants[0]['image_url'];
         }
         
         $stmtImg = $db->prepare("SELECT image_url, is_primary FROM product_images WHERE product_id = ? ORDER BY is_primary DESC, id ASC");
@@ -110,6 +127,7 @@ class RetailerController extends Controller {
         
         return $this->render('retailer/product_detail', [
             'product' => $product,
+            'variants' => $variants,
             'images' => $images,
             'videos' => $videos
         ]);

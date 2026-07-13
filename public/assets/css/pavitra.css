@@ -20,8 +20,8 @@
     --surface-white: #ffffff;
     --surface-warm: #f9f9fa;
 
-    --font-headings: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-headings: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --pavitra-body-size: 14px;
     --pavitra-body-line-height: 1.65;
     --pavitra-logo-size: 28px;
@@ -39,6 +39,54 @@
 
     --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition-smooth);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+
+.color-swatch.active {
+    border-color: var(--premium-dark);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--surface-white), 0 0 0 4px var(--premium-dark);
+}
+
+.color-swatch.color-white { background-color: #FFFFFF; }
+.color-swatch.color-black { background-color: #000000; }
+.color-swatch.color-red { background-color: #FF0000; }
+.color-swatch.color-blue { background-color: #0000FF; }
+.color-swatch.color-green { background-color: #008000; }
+.color-swatch.color-yellow { background-color: #FFFF00; }
+.color-swatch.color-pink { background-color: #FFC0CB; }
+.color-swatch.color-purple { background-color: #800080; }
+.color-swatch.color-orange { background-color: #FFA500; }
+.color-swatch.color-teal { background-color: #008080; }
+.color-swatch.color-grey { background-color: #808080; }
+.color-swatch.color-brown { background-color: #A52A2A; }
+.color-swatch.color-navy { background-color: #000080; }
+.color-swatch.color-maroon { background-color: #800000; }
+.color-swatch.color-olive { background-color: #808000; }
+.color-swatch.color-silver { background-color: #C0C0C0; }
+.color-swatch.color-gold { background-color: #FFD700; }
+.color-swatch.color-cyan { background-color: #00FFFF; }
+.color-swatch.color-magenta { background-color: #FF00FF; }
+.color-swatch.color-beige { background-color: #F5F5DC; }
+.color-swatch.color-mustard { background-color: #FFDB58; }
+.color-swatch.color-peach { background-color: #FFE5B4; }
+.color-swatch.color-lavender { background-color: #E6E6FA; }
+.color-swatch.color-coral { background-color: #FF7F50; }
+.color-swatch.color-mint { background-color: #98FF98; }
+.color-swatch.color-default { background-color: var(--premium-dark-muted); }
 
 body {
     font-family: var(--font-body);

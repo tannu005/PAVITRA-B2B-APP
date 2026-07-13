@@ -77,9 +77,9 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                 <p class="text-muted mb-3" style="font-size: 0.88rem;"><?= htmlspecialchars($p['description']) ?></p>
 
                 <div class="mb-3">
-                    <span class="text-decoration-line-through text-muted me-2" style="font-size: 0.95rem;">MRP ₹<?= $mrp ?></span>
-                    <span class="fs-4 fw-bold text-dark me-2">₹<?= number_format($wholesalePrice) ?></span>
-                    <span class="fw-bold text-success" style="font-size: 0.95rem;">(Rs. <?= $saving ?> OFF)</span>
+                    <span class="text-decoration-line-through text-muted me-2" style="font-size: 0.95rem;" id="detail-mrp">MRP ₹<?= $mrp ?></span>
+                    <span class="fs-4 fw-bold text-dark me-2" id="detail-wholesale-price">₹<?= number_format($wholesalePrice) ?></span>
+                    <span class="fw-bold text-success" style="font-size: 0.95rem;" id="detail-saving">(Rs. <?= $saving ?> OFF)</span>
                 </div>
 
                 <div class="mb-4">
@@ -87,6 +87,37 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                         Thunder Deal
                     </span>
                 </div>
+
+                <?php if (!empty($variants) && count($variants) > 1): ?>
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted text-uppercase mb-2">Select Color</label>
+                    <div class="d-flex flex-wrap gap-2" id="color-swatches-container">
+                        <?php foreach($variants as $index => $v): ?>
+                            <?php 
+                                $colorClass = 'color-default';
+                                $lowerColor = strtolower(trim($v['color']));
+                                $cssColors = ['white', 'black', 'red', 'blue', 'green', 'yellow', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown', 'navy', 'maroon', 'olive', 'silver', 'gold', 'cyan', 'magenta', 'beige', 'mustard', 'peach', 'lavender', 'coral', 'mint'];
+                                foreach ($cssColors as $cc) {
+                                    if (strpos($lowerColor, $cc) !== false) {
+                                        $colorClass = 'color-' . $cc;
+                                        break;
+                                    }
+                                }
+                            ?>
+                            <div class="color-swatch <?= $colorClass ?> <?= $index === 0 ? 'active' : '' ?>" 
+                                 title="<?= htmlspecialchars($v['color']) ?>"
+                                 data-variant-id="<?= $v['id'] ?>"
+                                 data-sku="<?= htmlspecialchars($v['sku']) ?>"
+                                 data-price="<?= $v['price'] ?>"
+                                 data-wholesale="<?= $v['wholesale_price'] ?>"
+                                 data-mrp="<?= number_format($v['price'] > 0 ? $v['price'] : $v['wholesale_price'] + 8500) ?>"
+                                 data-saving="<?= number_format(($v['price'] > 0 ? $v['price'] : $v['wholesale_price'] + 8500) - $v['wholesale_price']) ?>"
+                                 data-image="<?= htmlspecialchars($v['image_url']) ?>">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
 
                 <div class="mb-4">
                     <label class="form-label small fw-bold text-muted text-uppercase mb-2">Select Quantity</label>
@@ -146,7 +177,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                         </div>
                         <div class="col-6">
                             <div class="small text-muted">SKU</div>
-                            <div class="fw-bold text-dark"><?= htmlspecialchars($p['sku']) ?></div>
+                            <div class="fw-bold text-dark" id="detail-sku"><?= htmlspecialchars($p['sku']) ?></div>
                         </div>
                         <div class="col-6">
                             <div class="small text-muted">Weight</div>
@@ -397,6 +428,30 @@ $(document).ready(function() {
         const isActive = $(this).hasClass('active');
         $(this).find('i').toggleClass('fa-regular fa-solid').css('color', isActive ? '#e74c3c' : '');
         showToast(isActive ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');
+    });
+
+    $('.color-swatch').on('click', function() {
+        $('.color-swatch').removeClass('active');
+        $(this).addClass('active');
+        
+        const variantId = $(this).attr('data-variant-id');
+        const wholesale = parseInt($(this).attr('data-wholesale')).toLocaleString('en-IN');
+        const mrp = $(this).attr('data-mrp');
+        const saving = $(this).attr('data-saving');
+        const image = $(this).attr('data-image');
+        const sku = $(this).attr('data-sku');
+        
+        $('#detail-add-bag-btn').attr('data-variant-id', variantId);
+        $('#detail-buy-now-btn').attr('data-variant-id', variantId);
+        
+        $('#detail-wholesale-price').text('₹' + wholesale);
+        $('#detail-mrp').text('MRP ₹' + mrp);
+        $('#detail-saving').text('(Rs. ' + saving + ' OFF)');
+        $('#detail-sku').text(sku);
+        
+        if(image && image !== '') {
+            $('#detail-saree-img').attr('src', image);
+        }
     });
 });
 
