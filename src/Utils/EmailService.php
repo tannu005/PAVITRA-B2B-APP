@@ -44,3 +44,4 @@ class EmailService {
         return $httpCode >= 200 && $httpCode < 300;
     }
 }
+

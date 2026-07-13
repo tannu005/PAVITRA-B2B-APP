@@ -20,7 +20,18 @@ class RetailerController extends Controller {
         $db = Application::$app->db;
         
         $sql = "
-            SELECT p.*, pv.id as variant_id, pv.wholesale_price, pv.price, pv.image_url, pv.bulk_threshold, pv.stock, pv.sku, pv.color, pv.weight, pv.dimensions, c.name as category_name 
+            SELECT p.*, 
+                   MIN(pv.id) as variant_id, 
+                   MIN(pv.wholesale_price) as wholesale_price, 
+                   MAX(pv.price) as price, 
+                   MIN(pv.image_url) as image_url, 
+                   MIN(pv.bulk_threshold) as bulk_threshold, 
+                   MIN(pv.stock) as stock, 
+                   MIN(pv.sku) as sku, 
+                   GROUP_CONCAT(pv.color ORDER BY pv.id ASC SEPARATOR '|') as all_colors, 
+                   MIN(pv.weight) as weight, 
+                   MIN(pv.dimensions) as dimensions, 
+                   c.name as category_name 
             FROM products p 
             JOIN product_variants pv ON pv.product_id = p.id
             JOIN categories c ON p.category_id = c.id
@@ -49,10 +60,12 @@ class RetailerController extends Controller {
             $params[] = $maxPrice;
         }
 
+        $sql .= " GROUP BY p.id";
+
         if ($sort === 'price_low') {
-            $sql .= " ORDER BY pv.wholesale_price ASC";
+            $sql .= " ORDER BY MIN(pv.wholesale_price) ASC";
         } else if ($sort === 'price_high') {
-            $sql .= " ORDER BY pv.wholesale_price DESC";
+            $sql .= " ORDER BY MIN(pv.wholesale_price) DESC";
         } else {
             $sql .= " ORDER BY p.id DESC";
         }
@@ -403,9 +416,9 @@ class RetailerController extends Controller {
             'receipt' => 'rcpt_' . time()
         ]));
         curl_setopt($ch, CURLOPT_USERPWD, $key . ':' . $secret);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Fix for local Windows cURL SSL issues
-        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); // Force IPv4 to prevent hanging
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Prevent PHP max_execution_time fatal errors
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); 
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10); 
         $headers = ['Content-Type: application/json'];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -457,11 +470,11 @@ class RetailerController extends Controller {
         $db = Application::$app->db;
         $netSubtotal = $totals['netSubtotal'];
 
-        // Wallet checkout logic
+        
         try {
             $db->beginTransaction();
 
-            // Lock the wallet row to prevent race conditions
+            
             $stmtWallet = $db->prepare("SELECT id, balance FROM wallets WHERE user_id = ? FOR UPDATE");
             $stmtWallet->execute([$user['id']]);
             $wallet = $stmtWallet->fetch();
@@ -471,18 +484,18 @@ class RetailerController extends Controller {
                 return $response->json(['error' => 'Insufficient wallet balance.'], 400);
             }
 
-            // Perform transaction based checkout
+            
             $checkoutResult = $this->processConfirmedCheckout($user, $address, 'WALLET_TXN', 'WALLET', 'PAID', $db);
             if (isset($checkoutResult['error'])) {
                 $db->rollBack();
                 return $response->json($checkoutResult, 400);
             }
 
-            // Deduct from wallet
+            
             $stmtUpWallet = $db->prepare("UPDATE wallets SET balance = balance - ? WHERE id = ?");
             $stmtUpWallet->execute([$netSubtotal, $wallet['id']]);
 
-            // Add ledger entry
+            
             $stmtTx = $db->prepare("
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'DEBIT', ?, ?, 'ORDER_PAYMENT', (SELECT balance FROM wallets WHERE id = ?))
@@ -1026,4 +1039,5 @@ class RetailerController extends Controller {
         ]);
     }
 }
+
 

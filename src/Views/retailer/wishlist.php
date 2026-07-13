@@ -1,8 +1,5 @@
 <?php
-/**
- * Wishlist Page — Pavitra Designer
- * Products are saved in browser localStorage (key: pavitra_wishlist = JSON array of variant IDs)
- */
+
 ?>
 <div class="container-xl py-4" style="min-height: 60vh;">
     
@@ -238,3 +235,4 @@ async function addToCartFromWishlist(variantId, btn) {
 
 document.addEventListener('DOMContentLoaded', loadWishlist);
 </script>
+

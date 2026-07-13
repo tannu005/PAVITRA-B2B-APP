@@ -1,8 +1,5 @@
 <?php
-/**
- * Saree Customization Request View — Pavitra Designer
- * Evokes premium custom handloom artisan design workflow
- */
+
 ?>
 <div class="container py-5 my-2" style="max-width: 900px; font-family: 'Plus Jakarta Sans', sans-serif;">
     
@@ -206,3 +203,4 @@ document.addEventListener('DOMContentLoaded', () => {
     updateVisualizer();
 });
 </script>
+

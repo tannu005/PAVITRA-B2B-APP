@@ -285,7 +285,7 @@ $(document).ready(function() {
             active: $('#active').val(),
             meta_title: $('#meta_title').val(),
             meta_description: $('#meta_description').val(),
-            content: JSON.stringify(blocks) // Serialize blocks array
+            content: JSON.stringify(blocks) 
         };
 
         $.ajax({
@@ -309,3 +309,4 @@ $(document).ready(function() {
     renderBlocks();
 });
 </script>
+

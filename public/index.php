@@ -7,7 +7,7 @@ if (php_sapi_name() === 'cli-server') {
     }
 }
 
-// 1. Fallback Autoloader (PSR-4 compliant)
+
 spl_autoload_register(function ($class) {
     $baseDir = dirname(__DIR__) . '/';
 
@@ -36,12 +36,12 @@ if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
     require_once dirname(__DIR__) . '/vendor/autoload.php';
 }
 
-// 2. Instantiate and Run Application
+
 use Core\Application;
 
 $app = new Application();
 
-// --- DEFINING WEB ROUTES ---
+
 
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
@@ -141,7 +141,7 @@ $app->router->post('/delivery/status', [App\Controllers\DeliveryController::clas
 $app->router->post('/delivery/verify-otp', [App\Controllers\DeliveryController::class, 'verifyDeliveryOtp']);
 
 
-// --- DEFINING REST API ENDPOINTS ---
+
 $app->router->post('/api/auth/login', [App\Controllers\ApiController::class, 'login']);
 $app->router->post('/api/auth/register', [App\Controllers\ApiController::class, 'register']);
 $app->router->get('/api/categories', [App\Controllers\ApiController::class, 'getCategories']);
@@ -163,4 +163,5 @@ $app->router->post('/api/kyc/simulate', [App\Controllers\ApiController::class, '
 $app->router->get('/api/product-variant/{id}', [App\Controllers\ApiController::class, 'getProductVariant']);
 
 $app->run();
+
 

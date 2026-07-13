@@ -86,7 +86,7 @@
                                 <?php
                                     $statuses = ['PLACED', 'ACCEPTED', 'PACKED', 'SHIPPED', 'OUT_FOR_DELIVERY', 'DELIVERED'];
                                     $currentIndex = array_search($order['status'], $statuses);
-                                    if ($currentIndex === false) $currentIndex = -1; // If cancelled/returned
+                                    if ($currentIndex === false) $currentIndex = -1; 
                                 ?>
 
                                 <?php if (in_array($order['status'], ['CANCELLED', 'RETURNED', 'REFUNDED'])): ?>
@@ -124,3 +124,4 @@
         </div>
     <?php endif; ?>
 </div>
+

@@ -478,7 +478,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     return;
                 }
 
-                // Razorpay Flow
+                
                 $.ajax({
                     url: '/checkout/razorpay/create',
                     method: 'POST',
@@ -735,7 +735,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             if (SpeechRecognition) {
                 var recognition = new SpeechRecognition();
                 recognition.continuous = false;
-                recognition.lang = 'en-IN'; // set to Indian English accents
+                recognition.lang = 'en-IN'; 
                 recognition.interimResults = false;
                 recognition.maxAlternatives = 1;
 
@@ -866,7 +866,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 $('.scanner-reticle').hide();
                 
                 $('#scanner-loading-text').text(text);
-                $('#scanner-loading').css('display', 'flex'); // Show analyzing overlay cleanly
+                $('#scanner-loading').css('display', 'flex'); 
                 
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
@@ -1389,3 +1389,4 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
 
 </body>
 </html>
+

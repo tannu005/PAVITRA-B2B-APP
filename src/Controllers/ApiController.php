@@ -78,14 +78,14 @@ class ApiController extends Controller {
         return $user;
     }
 
-    // 1. POST /api/auth/register (User & Profile Registration API)
+    
     public function register(Request $request, Response $response) {
         $body = $request->getBody();
         $name = trim($body['name'] ?? '');
         $email = trim($body['email'] ?? '');
         $mobile = trim($body['mobile'] ?? '');
         $password = $body['password'] ?? '';
-        $roleName = strtoupper(trim($body['role_name'] ?? 'RETAILER')); // SELLER, RETAILER, DELIVERY
+        $roleName = strtoupper(trim($body['role_name'] ?? 'RETAILER')); 
         $shopCompanyName = trim($body['shop_company_name'] ?? '');
 
         if (empty($name) || empty($email) || empty($mobile) || empty($password) || empty($shopCompanyName)) {
@@ -164,7 +164,7 @@ class ApiController extends Controller {
         }
     }
 
-    // 2. POST /api/auth/login (Centralized Login API)
+    
     public function login(Request $request, Response $response) {
         $body = $request->getBody();
         $email = trim($body['email'] ?? '');
@@ -206,7 +206,7 @@ class ApiController extends Controller {
         return $response->json(['error' => 'Invalid credentials.'], 401);
     }
 
-    // 3. GET /api/categories (Fetch Catalog Categories List)
+    
     public function getCategories(Request $request, Response $response) {
         $db = Application::$app->db;
         $stmt = $db->query("SELECT id, name, slug, description, image_url FROM categories ORDER BY id ASC");
@@ -214,7 +214,7 @@ class ApiController extends Controller {
         return $response->json($categories);
     }
 
-    // 4. GET /api/products (Fetch Catalog approved items)
+    
     public function getProducts(Request $request, Response $response) {
         $db = Application::$app->db;
         $stmt = $db->query("
@@ -229,7 +229,7 @@ class ApiController extends Controller {
         return $response->json($products);
     }
 
-    // 5. GET /api/inventory (For Sellers / Weavers to monitor stock)
+    
     public function getInventory(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response, ['SELLER']);
         if (!$user) return;
@@ -248,14 +248,14 @@ class ApiController extends Controller {
         return $response->json($inventory);
     }
 
-    // 6. POST /api/inventory/update (Seller stock Restocks API)
+    
     public function updateInventory(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response, ['SELLER']);
         if (!$user) return;
 
         $body = $request->getBody();
         $variantId = intval($body['variant_id'] ?? 0);
-        $absoluteQty = intval($body['stock'] ?? -1); // Set absolute stock count
+        $absoluteQty = intval($body['stock'] ?? -1); 
 
         if ($variantId <= 0 || $absoluteQty < 0) {
             return $response->json(['error' => 'Variant ID and absolute stock count (>= 0) are required.'], 400);
@@ -299,7 +299,7 @@ class ApiController extends Controller {
         }
     }
 
-    // 7. GET /api/orders (Fetch user specific orders log)
+    
     public function getOrders(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response);
         if (!$user) return;
@@ -331,7 +331,7 @@ class ApiController extends Controller {
         return $response->json($orders);
     }
 
-    // 8. POST /api/orders/create (B2B Checkout Purchase API)
+    
     public function createOrder(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response, ['RETAILER']);
         if (!$user) return;
@@ -435,7 +435,7 @@ class ApiController extends Controller {
         }
     }
 
-    // 9. GET /api/wallet/balance (Fetch User Wallet Balance)
+    
     public function getWalletBalance(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response);
         if (!$user) return;
@@ -448,14 +448,14 @@ class ApiController extends Controller {
         return $response->json(['balance' => floatval($balance)]);
     }
 
-    // 10. POST /api/payments/charge (Simulated Refill Wallet / UPI Payments API)
+    
     public function chargePayment(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response, ['RETAILER']);
         if (!$user) return;
 
         $body = $request->getBody();
         $amount = floatval($body['amount'] ?? 0);
-        $method = trim($body['payment_method'] ?? 'UPI'); // UPI, CARD, NETBANKING
+        $method = trim($body['payment_method'] ?? 'UPI'); 
 
         if ($amount <= 0) {
             return $response->json(['error' => 'Invalid refill payment amount.'], 400);
@@ -466,11 +466,11 @@ class ApiController extends Controller {
         try {
             $db->beginTransaction();
 
-            // 1. Credit retailer profile balance
+            
             $stmtUpRet = $db->prepare("UPDATE retailer_profiles SET balance = balance + ? WHERE user_id = ?");
             $stmtUpRet->execute([$amount, $user['id']]);
 
-            // 2. Credit wallets table
+            
             $stmtUpWallet = $db->prepare("UPDATE wallets SET balance = balance + ? WHERE user_id = ?");
             $stmtUpWallet->execute([$amount, $user['id']]);
 
@@ -478,7 +478,7 @@ class ApiController extends Controller {
             $stmtWallet->execute([$user['id']]);
             $wallet = $stmtWallet->fetch();
 
-            // 3. Log credit transaction ledger
+            
             $stmtTx = $db->prepare("
                 INSERT INTO wallet_transactions (wallet_id, type, amount, description, reference_type, balance_after)
                 VALUES (?, 'CREDIT', ?, ?, 'DEPOSIT_CREDIT', ?)
@@ -499,15 +499,15 @@ class ApiController extends Controller {
         }
     }
 
-    // 11. POST /api/kyc/upload (Merchant KYC Document submission API)
+    
     public function uploadKyc(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response, ['SELLER', 'RETAILER', 'DELIVERY']);
         if (!$user) return;
 
         $body = $request->getBody();
-        $docType = trim($body['document_type'] ?? ''); // GST, AADHAAR, PAN, MSME, SHOP_LICENSE
+        $docType = trim($body['document_type'] ?? ''); 
         $docNumber = trim($body['document_number'] ?? '');
-        $mockFileBase64 = trim($body['file_data'] ?? ''); // Simulated base64 document upload
+        $mockFileBase64 = trim($body['file_data'] ?? ''); 
 
         if (empty($docType) || empty($docNumber)) {
             return $response->json(['error' => 'Document Type and Document Certificate Number are required.'], 400);
@@ -529,7 +529,7 @@ class ApiController extends Controller {
         }
     }
 
-    // 12. GET /api/notifications (Fetch User Alerts & Notification logs)
+    
     public function getNotifications(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response);
         if (!$user) return;
@@ -546,7 +546,7 @@ class ApiController extends Controller {
         return $response->json($notifs);
     }
 
-    // 13. GET /api/reports/sales (Sales Reports / Revenue summary API)
+    
     public function getSalesReport(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response, ['SUPER_ADMIN', 'ADMIN', 'SELLER']);
         if (!$user) return;
@@ -590,7 +590,7 @@ class ApiController extends Controller {
         }
     }
 
-    // 14. POST /api/delivery/update (Logistics dispatch & Otp completion verification)
+    
     public function updateDelivery(Request $request, Response $response) {
         $user = $this->authenticateApi($request, $response, ['DELIVERY']);
         if (!$user) return;
@@ -681,7 +681,7 @@ class ApiController extends Controller {
         }
     }
 
-    // --- MOCK SIMULATORS FOR UI TRIGGERS ---
+    
     public function depositSimulate(Request $request, Response $response) {
         $user = Application::$app->getSessionUser();
         if (!$user) {
@@ -777,4 +777,5 @@ class ApiController extends Controller {
         exit;
     }
 }
+
 

@@ -1,6 +1,4 @@
 <?php
-// =============================================
-// =============================================
 
 function renderProductCard($p) {
     $hoverImg = '/saree-banner1.png';
@@ -40,12 +38,33 @@ function renderProductCard($p) {
                 + Quick Add
             </button>
         </div>
-        <div class="pavitra-card-body text-center pt-2 pb-3">
-            <h6 class="pavitra-card-title mb-1 text-uppercase pavitra-product-title"><?= htmlspecialchars($p['title']) ?></h6>
-            <div class="pavitra-price-wholesale fw-bold text-dark mb-1 pavitra-product-price">
-                Rs. <?= number_format($wholesalePrice) ?>
+        <div class="pavitra-card-body text-start pt-2 pb-3 px-2">
+            <?php if (!empty($p['all_colors'])): 
+                $colors = explode('|', $p['all_colors']);
+                if (count($colors) > 1):
+            ?>
+            <div class="d-flex align-items-center mb-2 gap-1" style="flex-wrap: wrap;">
+                <?php foreach($colors as $idx => $c): 
+                    $colorClass = 'color-default';
+                    $lowerColor = strtolower(trim($c));
+                    $cssColors = ['white', 'black', 'red', 'blue', 'green', 'yellow', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown', 'navy', 'maroon', 'olive', 'silver', 'gold', 'cyan', 'magenta', 'beige', 'mustard', 'peach', 'lavender', 'coral', 'mint'];
+                    foreach ($cssColors as $cc) {
+                        if (strpos($lowerColor, $cc) !== false) {
+                            $colorClass = 'color-' . $cc;
+                            break;
+                        }
+                    }
+                ?>
+                    <div class="color-swatch <?= $colorClass ?> <?= $idx === 0 ? 'active' : '' ?>" style="width: 18px; height: 18px; border-width: 1px;"></div>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; endif; ?>
+            <div class="text-muted fw-bold mb-1" style="font-size: 0.85rem; color: #555 !important;">SIRIL</div>
+            <h6 class="pavitra-card-title mb-1 pavitra-product-title" style="text-transform: none; font-weight: normal; color: #333; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 40px;"><?= htmlspecialchars($p['title']) ?></h6>
+            <div class="pavitra-price-wholesale fw-bold text-dark mt-2 pavitra-product-price" style="font-size: 1.1rem;">
+                ₹<?= number_format($wholesalePrice) ?>
                 <?php if ($price > $wholesalePrice): ?>
-                    <span class="text-decoration-line-through text-muted fw-normal ms-1 pavitra-product-price-compare">Rs. <?= number_format($price) ?></span>
+                    <span class="text-decoration-line-through text-muted fw-normal ms-1 pavitra-product-price-compare" style="font-size: 0.8rem;">₹<?= number_format($price) ?></span>
                 <?php endif; ?>
             </div>
         </div>
@@ -450,7 +469,7 @@ $(document).ready(function() {
         }, 200);
     }
 
-    // ═══ pavitraRAMA SCROLL-TRIGGERED ANIMATIONS ═══
+    
     if ('IntersectionObserver' in window) {
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -495,7 +514,7 @@ $(document).ready(function() {
         });
     }
 
-    // ═══ HERO CAROUSEL: Pause on hover ═══
+    
     const heroCarousel = document.getElementById('heroCarousel');
     if (heroCarousel) {
         heroCarousel.addEventListener('mouseenter', () => {
@@ -506,7 +525,7 @@ $(document).ready(function() {
         });
     }
 
-    // ═══ SMOOTH CAROUSEL DRAG-TO-SCROLL ═══
+    
     document.querySelectorAll('.pavitra-carousel-container').forEach(container => {
         let isDown = false, startX, scrollLeft;
         container.addEventListener('mousedown', (e) => {
@@ -756,7 +775,7 @@ $(document).ready(function() {
     </div>
 </div>
 <script>
-// jQuery Script for Tab Toggles
+
 $(document).ready(function() {
     $('.filter-tab-btn').on('click', function() {
         $('.filter-tab-btn').removeClass('active');
@@ -767,8 +786,8 @@ $(document).ready(function() {
         $('#' + targetPane).addClass('active');
     });
 
-    // ══════════════════════════════════════════════════════
-    // ══════════════════════════════════════════════════════
+    
+    
     $(document).on('click', '.zoomable-saree-img', function(e) {
         var src = $(this).attr('src');
         if (!src) return;
@@ -870,3 +889,4 @@ $(document).ready(function() {
     });
 });
 </script>
+

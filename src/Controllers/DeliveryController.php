@@ -140,15 +140,15 @@ class DeliveryController extends Controller {
 
             $now = date('Y-m-d H:i:s');
 
-            // 1. Update delivery assignment
+            
             $stmtUp = $db->prepare("UPDATE delivery_assignments SET status = 'DELIVERED', completed_at = ? WHERE id = ?");
             $stmtUp->execute([$now, $assignId]);
 
-            // 2. Update delivery proofs
+            
             $stmtUpProof = $db->prepare("UPDATE delivery_proofs SET verified_at = ? WHERE delivery_assignment_id = ?");
             $stmtUpProof->execute([$now, $assignId]);
 
-            // 3. Find order linked to shipment
+            
             $stmtOrder = $db->prepare("SELECT order_id FROM shipments WHERE id = ?");
             $stmtOrder->execute([$proof['shipment_id']]);
             $orderId = $stmtOrder->fetchColumn();
@@ -164,7 +164,7 @@ class DeliveryController extends Controller {
                 $stmtHistory->execute([$orderId, $user['id']]);
             }
 
-            // 4. Pay courier rider delivery payout (e.g. ₹150.00 mock delivery payout)
+            
             $riderPayout = 150.00;
             $stmtRider = $db->prepare("UPDATE delivery_partner_profiles SET balance = balance + ? WHERE user_id = ?");
             $stmtRider->execute([$riderPayout, $user['id']]);
@@ -191,4 +191,5 @@ class DeliveryController extends Controller {
         }
     }
 }
+
 

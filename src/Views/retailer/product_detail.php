@@ -1,6 +1,6 @@
 <?php
-// =============================================
-// =============================================
+
+
 
 $p = $product;
 $wholesalePrice = floatval($p['wholesale_price']);
@@ -476,3 +476,4 @@ function changeMainMedia(url, type, element) {
     }
 }
 </script>
+

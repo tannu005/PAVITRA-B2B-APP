@@ -53,7 +53,7 @@ class ReturnController extends Controller {
         $orderId = intval($params['id'] ?? 0);
         $body = $request->getBody();
         $reason = trim($body['reason'] ?? '');
-        $returnQuantities = $body['quantities'] ?? []; // Array keyed by order_item_id
+        $returnQuantities = $body['quantities'] ?? []; 
 
         if (empty($reason)) {
             $_SESSION['return_error'] = 'Return reason is required.';
@@ -230,7 +230,7 @@ class ReturnController extends Controller {
 
         $refundAmount = 0.00;
         foreach ($retItems as $item) {
-            $isWholesale = ($item['ordered_qty'] >= $item['quantity']); // simplified check
+            $isWholesale = ($item['ordered_qty'] >= $item['quantity']); 
             $unitPrice = floatval($item['wholesale_price'] ?: $item['price']);
             $refundAmount += $unitPrice * intval($item['quantity']);
         }
@@ -238,18 +238,18 @@ class ReturnController extends Controller {
         try {
             $db->beginTransaction();
 
-            // 1. Update return status to COMPLETED
+            
             $stmtUp = $db->prepare("UPDATE returns SET status = 'COMPLETED' WHERE id = ?");
             $stmtUp->execute([$returnId]);
 
-            // 2. Create refund record
+            
             $stmtRefund = $db->prepare("
                 INSERT INTO refunds (return_id, amount, payment_method, status)
                 VALUES (?, ?, 'WALLET', 'SUCCESS')
             ");
             $stmtRefund->execute([$returnId, $refundAmount]);
 
-            // 3. Credit retailer wallet
+            
             $stmtUpProfile = $db->prepare("UPDATE retailer_profiles SET balance = balance + ? WHERE user_id = ?");
             $stmtUpProfile->execute([$refundAmount, $return['buyer_id']]);
 
@@ -266,7 +266,7 @@ class ReturnController extends Controller {
             ");
             $stmtTx->execute([$walletId, $refundAmount, "Refund credit for Return #{$return['return_number']}", $returnId, $walletId]);
 
-            // 4. Deduct the refund from seller available settlements/balances
+            
             $commRate = floatval($return['commission_rate'] ?? 8.50);
             $commissionDeducted = ($refundAmount * $commRate) / 100.00;
             $taxDeducted = ($refundAmount * 5.00) / 100.00;
@@ -319,4 +319,5 @@ class ReturnController extends Controller {
         }
     }
 }
+
 

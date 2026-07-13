@@ -401,7 +401,7 @@ $(document).ready(function() {
     setupCollapse('#toggle-devices', '#devices-block', '#devices-chevron');
     setupCollapse('#toggle-help-policies', '#help-policies-block', '#help-policies-chevron');
 
-    // 2FA Switch Event
+    
     $('#twofa-switch').on('change', function() {
         var isChecked = $(this).is(':checked');
         var badge = $('#twofa-status-badge');
@@ -444,3 +444,4 @@ $(document).ready(function() {
     });
 });
 </script>
+

@@ -1,8 +1,5 @@
 <?php
-/**
- * Categories Page — Master Weaver Stores Directory
- * Presents business stores / weavers and highlights their saree specialties
- */
+
 ?>
 <div class="container py-4 my-2" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     
@@ -80,3 +77,4 @@
     transition: all 0.35s ease;
 }
 </style>
+

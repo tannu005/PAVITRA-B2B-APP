@@ -151,7 +151,7 @@ class SuperAdminController extends Controller {
 
         $body = $request->getBody();
         $kycDocId = intval($body['kyc_id'] ?? 0);
-        $status = trim($body['status'] ?? 'VERIFIED'); // VERIFIED or REJECTED
+        $status = trim($body['status'] ?? 'VERIFIED'); 
 
         if ($kycDocId <= 0 || !in_array($status, ['VERIFIED', 'REJECTED'])) {
             return $response->json(['error' => 'Invalid parameters'], 400);
@@ -250,7 +250,7 @@ class SuperAdminController extends Controller {
                 $order = $stmt->fetch();
 
                 if (!$order) {
-                    continue; // Skip invalid or already settled
+                    continue; 
                 }
 
                 $salesAmount = floatval($order['total_amount']);
@@ -522,7 +522,7 @@ class SuperAdminController extends Controller {
         $metaTitle = trim($body['meta_title'] ?? '');
         $metaDescription = trim($body['meta_description'] ?? '');
         $active = isset($body['active']) ? intval($body['active']) : 1;
-        $content = $body['content'] ?? ''; // This is the JSON string of blocks
+        $content = $body['content'] ?? ''; 
 
         $errors = [];
         if (empty($title)) $errors[] = 'Title is required.';
@@ -542,4 +542,5 @@ class SuperAdminController extends Controller {
         return $response->json(['error' => implode(' ', $errors)], 400);
     }
 }
+
 
