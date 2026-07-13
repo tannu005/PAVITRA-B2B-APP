@@ -1,9 +1,9 @@
-package com.example.viraasatb2b.ui.main
+package com.pavitrab2b.app.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.viraasatb2b.data.DataRepository
-import com.example.viraasatb2b.ui.main.MainScreenUiState.Success
+import com.pavitrab2b.app.data.DataRepository
+import com.pavitrab2b.app.ui.main.MainScreenUiState.Success
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

@@ -1,4 +1,4 @@
-package com.example.viraasatb2b.ui.main
+package com.pavitrab2b.app.ui.main
 
 import android.content.Context
 import android.webkit.WebResourceError
@@ -6,7 +6,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
-import com.example.viraasatb2b.BuildConfig
+import com.pavitrab2b.app.BuildConfig
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

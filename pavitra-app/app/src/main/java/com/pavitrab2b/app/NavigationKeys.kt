@@ -1,4 +1,4 @@
-package com.example.viraasatb2b
+package com.pavitrab2b.app
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable

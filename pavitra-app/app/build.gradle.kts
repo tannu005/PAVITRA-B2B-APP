@@ -4,10 +4,10 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
 }
 android {
-    namespace = "com.example.viraasatb2b"
+    namespace = "com.pavitrab2b.app"
     compileSdk = 36
     defaultConfig {
-        applicationId = "com.example.viraasatb2b"
+        applicationId = "com.pavitrab2b.app"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

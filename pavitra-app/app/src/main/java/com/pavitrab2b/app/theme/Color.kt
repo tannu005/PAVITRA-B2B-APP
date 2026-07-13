@@ -1,4 +1,4 @@
-package com.example.viraasatb2b.theme
+package com.pavitrab2b.app.theme
 
 import androidx.compose.ui.graphics.Color
 
