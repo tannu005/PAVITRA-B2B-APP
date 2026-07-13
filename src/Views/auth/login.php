@@ -49,7 +49,6 @@
             <strong class="text-dark">Demo Credentials:</strong><br>
             • Retailer/Buyer: <code>boutique@pavitrab2b.com</code> / <code>password123</code><br>
             • Seller/Weaver: <code>weaver@pavitrab2b.com</code> / <code>password123</code><br>
-            • Super Admin: <code>admin@pavitrab2b.com</code> / <code>password123</code><br>
             • Delivery Partner: <code>delivery@pavitrab2b.com</code> / <code>password123</code>
         </div>
     </div>

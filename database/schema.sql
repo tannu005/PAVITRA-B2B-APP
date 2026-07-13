@@ -1,23 +1,17 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- 1. roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(50) NOT NULL UNIQUE,
   `description` TEXT,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 2. permissions
 CREATE TABLE IF NOT EXISTS `permissions` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL UNIQUE,
   `description` TEXT,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 3. role_permissions
 CREATE TABLE IF NOT EXISTS `role_permissions` (
   `role_id` INT NOT NULL,
   `permission_id` INT NOT NULL,
@@ -25,8 +19,6 @@ CREATE TABLE IF NOT EXISTS `role_permissions` (
   FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 4. users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
@@ -45,8 +37,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   INDEX (`status`),
   INDEX (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 5. user_sessions
 CREATE TABLE IF NOT EXISTS `user_sessions` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
@@ -57,8 +47,6 @@ CREATE TABLE IF NOT EXISTS `user_sessions` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 6. seller_profiles
 CREATE TABLE IF NOT EXISTS `seller_profiles` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL UNIQUE,
@@ -73,8 +61,6 @@ CREATE TABLE IF NOT EXISTS `seller_profiles` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 7. retailer_profiles
 CREATE TABLE IF NOT EXISTS `retailer_profiles` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL UNIQUE,
@@ -85,8 +71,6 @@ CREATE TABLE IF NOT EXISTS `retailer_profiles` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 8. delivery_partner_profiles
 CREATE TABLE IF NOT EXISTS `delivery_partner_profiles` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL UNIQUE,
@@ -98,8 +82,6 @@ CREATE TABLE IF NOT EXISTS `delivery_partner_profiles` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 9. employee_profiles
 CREATE TABLE IF NOT EXISTS `employee_profiles` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL UNIQUE,
@@ -109,8 +91,6 @@ CREATE TABLE IF NOT EXISTS `employee_profiles` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 10. kyc_documents
 CREATE TABLE IF NOT EXISTS `kyc_documents` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
@@ -123,8 +103,6 @@ CREATE TABLE IF NOT EXISTS `kyc_documents` (
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   INDEX (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 11. kyc_verifications
 CREATE TABLE IF NOT EXISTS `kyc_verifications` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `kyc_document_id` INT NOT NULL,
@@ -135,8 +113,6 @@ CREATE TABLE IF NOT EXISTS `kyc_verifications` (
   FOREIGN KEY (`kyc_document_id`) REFERENCES `kyc_documents` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`verified_by`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 12. user_addresses
 CREATE TABLE IF NOT EXISTS `user_addresses` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
@@ -151,15 +127,11 @@ CREATE TABLE IF NOT EXISTS `user_addresses` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 13. banks
 CREATE TABLE IF NOT EXISTS `banks` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(150) NOT NULL,
   `code` VARCHAR(20) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 14. bank_accounts
 CREATE TABLE IF NOT EXISTS `bank_accounts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
@@ -173,8 +145,6 @@ CREATE TABLE IF NOT EXISTS `bank_accounts` (
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 15. wallets
 CREATE TABLE IF NOT EXISTS `wallets` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL UNIQUE,
@@ -184,8 +154,6 @@ CREATE TABLE IF NOT EXISTS `wallets` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 16. wallet_transactions
 CREATE TABLE IF NOT EXISTS `wallet_transactions` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `wallet_id` INT NOT NULL,
@@ -198,8 +166,6 @@ CREATE TABLE IF NOT EXISTS `wallet_transactions` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`wallet_id`) REFERENCES `wallets` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 17. wallet_requests
 CREATE TABLE IF NOT EXISTS `wallet_requests` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
@@ -211,8 +177,6 @@ CREATE TABLE IF NOT EXISTS `wallet_requests` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 18. wallet_limits
 CREATE TABLE IF NOT EXISTS `wallet_limits` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL UNIQUE,
@@ -220,8 +184,6 @@ CREATE TABLE IF NOT EXISTS `wallet_limits` (
   `transaction_limit` DECIMAL(15,2) DEFAULT 20000.00,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 19. categories
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL UNIQUE,
@@ -230,8 +192,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `image_url` VARCHAR(255) DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 20. subcategories
 CREATE TABLE IF NOT EXISTS `subcategories` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `category_id` INT NOT NULL,
@@ -241,31 +201,23 @@ CREATE TABLE IF NOT EXISTS `subcategories` (
   `image_url` VARCHAR(255) DEFAULT NULL,
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 21. brands
 CREATE TABLE IF NOT EXISTS `brands` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL UNIQUE,
   `slug` VARCHAR(100) NOT NULL UNIQUE,
   `logo_url` VARCHAR(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 22. product_attributes
 CREATE TABLE IF NOT EXISTS `product_attributes` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL UNIQUE,
   `type` ENUM('SELECT', 'TEXT', 'NUMBER', 'BOOLEAN') DEFAULT 'SELECT'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 23. attribute_values
 CREATE TABLE IF NOT EXISTS `attribute_values` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `attribute_id` INT NOT NULL,
   `value` VARCHAR(255) NOT NULL,
   FOREIGN KEY (`attribute_id`) REFERENCES `product_attributes` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 24. products
 CREATE TABLE IF NOT EXISTS `products` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `title` VARCHAR(200) NOT NULL,
@@ -285,8 +237,6 @@ CREATE TABLE IF NOT EXISTS `products` (
   INDEX (`status`),
   INDEX (`is_approved`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 25. product_variants
 CREATE TABLE IF NOT EXISTS `product_variants` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_id` INT NOT NULL,
@@ -303,8 +253,6 @@ CREATE TABLE IF NOT EXISTS `product_variants` (
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   INDEX (`wholesale_price`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 26. product_images
 CREATE TABLE IF NOT EXISTS `product_images` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_id` INT NOT NULL,
@@ -312,24 +260,18 @@ CREATE TABLE IF NOT EXISTS `product_images` (
   `is_primary` TINYINT(1) DEFAULT 0,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 27. product_videos
 CREATE TABLE IF NOT EXISTS `product_videos` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_id` INT NOT NULL,
   `video_url` VARCHAR(255) NOT NULL,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 28. product_documents
 CREATE TABLE IF NOT EXISTS `product_documents` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_id` INT NOT NULL,
   `doc_url` VARCHAR(255) NOT NULL,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 29. bulk_pricing
 CREATE TABLE IF NOT EXISTS `bulk_pricing` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_variant_id` INT NOT NULL,
@@ -337,8 +279,6 @@ CREATE TABLE IF NOT EXISTS `bulk_pricing` (
   `price` DECIMAL(12,2) NOT NULL,
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 30. inventory
 CREATE TABLE IF NOT EXISTS `inventory` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_variant_id` INT NOT NULL UNIQUE,
@@ -346,8 +286,6 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `min_alert_stock` INT DEFAULT 5,
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 31. inventory_logs
 CREATE TABLE IF NOT EXISTS `inventory_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `product_variant_id` INT NOT NULL,
@@ -357,8 +295,6 @@ CREATE TABLE IF NOT EXISTS `inventory_logs` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 32. warehouses
 CREATE TABLE IF NOT EXISTS `warehouses` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL UNIQUE,
@@ -366,8 +302,6 @@ CREATE TABLE IF NOT EXISTS `warehouses` (
   `manager_name` VARCHAR(100) DEFAULT NULL,
   `manager_phone` VARCHAR(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 33. warehouse_stock
 CREATE TABLE IF NOT EXISTS `warehouse_stock` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `warehouse_id` INT NOT NULL,
@@ -377,8 +311,6 @@ CREATE TABLE IF NOT EXISTS `warehouse_stock` (
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE,
   UNIQUE KEY `wh_variant` (`warehouse_id`, `product_variant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 34. stock_transfers
 CREATE TABLE IF NOT EXISTS `stock_transfers` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `from_warehouse_id` INT NOT NULL,
@@ -388,8 +320,6 @@ CREATE TABLE IF NOT EXISTS `stock_transfers` (
   FOREIGN KEY (`from_warehouse_id`) REFERENCES `warehouses` (`id`),
   FOREIGN KEY (`to_warehouse_id`) REFERENCES `warehouses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 35. stock_transfer_items
 CREATE TABLE IF NOT EXISTS `stock_transfer_items` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `stock_transfer_id` INT NOT NULL,
@@ -398,8 +328,6 @@ CREATE TABLE IF NOT EXISTS `stock_transfer_items` (
   FOREIGN KEY (`stock_transfer_id`) REFERENCES `stock_transfers` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 36. carts
 CREATE TABLE IF NOT EXISTS `carts` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT DEFAULT NULL,
@@ -407,8 +335,6 @@ CREATE TABLE IF NOT EXISTS `carts` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 37. cart_items
 CREATE TABLE IF NOT EXISTS `cart_items` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `cart_id` INT NOT NULL,
@@ -419,16 +345,12 @@ CREATE TABLE IF NOT EXISTS `cart_items` (
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE,
   UNIQUE KEY `cart_variant` (`cart_id`, `product_variant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 38. wishlists
 CREATE TABLE IF NOT EXISTS `wishlists` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL UNIQUE,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 39. wishlist_items
 CREATE TABLE IF NOT EXISTS `wishlist_items` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `wishlist_id` INT NOT NULL,
@@ -438,8 +360,6 @@ CREATE TABLE IF NOT EXISTS `wishlist_items` (
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE,
   UNIQUE KEY `wishlist_variant` (`wishlist_id`, `product_variant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 40. orders
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_number` VARCHAR(50) NOT NULL UNIQUE,
@@ -462,8 +382,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   INDEX (`status`),
   INDEX (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 41. order_items
 CREATE TABLE IF NOT EXISTS `order_items` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_id` INT NOT NULL,
@@ -476,8 +394,6 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 42. order_status_history
 CREATE TABLE IF NOT EXISTS `order_status_history` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_id` INT NOT NULL,
@@ -488,8 +404,6 @@ CREATE TABLE IF NOT EXISTS `order_status_history` (
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 43. order_tracking
 CREATE TABLE IF NOT EXISTS `order_tracking` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_id` INT NOT NULL,
@@ -498,8 +412,6 @@ CREATE TABLE IF NOT EXISTS `order_tracking` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 44. shipments
 CREATE TABLE IF NOT EXISTS `shipments` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_id` INT NOT NULL,
@@ -510,8 +422,6 @@ CREATE TABLE IF NOT EXISTS `shipments` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 45. shipment_items
 CREATE TABLE IF NOT EXISTS `shipment_items` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `shipment_id` INT NOT NULL,
@@ -520,8 +430,6 @@ CREATE TABLE IF NOT EXISTS `shipment_items` (
   FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 46. delivery_assignments
 CREATE TABLE IF NOT EXISTS `delivery_assignments` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `shipment_id` INT NOT NULL,
@@ -532,8 +440,6 @@ CREATE TABLE IF NOT EXISTS `delivery_assignments` (
   FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`delivery_partner_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 47. delivery_routes
 CREATE TABLE IF NOT EXISTS `delivery_routes` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `delivery_assignment_id` INT NOT NULL,
@@ -541,8 +447,6 @@ CREATE TABLE IF NOT EXISTS `delivery_routes` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`delivery_assignment_id`) REFERENCES `delivery_assignments` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 48. delivery_proofs
 CREATE TABLE IF NOT EXISTS `delivery_proofs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `delivery_assignment_id` INT NOT NULL,
@@ -552,8 +456,6 @@ CREATE TABLE IF NOT EXISTS `delivery_proofs` (
   `verified_at` TIMESTAMP NULL DEFAULT NULL,
   FOREIGN KEY (`delivery_assignment_id`) REFERENCES `delivery_assignments` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 49. returns
 CREATE TABLE IF NOT EXISTS `returns` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_id` INT NOT NULL,
@@ -563,8 +465,6 @@ CREATE TABLE IF NOT EXISTS `returns` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 50. return_items
 CREATE TABLE IF NOT EXISTS `return_items` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `return_id` INT NOT NULL,
@@ -574,8 +474,6 @@ CREATE TABLE IF NOT EXISTS `return_items` (
   FOREIGN KEY (`return_id`) REFERENCES `returns` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 51. refunds
 CREATE TABLE IF NOT EXISTS `refunds` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `return_id` INT DEFAULT NULL,
@@ -585,8 +483,6 @@ CREATE TABLE IF NOT EXISTS `refunds` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`return_id`) REFERENCES `returns` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 52. replacement_requests
 CREATE TABLE IF NOT EXISTS `replacement_requests` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_id` INT NOT NULL,
@@ -595,8 +491,6 @@ CREATE TABLE IF NOT EXISTS `replacement_requests` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 53. payments
 CREATE TABLE IF NOT EXISTS `payments` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `payment_number` VARCHAR(50) NOT NULL UNIQUE,
@@ -608,8 +502,6 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 54. payment_transactions
 CREATE TABLE IF NOT EXISTS `payment_transactions` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `payment_id` INT NOT NULL,
@@ -618,8 +510,6 @@ CREATE TABLE IF NOT EXISTS `payment_transactions` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 55. settlements
 CREATE TABLE IF NOT EXISTS `settlements` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `settlement_number` VARCHAR(50) NOT NULL UNIQUE,
@@ -627,8 +517,6 @@ CREATE TABLE IF NOT EXISTS `settlements` (
   `total_amount` DECIMAL(15,2) NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 56. seller_settlements
 CREATE TABLE IF NOT EXISTS `seller_settlements` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `settlement_id` INT NOT NULL,
@@ -644,8 +532,6 @@ CREATE TABLE IF NOT EXISTS `seller_settlements` (
   FOREIGN KEY (`seller_id`) REFERENCES `users` (`id`),
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 57. commissions
 CREATE TABLE IF NOT EXISTS `commissions` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `order_item_id` INT NOT NULL UNIQUE,
@@ -654,8 +540,6 @@ CREATE TABLE IF NOT EXISTS `commissions` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 58. commission_rules
 CREATE TABLE IF NOT EXISTS `commission_rules` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `category_id` INT DEFAULT NULL,
@@ -665,16 +549,12 @@ CREATE TABLE IF NOT EXISTS `commission_rules` (
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`seller_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 59. gst_rates
 CREATE TABLE IF NOT EXISTS `gst_rates` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `hsn_code` VARCHAR(20) NOT NULL UNIQUE,
   `percentage` DECIMAL(5,2) NOT NULL,
   `description` TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 60. invoices
 CREATE TABLE IF NOT EXISTS `invoices` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `invoice_number` VARCHAR(50) NOT NULL UNIQUE,
@@ -686,8 +566,6 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 61. invoice_items
 CREATE TABLE IF NOT EXISTS `invoice_items` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `invoice_id` INT NOT NULL,
@@ -699,8 +577,6 @@ CREATE TABLE IF NOT EXISTS `invoice_items` (
   `total_amount` DECIMAL(12,2) NOT NULL,
   FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 62. credit_notes
 CREATE TABLE IF NOT EXISTS `credit_notes` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `invoice_id` INT NOT NULL,
@@ -709,8 +585,6 @@ CREATE TABLE IF NOT EXISTS `credit_notes` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 63. debit_notes
 CREATE TABLE IF NOT EXISTS `debit_notes` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `invoice_id` INT NOT NULL,
@@ -719,8 +593,6 @@ CREATE TABLE IF NOT EXISTS `debit_notes` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 64. coupons
 CREATE TABLE IF NOT EXISTS `coupons` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `code` VARCHAR(30) NOT NULL UNIQUE,
@@ -732,8 +604,6 @@ CREATE TABLE IF NOT EXISTS `coupons` (
   `max_uses` INT DEFAULT 100,
   `active` TINYINT(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 65. coupon_usage
 CREATE TABLE IF NOT EXISTS `coupon_usage` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `coupon_id` INT NOT NULL,
@@ -744,8 +614,6 @@ CREATE TABLE IF NOT EXISTS `coupon_usage` (
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 66. offers
 CREATE TABLE IF NOT EXISTS `offers` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(150) NOT NULL,
@@ -755,8 +623,6 @@ CREATE TABLE IF NOT EXISTS `offers` (
   `end_date` DATETIME NOT NULL,
   `active` TINYINT(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 67. offer_products
 CREATE TABLE IF NOT EXISTS `offer_products` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `offer_id` INT NOT NULL,
@@ -764,8 +630,6 @@ CREATE TABLE IF NOT EXISTS `offer_products` (
   FOREIGN KEY (`offer_id`) REFERENCES `offers` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 68. banners
 CREATE TABLE IF NOT EXISTS `banners` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `title` VARCHAR(100) DEFAULT NULL,
@@ -775,15 +639,11 @@ CREATE TABLE IF NOT EXISTS `banners` (
   `sort_order` INT DEFAULT 0,
   `active` TINYINT(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 69. banner_positions
 CREATE TABLE IF NOT EXISTS `banner_positions` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL UNIQUE,
   `key` VARCHAR(50) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 70. notifications
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
@@ -795,8 +655,6 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   INDEX (`user_id`),
   INDEX (`read`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 71. notification_logs
 CREATE TABLE IF NOT EXISTS `notification_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `notification_id` INT NOT NULL,
@@ -805,8 +663,6 @@ CREATE TABLE IF NOT EXISTS `notification_logs` (
   `sent_at` TIMESTAMP NULL DEFAULT NULL,
   FOREIGN KEY (`notification_id`) REFERENCES `notifications` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 72. sms_logs
 CREATE TABLE IF NOT EXISTS `sms_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `phone_number` VARCHAR(20) NOT NULL,
@@ -815,8 +671,6 @@ CREATE TABLE IF NOT EXISTS `sms_logs` (
   `status` VARCHAR(20) DEFAULT 'SENT',
   `sent_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 73. email_logs
 CREATE TABLE IF NOT EXISTS `email_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `email` VARCHAR(150) NOT NULL,
@@ -825,8 +679,6 @@ CREATE TABLE IF NOT EXISTS `email_logs` (
   `status` VARCHAR(20) DEFAULT 'SENT',
   `sent_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 74. whatsapp_logs
 CREATE TABLE IF NOT EXISTS `whatsapp_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `phone_number` VARCHAR(20) NOT NULL,
@@ -835,8 +687,6 @@ CREATE TABLE IF NOT EXISTS `whatsapp_logs` (
   `status` VARCHAR(20) DEFAULT 'SENT',
   `sent_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 75. support_tickets
 CREATE TABLE IF NOT EXISTS `support_tickets` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `ticket_number` VARCHAR(50) NOT NULL UNIQUE,
@@ -848,8 +698,6 @@ CREATE TABLE IF NOT EXISTS `support_tickets` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 76. ticket_messages
 CREATE TABLE IF NOT EXISTS `ticket_messages` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `ticket_id` INT NOT NULL,
@@ -860,16 +708,12 @@ CREATE TABLE IF NOT EXISTS `ticket_messages` (
   FOREIGN KEY (`ticket_id`) REFERENCES `support_tickets` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 77. ticket_attachments
 CREATE TABLE IF NOT EXISTS `ticket_attachments` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `ticket_message_id` INT NOT NULL,
   `file_path` VARCHAR(255) NOT NULL,
   FOREIGN KEY (`ticket_message_id`) REFERENCES `ticket_messages` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 78. cms_pages
 CREATE TABLE IF NOT EXISTS `cms_pages` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `title` VARCHAR(150) NOT NULL,
@@ -879,8 +723,6 @@ CREATE TABLE IF NOT EXISTS `cms_pages` (
   `meta_description` TEXT,
   `active` TINYINT(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 79. cms_blocks
 CREATE TABLE IF NOT EXISTS `cms_blocks` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
@@ -888,16 +730,12 @@ CREATE TABLE IF NOT EXISTS `cms_blocks` (
   `content` TEXT NOT NULL,
   `active` TINYINT(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 80. reports_cache
 CREATE TABLE IF NOT EXISTS `reports_cache` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `report_type` VARCHAR(100) NOT NULL,
   `data` LONGTEXT,
   `generated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 81. audit_logs
 CREATE TABLE IF NOT EXISTS `audit_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `table_name` VARCHAR(100) NOT NULL,
@@ -909,8 +747,6 @@ CREATE TABLE IF NOT EXISTS `audit_logs` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 82. activity_logs
 CREATE TABLE IF NOT EXISTS `activity_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT DEFAULT NULL,
@@ -920,8 +756,6 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 83. api_clients
 CREATE TABLE IF NOT EXISTS `api_clients` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
@@ -929,8 +763,6 @@ CREATE TABLE IF NOT EXISTS `api_clients` (
   `client_secret` VARCHAR(255) NOT NULL,
   `active` TINYINT(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 84. api_tokens
 CREATE TABLE IF NOT EXISTS `api_tokens` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `api_client_id` INT NOT NULL,
@@ -938,15 +770,11 @@ CREATE TABLE IF NOT EXISTS `api_tokens` (
   `expires_at` TIMESTAMP NOT NULL,
   FOREIGN KEY (`api_client_id`) REFERENCES `api_clients` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 85. system_settings
 CREATE TABLE IF NOT EXISTS `system_settings` (
   `setting_key` VARCHAR(100) PRIMARY KEY,
   `setting_value` TEXT,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 86. error_logs
 CREATE TABLE IF NOT EXISTS `error_logs` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `message` TEXT NOT NULL,
@@ -961,16 +789,11 @@ CREATE TABLE IF NOT EXISTS `error_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-
--- Email Subscribers
 CREATE TABLE IF NOT EXISTS subscribers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Coupons
 CREATE TABLE IF NOT EXISTS coupons (
     id INT AUTO_INCREMENT PRIMARY KEY,
     seller_id INT NOT NULL,
@@ -983,8 +806,6 @@ CREATE TABLE IF NOT EXISTS coupons (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (seller_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
--- Applied Coupons (for tracking)
 CREATE TABLE IF NOT EXISTS applied_coupons (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
