@@ -39,9 +39,11 @@ function renderProductCard($p) {
             </button>
         </div>
         <div class="pavitra-card-body text-start pt-2 pb-3 px-2">
-            <?php if (!empty($p['all_colors'])): 
-                $colors = explode('|', $p['all_colors']);
-                if (count($colors) > 1):
+            <?php 
+                $colors = !empty($p['all_colors']) ? explode('|', $p['all_colors']) : [];
+                if (count($colors) <= 1) {
+                    $colors = ['Pink', 'Black', 'Blue', 'Orange', 'Purple', 'Teal'];
+                }
             ?>
             <div class="d-flex align-items-center mb-2 gap-1" style="flex-wrap: wrap;">
                 <?php foreach($colors as $idx => $c): 
@@ -55,10 +57,11 @@ function renderProductCard($p) {
                         }
                     }
                 ?>
-                    <div class="color-swatch <?= $colorClass ?> <?= $idx === 0 ? 'active' : '' ?>" style="width: 18px; height: 18px; border-width: 1px;"></div>
+                    <div class="color-swatch-wrapper <?= $idx === 0 ? 'active' : '' ?>" style="border: 2px solid <?= $idx === 0 ? '#999' : 'transparent' ?>; border-radius: 50%; padding: 2px; display: inline-flex;">
+                        <div class="color-swatch <?= $colorClass ?>" style="width: 14px; height: 14px; border: 1px solid rgba(0,0,0,0.15) !important; margin: 0; box-shadow: none;"></div>
+                    </div>
                 <?php endforeach; ?>
             </div>
-            <?php endif; endif; ?>
             <div class="text-muted fw-bold mb-1" style="font-size: 0.85rem; color: #555 !important;">SIRIL</div>
             <h6 class="pavitra-card-title mb-1 pavitra-product-title" style="text-transform: none; font-weight: normal; color: #333; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 40px;"><?= htmlspecialchars($p['title']) ?></h6>
             <div class="pavitra-price-wholesale fw-bold text-dark mt-2 pavitra-product-price" style="font-size: 1.1rem;">
