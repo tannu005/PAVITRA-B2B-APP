@@ -111,4 +111,14 @@ class Cache {
         }
         return true;
     }
+
+    public function remember(string $key, int $ttl, callable $callback) {
+        $value = $this->get($key);
+        if ($value !== null) {
+            return $value;
+        }
+        $value = $callback();
+        $this->set($key, $value, $ttl);
+        return $value;
+    }
 }
