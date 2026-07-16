@@ -9,7 +9,7 @@ class Cache {
     public function __construct() {
         $this->cachePath = dirname(__DIR__) . '/storage/cache/';
         
-        // Use Predis if available (via Composer), fallback to Native Redis, fallback to File
+     
         if (class_exists('Predis\Client')) {
             try {
                 $this->redis = new \Predis\Client([
