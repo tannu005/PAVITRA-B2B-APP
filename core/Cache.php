@@ -68,7 +68,6 @@ class Cache {
         $cacheKey = 'pavitra_cache_' . md5($key);
         if ($this->useRedis && $this->redis) {
             try {
-                // Predis uses setex, same as native Redis wrapper usually
                 $this->redis->setex($cacheKey, $ttl, serialize($value));
                 return true;
             } catch (\Throwable $e) {}
