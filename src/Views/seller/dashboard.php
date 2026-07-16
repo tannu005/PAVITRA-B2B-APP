@@ -40,6 +40,22 @@
         </div>
     </div>
     <div class="row g-4">
+
+    <div class="card shadow-sm border border-light bg-light p-4 rounded mb-4" style="font-size: 0.9rem;">
+        <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-shield-halved me-2 text-pink"></i>Seller Policies & SLA</h5>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <strong>Product Accuracy:</strong> Sellers are solely responsible for listing accurate descriptions, fabric details, stock counts, and true-to-life images of the sarees.
+            </div>
+            <div class="col-md-4">
+                <strong>Order Fulfillment SLA:</strong> Sellers must pack and mark orders as "Ready for Pickup" within 48 hrs of receiving the order notification.
+            </div>
+            <div class="col-md-4">
+                <strong>Defect & Dispute Liability:</strong> If a Retailer provides valid proof (via unboxing video) of receiving damaged, stained, or incorrect items, the cost of the return/refund will be debited directly from the Seller's payout balance.
+            </div>
+        </div>
+    </div>
+
         <div class="col-lg-4">
             <div class="card shadow-sm border border-light p-4 bg-white h-100">
                 <h5 class="fw-bold mb-3 text-dark">Quick Navigation</h5>
@@ -54,7 +70,7 @@
         </div>
         <div class="col-lg-8">
             <div class="card shadow-sm border border-light p-4 bg-white h-100">
-                <h5 class="fw-bold mb-3 text-dark">Recent Bulk Orders</h5>
+                <h5 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-list-check text-pink me-2"></i>Recent Orders to Fulfill</h5>
                 <?php if (empty($recentOrders)): ?>
                     <div class="text-center py-5 text-muted">
                         <i class="fa-solid fa-cart-shopping fs-1 opacity-25 mb-2"></i>

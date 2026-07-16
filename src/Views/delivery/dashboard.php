@@ -17,10 +17,11 @@
                 </div>
             </div>
             <div class="card shadow-sm border border-light bg-light p-3 rounded" style="font-size: 0.8rem;">
-                <div class="fw-bold text-dark mb-1"><i class="fa fa-info-circle me-1 text-pink"></i>Logistics Protocol</div>
-                • Collect package from weaver warehouse.<br>
-                • Verify the package seal before driving.<br>
-                • Ask the boutique owner for their 4-digit OTP code to complete delivery.
+                <div class="fw-bold text-dark mb-2"><i class="fa fa-info-circle me-1 text-pink"></i>Logistics Protocol & Policies</div>
+                <div class="mb-2"><strong>Service Level Agreement (SLA):</strong> Delivery partners must accept and fulfill assigned pickups within the designated time window displayed on the app dashboard.</div>
+                <div class="mb-2"><strong>Safe Handling:</strong> Delivery partners are independent contractors responsible for the safe transit of goods. Parcels must be protected from weather elements (rain, dust) and rough handling.</div>
+                <div class="mb-2"><strong>Verification Upon Delivery:</strong> Delivery partners must collect the required digital signature, OTP (One-Time Password), or Cash on Delivery (COD) amount before handing over the parcel to the Retailer.</div>
+                <div><strong>Loss & Damage Penalty:</strong> If a consignment is lost, stolen, or severely damaged due to negligence during transit, the platform reserves the right to withhold delivery payouts or suspend the delivery partner's account pending investigation.</div>
             </div>
         </div>
         <div class="col-lg-8">
