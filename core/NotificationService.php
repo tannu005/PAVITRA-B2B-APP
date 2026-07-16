@@ -45,22 +45,22 @@ class NotificationService {
 
     private static function sendSmsTwilio(int $userId, string $message) {
      
-        self::logMockDispatch('SMS_TWILIO', $userId, $message);
+        self::logDispatch('SMS_TWILIO', $userId, $message);
     }
 
     private static function sendWhatsApp(int $userId, string $message) {
     
         
-        self::logMockDispatch('WHATSAPP_META', $userId, $message);
+        self::logDispatch('WHATSAPP_META', $userId, $message);
     }
 
     private static function sendFcmPush(int $userId, string $title, string $message) {
      
         
-        self::logMockDispatch('FCM_PUSH', $userId, "$title: $message");
+        self::logDispatch('FCM_PUSH', $userId, "$title: $message");
     }
     
-    private static function logMockDispatch(string $type, int $userId, string $payload) {
+    private static function logDispatch(string $type, int $userId, string $payload) {
         try {
             $db = Application::$app->db;
             $stmt = $db->prepare("INSERT INTO activity_logs (activity, details) VALUES (?, ?)");

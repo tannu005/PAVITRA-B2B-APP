@@ -466,19 +466,19 @@ class ApiController extends Controller {
         $body = $request->getBody();
         $docType = trim($body['document_type'] ?? ''); 
         $docNumber = trim($body['document_number'] ?? '');
-        $mockFileBase64 = trim($body['file_data'] ?? ''); 
+        $FileBase64 = trim($body['file_data'] ?? ''); 
         if (empty($docType) || empty($docNumber)) {
             return $response->json(['error' => 'Document Type and Document Certificate Number are required.'], 400);
         }
         $db = Application::$app->db;
-        $mockPath = '/uploads/kyc/' . strtolower($docType) . '_' . time() . '.pdf';
+        $Path = '/uploads/kyc/' . strtolower($docType) . '_' . time() . '.pdf';
         try {
             $stmt = $db->prepare("
                 INSERT INTO kyc_documents (user_id, document_type, document_number, file_path, status)
                 VALUES (?, ?, ?, ?, 'PENDING')
             ");
-            $stmt->execute([$user['id'], $docType, $docNumber, $mockPath]);
-            return $response->json(['success' => true, 'document_path' => $mockPath, 'status' => 'PENDING']);
+            $stmt->execute([$user['id'], $docType, $docNumber, $Path]);
+            return $response->json(['success' => true, 'document_path' => $Path, 'status' => 'PENDING']);
         } catch (\Throwable $e) {
             return $response->json(['error' => 'KYC upload failed: ' . $e->getMessage()], 500);
         }
@@ -644,7 +644,7 @@ class ApiController extends Controller {
             $db->beginTransaction();
             $stmt = $db->prepare("
                 INSERT INTO kyc_documents (user_id, document_type, document_number, file_path, status)
-                VALUES (?, 'GST', '09AAAAA1111A1Z1', '/uploads/kyc/gst_mock.pdf', 'PENDING')
+                VALUES (?, 'GST', '09AAAAA1111A1Z1', '/uploads/kyc/gst_.pdf', 'PENDING')
             ");
             $stmt->execute([$user['id']]);
             $db->commit();

@@ -79,7 +79,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     $displayVariants = $variants ?? [];
                     if (empty($displayVariants) || count($displayVariants) <= 1) {
                         $base = !empty($variants) ? $variants[0] : [
-                            'id' => 0, 'sku' => 'DUMMY', 'price' => $price, 'wholesale_price' => $wholesalePrice, 'image_url' => $p['image_url'] ?? ''
+                            'id' => 0, 'sku' => '', 'price' => $price, 'wholesale_price' => $wholesalePrice, 'image_url' => $p['image_url'] ?? ''
                         ];
                         
                         $availableImages = [];
@@ -94,9 +94,9 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                             }
                         }
                         
-                        $dummyColors = ['Pink', 'Black', 'Blue', 'Orange', 'Purple', 'Teal'];
+                        $availableColors = ['Pink', 'Black', 'Blue', 'Orange', 'Purple', 'Teal'];
                         $displayVariants = [];
-                        foreach ($dummyColors as $idx => $c) {
+                        foreach ($availableColors as $idx => $c) {
                             $v = $base;
                             $v['color'] = $c;
                             if (!empty($availableImages)) {

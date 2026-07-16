@@ -32,7 +32,7 @@
                                 <?php foreach ($permissions as $perm): ?>
                                     <?php 
                                         $isChecked = isset($mapping[$role['id']]) && in_array($perm['id'], $mapping[$role['id']]);
-                                        $isLocked = $role['name'] === 'SUPER_ADMIN'; // Super admin has all, cannot be unchecked visually here
+                                        $isLocked = $role['name'] === 'SUPER_ADMIN'; 
                                     ?>
                                     <div class="col-6">
                                         <div class="form-check form-switch">
@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<!-- Create Role Modal -->
+
 <div class="modal fade" id="createRoleModal" tabindex="-1">
     <div class="modal-dialog">
         <form action="/admin/roles/create" method="POST" class="modal-content">

@@ -122,7 +122,7 @@
                 <td>₹250.00</td>
                 <td>₹5,250.00</td>
             </tr>
-            <!-- More dynamic items would be looped here in production -->
+            
         </tbody>
     </table>
     

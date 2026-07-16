@@ -123,7 +123,7 @@ class Notification {
         $token = $config['twilio_auth_token'] ?? '';
         $fromPhone = $config['twilio_phone_number'] ?? '';
         if (empty($sid) || empty($token) || empty($fromPhone)) {
-            error_log("Mock WhatsApp to {$toMobile}: {$messageText}");
+            error_log(" WhatsApp to {$toMobile}: {$messageText}");
             return true;
         }
         $to = str_starts_with($toMobile, 'whatsapp:') ? $toMobile : 'whatsapp:' . $toMobile;

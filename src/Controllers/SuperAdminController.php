@@ -117,7 +117,7 @@ class SuperAdminController extends Controller {
         if (class_exists(\Dompdf\Dompdf::class)) {
             $dompdf = new \Dompdf\Dompdf();
             
-            // Render the invoice template
+            
             ob_start();
             $title = 'GST Tax Invoice - #' . $orderId;
             include dirname(__DIR__) . '/Views/admin/invoice_template.php';
