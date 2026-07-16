@@ -131,6 +131,12 @@ class Application {
             return;
         }
         $this->response->setStatusCode(500);
+        echo "<h1>CRITICAL ERROR</h1>";
+        echo "<p><strong>Message:</strong> " . $e->getMessage() . "</p>";
+        echo "<p><strong>File:</strong> " . $e->getFile() . " on line " . $e->getLine() . "</p>";
+        echo "<pre>" . $e->getTraceAsString() . "</pre>";
+        exit;
+
         if (file_exists(dirname(__DIR__) . '/public/php-error.php')) {
             $this->response->redirect('/php-error.php');
         } else {

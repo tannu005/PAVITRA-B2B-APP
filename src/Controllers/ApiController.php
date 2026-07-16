@@ -86,9 +86,6 @@ class ApiController extends Controller {
         
         $cache->set($key, $count + 1, 60);
     }
-        } catch (\Throwable $e) {
-        }
-    }
     protected function authenticateApi(Request $request, Response $response, array $allowedRoles = []): ?array {
         $headers = getallheaders();
         $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
