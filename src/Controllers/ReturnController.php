@@ -114,6 +114,7 @@ class ReturnController extends Controller {
     public function sellerIndex(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $db = Application::$app->db;
         $stmt = $db->prepare("
             SELECT r.*, o.order_number, u.name as buyer_name
@@ -145,6 +146,7 @@ class ReturnController extends Controller {
     public function sellerApprove(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $returnId = intval($params['id'] ?? 0);
         $db = Application::$app->db;
         $stmtCheck = $db->prepare("
@@ -164,6 +166,7 @@ class ReturnController extends Controller {
     public function sellerVerify(Request $request, Response $response, array $params) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $returnId = intval($params['id'] ?? 0);
         $db = Application::$app->db;
         $stmtCheck = $db->prepare("

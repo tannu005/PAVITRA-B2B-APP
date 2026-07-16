@@ -8,9 +8,32 @@ class SellerController extends Controller {
     public function __construct() {
         $this->setLayout('main');
     }
+
+    public function kycView(Request $request, Response $response) {
+        $user = $this->checkAuth(['SELLER']);
+        if (!$user) return;
+        
+        $db = Application::$app->db;
+        $stmt = $db->prepare("SELECT * FROM kyc_documents WHERE user_id = ?");
+        $stmt->execute([$user['id']]);
+        $documents = $stmt->fetchAll();
+        
+        $docMap = [];
+        foreach ($documents as $doc) {
+            $docMap[$doc['document_type']] = $doc;
+        }
+
+        return $this->render('seller/kyc', [
+            'title' => 'KYC Compliance - Weaver Hub',
+            'docMap' => $docMap,
+            'user' => $user
+        ]);
+    }
+
     public function dashboard(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $db = Application::$app->db;
         $stmtBalance = $db->prepare("SELECT balance FROM seller_profiles WHERE user_id = ?");
         $stmtBalance->execute([$user['id']]);
@@ -46,6 +69,7 @@ class SellerController extends Controller {
     public function products(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $db = Application::$app->db;
         $stmt = $db->prepare("
             SELECT p.*, pv.sku, pv.wholesale_price, pv.price, pv.stock, c.name as category_name
@@ -65,6 +89,7 @@ class SellerController extends Controller {
     public function createProductView(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $db = Application::$app->db;
         $categories = $db->query("SELECT id, name FROM categories")->fetchAll();
         return $this->render('seller/create_product', [
@@ -75,6 +100,7 @@ class SellerController extends Controller {
     public function storeProduct(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $body = $request->getBody();
         $title = trim($body['title'] ?? '');
         $description = trim($body['description'] ?? '');
@@ -184,6 +210,7 @@ class SellerController extends Controller {
     public function inventory(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $db = Application::$app->db;
         $stmt = $db->prepare("
             SELECT pv.id as variant_id, pv.sku, pv.color, pv.size, pv.stock, p.title
@@ -202,6 +229,7 @@ class SellerController extends Controller {
     public function updateInventory(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $body = $request->getBody();
         $variantId = intval($body['variant_id'] ?? 0);
         $qty = intval($body['qty'] ?? 0);
@@ -234,6 +262,7 @@ class SellerController extends Controller {
     public function orders(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $db = Application::$app->db;
         $stmt = $db->prepare("
             SELECT o.*, u.name as buyer_name 
@@ -263,6 +292,7 @@ class SellerController extends Controller {
     public function updateOrderStatus(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $body = $request->getBody();
         $orderId = intval($body['order_id'] ?? 0);
         $newStatus = trim($body['status'] ?? '');
@@ -330,6 +360,7 @@ class SellerController extends Controller {
     public function settlements(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         $db = Application::$app->db;
         $stmt = $db->prepare("
             SELECT ss.*, o.order_number, s.settlement_number
@@ -349,6 +380,8 @@ class SellerController extends Controller {
     public function bulkUploadView(Request $request, Response $response) {
         $user = $this->checkAuth(['SELLER']);
         if (!$user) return;
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
+        if ($user['status'] === 'PENDING') return $response->redirect('/seller/kyc');
         return $this->render('seller/bulk_upload', [
             'title' => 'Bulk Product Upload - Weaver Hub'
         ]);

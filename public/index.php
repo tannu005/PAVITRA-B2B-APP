@@ -31,6 +31,8 @@ use Core\Application;
 $app = new Application();
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
+$app->router->get('/admin/login', [App\Controllers\AuthController::class, 'adminLoginView']);
+$app->router->post('/admin/login', [App\Controllers\AuthController::class, 'adminLogin']);
 $app->router->get('/login/mfa', [App\Controllers\AuthController::class, 'mfaView']);
 $app->router->post('/login/mfa', [App\Controllers\AuthController::class, 'mfaVerify']);
 $app->router->get('/register', [App\Controllers\AuthController::class, 'registerView']);
@@ -104,6 +106,7 @@ $app->router->get('/admin/sessions', [App\Controllers\SuperAdminController::clas
 $app->router->post('/admin/sessions/revoke', [App\Controllers\SuperAdminController::class, 'revokeSession']);
 $app->router->get('/admin/activity', [App\Controllers\SuperAdminController::class, 'activityLogs']);
 $app->router->get('/seller', [App\Controllers\SellerController::class, 'dashboard']);
+$app->router->get('/seller/kyc', [App\Controllers\SellerController::class, 'kycView']);
 $app->router->get('/seller/products', [App\Controllers\SellerController::class, 'products']);
 $app->router->get('/seller/products/create', [App\Controllers\SellerController::class, 'createProductView']);
 $app->router->post('/seller/products/create', [App\Controllers\SellerController::class, 'storeProduct']);

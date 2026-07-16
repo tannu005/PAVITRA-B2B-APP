@@ -24,6 +24,57 @@ class AuthController extends Controller {
             $ip
         ]);
     }
+
+    public function adminLoginView(Request $request, Response $response) {
+        if (Application::$app->getSessionUser()) {
+            $response->redirect('/');
+        }
+        return $this->render('auth/admin_login', ['title' => 'Admin Secure Portal - Pavitra Designer']);
+    }
+
+    public function adminLogin(Request $request, Response $response) {
+        $body = $request->getBody();
+        $email = trim($body['email'] ?? '');
+        $password = $body['password'] ?? '';
+        $errors = [];
+        if (empty($email)) $errors[] = 'Email address is required.';
+        if (empty($password)) $errors[] = 'Password is required.';
+        
+        if (empty($errors)) {
+            $db = Application::$app->db;
+            $stmt = $db->prepare("SELECT u.*, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+            
+            if ($user && password_verify($password, $user['password_hash'])) {
+                if (!in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])) {
+                    $errors[] = 'Unauthorized role. Only administrators can access this portal.';
+                } else if ($user['status'] !== 'ACTIVE') {
+                    $errors[] = 'Your account has been blocked or is pending approval.';
+                } else {
+                    if (!empty($user['two_factor_secret'])) {
+                        $_SESSION['mfa_pending_user_id'] = $user['id'];
+                        $response->redirect('/login/mfa');
+                        return;
+                    }
+                    session_regenerate_id(true);
+                    $_SESSION['user_id'] = $user['id'];
+                    $this->createWebSession($user, 'ADMIN_LOGIN');
+                    $response->redirect('/admin');
+                    return;
+                }
+            } else {
+                $errors[] = 'Invalid credentials.';
+            }
+        }
+        
+        return $this->render('auth/admin_login', [
+            'title' => 'Admin Secure Portal - Pavitra Designer',
+            'errors' => $errors,
+            'email' => $email
+        ]);
+    }
+
     public function loginView(Request $request, Response $response) {
         if (Application::$app->getSessionUser()) {
             $response->redirect('/');
@@ -43,7 +94,9 @@ class AuthController extends Controller {
             $stmt->execute([$email]);
             $user = $stmt->fetch();
             if ($user && password_verify($password, $user['password_hash'])) {
-                if ($user['status'] !== 'ACTIVE') {
+                if (in_array($user['role'], ['SUPER_ADMIN', 'ADMIN'])) {
+                    $errors[] = 'Administrators must use the secure admin portal to sign in.';
+                } else if ($user['status'] !== 'ACTIVE' && !($user['role'] === 'SELLER' && $user['status'] === 'PENDING')) {
                     $errors[] = 'Your account has been blocked or is pending approval.';
                 } else {
                     if (!empty($user['two_factor_secret'])) {
@@ -117,7 +170,7 @@ class AuthController extends Controller {
                 $stmtRole = $db->prepare("SELECT name FROM roles WHERE id = ?");
                 $stmtRole->execute([$roleId]);
                 $role = $stmtRole->fetch();
-                if (!$role) {
+                if (!$role || !in_array($role['name'], ['SELLER', 'RETAILER', 'DELIVERY'])) {
                     throw new \Exception("Invalid registration role selected.");
                 }
                 $status = ($role['name'] === 'SELLER') ? 'PENDING' : 'ACTIVE';

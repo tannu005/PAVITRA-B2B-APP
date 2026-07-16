@@ -143,7 +143,8 @@ class ApiController extends Controller {
         $stmt->execute([$email]);
         $user = $stmt->fetch();
         if ($user && password_verify($password, $user['password_hash'])) {
-            if ($user['status'] !== 'ACTIVE') {
+            $isKycRoute = strpos($_SERVER['REQUEST_URI'] ?? '', '/api/kyc/upload') !== false;
+        if ($user['status'] !== 'ACTIVE' && !($user['role'] === 'SELLER' && $user['status'] === 'PENDING' && $isKycRoute)) {
                 return $response->json(['error' => 'Your merchant account status is pending or blocked.'], 403);
             }
             $token = bin2hex(random_bytes(32));
