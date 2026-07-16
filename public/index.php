@@ -105,6 +105,11 @@ $app->router->get('/admin/errors', [App\Controllers\SuperAdminController::class,
 $app->router->get('/admin/sessions', [App\Controllers\SuperAdminController::class, 'sessions']);
 $app->router->post('/admin/sessions/revoke', [App\Controllers\SuperAdminController::class, 'revokeSession']);
 $app->router->get('/admin/activity', [App\Controllers\SuperAdminController::class, 'activityLogs']);
+$app->router->get('/admin/orders/export', [App\Controllers\SuperAdminController::class, 'exportOrdersCsv']);
+$app->router->get('/admin/orders/invoice', [App\Controllers\SuperAdminController::class, 'generateInvoicePdf']);
+$app->router->get('/admin/roles', [App\Controllers\SuperAdminController::class, 'rolesView']);
+$app->router->post('/admin/roles/create', [App\Controllers\SuperAdminController::class, 'createRole']);
+$app->router->post('/admin/roles/assign', [App\Controllers\SuperAdminController::class, 'assignPermission']);
 $app->router->get('/seller', [App\Controllers\SellerController::class, 'dashboard']);
 $app->router->get('/seller/kyc', [App\Controllers\SellerController::class, 'kycView']);
 $app->router->get('/seller/products', [App\Controllers\SellerController::class, 'products']);

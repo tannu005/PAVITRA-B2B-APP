@@ -8,6 +8,133 @@ class SuperAdminController extends Controller {
     public function __construct() {
         $this->setLayout('main');
     }
+    
+    public function rolesView(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+        
+        $db = Application::$app->db;
+        $roles = $db->query("SELECT * FROM roles ORDER BY id")->fetchAll();
+        $permissions = $db->query("SELECT * FROM permissions ORDER BY id")->fetchAll();
+        $rolePerms = $db->query("SELECT * FROM role_permissions")->fetchAll();
+        
+        $mapping = [];
+        foreach ($rolePerms as $rp) {
+            $mapping[$rp['role_id']][] = $rp['permission_id'];
+        }
+
+        return $this->render('admin/roles', [
+            'title' => 'RBAC Management',
+            'user' => $user,
+            'roles' => $roles,
+            'permissions' => $permissions,
+            'mapping' => $mapping
+        ]);
+    }
+
+    public function createRole(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+        
+        $body = $request->getBody();
+        $name = trim($body['name'] ?? '');
+        $description = trim($body['description'] ?? '');
+        
+        if (!empty($name)) {
+            $db = Application::$app->db;
+            $stmt = $db->prepare("INSERT INTO roles (name, description) VALUES (?, ?)");
+            $stmt->execute([strtoupper($name), $description]);
+        }
+        
+        $response->redirect('/admin/roles');
+    }
+
+    public function assignPermission(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+        
+        $body = $request->getBody();
+        $role_id = $body['role_id'] ?? null;
+        $permission_ids = $body['permissions'] ?? [];
+        
+        if ($role_id) {
+            $db = Application::$app->db;
+            $db->prepare("DELETE FROM role_permissions WHERE role_id = ?")->execute([$role_id]);
+            
+            if (!empty($permission_ids)) {
+                $stmt = $db->prepare("INSERT INTO role_permissions (role_id, permission_id) VALUES (?, ?)");
+                foreach ($permission_ids as $pid) {
+                    $stmt->execute([$role_id, $pid]);
+                }
+            }
+        }
+        
+        $response->redirect('/admin/roles');
+    }
+
+    
+    public function exportOrdersCsv(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+        
+        $db = Application::$app->db;
+        $orders = $db->query("
+            SELECT o.id, o.status, o.total_amount, o.created_at, u.name as retailer_name
+            FROM orders o
+            JOIN users u ON o.user_id = u.id
+            ORDER BY o.created_at DESC
+        ")->fetchAll();
+        
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="pavitra_orders_export_' . date('Y-m-d') . '.csv"');
+        
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['Order ID', 'Retailer', 'Status', 'Total Amount', 'Date']);
+        
+        foreach ($orders as $order) {
+            fputcsv($output, [
+                $order['id'],
+                $order['retailer_name'],
+                $order['status'],
+                number_format((float)$order['total_amount'], 2, '.', ''),
+                $order['created_at']
+            ]);
+        }
+        fclose($output);
+        exit;
+    }
+
+    public function generateInvoicePdf(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+        
+        $orderId = $_GET['id'] ?? null;
+        if (!$orderId) {
+            echo "Order ID is required.";
+            return;
+        }
+        
+        if (class_exists(\Dompdf\Dompdf::class)) {
+            $dompdf = new \Dompdf\Dompdf();
+            
+            // Render the invoice template
+            ob_start();
+            $title = 'GST Tax Invoice - #' . $orderId;
+            include dirname(__DIR__) . '/Views/admin/invoice_template.php';
+            $html = ob_get_clean();
+            
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('A4', 'portrait');
+            $dompdf->render();
+            
+            $dompdf->stream("invoice_$orderId.pdf", ["Attachment" => false]);
+            exit;
+        } else {
+            echo "Error: dompdf/dompdf package is not installed. Please run composer install to enable PDF generation.";
+            exit;
+        }
+    }
+
     public function dashboard(Request $request, Response $response) {
         $user = $this->checkAuth(['SUPER_ADMIN', 'ADMIN']);
         if (!$user) return;

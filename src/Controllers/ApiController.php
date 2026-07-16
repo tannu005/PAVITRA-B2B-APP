@@ -5,28 +5,87 @@ use Core\Request;
 use Core\Response;
 use Core\Application;
 class ApiController extends Controller {
+    public function apiLogin(Request $request, Response $response) {
+        $body = json_decode($request->getBodyRaw(), true) ?: $request->getBody();
+        $email = trim($body['email'] ?? '');
+        $password = $body['password'] ?? '';
+        
+        if (empty($email) || empty($password)) {
+            $response->setStatusCode(400);
+            return json_encode(['error' => 'Email and password are required.']);
+        }
+        
+        $db = Application::$app->db;
+        $stmt = $db->prepare("SELECT u.*, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+        
+        if ($user && password_verify($password, $user['password_hash'])) {
+            if ($user['status'] !== 'ACTIVE' && $user['role'] !== 'SELLER') {
+                $response->setStatusCode(403);
+                return json_encode(['error' => 'Account is not active.']);
+            }
+            
+            $jwtHandler = new \Core\JWTHandler();
+            $token = $jwtHandler->generateToken($user);
+            
+            return json_encode([
+                'success' => true,
+                'token' => $token,
+                'user' => [
+                    'id' => $user['id'],
+                    'name' => $user['name'],
+                    'role' => $user['role']
+                ]
+            ]);
+        }
+        
+        $response->setStatusCode(401);
+        return json_encode(['error' => 'Invalid credentials.']);
+    }
+
+    public function registerDevice(Request $request, Response $response) {
+        $user = $this->authenticateApi($request, $response);
+        if (!$user) return null;
+        
+        $body = json_decode($request->getBodyRaw(), true) ?: $request->getBody();
+        $token = $body['device_token'] ?? '';
+        $type = $body['device_type'] ?? 'ANDROID';
+        
+        if (empty($token)) {
+            $response->setStatusCode(400);
+            return json_encode(['error' => 'Device token required.']);
+        }
+        
+        $db = Application::$app->db;
+        $stmt = $db->prepare("INSERT INTO devices (user_id, device_token, device_type) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id), updated_at = NOW()");
+        $stmt->execute([$user['id'], $token, $type]);
+        
+        return json_encode(['success' => true, 'message' => 'Device registered successfully.']);
+    }
+
     public function __construct() {
         $this->checkRateLimit(Application::$app->request, Application::$app->response);
     }
     protected function checkRateLimit(Request $request, Response $response): void {
         $ip = $_SERVER['REMOTE_ADDR'] ?? '';
         if (empty($ip)) return;
-        $db = Application::$app->db;
-        $url = $_SERVER['REQUEST_URI'] ?? '';
-        try {
-            $stmt = $db->prepare("INSERT INTO activity_logs (activity, details, ip_address) VALUES ('API_HIT', ?, ?)");
-            $stmt->execute([$url, $ip]);
-            $stmtCount = $db->prepare("SELECT COUNT(*) FROM activity_logs WHERE ip_address = ? AND created_at >= NOW() - INTERVAL 1 MINUTE");
-            $stmtCount->execute([$ip]);
-            $count = intval($stmtCount->fetchColumn());
-            if ($count > 60) {
-                $response->setStatusCode(429);
-                echo json_encode([
-                    'error' => 'Too Many Requests. Rate limit of 60 requests per minute exceeded.',
-                    'retry_after' => 60
-                ]);
-                exit;
-            }
+        
+        $cache = Application::$app->cache;
+        $key = 'rate_limit_' . md5($ip);
+        $count = $cache->get($key) ?: 0;
+        
+        if ($count > 100) {
+            $response->setStatusCode(429);
+            echo json_encode([
+                'error' => 'Too Many Requests. Rate limit exceeded.',
+                'retry_after' => 60
+            ]);
+            exit;
+        }
+        
+        $cache->set($key, $count + 1, 60);
+    }
         } catch (\Throwable $e) {
         }
     }
@@ -39,21 +98,34 @@ class ApiController extends Controller {
             exit;
         }
         $token = substr($authHeader, 7);
-        $db = Application::$app->db;
-        $stmt = $db->prepare("
-            SELECT u.*, r.name as role 
-            FROM user_sessions us
-            JOIN users u ON us.user_id = u.id
-            JOIN roles r ON u.role_id = r.id
-            WHERE us.token = ? AND u.status = 'ACTIVE'
-        ");
-        $stmt->execute([$token]);
-        $user = $stmt->fetch();
-        if (!$user) {
+        
+        $jwtHandler = new \Core\JWTHandler();
+        $decoded = $jwtHandler->decodeToken($token);
+        
+        if (!$decoded || !isset($decoded['id'])) {
             $response->setStatusCode(401);
-            echo json_encode(['error' => 'Unauthorised. Session expired or token revoked.']);
+            echo json_encode(['error' => 'Unauthorised. Invalid or expired JWT token.']);
             exit;
         }
+        
+        $db = Application::$app->db;
+        $stmt = $db->prepare("SELECT u.*, r.name as role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = ?");
+        $stmt->execute([$decoded['id']]);
+        $user = $stmt->fetch();
+        
+        if (!$user) {
+            $response->setStatusCode(401);
+            echo json_encode(['error' => 'Unauthorised. User not found.']);
+            exit;
+        }
+
+        $isKycRoute = strpos($_SERVER['REQUEST_URI'] ?? '', '/api/kyc/upload') !== false;
+        if ($user['status'] !== 'ACTIVE' && !($user['role'] === 'SELLER' && $user['status'] === 'PENDING' && $isKycRoute)) {
+            $response->setStatusCode(403);
+            echo json_encode(['error' => 'Forbidden. Account is pending or inactive.']);
+            exit;
+        }
+        
         if (!empty($allowedRoles) && !in_array($user['role'], $allowedRoles)) {
             $response->setStatusCode(403);
             echo json_encode(['error' => 'Forbidden. Permission denied.']);

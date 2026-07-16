@@ -20,8 +20,8 @@ function renderProductCard($p) {
     ?>
     <div class="pavitra-product-card minimal product-card-trigger" data-id="<?= $p['id'] ?>" data-json="<?= htmlspecialchars(json_encode($p), ENT_QUOTES, 'UTF-8') ?>">
         <div class="pavitra-card-img-wrapper position-relative">
-            <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="pavitra-card-img" loading="lazy">
-            <img src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="pavitra-card-img-hover" loading="lazy">
+            <img loading="lazy" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="<?= htmlspecialchars($p['title']) ?>" class="pavitra-card-img" loading="lazy">
+            <img loading="lazy" src="<?= $hoverImg ?>" alt="<?= htmlspecialchars($p['title']) ?> Back View" class="pavitra-card-img-hover" loading="lazy">
             <button class="wishlist-heart-btn" onclick="event.stopPropagation(); $(this).toggleClass('active'); showToast($(this).hasClass('active') ? 'Added to Wishlist ❤️' : 'Removed from Wishlist');">
                 <i class="fa-solid fa-heart"></i>
             </button>
@@ -84,31 +84,31 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <div class="category-circle-title">All Sarees</div>
         </a>
         <a href="/?category=Kanjeevaram+Silk" class="category-circle-item <?= $selectedCategory === 'Kanjeevaram Silk' ? 'active' : '' ?>">
-            <img src="/kanjeevaram_1782883481838.png" class="category-circle-img" alt="Kanjeevaram">
+            <img loading="lazy" src="/kanjeevaram_1782883481838.png" class="category-circle-img" alt="Kanjeevaram">
             <div class="category-circle-title">Kanjeevaram</div>
         </a>
         <a href="/?category=Banarasi+Brocade" class="category-circle-item <?= $selectedCategory === 'Banarasi Brocade' ? 'active' : '' ?>">
-            <img src="/banarasi_1782883519429.png" class="category-circle-img" alt="Banarasi">
+            <img loading="lazy" src="/banarasi_1782883519429.png" class="category-circle-img" alt="Banarasi">
             <div class="category-circle-title">Banarasi</div>
         </a>
         <a href="/?category=Patola+Silk" class="category-circle-item <?= $selectedCategory === 'Patola Silk' ? 'active' : '' ?>">
-            <img src="/patola_1782883499288.png" class="category-circle-img" alt="Patola">
+            <img loading="lazy" src="/patola_1782883499288.png" class="category-circle-img" alt="Patola">
             <div class="category-circle-title">Patola</div>
         </a>
         <a href="/?category=Organza+Silk" class="category-circle-item <?= $selectedCategory === 'Organza Silk' ? 'active' : '' ?>">
-            <img src="/tissue_1782883588057.png" class="category-circle-img" alt="Organza">
+            <img loading="lazy" src="/tissue_1782883588057.png" class="category-circle-img" alt="Organza">
             <div class="category-circle-title">Organza</div>
         </a>
         <a href="/?category=Chanderi+Weave" class="category-circle-item <?= $selectedCategory === 'Chanderi Weave' ? 'active' : '' ?>">
-            <img src="/banarasi_1782883568122.png" class="category-circle-img" alt="Chanderi">
+            <img loading="lazy" src="/banarasi_1782883568122.png" class="category-circle-img" alt="Chanderi">
             <div class="category-circle-title">Chanderi</div>
         </a>
         <a href="/?category=Mysore+Crepe+Silk" class="category-circle-item <?= $selectedCategory === 'Mysore Crepe Silk' ? 'active' : '' ?>">
-            <img src="/kanjeevaram_1782883536799.png" class="category-circle-img" alt="Mysore Silk">
+            <img loading="lazy" src="/kanjeevaram_1782883536799.png" class="category-circle-img" alt="Mysore Silk">
             <div class="category-circle-title">Mysore Silk</div>
         </a>
         <a href="/?category=Jamdani+Muslin" class="category-circle-item <?= $selectedCategory === 'Jamdani Muslin' ? 'active' : '' ?>">
-            <img src="/patola_1782883552751.png" class="category-circle-img" alt="Jamdani">
+            <img loading="lazy" src="/patola_1782883552751.png" class="category-circle-img" alt="Jamdani">
             <div class="category-circle-title">Jamdani</div>
         </a>
     </div>
@@ -736,7 +736,7 @@ $(document).ready(function() {
             <div class="pavitra-zoom-lightbox">
                 <button class="pavitra-zoom-close" title="Close"><i class="fa-solid fa-xmark"></i></button>
                 <div class="pavitra-zoom-wrapper">
-                    <img src="${src}" class="pavitra-zoom-img" alt="Zoom Saree">
+                    <img loading="lazy" src="${src}" class="pavitra-zoom-img" alt="Zoom Saree">
                 </div>
                 <div class="pavitra-zoom-controls">
                     <button class="pavitra-zoom-btn btn-zoom-out" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>

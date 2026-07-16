@@ -39,7 +39,7 @@
                         <?php foreach ($products as $p): ?>
                             <tr>
                                 <td>
-                                    <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
+                                    <img loading="lazy" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
                                 </td>
                                 <td>
                                     <h6 class="fw-bold text-dark mb-1"><?= htmlspecialchars($p['title']) ?></h6>

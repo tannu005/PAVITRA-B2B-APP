@@ -44,7 +44,7 @@
                                 <div class="d-flex flex-column gap-3">
                                     <?php foreach ($order['items'] as $item): ?>
                                         <div class="d-flex gap-3 align-items-center">
-                                            <img src="<?= htmlspecialchars($item['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
+                                            <img loading="lazy" src="<?= htmlspecialchars($item['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
                                             <div class="flex-grow-1" style="min-width: 0;">
                                                 <h6 class="fw-semibold mb-0 text-truncate" style="font-size: 0.9rem;"><?= htmlspecialchars($item['title']) ?></h6>
                                                 <span class="text-muted small">Quantity: <strong><?= $item['quantity'] ?> units</strong> • B2B Rate: ₹<?= number_format($item['wholesale_price']) ?></span>

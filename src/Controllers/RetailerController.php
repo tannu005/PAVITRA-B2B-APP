@@ -579,6 +579,7 @@ class RetailerController extends Controller {
             $stmtClear->execute([$cartId]);
             unset($_SESSION['applied_coupon']);
             if (!$hasActiveTransaction) {
+                \Core\NotificationService::dispatchOrderPlaced($user['id'], $orderId, $cartTotal);
                 $db->commit();
             }
             return ['success' => true];

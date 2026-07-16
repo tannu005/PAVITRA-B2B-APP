@@ -165,7 +165,7 @@ async function loadWishlist() {
                     <i class="fa-solid fa-heart-crack" style="font-size:0.85rem;"></i>
                 </button>
                 ${savings > 0 ? `<div style="position:absolute;top:10px;left:10px;background:var(--premium-gold);color:#fff;font-size:0.65rem;font-weight:800;padding:2px 7px;border-radius:20px;z-index:5;">${savings}% OFF</div>` : ''}
-                <img src="${p.image_url || '/assets/images/placeholder.jpg'}" alt="${p.title || 'Product'}" onerror="this.src='/assets/images/placeholder.jpg'">
+                <img loading="lazy" src="${p.image_url || '/assets/images/placeholder.jpg'}" alt="${p.title || 'Product'}" onerror="this.src='/assets/images/placeholder.jpg'">
                 <div class="wishlist-card-body">
                     <div class="wishlist-card-title">${p.title || 'Saree'}</div>
                     <div class="wishlist-card-price">₹${price.toLocaleString('en-IN')}</div>

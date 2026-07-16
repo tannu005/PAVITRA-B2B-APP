@@ -817,3 +817,15 @@ CREATE TABLE IF NOT EXISTS applied_coupons (
 );
 
 ALTER TABLE users ADD COLUMN email_opt_in TINYINT(1) DEFAULT 1;
+
+
+CREATE TABLE IF NOT EXISTS `devices` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NOT NULL,
+  `device_token` VARCHAR(255) NOT NULL,
+  `device_type` ENUM('ANDROID', 'IOS', 'WEB') DEFAULT 'ANDROID',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY `unique_device_token` (`device_token`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

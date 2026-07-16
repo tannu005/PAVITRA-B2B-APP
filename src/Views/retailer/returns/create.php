@@ -32,7 +32,7 @@
                                 <?php foreach ($items as $item): ?>
                                     <tr>
                                         <td>
-                                            <img src="<?= htmlspecialchars($item['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
+                                            <img loading="lazy" src="<?= htmlspecialchars($item['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
                                         </td>
                                         <td>
                                             <h6 class="fw-semibold text-dark mb-0"><?= htmlspecialchars($item['title']) ?></h6>

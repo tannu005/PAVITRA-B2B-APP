@@ -63,7 +63,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     </a>
                 <?php else: ?>
                     <a href="/" class="pavitra-logo" style="margin-right: 10px; text-decoration: none;">
-                        <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 38px; width: auto; display: block;" class="pavitra-logo-img">
+                        <img loading="lazy" src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 38px; width: auto; display: block;" class="pavitra-logo-img">
                     </a>
                 <?php endif; ?>
             </div>
@@ -93,7 +93,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
     <header class="pavitra-header py-2">
         <div class="container-xl d-flex align-items-center justify-content-between">
             <a href="/" class="pavitra-logo" style="text-decoration: none;">
-                <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
+                <img loading="lazy" src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
             </a>
             <div class="pavitra-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
@@ -281,7 +281,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     const totalFormatted = parseFloat(item.total).toLocaleString('en-IN');
                     html += `
                         <div class="d-flex gap-3 pb-3 border-bottom align-items-center">
-                            <img src="${item.image_url || '/assets/images/placeholder.png'}" class="rounded" style="width: 60px; height: 75px; object-fit: cover; border: 1px solid var(--pavitra-border);">
+                            <img loading="lazy" src="${item.image_url || '/assets/images/placeholder.png'}" class="rounded" style="width: 60px; height: 75px; object-fit: cover; border: 1px solid var(--pavitra-border);">
                             <div class="flex-grow-1" style="min-width: 0;">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h6 class="fw-semibold mb-0 text-truncate" style="font-size: 0.9rem;">${item.title}</h6>
@@ -594,7 +594,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
                     <a href="/" class="pavitra-logo d-inline-block mb-3">
-                        <img src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
+                        <img loading="lazy" src="/assets/img/pavitra_logo.png" alt="Pavitra Designer Saree" style="height: 48px; width: auto; display: block;" class="pavitra-logo-img">
                     </a>
                     <p style="font-size: 0.82rem; line-height: 1.8; color: rgba(255,255,255,0.4);">India's premier wholesale saree marketplace. Weaver-direct GI-tagged handlooms for discerning retailers.</p>
                     <div class="pavitra-footer-social mt-3">

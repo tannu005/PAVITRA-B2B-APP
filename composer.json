@@ -3,7 +3,10 @@
     "description": "Pavitra B2B Wholesale Marketplace",
     "type": "project",
     "require": {
-        "php": ">=8.3.0"
+        "php": ">=8.3.0",
+        "firebase/php-jwt": "^6.10",
+        "dompdf/dompdf": "^3.0",
+        "predis/predis": "^2.2"
     },
     "autoload": {
         "psr-4": {

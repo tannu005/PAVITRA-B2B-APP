@@ -41,7 +41,7 @@
                                     <div class="d-flex flex-column gap-2" style="font-size: 0.85rem;">
                                         <?php foreach ($r['items'] as $item): ?>
                                             <div class="d-flex align-items-center gap-2">
-                                                <img src="<?= htmlspecialchars($item['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 30px; height: 35px; object-fit: cover;">
+                                                <img loading="lazy" src="<?= htmlspecialchars($item['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 30px; height: 35px; object-fit: cover;">
                                                 <span><?= htmlspecialchars($item['title']) ?> (<strong><?= $item['quantity'] ?> units</strong>)</span>
                                             </div>
                                         <?php endforeach; ?>

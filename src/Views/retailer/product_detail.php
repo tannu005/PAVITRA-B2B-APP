@@ -16,7 +16,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
     <div class="row g-4">
         <div class="col-lg-6 col-md-12">
             <div class="position-relative overflow-hidden bg-light border rounded-3 text-center mb-3" id="main-media-container" style="min-height: 400px; display: flex; align-items: center; justify-content: center;">
-                <img id="detail-saree-img" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" class="img-fluid w-100 zoomable-saree-img" style="max-height: 580px; object-fit: cover; cursor: zoom-in;" title="Click to zoom saree pattern">
+                <img loading="lazy" id="detail-saree-img" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" class="img-fluid w-100 zoomable-saree-img" style="max-height: 580px; object-fit: cover; cursor: zoom-in;" title="Click to zoom saree pattern">
                 <video id="detail-saree-video" src="" controls style="display: none; max-height: 580px; width: 100%;"></video>
                 <iframe id="detail-saree-iframe" src="" frameborder="0" allowfullscreen style="display: none; height: 400px; width: 100%;"></iframe>
                 <span class="position-absolute bg-dark text-white px-2 py-1 small fw-bold" style="top: 15px; left: 15px; background-color: #7952B3 !important; font-size: 0.65rem; border-radius: 2px;">
@@ -32,13 +32,13 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
             <div class="d-flex gap-2 overflow-auto pb-2 mb-3 px-1 custom-scrollbar">
                 <?php if (!empty($p['image_url'])): ?>
                 <div class="border rounded-2 overflow-hidden flex-shrink-0 cursor-pointer thumbnail-item border-dark" style="width: 70px; height: 70px;" onclick="changeMainMedia('<?= htmlspecialchars($p['image_url']) ?>', 'image', this)">
-                    <img src="<?= htmlspecialchars($p['image_url']) ?>" class="w-100 h-100" style="object-fit: cover;">
+                    <img loading="lazy" src="<?= htmlspecialchars($p['image_url']) ?>" class="w-100 h-100" style="object-fit: cover;">
                 </div>
                 <?php endif; ?>
                 <?php foreach($images as $img): ?>
                 <?php if($img['image_url'] !== $p['image_url']): ?>
                 <div class="border rounded-2 overflow-hidden flex-shrink-0 cursor-pointer thumbnail-item opacity-75" style="width: 70px; height: 70px;" onclick="changeMainMedia('<?= htmlspecialchars($img['image_url']) ?>', 'image', this)">
-                    <img src="<?= htmlspecialchars($img['image_url']) ?>" class="w-100 h-100" style="object-fit: cover;">
+                    <img loading="lazy" src="<?= htmlspecialchars($img['image_url']) ?>" class="w-100 h-100" style="object-fit: cover;">
                 </div>
                 <?php endif; ?>
                 <?php endforeach; ?>
@@ -211,7 +211,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     </div>
                     <div class="d-flex gap-2 mb-3 mt-2 overflow-auto" style="scrollbar-width: none;">
                         <div class="position-relative border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img src="/saree-banner1.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/saree-banner1.png" style="width: 100%; height: 100%; object-fit: cover;">
                             <div class="position-absolute start-0 top-0 w-100 h-100 d-flex align-items-end p-1" style="background: rgba(0,0,0,0.15);">
                                 <span class="text-white fw-bold d-flex align-items-center gap-1" style="font-size: 0.58rem; background: rgba(0,0,0,0.5); padding: 1px 4px; border-radius: 4px;">
                                     <i class="fa-solid fa-play" style="font-size: 0.5rem;"></i> 0:42
@@ -219,13 +219,13 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                             </div>
                         </div>
                         <div class="border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img src="/saree-banner2.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/saree-banner2.png" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div class="border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img src="/saree-banner3.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/saree-banner3.png" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div class="position-relative border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img src="/saree-banner4.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/saree-banner4.png" style="width: 100%; height: 100%; object-fit: cover;">
                             <div class="position-absolute start-0 top-0 w-100 h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="background: rgba(0,0,0,0.45); font-size: 0.85rem;">
                                 +1168
                             </div>
@@ -261,11 +261,11 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     </div>
                     <div class="d-flex align-items-center justify-content-around border-top pt-3 mt-2 text-center">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="https://cdn-icons-png.flaticon.com/512/9322/9322127.png" style="width: 48px; height: 48px; object-fit: contain;" class="mb-1">
+                            <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/9322/9322127.png" style="width: 48px; height: 48px; object-fit: contain;" class="mb-1">
                             <div class="fw-bold text-danger text-uppercase" style="font-size: 0.65rem; letter-spacing: 0.05em; color: #DC3545 !important;">Genuine Product</div>
                         </div>
                         <div class="d-flex flex-column align-items-center">
-                            <img src="https://cdn-icons-png.flaticon.com/512/9552/9552523.png" style="width: 48px; height: 48px; object-fit: contain;" class="mb-1">
+                            <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/9552/9552523.png" style="width: 48px; height: 48px; object-fit: contain;" class="mb-1">
                             <div class="fw-bold text-success text-uppercase" style="font-size: 0.65rem; letter-spacing: 0.05em; color: #198754 !important;">Quality Checked</div>
                         </div>
                     </div>
@@ -312,7 +312,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
     </div>
 </div>
 <div id="imageZoomOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); z-index: 9999; align-items: center; justify-content: center; cursor: zoom-out;">
-    <img id="zoomed-saree-img" src="" class="img-fluid" style="max-height: 90vh; max-width: 90vw; object-fit: contain; transform: scale(1); transition: transform 0.25s ease;">
+    <img loading="lazy" id="zoomed-saree-img" src="" class="img-fluid" style="max-height: 90vh; max-width: 90vw; object-fit: contain; transform: scale(1); transition: transform 0.25s ease;">
     <div class="position-absolute d-flex gap-3" style="bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10000;">
         <button class="btn btn-dark btn-sm rounded-circle d-flex align-items-center justify-content-center" id="btn-zoom-in" style="width: 40px; height: 40px;"><i class="fa-solid fa-plus fs-5"></i></button>
         <button class="btn btn-dark btn-sm rounded-circle d-flex align-items-center justify-content-center" id="btn-zoom-out" style="width: 40px; height: 40px;"><i class="fa-solid fa-minus fs-5"></i></button>

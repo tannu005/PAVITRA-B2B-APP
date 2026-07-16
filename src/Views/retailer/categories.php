@@ -28,7 +28,7 @@
                     <div class="card h-100 border-0 shadow-sm p-4 text-center pavitra-store-card" style="border-radius: 16px; background-color: #FFFDF8; border: 1px solid var(--premium-border) !important; transition: all 0.35s ease;">
                         <div class="d-flex justify-content-center mb-3">
                             <div class="img-wrapper" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #FFF; box-shadow: 0 8px 24px rgba(107,29,29,0.12); position:relative;">
-                                <img src="<?= htmlspecialchars($store['image']) ?>" alt="<?= htmlspecialchars($store['name']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                                <img loading="lazy" src="<?= htmlspecialchars($store['image']) ?>" alt="<?= htmlspecialchars($store['name']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                         </div>
                         <span class="badge bg-gold-light text-uppercase mb-2 px-2.5 py-1.5" style="font-size:0.6rem; letter-spacing:0.08em; background-color: var(--premium-gold-light); color: var(--premium-gold-dark); font-weight:700;">

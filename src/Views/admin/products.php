@@ -26,7 +26,7 @@
                     <?php foreach ($productsList as $p): ?>
                         <tr>
                             <td>
-                                <img src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
+                                <img loading="lazy" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" alt="" class="rounded border" style="width: 50px; height: 60px; object-fit: cover;">
                             </td>
                             <td>
                                 <h6 class="fw-semibold mb-1 text-dark"><?= htmlspecialchars($p['title']) ?></h6>

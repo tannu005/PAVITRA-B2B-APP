@@ -231,7 +231,7 @@
             <div id="twofa-setup-container" class="text-center p-3 border rounded bg-white mt-3" style="display: none;">
                 <p class="mb-3 text-muted" style="font-size: 0.75rem;">Scan this QR code using Google Authenticator or Microsoft Authenticator, then copy the 2FA secret.</p>
                 <div class="mb-3">
-                    <img id="twofa-qr-image" src="" alt="2FA QR Code" class="img-fluid border p-2 bg-light" style="max-width: 180px;">
+                    <img loading="lazy" id="twofa-qr-image" src="" alt="2FA QR Code" class="img-fluid border p-2 bg-light" style="max-width: 180px;">
                 </div>
                 <div class="mb-2">
                     <span class="text-muted d-block small mb-1">Secret Key (Manual Entry):</span>
