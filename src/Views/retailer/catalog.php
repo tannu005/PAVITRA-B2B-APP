@@ -43,9 +43,9 @@ $hoverImg = !empty($p['hover_image_url']) ? $p['hover_image_url'] : ($p['image_u
                         }
                     }
                 ?>
-                    <div class="color-swatch-wrapper <?= $idx === 0 ? 'active' : '' ?>" style="border: 2px solid <?= $idx === 0 ? '#999' : 'transparent' ?>; border-radius: 50%; padding: 2px; display: inline-flex;">
+                    <a href="/product/<?= $p['id'] ?>?color=<?= urlencode(trim($c)) ?>" class="color-swatch-wrapper <?= $idx === 0 ? 'active' : '' ?>" style="border: 2px solid <?= $idx === 0 ? '#999' : 'transparent' ?>; border-radius: 50%; padding: 2px; display: inline-flex; text-decoration: none;" title="<?= htmlspecialchars(trim($c)) ?>">
                         <div class="color-swatch <?= $colorClass ?>" style="width: 14px; height: 14px; border: 1px solid rgba(0,0,0,0.15) !important; margin: 0; box-shadow: none;"></div>
-                    </div>
+                    </a>
                 <?php endforeach; ?>
             </div>
             <?php endif; ?>
@@ -210,9 +210,10 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         <div class="row g-3 g-md-4 justify-content-center">
             <?php
             $cats = [];
+            $fallbackImages = ['/kanjeevaram.png', '/banarasi.png', '/patola.png', '/tissue.png'];
             foreach (array_slice($categoriesList, 0, 4) as $idx => $c) {
                 
-                $catImg = '/uploads/products/bandhej---2--jpg.jpg'; 
+                $catImg = $fallbackImages[$idx % count($fallbackImages)]; 
                 if (isset($products) && is_array($products)) {
                     foreach($products as $p) {
                         if($p['category_name'] == $c['name'] && !empty($p['image_url'])) {

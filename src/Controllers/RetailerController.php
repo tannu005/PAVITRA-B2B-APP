@@ -96,18 +96,32 @@ class RetailerController extends Controller {
         $stmtVariants = $db->prepare("SELECT * FROM product_variants WHERE product_id = ? ORDER BY id ASC");
         $stmtVariants->execute([$id]);
         $variants = $stmtVariants->fetchAll();
+        
+        $body = $request->getBody();
+        $requestedColor = isset($body['color']) ? strtolower(trim($body['color'])) : '';
+        $selectedVariantIndex = 0;
+
         if (!empty($variants)) {
-            $product['variant_id'] = $variants[0]['id'];
-            $product['sku'] = $variants[0]['sku'];
-            $product['color'] = $variants[0]['color'];
-            $product['size'] = $variants[0]['size'];
-            $product['weight'] = $variants[0]['weight'];
-            $product['dimensions'] = $variants[0]['dimensions'];
-            $product['wholesale_price'] = $variants[0]['wholesale_price'];
-            $product['price'] = $variants[0]['price'];
-            $product['bulk_threshold'] = $variants[0]['bulk_threshold'];
-            $product['stock'] = $variants[0]['stock'];
-            $product['image_url'] = $variants[0]['image_url'];
+            if ($requestedColor) {
+                foreach ($variants as $idx => $v) {
+                    if (strtolower(trim($v['color'])) === $requestedColor) {
+                        $selectedVariantIndex = $idx;
+                        break;
+                    }
+                }
+            }
+
+            $product['variant_id'] = $variants[$selectedVariantIndex]['id'];
+            $product['sku'] = $variants[$selectedVariantIndex]['sku'];
+            $product['color'] = $variants[$selectedVariantIndex]['color'];
+            $product['size'] = $variants[$selectedVariantIndex]['size'];
+            $product['weight'] = $variants[$selectedVariantIndex]['weight'];
+            $product['dimensions'] = $variants[$selectedVariantIndex]['dimensions'];
+            $product['wholesale_price'] = $variants[$selectedVariantIndex]['wholesale_price'];
+            $product['price'] = $variants[$selectedVariantIndex]['price'];
+            $product['bulk_threshold'] = $variants[$selectedVariantIndex]['bulk_threshold'];
+            $product['stock'] = $variants[$selectedVariantIndex]['stock'];
+            $product['image_url'] = $variants[$selectedVariantIndex]['image_url'];
         }
         $stmtImg = $db->prepare("SELECT image_url, is_primary FROM product_images WHERE product_id = ? ORDER BY is_primary DESC, id ASC");
         $stmtImg->execute([$id]);
@@ -115,12 +129,52 @@ class RetailerController extends Controller {
         $stmtVid = $db->prepare("SELECT video_url FROM product_videos WHERE product_id = ?");
         $stmtVid->execute([$id]);
         $videos = $stmtVid->fetchAll();
+
+        $stmtReviews = $db->prepare("
+            SELECT pr.*, u.name as user_name
+            FROM product_reviews pr
+            JOIN users u ON pr.user_id = u.id
+            WHERE pr.product_id = ?
+            ORDER BY pr.created_at DESC
+        ");
+        $stmtReviews->execute([$id]);
+        $reviews = $stmtReviews->fetchAll();
+
         return $this->render('retailer/product_detail', [
             'product' => $product,
             'variants' => $variants,
             'images' => $images,
-            'videos' => $videos
+            'videos' => $videos,
+            'reviews' => $reviews
         ]);
+    }
+
+    public function addReview(Request $request, Response $response) {
+        $user = Application::$app->getSessionUser();
+        if (!$user) {
+            $response->setStatusCode(401);
+            return json_encode(['success' => false, 'error' => 'You must be logged in to leave a review.']);
+        }
+
+        $body = $request->getBody();
+        $productId = intval($body['product_id'] ?? 0);
+        $rating = intval($body['rating'] ?? 0);
+        $comment = trim($body['comment'] ?? '');
+
+        if ($productId <= 0 || $rating < 1 || $rating > 5 || empty($comment)) {
+            $response->setStatusCode(400);
+            return json_encode(['success' => false, 'error' => 'Invalid review data.']);
+        }
+
+        try {
+            $db = Application::$app->db;
+            $stmt = $db->prepare("INSERT INTO product_reviews (product_id, user_id, rating, comment) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$productId, $user['id'], $rating, $comment]);
+            return json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            $response->setStatusCode(500);
+            return json_encode(['success' => false, 'error' => 'Failed to submit review.']);
+        }
     }
     protected function getOrCreateCartId(): int {
         $db = Application::$app->db;
@@ -801,71 +855,44 @@ class RetailerController extends Controller {
         ]);
     }
     public function categoriesView(Request $request, Response $response) {
-        $stores = [
-            [
-                'name' => 'Banaras Heritage Weaves',
-                'speciality' => 'Banarasi Sarees',
-                'artisan' => 'Mohammad Yaseen & Sons',
-                'location' => 'Varanasi, Uttar Pradesh',
-                'image' => '/uploads/products/banarasi---1--jpg.jpg',
-                'slug' => 'Banarasi+Sarees',
-                'rating' => '4.9',
-                'desc' => 'Pure silk handlooms with real silver and gold Zari work, carrying GI-tagged legacy from the ghats of Varanasi.'
-            ],
-            [
-                'name' => 'Silk Emporium',
-                'speciality' => 'Silk Sarees',
-                'artisan' => 'K. Srinivasa Chari',
-                'location' => 'Kanchipuram, Tamil Nadu',
-                'image' => '/uploads/products/designer-sarees-621.jpg',
-                'slug' => 'Silk+Sarees',
-                'rating' => '4.8',
-                'desc' => 'Heavy temple-border wedding silks woven with three shuttles and pure gold Zari thread for generational longevity.'
-            ],
-            [
-                'name' => 'Bandhej Masters',
-                'speciality' => 'Bandhej Sarees',
-                'artisan' => 'The Salvi Family Collective',
-                'location' => 'Patan, Gujarat',
-                'image' => '/uploads/products/bandhej---2--jpg.jpg',
-                'slug' => 'Bandhej+Sarees',
-                'rating' => '4.9',
-                'desc' => 'Traditional geometric tie and dye patterns in rich natural dye tints, showcasing mastery over complex resist dyeing.'
-            ],
-            [
-                'name' => 'Designer Saree Handlooms',
-                'speciality' => 'Designer Sarees',
-                'artisan' => 'Ansari Weavers',
-                'location' => 'Chanderi, Madhya Pradesh',
-                'image' => '/uploads/products/designer-sarees-622.jpg',
-                'slug' => 'Designer+Sarees',
-                'rating' => '4.7',
-                'desc' => 'Lightweight, sheer, and glossy textures crafted with fine cotton and silk threads intertwined with zari.'
-            ],
-            [
-                'name' => 'Bridal Artisan Cooperative',
-                'speciality' => 'Bridal Sarees',
-                'artisan' => 'State Handloom Board',
-                'location' => 'Mysuru, Karnataka',
-                'image' => '/uploads/products/lehenga--23--jpg.jpg',
-                'slug' => 'Bridal+Sarees',
-                'rating' => '4.9',
-                'desc' => 'Minimalist pure crepe and georgette with solid colors and authentic pure gold zari borders.'
-            ],
-            [
-                'name' => 'Cotton Jamdani Guild',
-                'speciality' => 'Cotton Sarees',
-                'artisan' => 'Dhar Family Artisans',
-                'location' => 'Phulia, West Bengal',
-                'image' => '/uploads/products/cotton-sarees-5.jpg',
-                'slug' => 'Cotton+Sarees',
-                'rating' => '4.8',
-                'desc' => 'Incredibly fine translucent muslin cotton, interwoven with supplementary weft motifs that look like floating embroidery.'
-            ]
-        ];
+        $db = Application::$app->db;
+        $stmtCats = $db->query("SELECT id, name, slug FROM categories ORDER BY name ASC");
+        $categories = $stmtCats->fetchAll();
+        $body = $request->getBody();
+        $activeCategory = $body['category'] ?? '';
+
+        $sql = "
+            SELECT p.*, 
+                   MIN(pv.id) as variant_id, 
+                   MIN(pv.wholesale_price) as wholesale_price, 
+                   MAX(pv.price) as price, 
+                   MIN(pv.image_url) as image_url, 
+                   MIN(pv.bulk_threshold) as bulk_threshold, 
+                   MIN(pv.stock) as stock, 
+                   MIN(pv.sku) as sku, 
+                   GROUP_CONCAT(pv.color ORDER BY pv.id ASC SEPARATOR '|') as all_colors, 
+                   MIN(pv.weight) as weight, 
+                   MIN(pv.dimensions) as dimensions, 
+                   c.name as category_name 
+            FROM products p 
+            JOIN product_variants pv ON pv.product_id = p.id
+            JOIN categories c ON p.category_id = c.id
+            WHERE p.status = 'ACTIVE' AND p.is_approved = 1
+        ";
+        $params = [];
+        if (!empty($activeCategory)) {
+            $sql .= " AND c.slug = ?";
+            $params[] = $activeCategory;
+        }
+        $sql .= " GROUP BY p.id ORDER BY p.id DESC";
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        $products = $stmt->fetchAll();
+
         return $this->render('retailer/categories', [
-            'title' => 'Master Weaver Stores Directory - Pavitra Designer',
-            'stores' => $stores
+            'categories' => $categories,
+            'products' => $products,
+            'activeCategory' => $activeCategory
         ]);
     }
 }

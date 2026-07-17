@@ -45,6 +45,7 @@ $app->router->post('/reset-password', [App\Controllers\AuthController::class, 'r
 $app->router->get('/', [App\Controllers\RetailerController::class, 'index']);
 $app->router->get('/categories', [App\Controllers\RetailerController::class, 'categoriesView']);
 $app->router->get('/product/{id}', [App\Controllers\RetailerController::class, 'detail']);
+$app->router->post('/product/review', [App\Controllers\RetailerController::class, 'addReview']);
 $app->router->post('/cart/add', [App\Controllers\RetailerController::class, 'addToCart']);
 $app->router->post('/cart/update', [App\Controllers\RetailerController::class, 'updateCart']);
 $app->router->post('/cart/remove', [App\Controllers\RetailerController::class, 'removeFromCart']);

@@ -121,7 +121,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                                     }
                                 }
                             ?>
-                            <div class="color-swatch-wrapper <?= $index === 0 ? 'active' : '' ?>" style="border: 2px solid <?= $index === 0 ? '#999' : 'transparent' ?>; border-radius: 50%; padding: 2px; display: inline-flex; cursor: pointer; transition: all 0.2s;">
+                            <div class="color-swatch-wrapper <?= $v['id'] == $product['variant_id'] ? 'active' : '' ?>" style="border: 2px solid <?= $v['id'] == $product['variant_id'] ? '#999' : 'transparent' ?>; border-radius: 50%; padding: 2px; display: inline-flex; cursor: pointer; transition: all 0.2s;">
                                 <div class="color-swatch shadow-sm" 
                                      title="<?= htmlspecialchars($v['color']) ?>"
                                      data-variant-id="<?= $v['id'] ?>"
@@ -200,66 +200,72 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     </div>
                 </div>
                 <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
-                    <h6 class="fw-bold text-dark mb-3" style="font-size: 0.85rem;">Customer Reviews (1354)</h6>
+                <div class="p-3 mb-4 bg-white border rounded-3" style="border-color: #eaeaec !important;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold text-dark mb-0" style="font-size: 0.85rem;">Customer Reviews (<?= count($reviews) ?>)</h6>
+                        <button class="btn btn-sm btn-outline-dark fw-bold" onclick="$('#writeReviewForm').slideToggle();" style="font-size: 0.75rem;">Write a Review</button>
+                    </div>
+
+                    <div id="writeReviewForm" class="mb-4 p-3 bg-light border rounded-3" style="display: none; border-color: #eaeaec !important;">
+                        <h6 class="fw-bold mb-2" style="font-size: 0.8rem;">Leave a Review</h6>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Rating</label>
+                            <select id="reviewRating" class="form-select form-select-sm">
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Good</option>
+                                <option value="3">3 - Average</option>
+                                <option value="2">2 - Poor</option>
+                                <option value="1">1 - Terrible</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold">Comment</label>
+                            <textarea id="reviewComment" class="form-control form-control-sm" rows="3" placeholder="Share your experience..."></textarea>
+                        </div>
+                        <button class="btn btn-dark btn-sm w-100 fw-bold" onclick="submitReview(<?= $p['id'] ?>)">Submit Review</button>
+                    </div>
+
                     <div class="d-flex align-items-center gap-2 mb-3">
+                        <?php 
+                        $avg = 0;
+                        if (count($reviews) > 0) {
+                            $total = 0;
+                            foreach($reviews as $r) { $total += $r['rating']; }
+                            $avg = round($total / count($reviews), 1);
+                        }
+                        ?>
                         <span class="bg-success text-white px-2 py-1 fw-bold rounded-2 d-inline-flex align-items-center gap-1" style="font-size: 1.1rem; background-color: #03a685 !important;">
-                            4 <i class="fa-solid fa-star" style="font-size: 0.75rem;"></i>
+                            <?= $avg > 0 ? $avg : 'New' ?> <i class="fa-solid fa-star" style="font-size: 0.75rem;"></i>
                         </span>
-                        <span class="bg-light border px-3 py-1.5 rounded-pill text-muted fw-semibold d-inline-flex align-items-center justify-content-between" style="font-size: 0.78rem; width: 220px; cursor: pointer;">
-                            <span>7293 ratings | 1354 reviews</span>
-                            <span class="ms-1" style="font-size: 0.65rem;"><i class="fa-solid fa-chevron-right"></i></span>
+                        <span class="bg-light border px-3 py-1.5 rounded-pill text-muted fw-semibold d-inline-flex align-items-center justify-content-between" style="font-size: 0.78rem;">
+                            <span><?= count($reviews) ?> reviews</span>
                         </span>
                     </div>
-                    <div class="d-flex gap-2 mb-3 mt-2 overflow-auto" style="scrollbar-width: none;">
-                        <div class="position-relative border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/uploads/products/banarasi-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="position-absolute start-0 top-0 w-100 h-100 d-flex align-items-end p-1" style="background: rgba(0,0,0,0.15);">
-                                <span class="text-white fw-bold d-flex align-items-center gap-1" style="font-size: 0.58rem; background: rgba(0,0,0,0.5); padding: 1px 4px; border-radius: 4px;">
-                                    <i class="fa-solid fa-play" style="font-size: 0.5rem;"></i> 0:42
-                                </span>
-                            </div>
-                        </div>
-                        <div class="border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/uploads/products/organza-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/uploads/products/designer-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="position-relative border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/uploads/products/chiffon-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="position-absolute start-0 top-0 w-100 h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="background: rgba(0,0,0,0.45); font-size: 0.85rem;">
-                                +1168
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="d-flex gap-3 overflow-auto pb-3 mb-3" style="scrollbar-width: none;">
-                        <div class="p-3 bg-light border rounded-3" style="min-width: 280px; max-width: 280px; border-color: #eaeaec !important;">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="badge bg-success d-inline-flex align-items-center gap-1" style="font-size: 0.7rem; background-color: #03a685 !important;">
-                                    5 <i class="fa-solid fa-star" style="font-size: 0.55rem;"></i>
-                                </span>
-                                <span class="text-muted small">Feb 21, 2026</span>
+                        <?php if(empty($reviews)): ?>
+                            <div class="text-muted small w-100 text-center py-3">No reviews yet. Be the first to review!</div>
+                        <?php else: ?>
+                            <?php foreach($reviews as $r): ?>
+                            <div class="p-3 bg-light border rounded-3" style="min-width: 280px; max-width: 280px; border-color: #eaeaec !important;">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-success d-inline-flex align-items-center gap-1" style="font-size: 0.7rem; background-color: #03a685 !important;">
+                                        <?= $r['rating'] ?> <i class="fa-solid fa-star" style="font-size: 0.55rem;"></i>
+                                    </span>
+                                    <span class="text-muted small"><?= date('M d, Y', strtotime($r['created_at'])) ?></span>
+                                </div>
+                                <div class="fw-bold text-dark small mb-1">
+                                    <?php for($i=0; $i<$r['rating']; $i++): ?><i class="fa-solid fa-star text-warning"></i><?php endfor; ?>
+                                </div>
+                                <p class="text-muted mb-2" style="font-size: 0.75rem; white-space: pre-wrap;"><?= htmlspecialchars($r['comment']) ?></p>
+                                <div class="d-flex align-items-center gap-1 text-success fw-semibold" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-circle-check"></i> <?= htmlspecialchars($r['user_name']) ?>
+                                </div>
                             </div>
-                            <div class="fw-bold text-dark small mb-1"><i class="fa-solid fa-star text-warning"></i><i class="fa-solid fa-star text-warning"></i><i class="fa-solid fa-star text-warning"></i><i class="fa-solid fa-star text-warning"></i><i class="fa-solid fa-star text-warning"></i> Absolutely Stunning Saree – Pure Grace & Elegance!</div>
-                            <p class="text-muted mb-2 text-truncate" style="font-size: 0.75rem;">... read more</p>
-                            <div class="d-flex align-items-center gap-1 text-success fw-semibold" style="font-size: 0.72rem;">
-                                <i class="fa-solid fa-circle-check"></i> satrajit hore
-                            </div>
-                        </div>
-                        <div class="p-3 bg-light border rounded-3" style="min-width: 280px; max-width: 280px; border-color: #eaeaec !important;">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="badge bg-success d-inline-flex align-items-center gap-1" style="font-size: 0.7rem; background-color: #03a685 !important;">
-                                    5 <i class="fa-solid fa-star" style="font-size: 0.55rem;"></i>
-                                </span>
-                                <span class="text-muted small">Mar 02, 2026</span>
-                            </div>
-                            <div class="fw-bold text-dark small mb-1">Absolutely beautiful fabric and shine. Highly recommended for bridal store stock.</div>
-                            <p class="text-muted mb-2 text-truncate" style="font-size: 0.75rem;">... read more</p>
-                            <div class="d-flex align-items-center gap-1 text-success fw-semibold" style="font-size: 0.72rem;">
-                                <i class="fa-solid fa-circle-check"></i> Manas
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
+                    
                     <div class="d-flex align-items-center justify-content-around border-top pt-3 mt-2 text-center">
                         <div class="d-flex flex-column align-items-center">
                             <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/9322/9322127.png" style="width: 48px; height: 48px; object-fit: contain;" class="mb-1">
@@ -438,6 +444,36 @@ $(document).ready(function() {
         }
     });
 });
+
+function submitReview(productId) {
+    const rating = $('#reviewRating').val();
+    const comment = $('#reviewComment').val().trim();
+    if (!comment) {
+        window.showToast('Please enter a comment for your review.');
+        return;
+    }
+    const btn = $('#writeReviewForm button');
+    btn.prop('disabled', true).text('Submitting...');
+    $.ajax({
+        url: '/product/review',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ product_id: productId, rating: parseInt(rating), comment: comment }),
+        dataType: 'json',
+        success: function() {
+            window.showToast('Review submitted successfully! 🎉');
+            setTimeout(function() { location.reload(); }, 1500);
+        },
+        error: function(xhr) {
+            btn.prop('disabled', false).text('Submit Review');
+            if (xhr.status === 401) {
+                window.showToast('You must be logged in to leave a review.');
+            } else {
+                window.showToast(xhr.responseJSON ? xhr.responseJSON.error : 'Failed to submit review.');
+            }
+        }
+    });
+}
 function changeMainMedia(url, type, element) {
     $('.thumbnail-item').removeClass('border-dark').addClass('opacity-75');
     if (element) {

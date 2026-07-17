@@ -1,67 +1,105 @@
 <?php
 ?>
-<div class="container py-4 my-2" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-    <div class="card border-0 mb-5 overflow-hidden shadow-sm" style="border-radius: 16px; background: linear-gradient(135deg, var(--pavitra-pink) 0%, #3D0A0A 100%); border: 1px solid rgba(201, 151, 46, 0.25) !important;">
-        <div class="card-body p-4 p-md-5 text-white position-relative">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-8 col-12">
-                    <span class="badge text-uppercase px-3 py-2 mb-2" style="font-size:0.65rem; letter-spacing:0.1em; background: var(--premium-gold-gradient); color: #FFF;">Exclusive B2B Service</span>
-                    <h3 class="h2 text-uppercase mb-2" style="font-family: var(--font-headings); letter-spacing: 0.08em; color: #FFF !important;">Bespoke Handloom Customization</h3>
-                    <p class="mb-0 text-white-50" style="font-size: 0.85rem; max-width: 600px;">Directly order custom weaves, color dye spectrums, zari border sizes, and matching custom blouse fits straight from artisan looms.</p>
+<div class="container-xl py-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="row g-4">
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 80px;">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h6 class="mb-0 fw-bold text-uppercase" style="letter-spacing: 0.05em; color: var(--pavitra-pink);">Shop by Category</h6>
                 </div>
-                <div class="col-lg-4 col-12 text-lg-end">
-                    <a href="/customization" class="btn btn-light rounded-0 px-4 py-2.5 text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing:0.05em; color: var(--pavitra-pink); border: 2px solid #FFF;">Open Design Studio</a>
-                </div>
-            </div>
-            <div style="position: absolute; right: -50px; top: -50px; width: 200px; height: 200px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.04); pointer-events:none;"></div>
-        </div>
-    </div>
-    <div class="text-center mb-5">
-        <h2 class="text-uppercase fw-normal mb-1" style="font-family: var(--font-headings); letter-spacing: 0.12em; color: var(--pavitra-pink);">Weaver Business Directory</h2>
-        <p class="text-muted small text-uppercase" style="letter-spacing: 0.08em;">Direct Hubs & Specialty Saree Stores</p>
-        <div style="width: 40px; height: 1.5px; background-color: var(--premium-gold); margin: 12px auto 0;"></div>
-    </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <?php foreach ($stores as $store): ?>
-            <div class="col">
-                <a href="/?category=<?= $store['slug'] ?>" class="text-decoration-none text-dark d-block h-100">
-                    <div class="card h-100 border-0 shadow-sm p-4 text-center pavitra-store-card" style="border-radius: 16px; background-color: #FFFDF8; border: 1px solid var(--premium-border) !important; transition: all 0.35s ease;">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div class="img-wrapper" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #FFF; box-shadow: 0 8px 24px rgba(107,29,29,0.12); position:relative;">
-                                <img loading="lazy" src="<?= htmlspecialchars($store['image']) ?>" alt="<?= htmlspecialchars($store['name']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                        </div>
-                        <span class="badge bg-gold-light text-uppercase mb-2 px-2.5 py-1.5" style="font-size:0.6rem; letter-spacing:0.08em; background-color: var(--premium-gold-light); color: var(--premium-gold-dark); font-weight:700;">
-                            <?= htmlspecialchars($store['speciality']) ?>
-                        </span>
-                        <h4 class="h6 text-uppercase fw-bold mb-1" style="letter-spacing: 0.05em; color: var(--pavitra-pink);"><?= htmlspecialchars($store['name']) ?></h4>
-                        <div class="text-muted mb-2 small d-flex align-items-center justify-content-center gap-1" style="font-size:0.7rem;">
-                            <i class="fa-solid fa-user-tie" style="color:var(--premium-gold);"></i> <span><?= htmlspecialchars($store['artisan']) ?></span>
-                        </div>
-                        <div class="text-muted mb-3 small d-flex align-items-center justify-content-center gap-1" style="font-size:0.7rem;">
-                            <i class="fa-solid fa-location-dot" style="color:var(--premium-gold);"></i> <span><?= htmlspecialchars($store['location']) ?></span>
-                        </div>
-                        <p class="text-muted mb-4 small" style="line-height:1.6; min-height:60px; font-size:0.78rem;"><?= htmlspecialchars($store['desc']) ?></p>
-                        <div class="d-flex align-items-center justify-content-between border-top pt-3 mt-auto">
-                            <span class="small" style="font-weight:700; color:var(--premium-gold-dark);"><i class="fa fa-star me-1 text-warning"></i><?= $store['rating'] ?></span>
-                            <span class="text-uppercase fw-bold" style="font-size: 0.72rem; letter-spacing: 0.08em; color: var(--pavitra-pink);">Visit Store →</span>
-                        </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush rounded-bottom-4">
+                        <?php foreach($categories as $cat): ?>
+                            <a href="/categories?category=<?= $cat['slug'] ?>" class="list-group-item list-group-item-action py-3 px-4 border-0 <?= $activeCategory === $cat['slug'] ? 'active' : '' ?>" style="<?= $activeCategory === $cat['slug'] ? 'background-color: var(--pavitra-pink); color: white; font-weight: bold;' : 'color: #482922; font-weight: 500;' ?>">
+                                <?= htmlspecialchars($cat['name']) ?>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
-                </a>
+                </div>
             </div>
-        <?php endforeach; ?>
+        </div>
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold text-dark mb-0"><?= !empty($activeCategory) ? htmlspecialchars(str_replace('+', ' ', $activeCategory)) : 'All Collections' ?></h4>
+                <span class="text-muted small fw-semibold"><?= count($products) ?> Products</span>
+            </div>
+            
+            <?php if(empty($products)): ?>
+                <div class="text-center py-5 my-5 bg-white rounded-4 shadow-sm">
+                    <div class="fs-1 text-muted mb-3"><i class="fa-solid fa-box-open"></i></div>
+                    <h5 class="fw-bold text-dark">No products found</h5>
+                    <p class="text-muted mb-4">We couldn't find any products in this category.</p>
+                    <a href="/categories" class="btn text-white fw-bold px-4 rounded-pill" style="background-color: var(--pavitra-pink);">View All Categories</a>
+                </div>
+            <?php else: ?>
+                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <?php foreach ($products as $p): 
+                        $wholesalePrice = floatval($p['wholesale_price']);
+                        $price = floatval($p['price']);
+                        $mrp = number_format($price > 0 ? $price : $wholesalePrice + 8500);
+                        $discount = $price > $wholesalePrice ? round((($price - $wholesalePrice) / $price) * 100) : 0;
+                        
+                        $colors = [];
+                        if(!empty($p['all_colors'])) {
+                            $colors = array_filter(array_unique(explode('|', $p['all_colors'])));
+                        }
+                    ?>
+                        <div class="col">
+                            <a href="/product/<?= $p['id'] ?>" class="text-decoration-none d-block h-100">
+                                <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden product-card" style="transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                                    <div class="position-relative bg-light" style="padding-top: 133.33%;">
+                                        <img loading="lazy" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" 
+                                             class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
+                                        <?php if ($discount > 0): ?>
+                                            <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 fw-bold" style="font-size: 0.65rem; border-bottom-right-radius: 8px;">
+                                                <?= $discount ?>% OFF
+                                            </span>
+                                        <?php endif; ?>
+                                        <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-2 shadow-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" onclick="event.preventDefault(); window.showToast('Added to Wishlist ❤️');">
+                                            <i class="fa-regular fa-heart text-danger"></i>
+                                        </button>
+                                    </div>
+                                    <div class="card-body p-3 d-flex flex-column">
+                                        <div class="text-muted mb-1 text-truncate" style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase;"><?= htmlspecialchars($p['category_name']) ?></div>
+                                        <h6 class="card-title text-dark fw-bold mb-1 text-truncate" style="font-size: 0.85rem; color: #482922 !important;"><?= htmlspecialchars($p['title']) ?></h6>
+                                        <div class="d-flex align-items-baseline gap-2 mb-2">
+                                            <span class="fw-bold fs-6 text-dark">₹<?= number_format($wholesalePrice) ?></span>
+                                            <span class="text-decoration-line-through text-muted" style="font-size: 0.75rem;">₹<?= $mrp ?></span>
+                                        </div>
+                                        
+                                        <?php if(!empty($colors) && count($colors) > 1): ?>
+                                            <div class="d-flex flex-wrap gap-1 mt-auto pt-2">
+                                                <?php 
+                                                $displayCount = min(4, count($colors));
+                                                for($i = 0; $i < $displayCount; $i++): 
+                                                    $c = strtolower(trim($colors[$i]));
+                                                    $cssColors = ['white', 'black', 'red', 'blue', 'green', 'yellow', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown', 'navy', 'maroon', 'olive', 'silver', 'gold', 'cyan', 'magenta', 'beige', 'mustard', 'peach', 'lavender', 'coral', 'mint'];
+                                                    $bg = in_array($c, $cssColors) ? $c : '#ccc';
+                                                ?>
+                                                    <a href="/product/<?= $p['id'] ?>?color=<?= urlencode(trim($colors[$i])) ?>" class="rounded-circle border d-inline-block" style="width: 14px; height: 14px; background-color: <?= $bg ?>;" title="<?= htmlspecialchars($colors[$i]) ?>"></a>
+                                                <?php endfor; ?>
+                                                <?php if(count($colors) > 4): ?>
+                                                    <span class="text-muted fw-bold" style="font-size: 0.65rem; line-height: 14px;">+<?= count($colors) - 4 ?></span>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="mt-auto pt-2">
+                                                <span class="badge bg-light text-dark border fw-normal" style="font-size: 0.65rem;">Single Color</span>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 <style>
-.pavitra-store-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 36px rgba(107,29,29,0.08) !important;
-    background-color: #FFF !important;
-    border-color: var(--premium-gold) !important;
-}
-.pavitra-store-card:hover .img-wrapper {
-    box-shadow: 0 12px 30px rgba(201,151,46,0.3) !important;
-    transform: scale(1.05);
-    transition: all 0.35s ease;
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
 }
 </style>

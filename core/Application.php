@@ -25,6 +25,25 @@ class Application {
         $this->cache = new Cache();
         $this->loadEnv();
         $this->loadConfig();
+
+        if ($this->db->pdo) {
+            try {
+                $this->db->pdo->query("SELECT 1 FROM `product_reviews` LIMIT 1");
+            } catch (\Exception $e) {
+                $this->db->pdo->exec("
+                    CREATE TABLE IF NOT EXISTS `product_reviews` (
+                        `id` INT AUTO_INCREMENT PRIMARY KEY,
+                        `product_id` INT NOT NULL,
+                        `user_id` INT NOT NULL,
+                        `rating` INT NOT NULL CHECK(rating >= 1 AND rating <= 5),
+                        `comment` TEXT,
+                        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+                        FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                ");
+            }
+        }
     }
     public function run(): void {
         try {
