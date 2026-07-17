@@ -2,6 +2,17 @@
 TRUNCATE TABLE product_variants;
 TRUNCATE TABLE products;
 TRUNCATE TABLE categories;
+TRUNCATE TABLE users;
+TRUNCATE TABLE seller_profiles;
+TRUNCATE TABLE retailer_profiles;
+TRUNCATE TABLE delivery_partner_profiles;
+TRUNCATE TABLE wallets;
+TRUNCATE TABLE cms_pages;
+SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE product_variants;
+TRUNCATE TABLE products;
+TRUNCATE TABLE categories;
 SET FOREIGN_KEY_CHECKS = 1;
 /*!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19  Distrib 10.11.8-MariaDB, for Win64 (AMD64)
@@ -2723,7 +2734,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES
+INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password_hash`, `role_id`, `status`, `referral_code`, `is_verified_email`, `is_verified_mobile`, `two_factor_secret`, `created_at`, `updated_at`) VALUES
 (1,'System Administrator','admin@pavitrab2b.com','+91 9876543210','$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.',1,'ACTIVE',NULL,1,1,NULL,'2026-07-08 10:09:07','2026-07-08 10:09:07'),
 (2,'Pavitra Weavers Ltd.','weaver@pavitrab2b.com','+91 8888888888','$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.',3,'ACTIVE',NULL,1,1,NULL,'2026-07-08 10:09:07','2026-07-08 10:09:07'),
 (3,'Heritage Saree Boutique','boutique@pavitrab2b.com','+91 7777777777','$2y$10$GjE39Zvikuw6YeSAHdCoCuK/XXFgqM4PTTqbPWbEyutmifai9gql.',4,'ACTIVE',NULL,1,1,NULL,'2026-07-08 10:09:07','2026-07-08 10:09:07'),
