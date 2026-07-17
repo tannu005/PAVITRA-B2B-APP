@@ -19,16 +19,7 @@ if (!empty($activeCategory)) {
 ?>
 <div class="w-100" style="font-family: 'Plus Jakarta Sans', sans-serif;">
 
-    <div class="px-3 py-2 bg-white sticky-top d-flex align-items-center" style="z-index: 1020; border-bottom: 1px solid #eee;">
-        <div class="input-group" style="border: 1px solid #ccc; border-radius: 20px; overflow: hidden;">
-            <input type="text" class="form-control border-0 shadow-none ps-3" placeholder="Sarees 🔥" style="font-size: 0.9rem;">
-            <span class="input-group-text bg-white border-0 text-muted px-2"><i class="fa-solid fa-camera"></i></span>
-            <button class="btn btn-dark px-3 rounded-0 m-1 rounded-circle" style="background-color: #111; color: white;"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
-    </div>
-
-
-    <div class="row g-0" style="height: calc(100vh - 125px); margin-bottom: 60px;">
+    <div class="row g-0" style="height: calc(100vh - 65px); margin-bottom: 60px;">
         
 
         <div class="col-4 col-md-3 bg-light overflow-y-auto" style="height: 100%;">
@@ -126,10 +117,7 @@ if (!empty($activeCategory)) {
             <?php endif; ?>
             
 
-            <button class="btn btn-dark rounded-pill position-fixed shadow d-flex align-items-center gap-2" style="bottom: 80px; right: 20px; z-index: 1030; background-color: #222;">
-                <i class="fa-solid fa-sliders"></i> Filters
-            </button>
-            
+
         </div>
     </div>
 </div>

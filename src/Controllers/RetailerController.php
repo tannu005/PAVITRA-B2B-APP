@@ -856,21 +856,42 @@ class RetailerController extends Controller {
     }
     public function categoriesView(Request $request, Response $response) {
         $db = Application::$app->db;
-        
-        try {
-            $db->pdo->exec("ALTER TABLE categories ADD COLUMN group_name VARCHAR(50) DEFAULT 'Categories'");
-        } catch (\PDOException $e) {
-        }
-
-        $stmtCats = $db->query("SELECT id, name, slug, group_name FROM categories ORDER BY id ASC");
+        $stmtCats = $db->query("SELECT id, name, slug FROM categories ORDER BY id ASC");
         $allCats = $stmtCats->fetchAll();
-        $groupedCategories = [];
+        
+        $occasion = ['Wedding Wear', 'Party Wear', 'Festival Wear', 'Office Wear', 'Daily Wear', 'Reception Collection', 'Haldi Collection', 'Mehndi Collection'];
+        $fabric = ['Pure Silk', 'Soft Silk', 'Cotton Silk', 'Pure Cotton', 'Mulmul Cotton', 'Georgette', 'Chiffon', 'Organza', 'Tissue', 'Linen', 'Crepe', 'Net', 'Satin'];
+        
+        $groupedCategories = [
+            'Categories' => [],
+            'Shop by Occasion' => [],
+            'Fabric' => []
+        ];
+        
         foreach ($allCats as $c) {
-            $group = $c['group_name'] ?: 'Categories';
-            $groupedCategories[$group][] = $c;
+            $name = $c['name'];
+            if (in_array($name, $occasion)) {
+                $groupedCategories['Shop by Occasion'][] = $c;
+            } elseif (in_array($name, $fabric)) {
+                $groupedCategories['Fabric'][] = $c;
+            } else {
+                $groupedCategories['Categories'][] = $c;
+            }
         }
+        
+        // Remove empty groups
+        $groupedCategories = array_filter($groupedCategories, function($g) { return !empty($g); });
+        
         $body = $request->getBody();
         $activeCategory = $body['category'] ?? '';
+        
+        // If no active category, pick the first one from the first group
+        if (empty($activeCategory) && !empty($groupedCategories)) {
+            $firstGroup = reset($groupedCategories);
+            if (!empty($firstGroup)) {
+                $activeCategory = $firstGroup[0]['slug'];
+            }
+        }
 
         $sql = "
             SELECT p.*, 
