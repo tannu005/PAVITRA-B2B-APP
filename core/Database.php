@@ -1,7 +1,7 @@
 <?php
 namespace Core;
 class Database {
-    protected ?\PDO $pdo = null;
+    public ?\PDO $pdo = null;
     public ?string $connectionError = null;
     public function __construct() {
         $config = require dirname(__DIR__) . '/config/db.php';
