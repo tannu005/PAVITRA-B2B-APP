@@ -209,8 +209,8 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php
             $cats = [];
             foreach (array_slice($categoriesList, 0, 4) as $idx => $c) {
-                // Find a real product image for this category if possible, or fallback to a real uploaded image
-                $catImg = '/uploads/products/bandhej---2--jpg.jpg'; // Real fallback image
+                
+                $catImg = '/uploads/products/bandhej---2--jpg.jpg'; 
                 if (isset($products) && is_array($products)) {
                     foreach($products as $p) {
                         if($p['category_name'] == $c['name'] && !empty($p['image_url'])) {
