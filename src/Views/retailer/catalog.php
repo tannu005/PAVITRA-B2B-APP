@@ -209,9 +209,20 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php
             $cats = [];
             foreach (array_slice($categoriesList, 0, 4) as $idx => $c) {
+                // Find a real product image for this category if possible, or fallback to a real uploaded image
+                $catImg = '/uploads/products/bandhej---2--jpg.jpg'; // Real fallback image
+                if (isset($products) && is_array($products)) {
+                    foreach($products as $p) {
+                        if($p['category_name'] == $c['name'] && !empty($p['image_url'])) {
+                            $catImg = $p['image_url'];
+                            break;
+                        }
+                    }
+                }
+                
                 $cats[] = [
                     'name' => $c['name'], 
-                    'img' => $c['image_url'] ?? '/uploads/products/banarasi-sarees-0.jpg', 
+                    'img' => $catImg, 
                     'link' => '/?category=' . urlencode($c['name']), 
                     'count' => rand(40, 150) . '+ designs'
                 ];
@@ -273,7 +284,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     </div>
     <div class="my-5">
         <section class="pavitra-video-banner position-relative overflow-hidden w-100">
-            <video class="pavitra-video-media" autoplay loop muted playsinline poster="/uploads/products/chiffon-sarees-0.jpg" preload="metadata">
+            <video class="pavitra-video-media" autoplay loop muted playsinline poster="/uploads/products/sifon-chunri--4--jpg.jpg" preload="metadata">
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-waving-red-fabric-surface-40294-large.mp4" type="video/mp4">
             </video>
             <div class="pavitra-video-overlay"></div>
