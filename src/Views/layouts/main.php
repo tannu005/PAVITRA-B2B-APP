@@ -113,12 +113,13 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     <div class="dropdown d-inline-block collections-dropdown">
                         <a href="#" class="dropdown-toggle text-decoration-none text-dark pavitra-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
                         <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Organza+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraOffice-SS2</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Kanjeevaram+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">Pavitra OFFICE-SS1</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Patola+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">PavitraHAVELI - SS2</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Mysore+Crepe+Silk" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">DESI ROMANCE</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Chanderi+Weave" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">SHAADI KA GHAR</a></li>
-                            <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=Jamdani+Muslin" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;">JEANS & JHUMKA</a></li>
+                            <?php
+                                $stmtCats = \Core\Application::$app->db->query("SELECT id, name FROM categories LIMIT 6");
+                                $navCats = $stmtCats->fetchAll(\PDO::FETCH_ASSOC);
+                                foreach ($navCats as $nc):
+                                ?>
+                                <li><a class="dropdown-item py-2 fw-semibold text-uppercase" href="/?category=<?= urlencode($nc['name']) ?>" style="font-size: 0.8rem; color: #482922; letter-spacing: 0.05em;"><?= htmlspecialchars($nc['name']) ?></a></li>
+                                <?php endforeach; ?>
                         </ul>
                     </div>
                     <a href="/?sort=price_low" class="text-danger fw-bold pavitra-menu-link" style="color: #dc3545 !important;">GOODBYE DEALS ;)</a>

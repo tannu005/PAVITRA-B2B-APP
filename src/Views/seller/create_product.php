@@ -35,6 +35,24 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="col-md-4">
+                            <label for="fabric" class="form-label small fw-semibold text-muted text-uppercase">Fabric <span class="text-danger">*</span></label>
+                            <select class="form-select" id="fabric" name="fabric" required>
+                                <option value="">Select Fabric...</option>
+                                <?php foreach (['Pure Silk', 'Soft Silk', 'Organza', 'Georgette', 'Chiffon', 'Cotton', 'Tissue', 'Linen'] as $fab): ?>
+                                    <option value="<?= $fab ?>"><?= $fab ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="occasion" class="form-label small fw-semibold text-muted text-uppercase">Occasion <span class="text-danger">*</span></label>
+                            <select class="form-select" id="occasion" name="occasion" required>
+                                <option value="">Select Occasion...</option>
+                                <?php foreach (['Wedding Wear', 'Party Wear', 'Festival Wear', 'Office Wear', 'Daily Wear', 'Reception Collection', 'Haldi Collection', 'Mehendi Collection', 'Sangeet Collection'] as $occ): ?>
+                                    <option value="<?= $occ ?>"><?= $occ ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="col-12">
                             <label for="description" class="form-label small fw-semibold text-muted text-uppercase">Description / Craft Heritage</label>
                             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Provide background on the fabric, yarn count, motifs, and weaver heritage..."><?= htmlspecialchars($description_val ?? '') ?></textarea>

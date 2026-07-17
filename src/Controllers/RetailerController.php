@@ -152,7 +152,8 @@ class RetailerController extends Controller {
         $cartId = $this->getOrCreateCartId();
         $db = Application::$app->db;
         $stmt = $db->prepare("
-            SELECT ci.quantity, pv.id as variant_id, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.image_url, p.title
+            SELECT ci.quantity, pv.id as variant_id, pv.wholesale_price, pv.price, pv.bulk_threshold, pv.image_url, p.title,
+            (SELECT image_url FROM product_images pi WHERE pi.product_id = p.id LIMIT 1) as hover_image_url
             FROM cart_items ci
             JOIN product_variants pv ON ci.product_variant_id = pv.id
             JOIN products p ON pv.product_id = p.id
@@ -803,63 +804,63 @@ class RetailerController extends Controller {
         $stores = [
             [
                 'name' => 'Banaras Heritage Weaves',
-                'speciality' => 'Banarasi Brocade',
+                'speciality' => 'Banarasi Sarees',
                 'artisan' => 'Mohammad Yaseen & Sons',
                 'location' => 'Varanasi, Uttar Pradesh',
-                'image' => '/banarasi_1782883519429.png',
-                'slug' => 'Banarasi+Brocade',
+                'image' => '/uploads/products/banarasi-sarees-0.jpg',
+                'slug' => 'Banarasi+Sarees',
                 'rating' => '4.9',
                 'desc' => 'Pure silk handlooms with real silver and gold Zari work, carrying GI-tagged legacy from the ghats of Varanasi.'
             ],
             [
-                'name' => 'Kanchi Emperor Silks',
-                'speciality' => 'Kanjeevaram Silk',
+                'name' => 'Silk Emporium',
+                'speciality' => 'Silk Sarees',
                 'artisan' => 'K. Srinivasa Chari',
                 'location' => 'Kanchipuram, Tamil Nadu',
-                'image' => '/kanjeevaram_1782883481838.png',
-                'slug' => 'Kanjeevaram+Silk',
+                'image' => '/uploads/products/silk-sarees-0.jpg',
+                'slug' => 'Silk+Sarees',
                 'rating' => '4.8',
                 'desc' => 'Heavy temple-border wedding silks woven with three shuttles and pure gold Zari thread for generational longevity.'
             ],
             [
-                'name' => 'Patan Double Ikat Guild',
-                'speciality' => 'Patola Silk',
+                'name' => 'Bandhej Masters',
+                'speciality' => 'Bandhej Sarees',
                 'artisan' => 'The Salvi Family Collective',
                 'location' => 'Patan, Gujarat',
-                'image' => '/patola_1782883499288.png',
-                'slug' => 'Patola+Silk',
-                'rating' => '5.0',
-                'desc' => 'Masterful double-ikat Patola weaves. Each piece takes 6-12 months of meticulous color-resist tying and alignment.'
-            ],
-            [
-                'name' => 'Royal Chanderi Loom Hub',
-                'speciality' => 'Chanderi Weave',
-                'artisan' => 'Devi Prasad Weavers',
-                'location' => 'Chanderi, Madhya Pradesh',
-                'image' => '/banarasi_1782883568122.png',
-                'slug' => 'Chanderi+Weave',
-                'rating' => '4.7',
-                'desc' => 'Feather-light sheer drapes woven with high-twist cotton and silk blends, decorated with traditional gold booti.'
-            ],
-            [
-                'name' => 'Mysore Royal Silk Mills',
-                'speciality' => 'Mysore Crepe Silk',
-                'artisan' => 'Karnataka Silk Guild',
-                'location' => 'Mysore, Karnataka',
-                'image' => '/kanjeevaram_1782883536799.png',
-                'slug' => 'Mysore+Crepe+Silk',
-                'rating' => '4.8',
-                'desc' => 'Pure 100% natural crepe silks dyed in rich royal hues, offering unbeatable fall, drape, and smooth texture.'
-            ],
-            [
-                'name' => 'Vindhya Jamdani Artisans',
-                'speciality' => 'Jamdani Muslin',
-                'artisan' => 'Abdul & Fatima Rahman',
-                'location' => 'Nabadwip, West Bengal',
-                'image' => '/patola_1782883552751.png',
-                'slug' => 'Jamdani+Muslin',
+                'image' => '/uploads/products/bandhej-sarees-0.jpg',
+                'slug' => 'Bandhej+Sarees',
                 'rating' => '4.9',
-                'desc' => 'Artistic transparent muslin drapes woven using supplementary weft hand-shuttling for a suspended motif look.'
+                'desc' => 'Traditional geometric tie and dye patterns in rich natural dye tints, showcasing mastery over complex resist dyeing.'
+            ],
+            [
+                'name' => 'Chanderi Handlooms',
+                'speciality' => 'Organza Sarees',
+                'artisan' => 'Ansari Weavers',
+                'location' => 'Chanderi, Madhya Pradesh',
+                'image' => '/uploads/products/organza-sarees-0.jpg',
+                'slug' => 'Organza+Sarees',
+                'rating' => '4.7',
+                'desc' => 'Lightweight, sheer, and glossy textures crafted with fine cotton and silk threads intertwined with zari.'
+            ],
+            [
+                'name' => 'Mysore Silks Cooperative',
+                'speciality' => 'Georgette Sarees',
+                'artisan' => 'State Handloom Board',
+                'location' => 'Mysuru, Karnataka',
+                'image' => '/uploads/products/georgette-sarees-0.jpg',
+                'slug' => 'Georgette+Sarees',
+                'rating' => '4.9',
+                'desc' => 'Minimalist pure crepe and georgette with solid colors and authentic pure gold zari borders.'
+            ],
+            [
+                'name' => 'Bengal Jamdani Guild',
+                'speciality' => 'Cotton Sarees',
+                'artisan' => 'Dhar Family Artisans',
+                'location' => 'Phulia, West Bengal',
+                'image' => '/uploads/products/cotton-sarees-0.jpg',
+                'slug' => 'Cotton+Sarees',
+                'rating' => '4.8',
+                'desc' => 'Incredibly fine translucent muslin cotton, interwoven with supplementary weft motifs that look like floating embroidery.'
             ]
         ];
         return $this->render('retailer/categories', [

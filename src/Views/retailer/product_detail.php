@@ -94,17 +94,17 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                             }
                         }
                         
-                        $availableColors = ['Pink', 'Black', 'Blue', 'Orange', 'Purple', 'Teal'];
-                        $displayVariants = [];
-                        foreach ($availableColors as $idx => $c) {
-                            $v = $base;
-                            $v['color'] = $c;
-                            if (!empty($availableImages)) {
-                                $v['image_url'] = $availableImages[$idx % count($availableImages)];
-                            }
-                            $displayVariants[] = $v;
-                        }
+                        $displayVariants = $variants;
                     }
+                ?>
+                <?php 
+                $hasColor = false;
+                foreach($displayVariants as $var) {
+                    if(!empty($var['color'])) {
+                        $hasColor = true; break;
+                    }
+                }
+                if ($hasColor): 
                 ?>
                 <div class="mb-4">
                     <label class="form-label small fw-bold text-muted text-uppercase mb-2">Select Color</label>
@@ -137,6 +137,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                         <?php endforeach; ?>
                     </div>
                 </div>
+                <?php endif; ?>
                 <div class="mb-4">
                     <label class="form-label small fw-bold text-muted text-uppercase mb-2">Select Quantity</label>
                     <div style="max-width: 120px;">
@@ -211,7 +212,7 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                     </div>
                     <div class="d-flex gap-2 mb-3 mt-2 overflow-auto" style="scrollbar-width: none;">
                         <div class="position-relative border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/saree-banner1.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/uploads/products/banarasi-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
                             <div class="position-absolute start-0 top-0 w-100 h-100 d-flex align-items-end p-1" style="background: rgba(0,0,0,0.15);">
                                 <span class="text-white fw-bold d-flex align-items-center gap-1" style="font-size: 0.58rem; background: rgba(0,0,0,0.5); padding: 1px 4px; border-radius: 4px;">
                                     <i class="fa-solid fa-play" style="font-size: 0.5rem;"></i> 0:42
@@ -219,13 +220,13 @@ $saving = number_format(($price > 0 ? $price : $wholesalePrice + 8500) - $wholes
                             </div>
                         </div>
                         <div class="border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/saree-banner2.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/uploads/products/organza-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div class="border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/saree-banner3.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/uploads/products/designer-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div class="position-relative border rounded-3 overflow-hidden" style="width: 76px; height: 76px; min-width: 76px; border-color: #eaeaec !important;">
-                            <img loading="lazy" src="/saree-banner4.png" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img loading="lazy" src="/uploads/products/chiffon-sarees-0.jpg" style="width: 100%; height: 100%; object-fit: cover;">
                             <div class="position-absolute start-0 top-0 w-100 h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="background: rgba(0,0,0,0.45); font-size: 0.85rem;">
                                 +1168
                             </div>

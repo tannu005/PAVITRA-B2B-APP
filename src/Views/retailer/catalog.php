@@ -1,15 +1,6 @@
 <?php
 function renderProductCard($p) {
-    $hoverImg = '/saree-banner1.png';
-    if (strpos($p['image_url'], 'kanjeevaram') !== false) {
-        $hoverImg = '/saree-banner2.png';
-    } else if (strpos($p['image_url'], 'patola') !== false) {
-        $hoverImg = '/saree-banner3.png';
-    } else if (strpos($p['image_url'], 'tissue') !== false) {
-        $hoverImg = '/saree-banner4.png';
-    } else if (strpos($p['image_url'], 'banarasi') !== false) {
-        $hoverImg = '/saree-banner1.png';
-    }
+$hoverImg = !empty($p['hover_image_url']) ? $p['hover_image_url'] : ($p['image_url'] ?: '/assets/images/placeholder.png');
     $price = floatval($p['price']);
     $wholesalePrice = floatval($p['wholesale_price']);
     $discVal = $price > $wholesalePrice ? round((($price - $wholesalePrice) / $price) * 100) : 0;
@@ -37,11 +28,10 @@ function renderProductCard($p) {
         <div class="pavitra-card-body text-start pt-2 pb-3 px-2">
             <?php 
                 $colors = !empty($p['all_colors']) ? explode('|', $p['all_colors']) : [];
-                if (count($colors) <= 1) {
-                    $colors = ['Pink', 'Black', 'Blue', 'Orange', 'Purple', 'Teal'];
-                }
+                
             ?>
-            <div class="d-flex align-items-center mb-2 gap-1" style="flex-wrap: wrap;">
+            <?php if (!empty($colors) && count($colors) > 1): ?>
+<div class="d-flex align-items-center mb-2 gap-1" style="flex-wrap: wrap;">
                 <?php foreach($colors as $idx => $c): 
                     $colorClass = 'color-default';
                     $lowerColor = strtolower(trim($c));
@@ -58,6 +48,7 @@ function renderProductCard($p) {
                     </div>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
             <div class="text-muted fw-bold mb-1 custom-caps" style="font-size: 0.85rem; color: #555 !important;"><?= htmlspecialchars($p['brand_name'] ?? 'Pavitra') ?></div>
             <h6 class="pavitra-card-title mb-1 pavitra-product-title custom-caps" style="font-weight: normal; color: #333; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 40px;"><?= htmlspecialchars($p['title']) ?></h6>
             <div class="pavitra-price-wholesale fw-bold text-dark mt-2 pavitra-product-price" style="font-size: 1.1rem;">
@@ -83,34 +74,14 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php endif; ?>
             <div class="category-circle-title">All Sarees</div>
         </a>
-        <a href="/?category=Kanjeevaram+Silk" class="category-circle-item <?= $selectedCategory === 'Kanjeevaram Silk' ? 'active' : '' ?>">
-            <img loading="lazy" src="/kanjeevaram_1782883481838.png" class="category-circle-img" alt="Kanjeevaram">
-            <div class="category-circle-title">Kanjeevaram</div>
+        <?php foreach (array_slice($categoriesList, 0, 8) as $cat): ?>
+        <a href="/?category=<?= urlencode($cat['name']) ?>" class="category-circle-item <?= $selectedCategory === $cat['name'] ? 'active' : '' ?>">
+            <div class="category-circle-img d-flex align-items-center justify-content-center bg-light text-dark fw-semibold" style="font-size: 0.8rem; border: 1px solid #ECEFF1; text-align: center; border-radius: 50%; width: 60px; height: 60px;">
+                <?= htmlspecialchars(substr($cat['name'], 0, 3)) ?>
+            </div>
+            <div class="category-circle-title"><?= htmlspecialchars(explode(' ', $cat['name'])[0]) ?></div>
         </a>
-        <a href="/?category=Banarasi+Brocade" class="category-circle-item <?= $selectedCategory === 'Banarasi Brocade' ? 'active' : '' ?>">
-            <img loading="lazy" src="/banarasi_1782883519429.png" class="category-circle-img" alt="Banarasi">
-            <div class="category-circle-title">Banarasi</div>
-        </a>
-        <a href="/?category=Patola+Silk" class="category-circle-item <?= $selectedCategory === 'Patola Silk' ? 'active' : '' ?>">
-            <img loading="lazy" src="/patola_1782883499288.png" class="category-circle-img" alt="Patola">
-            <div class="category-circle-title">Patola</div>
-        </a>
-        <a href="/?category=Organza+Silk" class="category-circle-item <?= $selectedCategory === 'Organza Silk' ? 'active' : '' ?>">
-            <img loading="lazy" src="/tissue_1782883588057.png" class="category-circle-img" alt="Organza">
-            <div class="category-circle-title">Organza</div>
-        </a>
-        <a href="/?category=Chanderi+Weave" class="category-circle-item <?= $selectedCategory === 'Chanderi Weave' ? 'active' : '' ?>">
-            <img loading="lazy" src="/banarasi_1782883568122.png" class="category-circle-img" alt="Chanderi">
-            <div class="category-circle-title">Chanderi</div>
-        </a>
-        <a href="/?category=Mysore+Crepe+Silk" class="category-circle-item <?= $selectedCategory === 'Mysore Crepe Silk' ? 'active' : '' ?>">
-            <img loading="lazy" src="/kanjeevaram_1782883536799.png" class="category-circle-img" alt="Mysore Silk">
-            <div class="category-circle-title">Mysore Silk</div>
-        </a>
-        <a href="/?category=Jamdani+Muslin" class="category-circle-item <?= $selectedCategory === 'Jamdani Muslin' ? 'active' : '' ?>">
-            <img loading="lazy" src="/patola_1782883552751.png" class="category-circle-img" alt="Jamdani">
-            <div class="category-circle-title">Jamdani</div>
-        </a>
+        <?php endforeach; ?>
     </div>
     <?php if (!$isFiltered): ?>
     <div id="heroCarousel" class="carousel slide carousel-fade mb-0" data-bs-ride="carousel" data-bs-interval="5000">
@@ -134,7 +105,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                 </div>
             </div>
             <div class="carousel-item">
-                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner2.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
+                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner3.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
                     <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Handloomed Zari Heritage</span>
                     </div>
@@ -146,7 +117,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                 </div>
             </div>
             <div class="carousel-item">
-                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner3.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
+                <div class="w-100 position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35)), url('/saree-banner2.png'); height: 65vh; min-height: 420px; max-height: 650px; background-size: cover; background-position: center;">
                     <div class="position-absolute start-0 top-0 p-4 text-white text-uppercase d-none d-md-block" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Double Ikat Masterpiece</span>
                     </div>
@@ -236,12 +207,15 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
         <div class="row g-3 g-md-4 justify-content-center">
             <?php
-            $cats = [
-                ['name' => 'Banarasi', 'img' => '/saree-banner1.png', 'link' => '/?category=Banarasi+Brocade', 'count' => '120+ designs'],
-                ['name' => 'Kanjeevaram', 'img' => '/saree-banner2.png', 'link' => '/?category=Kanjeevaram+Silk', 'count' => '85+ designs'],
-                ['name' => 'Patan Patola', 'img' => '/saree-banner3.png', 'link' => '/?category=Patola+Silk', 'count' => '45+ designs'],
-                ['name' => 'Organza', 'img' => '/saree-banner4.png', 'link' => '/?category=Organza+Silk', 'count' => '60+ designs'],
-            ];
+            $cats = [];
+            foreach (array_slice($categoriesList, 0, 4) as $idx => $c) {
+                $cats[] = [
+                    'name' => $c['name'], 
+                    'img' => $c['image_url'] ?? '/uploads/products/banarasi-sarees-0.jpg', 
+                    'link' => '/?category=' . urlencode($c['name']), 
+                    'count' => rand(40, 150) . '+ designs'
+                ];
+            }
             foreach ($cats as $cat): ?>
             <div class="col-6 col-md-3">
                 <a href="<?= $cat['link'] ?>" class="pavitra-cat-block position-relative d-block overflow-hidden" style="height: 400px; text-decoration: none;">
@@ -299,7 +273,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
     </div>
     <div class="my-5">
         <section class="pavitra-video-banner position-relative overflow-hidden w-100">
-            <video class="pavitra-video-media" autoplay loop muted playsinline poster="/saree-banner4.png" preload="metadata">
+            <video class="pavitra-video-media" autoplay loop muted playsinline poster="/uploads/products/chiffon-sarees-0.jpg" preload="metadata">
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-waving-red-fabric-surface-40294-large.mp4" type="video/mp4">
             </video>
             <div class="pavitra-video-overlay"></div>
@@ -543,36 +517,17 @@ $(document).ready(function() {
                             <div class="filter-pane-group active" id="pane-fabric">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Fabric / Material</h6>
                                 <div class="d-flex flex-column gap-2">
-                                    <?php foreach (['Silk (Kanjeevaram, Banarasi)', 'Cotton', 'Georgette', 'Chiffon', 'Crepe', 'Linen', 'Satin', 'Synthetic Blends'] as $f): ?>
+                                    <?php foreach (['Pure Silk', 'Soft Silk', 'Organza', 'Georgette', 'Chiffon', 'Cotton', 'Tissue', 'Linen'] as $f): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
                                             <input type="checkbox" name="filter_fabric[]" value="<?= htmlspecialchars($f) ?>"> <?= htmlspecialchars($f) ?>
                                         </label>
                                     <?php endforeach; ?>
                                 </div>
-                            </div>
-                            <div class="filter-pane-group" id="pane-color">
-                                <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Color Palette</h6>
-                                <div class="d-flex flex-column gap-2 mb-3">
-                                    <?php foreach (['Red' => '#e74c3c', 'Blue' => '#3498db', 'Green' => '#2ecc71', 'Yellow' => '#f1c40f', 'Peach' => '#ffb8b8', 'Lavender' => '#dec9e9', 'White' => '#ffffff', 'Black' => '#000000', 'Beige' => '#f5f5dc', 'Ombre' => 'linear-gradient(to right, #6b1d1d, #c9972e)'] as $colorName => $colorHex): ?>
-                                        <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
-                                            <input type="checkbox" name="filter_color[]" value="<?= $colorName ?>"> 
-                                            <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:<?= $colorHex ?>; border:1px solid #ddd;"></span>
-                                            <?= $colorName ?>
-                                        </label>
-                                    <?php endforeach; ?>
-                                </div>
-                                <div class="border-top pt-2">
-                                    <label class="form-label mb-1" style="font-size: 0.7rem; font-weight:700;">Custom Picker</label>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <input type="color" class="form-control-color border-0 p-0" name="custom_color_picker" value="#6B1D1D" style="width:30px; height:30px; cursor:pointer; background:none;">
-                                        <span class="text-muted small" style="font-size:0.65rem;">Tap block for custom colors</span>
-                                    </div>
-                                </div>
-                            </div>
+                              </div>
                             <div class="filter-pane-group" id="pane-occasion">
                                 <h6 class="fw-bold mb-3 text-uppercase" style="font-size:0.7rem; color:var(--pavitra-pink); letter-spacing:0.05em;">Occasion & Usage</h6>
                                 <div class="d-flex flex-column gap-2">
-                                    <?php foreach (['Casual / Daily wear', 'Office / Formal', 'Festive / Traditional', 'Wedding / Bridal', 'Party / Cocktail'] as $occ): ?>
+                                    <?php foreach (['Wedding Wear', 'Party Wear', 'Festival Wear', 'Office Wear', 'Daily Wear', 'Reception Collection', 'Haldi Collection', 'Mehendi Collection', 'Sangeet Collection'] as $occ): ?>
                                         <label class="d-flex align-items-center gap-2 mb-0" style="font-size:0.8rem; cursor:pointer;">
                                             <input type="checkbox" name="filter_occasion[]" value="<?= htmlspecialchars($occ) ?>"> <?= htmlspecialchars($occ) ?>
                                         </label>
