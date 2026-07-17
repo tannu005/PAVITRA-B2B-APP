@@ -286,12 +286,10 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
         </div>
     </div>
     <div class="my-5">
-        <section class="pavitra-video-banner position-relative overflow-hidden w-100">
-            <video class="pavitra-video-media" autoplay loop muted playsinline poster="/uploads/products/sifon-chunri--4--jpg.jpg" preload="metadata">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-waving-red-fabric-surface-40294-large.mp4" type="video/mp4">
-            </video>
-            <div class="pavitra-video-overlay"></div>
-            <div class="pavitra-video-content position-absolute d-flex flex-column justify-content-center align-items-center text-center text-white p-4">
+        <section class="pavitra-video-banner position-relative overflow-hidden w-100" style="min-height: 450px;">
+            <img src="/uploads/products/desi-romance-bg.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;" alt="Desi Romance Background">
+            <div class="pavitra-video-overlay" style="background: rgba(0,0,0,0.3); position: absolute; inset: 0;"></div>
+            <div class="pavitra-video-content position-absolute d-flex flex-column justify-content-center align-items-center text-center text-white p-4" style="inset: 0; z-index: 2;">
                 <p class="text-uppercase mb-2 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.6);">Heritage Storytelling</p>
                 <h2 class="text-uppercase mb-3 pavitra-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Desi Romance</h2>
                 <p class="mb-4 pavitra-video-copy">A rhythmic celebration of warp and weft. Traditional sarees reimagined for the modern wholesale buyer.</p>
