@@ -33,6 +33,19 @@ try {
     ]);
 
     $db->exec('SET FOREIGN_KEY_CHECKS = 0;');
+    
+    $tablesToTruncate = [
+        'attribute_values', 'banks', 'carts', 'categories', 'cms_pages', 'coupons', 
+        'delivery_partner_profiles', 'error_logs', 'gst_rates', 'offer_products', 'offers', 
+        'permissions', 'product_attributes', 'product_images', 'product_variants', 
+        'products', 'retailer_profiles', 'role_permissions', 'roles', 'seller_profiles', 
+        'system_settings', 'users', 'wallets'
+    ];
+    foreach ($tablesToTruncate as $table) {
+        try {
+            $db->exec("TRUNCATE TABLE `$table`;");
+        } catch (\PDOException $e) {}
+    }
 
     $seedsPath = dirname(__DIR__) . '/database/seeds.sql';
     if (file_exists($seedsPath)) {
