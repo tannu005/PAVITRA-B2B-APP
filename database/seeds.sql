@@ -1,4 +1,9 @@
-﻿/*!999999\- enable the sandbox mode */ 
+﻿SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE product_variants;
+TRUNCATE TABLE products;
+TRUNCATE TABLE categories;
+SET FOREIGN_KEY_CHECKS = 1;
+/*!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19  Distrib 10.11.8-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: pavitra_b2b
