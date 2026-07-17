@@ -38,7 +38,11 @@ try {
     if (file_exists($seedsPath)) {
         $sql = file_get_contents($seedsPath);
         $sql = preg_replace('/^\xEF\xBB\xBF/', '', $sql);
+        $sql = preg_replace('/^LOCK TABLES.*?;/m', '', $sql);
+        $sql = preg_replace('/^UNLOCK TABLES;/m', '', $sql);
+        
         try {
+            $db->exec('UNLOCK TABLES;'); // clear persistent locks
             $db->exec($sql);
         } catch (\PDOException $e) {
             $statements = preg_split('/;[\r\n]+/', $sql);
