@@ -35,14 +35,7 @@ try {
 
     $db->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
-    // 1. Run schema.sql
-    $schemaPath = dirname(__DIR__) . '/database/schema.sql';
-    if (file_exists($schemaPath)) {
-        $sql = file_get_contents($schemaPath);
-        $db->exec($sql);
-    }
-
-    // 2. Run seeds.sql
+    // 1. Run seeds.sql
     $seedsPath = dirname(__DIR__) . '/database/seeds.sql';
     if (file_exists($seedsPath)) {
         $sql = file_get_contents($seedsPath);
