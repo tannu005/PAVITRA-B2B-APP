@@ -1,19 +1,23 @@
 <?php
 $activeGroup = 'Categories';
+$activeCategoryName = '';
 if (!empty($activeCategory)) {
-
     foreach ($groupedCategories as $gName => $cats) {
         foreach ($cats as $c) {
             if ($c['slug'] === $activeCategory) {
                 $activeGroup = $gName;
+                $activeCategoryName = $c['name'];
                 break 2;
             }
         }
     }
 } else {
-
     if (!empty($groupedCategories)) {
         $activeGroup = array_key_first($groupedCategories);
+        $firstGroup = reset($groupedCategories);
+        if (!empty($firstGroup)) {
+            $activeCategoryName = $firstGroup[0]['name'];
+        }
     }
 }
 ?>
@@ -23,17 +27,20 @@ if (!empty($activeCategory)) {
         
 
         <div class="col-4 col-md-3 bg-light overflow-y-auto" style="height: 100%;">
-            <div class="list-group list-group-flush">
-                <?php foreach($groupedCategories as $groupName => $cats): 
-
-                    $firstCatSlug = $cats[0]['slug'] ?? '';
-                    $isActive = ($activeGroup === $groupName);
-                ?>
-                    <a href="/categories?category=<?= $firstCatSlug ?>" 
-                       class="list-group-item list-group-item-action py-3 px-2 border-0 text-center text-uppercase <?= $isActive ? 'active-group' : '' ?>" 
-                       style="font-size: 0.75rem; letter-spacing: 0.5px; background-color: <?= $isActive ? 'white' : '#f8f9fa' ?>; color: <?= $isActive ? 'var(--pavitra-pink)' : '#555' ?>;">
+            <div class="list-group list-group-flush pb-5">
+                <?php foreach($groupedCategories as $groupName => $cats): ?>
+                    <div class="p-2 fw-bold text-dark text-uppercase bg-light border-bottom text-center" style="font-size: 0.7rem; letter-spacing: 0.5px; position: sticky; top: 0; z-index: 10;">
                         <?= htmlspecialchars($groupName) ?>
-                    </a>
+                    </div>
+                    <?php foreach($cats as $c): 
+                        $isActive = ($activeCategory === $c['slug']);
+                    ?>
+                        <a href="/categories?category=<?= $c['slug'] ?>" 
+                           class="list-group-item list-group-item-action py-3 px-1 border-0 text-center <?= $isActive ? 'active-group' : '' ?>" 
+                           style="font-size: 0.75rem; font-weight: 500; line-height: 1.2; background-color: <?= $isActive ? 'white' : '#f8f9fa' ?>; color: <?= $isActive ? 'var(--pavitra-pink, #e91e63)' : '#555' ?>;">
+                            <?= htmlspecialchars($c['name']) ?>
+                        </a>
+                    <?php endforeach; ?>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -42,8 +49,8 @@ if (!empty($activeCategory)) {
         <div class="col-8 col-md-9 bg-white overflow-y-auto pb-4" style="height: 100%;">
             
             <div class="d-flex justify-content-between align-items-center mb-3 mt-3 px-3">
-                <h5 class="text-uppercase fw-bold mb-0" style="letter-spacing: 0.5px; font-size: 1.1rem; color: #111;">
-                    <?= htmlspecialchars($activeGroup) ?>
+                <h5 class="text-uppercase fw-bold mb-0" style="letter-spacing: 0.5px; font-size: 1rem; color: #111;">
+                    <?= htmlspecialchars($activeCategoryName ?: $activeGroup) ?>
                 </h5>
                 <a href="/categories" class="text-dark text-decoration-none" style="font-size: 0.8rem;">View all <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem;"></i></a>
             </div>
