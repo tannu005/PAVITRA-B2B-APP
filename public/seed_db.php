@@ -26,7 +26,6 @@ try {
     $config = require dirname(__DIR__) . '/config/db.php';
     $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
     
-    // Connect with multi-statements enabled so we can execute massive SQL dump files directly
     $db = new \PDO($dsn, $config['username'], $config['password'], [
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
         \PDO::ATTR_EMULATE_PREPARES => true,
@@ -35,7 +34,6 @@ try {
 
     $db->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
-    // 1. Run seeds.sql
     $seedsPath = dirname(__DIR__) . '/database/seeds.sql';
     if (file_exists($seedsPath)) {
         $sql = file_get_contents($seedsPath);
@@ -44,7 +42,6 @@ try {
 
     $db->exec('SET FOREIGN_KEY_CHECKS = 1;');
     
-    // 3. Clear Cache
     $app->cache->clear();
 
     echo "<div style='font-family: sans-serif; text-align: center; margin-top: 50px;'>";
