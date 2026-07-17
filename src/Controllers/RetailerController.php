@@ -856,8 +856,13 @@ class RetailerController extends Controller {
     }
     public function categoriesView(Request $request, Response $response) {
         $db = Application::$app->db;
-        $stmtCats = $db->query("SELECT id, name, slug FROM categories ORDER BY name ASC");
-        $categories = $stmtCats->fetchAll();
+        $stmtCats = $db->query("SELECT id, name, slug, group_name FROM categories ORDER BY id ASC");
+        $allCats = $stmtCats->fetchAll();
+        $groupedCategories = [];
+        foreach ($allCats as $c) {
+            $group = $c['group_name'] ?: 'Categories';
+            $groupedCategories[$group][] = $c;
+        }
         $body = $request->getBody();
         $activeCategory = $body['category'] ?? '';
 
@@ -890,7 +895,7 @@ class RetailerController extends Controller {
         $products = $stmt->fetchAll();
 
         return $this->render('retailer/categories', [
-            'categories' => $categories,
+            'groupedCategories' => $groupedCategories,
             'products' => $products,
             'activeCategory' => $activeCategory
         ]);

@@ -3,17 +3,32 @@
 <div class="container-xl py-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="row g-4">
         <div class="col-lg-3 d-none d-lg-block">
-            <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 80px;">
+            <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 80px; overflow: hidden;">
                 <div class="card-header bg-white border-bottom py-3">
-                    <h6 class="mb-0 fw-bold text-uppercase" style="letter-spacing: 0.05em; color: var(--pavitra-pink);">Shop by Category</h6>
+                    <h6 class="mb-0 fw-bold text-uppercase" style="letter-spacing: 0.05em; color: var(--pavitra-pink);">Shop Directory</h6>
                 </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush rounded-bottom-4">
-                        <?php foreach($categories as $cat): ?>
-                            <a href="/categories?category=<?= $cat['slug'] ?>" class="list-group-item list-group-item-action py-3 px-4 border-0 <?= $activeCategory === $cat['slug'] ? 'active' : '' ?>" style="<?= $activeCategory === $cat['slug'] ? 'background-color: var(--pavitra-pink); color: white; font-weight: bold;' : 'color: #482922; font-weight: 500;' ?>">
-                                <?= htmlspecialchars($cat['name']) ?>
-                            </a>
-                        <?php endforeach; ?>
+                <div class="card-body p-0" style="max-height: calc(100vh - 150px); overflow-y: auto;">
+                    <div class="accordion accordion-flush" id="categoriesAccordion">
+                        <?php $accIndex = 0; foreach($groupedCategories as $groupName => $cats): ?>
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header" id="heading<?= $accIndex ?>">
+                                    <button class="accordion-button <?= $accIndex > 0 ? 'collapsed' : '' ?> fw-bold bg-light text-dark" style="box-shadow: none;" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $accIndex ?>" aria-expanded="<?= $accIndex === 0 ? 'true' : 'false' ?>" aria-controls="collapse<?= $accIndex ?>">
+                                        <?= htmlspecialchars($groupName) ?>
+                                    </button>
+                                </h2>
+                                <div id="collapse<?= $accIndex ?>" class="accordion-collapse collapse <?= $accIndex === 0 ? 'show' : '' ?>" aria-labelledby="heading<?= $accIndex ?>">
+                                    <div class="accordion-body p-0">
+                                        <div class="list-group list-group-flush">
+                                            <?php foreach($cats as $cat): ?>
+                                                <a href="/categories?category=<?= $cat['slug'] ?>" class="list-group-item list-group-item-action py-2 px-4 border-0 <?= $activeCategory === $cat['slug'] ? 'active' : '' ?>" style="<?= $activeCategory === $cat['slug'] ? 'background-color: var(--pavitra-pink); color: white; font-weight: bold;' : 'color: #555; font-weight: 500; font-size: 0.9rem;' ?>">
+                                                    <?= htmlspecialchars($cat['name']) ?>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php $accIndex++; endforeach; ?>
                     </div>
                 </div>
             </div>
