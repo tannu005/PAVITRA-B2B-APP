@@ -57,13 +57,13 @@ class RetailerController extends Controller {
         } else {
             $sql .= " ORDER BY p.id DESC";
         }
-        $cacheKey = "catalog_products_" . md5(serialize([$category, $search, $sort, $minPrice, $maxPrice]));
+        $cacheKey = "catalog_products_v2_" . md5(serialize([$category, $search, $sort, $minPrice, $maxPrice]));
         $products = Application::$app->cache->remember($cacheKey, 60, function() use ($db, $sql, $params) {
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll() ?: [];
         });
-        $categoriesList = Application::$app->cache->remember('categories_list', 3600, function() use ($db) {
+        $categoriesList = Application::$app->cache->remember('categories_list_v2', 3600, function() use ($db) {
             $stmtCat = $db->query("SELECT id, name FROM categories");
             return $stmtCat->fetchAll() ?: [];
         });
@@ -814,11 +814,11 @@ class RetailerController extends Controller {
             ],
             [
                 'name' => 'Silk Emporium',
-                'speciality' => 'Silk Saree',
+                'speciality' => 'Silk Sarees',
                 'artisan' => 'K. Srinivasa Chari',
                 'location' => 'Kanchipuram, Tamil Nadu',
                 'image' => '/uploads/products/designer-sarees-621.jpg',
-                'slug' => 'Silk+Saree',
+                'slug' => 'Silk+Sarees',
                 'rating' => '4.8',
                 'desc' => 'Heavy temple-border wedding silks woven with three shuttles and pure gold Zari thread for generational longevity.'
             ],
@@ -843,22 +843,22 @@ class RetailerController extends Controller {
                 'desc' => 'Lightweight, sheer, and glossy textures crafted with fine cotton and silk threads intertwined with zari.'
             ],
             [
-                'name' => 'Lehenga Artisan Cooperative',
-                'speciality' => 'Lehenga',
+                'name' => 'Bridal Artisan Cooperative',
+                'speciality' => 'Bridal Sarees',
                 'artisan' => 'State Handloom Board',
                 'location' => 'Mysuru, Karnataka',
                 'image' => '/uploads/products/lehenga--23--jpg.jpg',
-                'slug' => 'Lehenga',
+                'slug' => 'Bridal+Sarees',
                 'rating' => '4.9',
                 'desc' => 'Minimalist pure crepe and georgette with solid colors and authentic pure gold zari borders.'
             ],
             [
                 'name' => 'Cotton Jamdani Guild',
-                'speciality' => 'Cotton Saree',
+                'speciality' => 'Cotton Sarees',
                 'artisan' => 'Dhar Family Artisans',
                 'location' => 'Phulia, West Bengal',
                 'image' => '/uploads/products/cotton-sarees-5.jpg',
-                'slug' => 'Cotton+Saree',
+                'slug' => 'Cotton+Sarees',
                 'rating' => '4.8',
                 'desc' => 'Incredibly fine translucent muslin cotton, interwoven with supplementary weft motifs that look like floating embroidery.'
             ]

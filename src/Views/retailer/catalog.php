@@ -74,12 +74,14 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <?php endif; ?>
             <div class="category-circle-title">All Sarees</div>
         </a>
-        <?php foreach (array_slice($categoriesList, 0, 8) as $cat): ?>
+        <?php 
+        $placeholders = ['/kanjeevaram.png', '/banarasi.png', '/patola.png', '/tissue.png', '/kanjeevaram_1782883481838.png', '/banarasi_1782883519429.png', '/patola_1782883499288.png', '/tissue_1782883588057.png'];
+        foreach (array_slice($categoriesList, 0, 8) as $idx => $cat): 
+            $img = $placeholders[$idx % count($placeholders)];
+        ?>
         <a href="/?category=<?= urlencode($cat['name']) ?>" class="category-circle-item <?= $selectedCategory === $cat['name'] ? 'active' : '' ?>">
-            <div class="category-circle-img d-flex align-items-center justify-content-center bg-light text-dark fw-semibold" style="font-size: 0.8rem; border: 1px solid #ECEFF1; text-align: center; border-radius: 50%; width: 60px; height: 60px;">
-                <?= htmlspecialchars(substr($cat['name'], 0, 3)) ?>
-            </div>
-            <div class="category-circle-title"><?= htmlspecialchars(explode(' ', $cat['name'])[0]) ?></div>
+            <img src="<?= $img ?>" class="category-circle-img" alt="<?= htmlspecialchars($cat['name']) ?>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid #ECEFF1; display: block; margin: 0 auto;">
+            <div class="category-circle-title mt-1" style="font-size: 0.75rem; text-align: center; color: #333; font-weight: 600;"><?= htmlspecialchars(explode(' ', $cat['name'])[0]) ?></div>
         </a>
         <?php endforeach; ?>
     </div>
@@ -100,7 +102,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
                         <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Shaadi Ka Ghar</h1>
                         <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Pavitra Banarasi Bridal Collection</p>
-                        <a href="/?category=Banarasi+Brocade" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
+                        <a href="/?category=Banarasi+Sarees" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -110,9 +112,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Handloomed Zari Heritage</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Royal Kanjeevaram</h1>
-                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Wholesale Temple Silk Weaves</p>
-                        <a href="/?category=Kanjeevaram+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Royal Silk</h1>
+                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Wholesale Silk Weaves</p>
+                        <a href="/?category=Silk+Sarees" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -122,9 +124,9 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                         <span style="border-left: 3px solid #FFF; padding-left: 12px;">Double Ikat Masterpiece</span>
                     </div>
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
-                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Patan Patola</h1>
-                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">GI-Tagged Handloom Craft</p>
-                        <a href="/?category=Patola+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
+                        <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Bandhej & Leheriya</h1>
+                        <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Traditional Handloom Craft</p>
+                        <a href="/?category=Bandhej+Sarees" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +138,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                     <div class="position-absolute start-50 translate-middle-x text-center text-white" style="bottom: 60px; width: 90%;">
                         <h1 class="mb-2 pavitra-hero-title" style="text-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #FFF !important;">Organza & Tissue</h1>
                         <p class="mb-3 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.7);">Lightweight Premium Drapes</p>
-                        <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
+                        <a href="/?category=Organza+Sarees" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -177,7 +179,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <p class="text-uppercase mb-2 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.6);">Wholesale Wedding Collection</p>
             <h2 class="text-uppercase mb-3 pavitra-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Tyoharcore</h2>
             <p class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.7); max-width: 500px;">Festive silks handpicked for the bridal season. Bulk orders with exclusive wholesale margins.</p>
-            <a href="/?category=Banarasi+Brocade" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="border-width: 2px;">Explore Collection</a>
+            <a href="/?category=Bridal+Sarees" class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="border-width: 2px;">Explore Collection</a>
         </div>
     </div>
     <div class="carousel-section-wrapper position-relative my-5 py-3" style="font-family: 'Nunito', sans-serif;">
@@ -292,7 +294,7 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
                 <p class="text-uppercase mb-2 pavitra-hero-subtitle" style="color: rgba(255,255,255,0.6);">Heritage Storytelling</p>
                 <h2 class="text-uppercase mb-3 pavitra-hero-title" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5); color: #FFF !important;">Desi Romance</h2>
                 <p class="mb-4 pavitra-video-copy">A rhythmic celebration of warp and weft. Traditional sarees reimagined for the modern wholesale buyer.</p>
-                <a href="/?category=Organza+Silk" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Explore Story</a>
+                <a href="/?category=Organza+Sarees" class="btn btn-light rounded-0 px-5 py-2 text-uppercase fw-bold pavitra-hero-cta" style="color: #482922;">Explore Story</a>
             </div>
         </section>
     </div>
