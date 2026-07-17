@@ -21,49 +21,44 @@ spl_autoload_register(function ($class) {
 use Core\Application;
 
 $app = new Application();
-$db = $app->db->pdo;
 
 try {
-    $db->exec('SET FOREIGN_KEY_CHECKS = 0');
+    $config = require dirname(__DIR__) . '/config/db.php';
+    $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
+    
+    // Connect with multi-statements enabled so we can execute massive SQL dump files directly
+    $db = new \PDO($dsn, $config['username'], $config['password'], [
+        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+        \PDO::ATTR_EMULATE_PREPARES => true,
+        \PDO::MYSQL_ATTR_MULTI_STATEMENTS => true,
+    ]);
+
+    $db->exec('SET FOREIGN_KEY_CHECKS = 0;');
 
     // 1. Run schema.sql
     $schemaPath = dirname(__DIR__) . '/database/schema.sql';
     if (file_exists($schemaPath)) {
         $sql = file_get_contents($schemaPath);
-        $statements = array_filter(array_map('trim', explode(';', $sql)));
-        foreach ($statements as $stmt) {
-            if (!empty($stmt)) {
-                try {
-                    $db->exec($stmt);
-                } catch (\Exception $e) {
-                    // Ignore drops that fail or similar minor issues
-                }
-            }
-        }
+        $db->exec($sql);
     }
 
     // 2. Run seeds.sql
     $seedsPath = dirname(__DIR__) . '/database/seeds.sql';
     if (file_exists($seedsPath)) {
-        // Since seeds.sql is huge and has massive INSERTs, we can't easily split by ';' safely if data has semicolons.
-        // Better to use a simpler execution for seeds if possible, or execute the whole thing if the driver supports it.
-        // PDO with mysql supports executing multiple statements at once if emulate prepares is on, which is default.
         $sql = file_get_contents($seedsPath);
-        try {
-            $db->exec($sql);
-        } catch (\PDOException $e) {
-            echo "Error running seeds: " . $e->getMessage() . "<br>";
-        }
+        $db->exec($sql);
     }
 
-    $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+    $db->exec('SET FOREIGN_KEY_CHECKS = 1;');
     
     // 3. Clear Cache
     $app->cache->clear();
 
-    echo "<h1>Database successfully updated!</h1>";
-    echo "<p>The new schema and 627 authentic products have been imported to this server.</p>";
-    echo "<a href='/'>Go back to Home</a>";
+    echo "<div style='font-family: sans-serif; text-align: center; margin-top: 50px;'>";
+    echo "<h1 style='color: green;'>Database Successfully Rebuilt!</h1>";
+    echo "<p>The live server has imported all 627 authentic products and dropped all mock data.</p>";
+    echo "<a href='/' style='padding: 10px 20px; background: #482922; color: white; text-decoration: none; border-radius: 5px;'>Go back to Home</a>";
+    echo "</div>";
 
 } catch (\Exception $e) {
     echo "<h1>Error updating database:</h1>";
