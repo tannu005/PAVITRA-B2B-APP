@@ -856,6 +856,12 @@ class RetailerController extends Controller {
     }
     public function categoriesView(Request $request, Response $response) {
         $db = Application::$app->db;
+        
+        try {
+            $db->pdo->exec("ALTER TABLE categories ADD COLUMN group_name VARCHAR(50) DEFAULT 'Categories'");
+        } catch (\PDOException $e) {
+        }
+
         $stmtCats = $db->query("SELECT id, name, slug, group_name FROM categories ORDER BY id ASC");
         $allCats = $stmtCats->fetchAll();
         $groupedCategories = [];
