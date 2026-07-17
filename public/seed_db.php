@@ -37,7 +37,18 @@ try {
     $seedsPath = dirname(__DIR__) . '/database/seeds.sql';
     if (file_exists($seedsPath)) {
         $sql = file_get_contents($seedsPath);
-        $db->exec($sql);
+        $sql = preg_replace('/^\xEF\xBB\xBF/', '', $sql);
+        try {
+            $db->exec($sql);
+        } catch (\PDOException $e) {
+            $statements = preg_split('/;[\r\n]+/', $sql);
+            foreach ($statements as $stmt) {
+                $stmt = trim($stmt);
+                if (!empty($stmt)) {
+                    $db->exec($stmt);
+                }
+            }
+        }
     }
 
     $db->exec('SET FOREIGN_KEY_CHECKS = 1;');
