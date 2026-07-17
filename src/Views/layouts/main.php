@@ -97,19 +97,19 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
             </a>
             <div class="pavitra-desktop-menu d-flex flex-column align-items-center gap-1">
                 <div class="menu-row-1 d-flex gap-4">
-                    <a href="/?category=Organza+Silk" class="pavitra-menu-link">Pavitra MUSE</a>
+                    <a href="/?category=Designer+Sarees" class="pavitra-menu-link">Pavitra MUSE</a>
                     <a href="/?sort=price_high" class="pavitra-menu-link">MOST WANTED</a>
                     <a href="/?sort=newest" class="pavitra-menu-link">NEW ARRIVALS</a>
                     <a href="/?all_sarees=true" class="pavitra-menu-link">ALL SAREES</a>
-                    <a href="/?category=Banarasi+Brocade" class="pavitra-menu-link">BANARASI</a>
-                    <a href="/?category=Kanjeevaram+Silk" class="pavitra-menu-link">KANJEEVARAM</a>
-                    <a href="/?category=Patola+Silk" class="pavitra-menu-link">PATOLA</a>
+                    <a href="/?category=Banarasi+Sarees" class="pavitra-menu-link">BANARASI</a>
+                    <a href="/?category=Silk+Saree" class="pavitra-menu-link">SILK</a>
+                    <a href="/?category=Bandhej+Sarees" class="pavitra-menu-link">BANDHEJ</a>
                 </div>
                 <div class="menu-row-2 d-flex gap-4">
-                    <a href="/?category=Organza+Silk" class="pavitra-menu-link">ORGANZA</a>
-                    <a href="/?category=Chanderi+Weave" class="pavitra-menu-link">CHANDERI</a>
-                    <a href="/?category=Mysore+Crepe+Silk" class="pavitra-menu-link">MYSORE SILK</a>
-                    <a href="/?category=Jamdani+Muslin" class="pavitra-menu-link">JAMDANI</a>
+                    <a href="/?category=Gotta+Patti+Sarees" class="pavitra-menu-link">GOTTA PATTI</a>
+                    <a href="/?category=Lehenga" class="pavitra-menu-link">LEHENGA</a>
+                    <a href="/?category=Cotton+Saree" class="pavitra-menu-link">COTTON</a>
+                    <a href="/?category=Chiffon+Saree" class="pavitra-menu-link">CHIFFON</a>
                     <div class="dropdown d-inline-block collections-dropdown">
                         <a href="#" class="dropdown-toggle text-decoration-none text-dark pavitra-menu-link" data-bs-toggle="dropdown" aria-expanded="false">COLLECTIONS</a>
                         <ul class="dropdown-menu mt-2 rounded-0 border text-center" style="min-width: 220px; font-family: 'Plus Jakarta Sans', sans-serif; border-color: #eee !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
@@ -608,10 +608,10 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                 <div class="col-lg-2 col-md-6 col-6">
                     <h5>Quick Links</h5>
                     <a href="/catalog?sort=newest">New Arrivals</a>
-                    <a href="/catalog?category=Banarasi+Brocade">Banarasi</a>
-                    <a href="/catalog?category=Kanjeevaram+Silk">Kanjeevaram</a>
-                    <a href="/catalog?category=Patola+Silk">Patola</a>
-                    <a href="/catalog?category=Organza+Silk">Organza</a>
+                    <a href="/catalog?category=Banarasi+Sarees">Banarasi Sarees</a>
+                    <a href="/catalog?category=Silk+Saree">Silk Saree</a>
+                    <a href="/catalog?category=Bandhej+Sarees">Bandhej Sarees</a>
+                    <a href="/catalog?category=Lehenga">Lehenga</a>
                 </div>
                 <div class="col-lg-4 col-md-6 d-none d-lg-block">
                     <h5>Help & Support</h5>
@@ -793,7 +793,7 @@ $canonicalUrl = $scheme . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $canonicalPat
                     stream = null;
                 }
                 setTimeout(function() {
-                    var categories = ["Banarasi Brocade", "Kanjeevaram Silk", "Patola Silk", "Organza Silk", "Mysore Crepe Silk", "Jamdani Muslin"];
+                    var categories = ["Banarasi Sarees", "Silk Saree", "Bandhej Sarees", "Designer Sarees", "Lehenga", "Cotton Saree"];
                     var matchedCategory = categories[Math.floor(Math.random() * categories.length)];
                     window.showToast("Loom match: " + matchedCategory + " found!");
                     setTimeout(function() {
