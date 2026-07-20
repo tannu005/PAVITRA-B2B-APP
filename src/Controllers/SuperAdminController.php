@@ -624,7 +624,7 @@ class SuperAdminController extends Controller {
             }
             $productsMap[$base]['images'][$angle] = $f;
         }
-        $sellerId = $db->query("SELECT id FROM users WHERE role = 'SELLER' LIMIT 1")->fetchColumn();
+        $sellerId = $db->query("SELECT id FROM users WHERE role_id = 3 LIMIT 1")->fetchColumn();
         if (!$sellerId) $sellerId = 1;
         foreach ($productsMap as $base => $data) {
             $stmt = $db->prepare("INSERT INTO products (seller_id, category_id, title, description, is_approved, status) VALUES (?, ?, ?, ?, 1, 'ACTIVE')");
