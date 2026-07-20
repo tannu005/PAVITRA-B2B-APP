@@ -656,6 +656,6 @@ class SuperAdminController extends Controller {
                 if(is_file($cf)) unlink($cf);
             }
         }
-        return $response->json(['success' => true, 'categories' => count($catMap)]);
+        return true;
     }
 }
