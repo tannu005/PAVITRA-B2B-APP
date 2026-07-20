@@ -28,6 +28,11 @@ if (!empty($activeCategory)) {
 
         <div class="col-4 col-md-3 bg-light overflow-y-auto" style="height: 100%;">
             <div class="list-group list-group-flush pb-5">
+                <a href="/customization" class="list-group-item list-group-item-action py-3 px-1 border-0 text-center" style="font-size: 0.75rem; font-weight: 700; line-height: 1.2; background-color: var(--premium-gold-dark, #b8860b); color: white;">
+                    <i class="fa-solid fa-wand-magic-sparkles mb-1 d-block" style="font-size: 1rem;"></i>
+                    Customize<br>Your Saree
+                </a>
+                
                 <?php foreach($groupedCategories as $groupName => $cats): ?>
                     <div class="p-2 fw-bold text-dark text-uppercase bg-light border-bottom text-center" style="font-size: 0.7rem; letter-spacing: 0.5px; position: sticky; top: 0; z-index: 10;">
                         <?= htmlspecialchars($groupName) ?>
