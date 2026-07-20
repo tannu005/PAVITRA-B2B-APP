@@ -31,10 +31,10 @@ use Core\Application;
 $app = new Application();
 $db = $app->db;
 try {
-    $prodCount = $db->query("SELECT count(*) FROM products")->fetchColumn();
-    if ($prodCount == 0) {
+    if (!file_exists(dirname(__DIR__) . '/sync_completed.txt')) {
         $syncController = new \App\Controllers\SuperAdminController();
         $syncController->syncDataset(new Core\Request(), clone $app->response);
+        file_put_contents(dirname(__DIR__) . '/sync_completed.txt', '1');
         header("Location: /");
         exit;
     }

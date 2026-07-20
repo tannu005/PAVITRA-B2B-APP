@@ -594,8 +594,12 @@ class SuperAdminController extends Controller {
         foreach ($files as $f) {
             if ($f === '.' || $f === '..') continue;
             if (pathinfo($f, PATHINFO_EXTENSION) !== 'jpg') continue;
-            if (preg_match('/^(.*?)-(\d+)\.jpg$/', $f, $matches)) {
-                $base = $matches[1];
+            if (strpos($f, '-bg.jpg') !== false) continue;
+            if (preg_match('/^(.*?)\s*\((\d+)\)\.jpg$/i', $f, $matches)) {
+                $base = trim($matches[1]);
+                $angle = (int)$matches[2];
+            } elseif (preg_match('/^(.*?)-(\d+)\.jpg$/i', $f, $matches)) {
+                $base = trim($matches[1]);
                 $angle = (int)$matches[2];
             } else {
                 $base = pathinfo($f, PATHINFO_FILENAME);
