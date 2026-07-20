@@ -48,6 +48,10 @@ try {
         header("Location: /");
         exit;
     }
+} catch (\Throwable $e) { 
+    echo "SYNC ERROR: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine(); 
+    exit; 
+}
 
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
