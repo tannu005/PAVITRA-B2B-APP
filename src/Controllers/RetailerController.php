@@ -856,26 +856,52 @@ class RetailerController extends Controller {
     }
     public function categoriesView(Request $request, Response $response) {
         $db = Application::$app->db;
+        $gottaPatti = ['Plain', 'Chunri', 'Saree', 'Mixed Patterns', 'Variants'];
+        $traditional = ['Bandhej', 'Printed', 'Pyor Gotta Patti'];
+        $embroidery = ['Pittan Work', 'Sitara Work', 'Light Work'];
+        $lehenga = ['All Lehengas'];
+        $plain = ['Sifon Chunri'];
+        $newColl = ['Latest Designs'];
+
+        $requiredCats = array_merge($gottaPatti, $traditional, $embroidery, $lehenga, $plain, $newColl);
+
+        $stmtExisting = $db->query("SELECT name FROM categories");
+        $existing = $stmtExisting->fetchAll(\PDO::FETCH_COLUMN) ?: [];
+
+        foreach ($requiredCats as $reqCat) {
+            if (!in_array($reqCat, $existing)) {
+                $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $reqCat)));
+                $stmtInsert = $db->prepare("INSERT INTO categories (name, slug) VALUES (?, ?)");
+                $stmtInsert->execute([$reqCat, $slug]);
+            }
+        }
+
         $stmtCats = $db->query("SELECT id, name, slug FROM categories ORDER BY id ASC");
         $allCats = $stmtCats->fetchAll();
-        
-        $occasion = ['Wedding Wear', 'Party Wear', 'Festival Wear', 'Office Wear', 'Daily Wear', 'Reception Collection', 'Haldi Collection', 'Mehndi Collection'];
-        $fabric = ['Pure Silk', 'Soft Silk', 'Cotton Silk', 'Pure Cotton', 'Mulmul Cotton', 'Georgette', 'Chiffon', 'Organza', 'Tissue', 'Linen', 'Crepe', 'Net', 'Satin'];
-        
+
         $groupedCategories = [
-            'Categories' => [],
-            'Shop by Occasion' => [],
-            'Fabric' => []
+            'Gotta Patti' => [],
+            'Traditional Patterns' => [],
+            'Embroidery Work' => [],
+            'Lehenga' => [],
+            'Plain Fabric' => [],
+            'New Collections' => []
         ];
-        
+
         foreach ($allCats as $c) {
             $name = $c['name'];
-            if (in_array($name, $occasion)) {
-                $groupedCategories['Shop by Occasion'][] = $c;
-            } elseif (in_array($name, $fabric)) {
-                $groupedCategories['Fabric'][] = $c;
-            } else {
-                $groupedCategories['Categories'][] = $c;
+            if (in_array($name, $gottaPatti)) {
+                $groupedCategories['Gotta Patti'][] = $c;
+            } elseif (in_array($name, $traditional)) {
+                $groupedCategories['Traditional Patterns'][] = $c;
+            } elseif (in_array($name, $embroidery)) {
+                $groupedCategories['Embroidery Work'][] = $c;
+            } elseif (in_array($name, $lehenga)) {
+                $groupedCategories['Lehenga'][] = $c;
+            } elseif (in_array($name, $plain)) {
+                $groupedCategories['Plain Fabric'][] = $c;
+            } elseif (in_array($name, $newColl)) {
+                $groupedCategories['New Collections'][] = $c;
             }
         }
         
