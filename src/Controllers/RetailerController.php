@@ -13,7 +13,6 @@ class RetailerController extends Controller {
         $minPrice = floatval($body['min_price'] ?? 0);
         $maxPrice = floatval($body['max_price'] ?? 0);
         $db = Application::$app->db;
-        // SELF HEALING BLOCK: Map products to correct categories based on image_url
         $allCats = $db->query("SELECT id, name FROM categories")->fetchAll();
         $catMap = [];
         foreach ($allCats as $c) {
@@ -930,7 +929,6 @@ class RetailerController extends Controller {
         $body = $request->getBody();
         $activeCategory = $body['category'] ?? '';
         
-        // If no active category, pick the first one from the first group
         if (empty($activeCategory) && !empty($groupedCategories)) {
             $firstGroup = reset($groupedCategories);
             if (!empty($firstGroup)) {
