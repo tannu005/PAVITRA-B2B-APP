@@ -611,7 +611,8 @@ class SuperAdminController extends Controller {
                 $title = ucwords($titleStr);
                 $catId = !empty($cats) ? $cats[0]['id'] : null;
                 foreach ($cats as $c) {
-                    if (stripos($title, $c['name']) !== false || stripos($title, str_replace('-', ' ', $c['slug'])) !== false) {
+                    $catBaseName = trim(str_ireplace('Sarees', '', $c['name']));
+                    if (stripos($c['name'], $title) !== false || stripos($title, $catBaseName) !== false) {
                         $catId = $c['id'];
                         break;
                     }
