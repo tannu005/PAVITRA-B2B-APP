@@ -77,7 +77,17 @@ if (!empty($activeCategory)) {
                             <a href="/product/<?= $p['id'] ?>" class="text-decoration-none d-block h-100">
                                 <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden product-card bg-white pb-2">
                                     <div class="position-relative bg-light" style="padding-top: 133.33%;">
-                                        <img loading="lazy" src="<?= htmlspecialchars($p['image_url'] ?: '/assets/images/placeholder.png') ?>" 
+                                        <?php
+                                        $pubPath = '/assets/SAREE_COLLECTION/';
+                                        $catType = str_replace(' ', '_', $p['category_name']);
+                                        $fName = basename($p['image_url'] ?: 'placeholder.jpg');
+                                        
+                                        $imgUrl = $pubPath . '01_BY_SAREE_TYPE/' . $catType . '/' . $fName;
+                                        if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $imgUrl)) {
+                                            $imgUrl = '/assets/images/placeholder.png';
+                                        }
+                                        ?>
+                                        <img loading="lazy" src="<?= htmlspecialchars($imgUrl) ?>" 
                                              class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
                                         
                                         <?php if ($discount > 0): ?>
