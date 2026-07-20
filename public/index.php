@@ -31,6 +31,16 @@ use Core\Application;
 $app = new Application();
 $db = $app->db;
 try {
+    if (isset($_GET['force_sync'])) {
+        try {
+            $syncController = new \App\Controllers\SuperAdminController();
+            $syncController->syncDataset(new Core\Request(), clone $app->response);
+            echo "SYNC SUCCESS";
+        } catch (\Exception $e) {
+            echo "SYNC ERROR: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine();
+        }
+        exit;
+    }
     if (!file_exists(dirname(__DIR__) . '/sync_completed.txt')) {
         $syncController = new \App\Controllers\SuperAdminController();
         $syncController->syncDataset(new Core\Request(), clone $app->response);
@@ -38,7 +48,6 @@ try {
         header("Location: /");
         exit;
     }
-} catch (\Exception $e) {}
 
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
