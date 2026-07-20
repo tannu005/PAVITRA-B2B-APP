@@ -11,8 +11,9 @@ if (php_sapi_name() === 'cli-server') {
         ];
         if (isset($mimes[$ext])) {
             header("Content-Type: " . $mimes[$ext]);
+            header("Content-Length: " . filesize($filepath));
             readfile($filepath);
-            exit;
+            return true;
         }
         return false;
     }
