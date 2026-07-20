@@ -623,8 +623,8 @@ class SuperAdminController extends Controller {
         $sellerId = $db->query("SELECT id FROM users WHERE role = 'SELLER' LIMIT 1")->fetchColumn();
         if (!$sellerId) $sellerId = 1;
         foreach ($productsMap as $base => $data) {
-            $stmt = $db->prepare("INSERT INTO products (seller_id, category_id, title, description, material, moq, is_approved, status) VALUES (?, ?, ?, ?, ?, ?, 1, 'ACTIVE')");
-            $stmt->execute([$sellerId, $data['category_id'], $data['title'], 'Premium ' . $data['title'], 'Silk/Blend', 1]);
+            $stmt = $db->prepare("INSERT INTO products (seller_id, category_id, title, description, is_approved, status) VALUES (?, ?, ?, ?, 1, 'ACTIVE')");
+            $stmt->execute([$sellerId, $data['category_id'], $data['title'], 'Premium ' . $data['title']]);
             $productId = $db->lastInsertId();
             ksort($data['images']);
             $primaryImage = '/uploads/products/' . reset($data['images']);
