@@ -7,7 +7,7 @@ if (php_sapi_name() === 'cli-server') {
         $mimes = [
             'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 
             'gif' => 'image/gif', 'webp' => 'image/webp', 'css' => 'text/css', 
-            'js' => 'application/javascript', 'svg' => 'image/svg+xml'
+            'js' => 'application/javascript', 'svg' => 'image/svg+xml', 'mp4' => 'video/mp4'
         ];
         if (isset($mimes[$ext])) {
             header("Content-Type: " . $mimes[$ext]);
