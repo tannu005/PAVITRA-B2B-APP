@@ -78,13 +78,9 @@ if (!empty($activeCategory)) {
                                 <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden product-card bg-white pb-2">
                                     <div class="position-relative bg-light" style="padding-top: 133.33%;">
                                         <?php
-                                        $pubPath = '/assets/SAREE_COLLECTION/';
-                                        $catType = str_replace(' ', '_', $p['category_name']);
-                                        $fName = basename($p['image_url'] ?: 'placeholder.jpg');
-                                        
-                                        $imgUrl = $pubPath . '01_BY_SAREE_TYPE/' . $catType . '/' . $fName;
-                                        if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $imgUrl)) {
-                                            $imgUrl = '/assets/images/placeholder.png';
+                                        $imgUrl = '/assets/SAREE_COLLECTION/' . ltrim($p['image_url'] ?? '', '/');
+                                        if (empty($p['image_url']) || !file_exists($_SERVER['DOCUMENT_ROOT'] . $imgUrl)) {
+                                            $imgUrl = '/assets/img/pavitra_logo.png';
                                         }
                                         ?>
                                         <img loading="lazy" src="<?= htmlspecialchars($imgUrl) ?>" 
