@@ -1,7 +1,19 @@
 <?php
 if (php_sapi_name() === 'cli-server') {
-    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    if (file_exists(__DIR__ . $path) && is_file(__DIR__ . $path)) {
+    $path = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    $filepath = __DIR__ . $path;
+    if ($path !== '/' && file_exists($filepath) && is_file($filepath)) {
+        $ext = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+        $mimes = [
+            'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 
+            'gif' => 'image/gif', 'webp' => 'image/webp', 'css' => 'text/css', 
+            'js' => 'application/javascript', 'svg' => 'image/svg+xml'
+        ];
+        if (isset($mimes[$ext])) {
+            header("Content-Type: " . $mimes[$ext]);
+            readfile($filepath);
+            exit;
+        }
         return false;
     }
 }
