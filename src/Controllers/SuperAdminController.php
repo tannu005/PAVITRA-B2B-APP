@@ -628,6 +628,7 @@ class SuperAdminController extends Controller {
         if (!$sellerId) {
             $sellerId = $db->query("SELECT id FROM users LIMIT 1")->fetchColumn();
             if (!$sellerId) {
+                $db->query("INSERT IGNORE INTO roles (id, name, description) VALUES (3, 'SELLER', 'Seller')");
                 $db->query("INSERT INTO users (name, email, mobile, password_hash, role_id) VALUES ('Default Seller', 'seller@example.com', '0000000000', 'password', 3)");
                 $sellerId = $db->lastInsertId();
             }
