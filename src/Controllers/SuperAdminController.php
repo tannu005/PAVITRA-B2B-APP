@@ -609,7 +609,7 @@ class SuperAdminController extends Controller {
                 $titleStr = trim(preg_replace('/-{2,}|\.jpg|\-\d+$/', ' ', $base));
                 $titleStr = trim(str_replace('-', ' ', $titleStr));
                 $title = ucwords($titleStr);
-                $catId = 1;
+                $catId = !empty($cats) ? $cats[0]['id'] : null;
                 foreach ($cats as $c) {
                     if (stripos($title, $c['name']) !== false || stripos($title, str_replace('-', ' ', $c['slug'])) !== false) {
                         $catId = $c['id'];
