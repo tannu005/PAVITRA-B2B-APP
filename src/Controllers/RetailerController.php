@@ -29,7 +29,7 @@ class RetailerController extends Controller {
             FROM products p 
             JOIN product_variants pv ON pv.product_id = p.id
             JOIN categories c ON p.category_id = c.id
-            WHERE p.status = 'ACTIVE' AND p.is_approved = 1
+            WHERE p.status = 'ACTIVE'
         ";
         $params = [];
         if (!empty($category)) {
@@ -922,7 +922,7 @@ class RetailerController extends Controller {
             FROM products p 
             JOIN product_variants pv ON pv.product_id = p.id
             JOIN categories c ON p.category_id = c.id
-            WHERE p.status = 'ACTIVE' AND p.is_approved = 1
+            WHERE p.status = 'ACTIVE'
         ";
         $params = [];
         if (!empty($activeCategory)) {
