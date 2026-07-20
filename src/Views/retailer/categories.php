@@ -78,8 +78,8 @@ if (!empty($activeCategory)) {
                                 <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden product-card bg-white pb-2">
                                     <div class="position-relative bg-light" style="padding-top: 133.33%;">
                                         <?php
-                                        $imgUrl = '/assets/SAREE_COLLECTION/' . ltrim($p['image_url'] ?? '', '/');
-                                        if (empty($p['image_url']) || !file_exists($_SERVER['DOCUMENT_ROOT'] . $imgUrl)) {
+                                        $imgUrl = $p['image_url'] ?? '';
+                                        if (empty($imgUrl)) {
                                             $imgUrl = '/assets/img/pavitra_logo.png';
                                         }
                                         ?>
