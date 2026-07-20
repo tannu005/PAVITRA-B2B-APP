@@ -583,47 +583,46 @@ class SuperAdminController extends Controller {
         $db->query("TRUNCATE TABLE product_images");
         $db->query("TRUNCATE TABLE product_variants");
         $db->query("TRUNCATE TABLE products");
+        $db->query("TRUNCATE TABLE categories");
         $db->query("SET FOREIGN_KEY_CHECKS = 1");
-        $cats = $db->query("SELECT id, name, slug FROM categories")->fetchAll();
+
         $uploadDir = dirname(__DIR__, 2) . '/public/uploads/products';
         if (!is_dir($uploadDir)) {
             echo "Upload dir not found"; exit;
         }
         $files = scandir($uploadDir);
+        
+        $catMap = [];
         $productsMap = [];
+        $productIndex = 1;
+
         foreach ($files as $f) {
             if ($f === '.' || $f === '..') continue;
             if (pathinfo($f, PATHINFO_EXTENSION) !== 'jpg') continue;
             if (strpos($f, '-bg.jpg') !== false) continue;
-            if (preg_match('/^(.*?)\s*\((\d+)\)\.jpg$/i', $f, $matches)) {
-                $base = trim($matches[1]);
-                $angle = (int)$matches[2];
-            } elseif (preg_match('/^(.*?)-(\d+)\.jpg$/i', $f, $matches)) {
-                $base = trim($matches[1]);
-                $angle = (int)$matches[2];
-            } else {
-                $base = pathinfo($f, PATHINFO_FILENAME);
-                $angle = 0;
+
+            $base = pathinfo($f, PATHINFO_FILENAME);
+            $catName = trim(preg_replace('/\s*\(\d+\)$/', '', $base));
+            $catName = trim(preg_replace('/-\d+$/', '', $catName));
+            $catName = ucwords(trim(str_replace('-', ' ', $catName)));
+
+            if (!isset($catMap[$catName])) {
+                $slug = strtolower(str_replace(' ', '-', $catName));
+                $stmt = $db->prepare("INSERT INTO categories (name, slug) VALUES (?, ?)");
+                $stmt->execute([$catName, $slug]);
+                $catMap[$catName] = $db->lastInsertId();
             }
-            if (!isset($productsMap[$base])) {
-                $titleStr = trim(preg_replace('/-{2,}|\.jpg|\-\d+$/', ' ', $base));
-                $titleStr = trim(str_replace('-', ' ', $titleStr));
-                $title = ucwords($titleStr);
-                $catId = !empty($cats) ? $cats[0]['id'] : null;
-                foreach ($cats as $c) {
-                    $catBaseName = trim(str_ireplace('Sarees', '', $c['name']));
-                    if (stripos($c['name'], $title) !== false || stripos($title, $catBaseName) !== false) {
-                        $catId = $c['id'];
-                        break;
-                    }
-                }
-                $productsMap[$base] = [
-                    'title' => $title,
-                    'category_id' => $catId,
-                    'images' => []
-                ];
-            }
-            $productsMap[$base]['images'][$angle] = $f;
+
+            $catId = $catMap[$catName];
+            $title = $catName . ' ' . $productIndex;
+
+            $productsMap['prod_' . $productIndex] = [
+                'title' => $title,
+                'category_id' => $catId,
+                'images' => [0 => $f],
+                'sku_base' => str_replace(' ', '', $catName)
+            ];
+            $productIndex++;
         }
         $sellerId = $db->query("SELECT id FROM users WHERE role_id = 3 LIMIT 1")->fetchColumn();
         if (!$sellerId) {
@@ -650,6 +649,13 @@ class SuperAdminController extends Controller {
                 $stmtImg->execute([$productId, $fullImg, $isPrimary]);
             }
         }
-        return true;
+        $cacheDir = dirname(__DIR__, 2) . '/storage/cache';
+        if (is_dir($cacheDir)) {
+            $cacheFiles = glob($cacheDir . '/*');
+            foreach($cacheFiles as $cf){
+                if(is_file($cf)) unlink($cf);
+            }
+        }
+        return $response->json(['success' => true, 'categories' => count($catMap)]);
     }
 }

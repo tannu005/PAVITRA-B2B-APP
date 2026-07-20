@@ -18,32 +18,7 @@ class RetailerController extends Controller {
         foreach ($allCats as $c) {
             $catMap[$c['name']] = $c['id'];
         }
-        $keywordMap = [
-            'bandhej' => 'Bandhej Sarees',
-            'gotta' => 'Gota Patti Sarees',
-            'chunri' => 'Chunri Sarees',
-            'leheriya' => 'Leheriya Sarees',
-            'organza' => 'Organza Sarees',
-            'silk' => 'Silk Sarees',
-            'georgette' => 'Georgette Sarees',
-            'chiffon' => 'Chiffon Sarees',
-            'tissue' => 'Tissue Sarees',
-            'cotton' => 'Cotton Sarees',
-            'linen' => 'Linen Sarees',
-            'banarasi' => 'Banarasi Sarees',
-            'pittan' => 'Pittan Work Sarees',
-            'bridal' => 'Bridal Sarees',
-            'wedding' => 'Wedding Wear',
-            'party' => 'Party Wear'
-        ];
-        foreach ($keywordMap as $kw => $catName) {
-            if (isset($catMap[$catName])) {
-                $db->prepare("UPDATE products p 
-                              JOIN product_variants pv ON pv.product_id = p.id 
-                              SET p.category_id = ? 
-                              WHERE pv.image_url LIKE ?")->execute([$catMap[$catName], '%' . $kw . '%']);
-            }
-        }
+        // Removed hardcoded keyword map as categories are now dynamically built during sync
         $sql = "
             SELECT p.*, 
                    MIN(pv.id) as variant_id, 
