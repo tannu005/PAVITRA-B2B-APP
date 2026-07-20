@@ -574,4 +574,71 @@ class SuperAdminController extends Controller {
         }
         return $response->json(['success' => true, 'sent_count' => count($users)]);
     }
+    public function syncDataset(Request $request, Response $response) {
+        $user = $this->checkAuth(['SUPER_ADMIN']);
+        if (!$user) return;
+        $db = Application::$app->db;
+        $db->query("SET FOREIGN_KEY_CHECKS = 0");
+        $db->query("TRUNCATE TABLE cart_items");
+        $db->query("TRUNCATE TABLE product_images");
+        $db->query("TRUNCATE TABLE product_variants");
+        $db->query("TRUNCATE TABLE products");
+        $db->query("SET FOREIGN_KEY_CHECKS = 1");
+        $cats = $db->query("SELECT id, name, slug FROM categories")->fetchAll();
+        $uploadDir = dirname(__DIR__, 2) . '/public/uploads/products';
+        if (!is_dir($uploadDir)) {
+            echo "Upload dir not found"; exit;
+        }
+        $files = scandir($uploadDir);
+        $productsMap = [];
+        foreach ($files as $f) {
+            if ($f === '.' || $f === '..') continue;
+            if (pathinfo($f, PATHINFO_EXTENSION) !== 'jpg') continue;
+            if (preg_match('/^(.*?)-(\d+)\.jpg$/', $f, $matches)) {
+                $base = $matches[1];
+                $angle = (int)$matches[2];
+            } else {
+                $base = pathinfo($f, PATHINFO_FILENAME);
+                $angle = 0;
+            }
+            if (!isset($productsMap[$base])) {
+                $titleStr = trim(preg_replace('/-{2,}|\.jpg|\-\d+$/', ' ', $base));
+                $titleStr = trim(str_replace('-', ' ', $titleStr));
+                $title = ucwords($titleStr);
+                $catId = 1;
+                foreach ($cats as $c) {
+                    if (stripos($title, $c['name']) !== false || stripos($title, str_replace('-', ' ', $c['slug'])) !== false) {
+                        $catId = $c['id'];
+                        break;
+                    }
+                }
+                $productsMap[$base] = [
+                    'title' => $title,
+                    'category_id' => $catId,
+                    'images' => []
+                ];
+            }
+            $productsMap[$base]['images'][$angle] = $f;
+        }
+        $sellerId = $db->query("SELECT id FROM users WHERE role = 'SELLER' LIMIT 1")->fetchColumn();
+        if (!$sellerId) $sellerId = 1;
+        foreach ($productsMap as $base => $data) {
+            $stmt = $db->prepare("INSERT INTO products (seller_id, category_id, title, description, material, moq, is_approved, status) VALUES (?, ?, ?, ?, ?, ?, 1, 'ACTIVE')");
+            $stmt->execute([$sellerId, $data['category_id'], $data['title'], 'Premium ' . $data['title'], 'Silk/Blend', 1]);
+            $productId = $db->lastInsertId();
+            ksort($data['images']);
+            $primaryImage = '/uploads/products/' . reset($data['images']);
+            $stmtVar = $db->prepare("INSERT INTO product_variants (product_id, sku, color, size, price, wholesale_price, bulk_threshold, stock, weight, dimensions, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $sku = strtoupper(substr(md5($base), 0, 8));
+            $stmtVar->execute([$productId, $sku, 'Default', 'Free Size', 2999.00, 1999.00, 10, 100, 500.00, '30x20x5', $primaryImage]);
+            foreach ($data['images'] as $idx => $img) {
+                $fullImg = '/uploads/products/' . $img;
+                $isPrimary = ($fullImg === $primaryImage) ? 1 : 0;
+                $stmtImg = $db->prepare("INSERT INTO product_images (product_id, image_url, is_primary) VALUES (?, ?, ?)");
+                $stmtImg->execute([$productId, $fullImg, $isPrimary]);
+            }
+        }
+        echo "Dataset synchronized successfully. Processed " . count($productsMap) . " unique products.";
+        exit;
+    }
 }

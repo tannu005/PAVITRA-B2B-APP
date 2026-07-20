@@ -91,6 +91,7 @@ $app->router->get('/admin/sellers', [App\Controllers\SuperAdminController::class
 $app->router->post('/admin/sellers/approve', [App\Controllers\SuperAdminController::class, 'approveSeller']);
 $app->router->get('/admin/products', [App\Controllers\SuperAdminController::class, 'products']);
 $app->router->post('/admin/products/approve', [App\Controllers\SuperAdminController::class, 'approveProduct']);
+$app->router->get('/admin/sync-dataset', [App\Controllers\SuperAdminController::class, 'syncDataset']);
 $app->router->get('/admin/kyc', [App\Controllers\SuperAdminController::class, 'kyc']);
 $app->router->post('/admin/kyc/verify', [App\Controllers\SuperAdminController::class, 'verifyKyc']);
 $app->router->get('/admin/settlements', [App\Controllers\SuperAdminController::class, 'settlements']);

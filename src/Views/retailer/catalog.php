@@ -26,29 +26,7 @@ $hoverImg = !empty($p['hover_image_url']) ? $p['hover_image_url'] : ($p['image_u
             </button>
         </div>
         <div class="pavitra-card-body text-start pt-2 pb-3 px-2">
-            <?php 
-                $colors = !empty($p['all_colors']) ? explode('|', $p['all_colors']) : [];
-                
-            ?>
-            <?php if (!empty($colors) && count($colors) > 1): ?>
-<div class="d-flex align-items-center mb-2 gap-1" style="flex-wrap: wrap;">
-                <?php foreach($colors as $idx => $c): 
-                    $colorClass = 'color-default';
-                    $lowerColor = strtolower(trim($c));
-                    $cssColors = ['white', 'black', 'red', 'blue', 'green', 'yellow', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown', 'navy', 'maroon', 'olive', 'silver', 'gold', 'cyan', 'magenta', 'beige', 'mustard', 'peach', 'lavender', 'coral', 'mint'];
-                    foreach ($cssColors as $cc) {
-                        if (strpos($lowerColor, $cc) !== false) {
-                            $colorClass = 'color-' . $cc;
-                            break;
-                        }
-                    }
-                ?>
-                    <a href="/product/<?= $p['id'] ?>?color=<?= urlencode(trim($c)) ?>" class="color-swatch-wrapper <?= $idx === 0 ? 'active' : '' ?>" style="border: 2px solid <?= $idx === 0 ? '#999' : 'transparent' ?>; border-radius: 50%; padding: 2px; display: inline-flex; text-decoration: none;" title="<?= htmlspecialchars(trim($c)) ?>">
-                        <div class="color-swatch <?= $colorClass ?>" style="width: 14px; height: 14px; border: 1px solid rgba(0,0,0,0.15) !important; margin: 0; box-shadow: none;"></div>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-            <?php endif; ?>
+
             <div class="text-muted fw-bold mb-1 custom-caps" style="font-size: 0.85rem; color: #555 !important;"><?= htmlspecialchars($p['brand_name'] ?? 'Pavitra') ?></div>
             <h6 class="pavitra-card-title mb-1 pavitra-product-title custom-caps" style="font-weight: normal; color: #333; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 40px;"><?= htmlspecialchars($p['title']) ?></h6>
             <div class="pavitra-price-wholesale fw-bold text-dark mt-2 pavitra-product-price" style="font-size: 1.1rem;">
