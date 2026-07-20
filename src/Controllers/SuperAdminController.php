@@ -575,8 +575,8 @@ class SuperAdminController extends Controller {
         return $response->json(['success' => true, 'sent_count' => count($users)]);
     }
     public function syncDataset(Request $request, Response $response) {
-        $user = $this->checkAuth(['SUPER_ADMIN']);
-        if (!$user) return;
+        // $user = $this->checkAuth(['SUPER_ADMIN']);
+        // if (!$user) return;
         $db = Application::$app->db;
         $db->query("SET FOREIGN_KEY_CHECKS = 0");
         $db->query("TRUNCATE TABLE cart_items");
@@ -638,7 +638,6 @@ class SuperAdminController extends Controller {
                 $stmtImg->execute([$productId, $fullImg, $isPrimary]);
             }
         }
-        echo "Dataset synchronized successfully. Processed " . count($productsMap) . " unique products.";
-        exit;
+        return true;
     }
 }

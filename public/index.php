@@ -29,6 +29,17 @@ if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
 }
 use Core\Application;
 $app = new Application();
+$db = $app->db;
+try {
+    $prodCount = $db->query("SELECT count(*) FROM products")->fetchColumn();
+    if ($prodCount == 0) {
+        $syncController = new \App\Controllers\SuperAdminController();
+        $syncController->syncDataset(new Core\Request(), clone $app->response);
+        header("Location: /");
+        exit;
+    }
+} catch (\Exception $e) {}
+
 $app->router->get('/login', [App\Controllers\AuthController::class, 'loginView']);
 $app->router->post('/login', [App\Controllers\AuthController::class, 'login']);
 $app->router->get('/admin/login', [App\Controllers\AuthController::class, 'adminLoginView']);
