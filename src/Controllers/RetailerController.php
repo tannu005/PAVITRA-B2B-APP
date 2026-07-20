@@ -863,43 +863,28 @@ class RetailerController extends Controller {
     }
     public function categoriesView(Request $request, Response $response) {
         $db = Application::$app->db;
-        $sareeTypes = ['Bandhej Sarees', 'Banarasi Sarees', 'Pittan Work Sarees', 'Gota Patti Sarees', 'Chunri Sarees', 'Leheriya Sarees', 'Organza Sarees', 'Silk Sarees', 'Georgette Sarees', 'Chiffon Sarees', 'Tissue Sarees', 'Cotton Sarees', 'Linen Sarees', 'Printed Sarees', 'Designer Sarees', 'Handloom Sarees'];
-        $occasionTypes = ['Wedding Wear', 'Bridal Sarees', 'Party Wear', 'Festival Wear', 'Office Wear', 'Daily Wear', 'Reception Collection', 'Haldi Collection', 'Mehendi Collection', 'Sangeet Collection'];
-        $fabricTypes = ['Pure Silk', 'Soft Silk', 'Organza', 'Georgette', 'Chiffon', 'Cotton', 'Tissue', 'Linen'];
-
-        $requiredCats = array_merge($sareeTypes, $occasionTypes, $fabricTypes);
-
-        $stmtExisting = $db->query("SELECT name FROM categories");
-        $existing = $stmtExisting->fetchAll(\PDO::FETCH_COLUMN) ?: [];
-
-        foreach ($requiredCats as $reqCat) {
-            if (!in_array($reqCat, $existing)) {
-                $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $reqCat)));
-                $stmtInsert = $db->prepare("INSERT INTO categories (name, slug) VALUES (?, ?)");
-                $stmtInsert->execute([$reqCat, $slug]);
-            }
-        }
-
-        $stmtCats = $db->query("SELECT id, name, slug FROM categories ORDER BY id ASC");
-        $allCats = $stmtCats->fetchAll();
-
+        
+        $stmtCats = $db->query("
+            SELECT DISTINCT c.id, c.name, c.slug 
+            FROM categories c 
+            JOIN products p ON p.category_id = c.id 
+            ORDER BY c.name ASC
+        ");
+        $allCats = $stmtCats->fetchAll() ?: [];
+        
         $sidebar = [
-            'Saree Categories' => [],
-            'Shop by Occasion' => [],
-            'Fabric' => []
+            'Saree Categories' => []
         ];
-
+        
         foreach ($allCats as $c) {
             $name = $c['name'];
-            if (in_array($name, $sareeTypes)) {
-                $sidebar['Saree Categories'][] = $c;
-            } elseif (in_array($name, $occasionTypes)) {
-                $sidebar['Shop by Occasion'][] = $c;
-            } elseif (in_array($name, $fabricTypes)) {
-                $sidebar['Fabric'][] = $c;
+            // Filter out the random hash categories if they are longer than 15 chars and have no spaces
+            if (strlen($name) > 15 && strpos($name, ' ') === false) {
+                continue;
             }
+            $sidebar['Saree Categories'][] = $c;
         }
-
+        
         $groupedCategories = array_filter($sidebar, function($g) { return !empty($g); });
         
         $body = $request->getBody();
@@ -911,7 +896,7 @@ class RetailerController extends Controller {
                 $activeCategory = $firstGroup[0]['slug'];
             }
         }
-
+        
         $sql = "
             SELECT p.*, 
                    MIN(pv.id) as variant_id, 

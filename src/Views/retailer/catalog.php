@@ -53,13 +53,14 @@ $isFiltered = !empty($selectedCategory) || !empty($searchQuery) || !empty($sort)
             <div class="category-circle-title">All Sarees</div>
         </a>
         <?php 
+        $occasionTypes = ['Wedding Wear', 'Bridal Sarees', 'Party Wear', 'Festival Wear', 'Office Wear', 'Daily Wear', 'Reception', 'Haldi'];
         $placeholders = ['/kanjeevaram.png', '/banarasi.png', '/patola.png', '/tissue.png', '/kanjeevaram_1782883481838.png', '/banarasi_1782883519429.png', '/patola_1782883499288.png', '/tissue_1782883588057.png'];
-        foreach (array_slice($categoriesList, 0, 8) as $idx => $cat): 
+        foreach (array_slice($occasionTypes, 0, 8) as $idx => $catName): 
             $img = $placeholders[$idx % count($placeholders)];
         ?>
-        <a href="/?category=<?= urlencode($cat['name']) ?>" class="category-circle-item <?= $selectedCategory === $cat['name'] ? 'active' : '' ?>">
-            <img src="<?= $img ?>" class="category-circle-img" alt="<?= htmlspecialchars($cat['name']) ?>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid #ECEFF1; display: block; margin: 0 auto;">
-            <div class="category-circle-title mt-1" style="font-size: 0.75rem; text-align: center; color: #333; font-weight: 600;"><?= htmlspecialchars(explode(' ', $cat['name'])[0]) ?></div>
+        <a href="/?category=<?= urlencode($catName) ?>" class="category-circle-item <?= $selectedCategory === $catName ? 'active' : '' ?>">
+            <img src="<?= $img ?>" class="category-circle-img" alt="<?= htmlspecialchars($catName) ?>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid #ECEFF1; display: block; margin: 0 auto;">
+            <div class="category-circle-title mt-1" style="font-size: 0.75rem; text-align: center; color: #333; font-weight: 600;"><?= htmlspecialchars(explode(' ', $catName)[0]) ?></div>
         </a>
         <?php endforeach; ?>
     </div>
